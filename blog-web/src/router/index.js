@@ -14,7 +14,7 @@ const routes = [
         children: [
             {
                 path: "/",
-                component: resolve => require(["@/view/home/newIndex.vue"], resolve),
+                component: resolve => require(["@/view/home/index.vue"], resolve),
                 meta: {
                     title: "拾壹博客"
                 }
@@ -50,7 +50,7 @@ const routes = [
             },
             {
                 path: "/search",
-                component: resolve => require(["@/view/search/index"], resolve),
+                component: resolve => require(["@/view/search/Search"], resolve),
                 meta: {
                     title: "搜索文章"
                 }
@@ -68,11 +68,6 @@ const routes = [
                 meta: {
                     title: "文章分类"
                 }
-            },
-            {
-                name: "/category",
-                path: "/category",
-                component: resolve => require(["@/view/category/index"], resolve),
             },
             {
                 path: "/tag",
