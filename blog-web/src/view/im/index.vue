@@ -69,7 +69,7 @@
 
                 <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
                     <li @click="clipboard" class="copyBtn">
-                        <i class="iconfont icon-fuzhi1"></i> 复制
+                        <i class="el-icon-document-copy"></i> 复制
                     </li>
                     <li @click="translate">
                         <i class="iconfont icon-fanyi"></i>翻译

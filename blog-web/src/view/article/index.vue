@@ -1038,8 +1038,8 @@ export default {
 
             .left-sidbarnav {
                 position: fixed;
-                left: 6%;
-                top: 40%;
+                left: 8%;
+                top: 25%;
                 z-index: 999;
 
                 .left-item {
@@ -1085,11 +1085,10 @@ export default {
                         display: none;
                         position: absolute;
                         bottom: -150px;
-                        left: 60px;
+                        left: 50px;
                         margin: 0;
                         padding: 0 0 15px;
                         width: 450px;
-                        transition: all 2s;
 
                         .reward-img {
                             margin-left: 5px;
