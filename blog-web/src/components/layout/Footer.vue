@@ -3,7 +3,7 @@
         <div class="content">
             <div class="site">
                 <p class="run_time">
-                    <i class="iconfont icon-shuangshandian"></i>
+                    <svg-icon icon-class="shandian"></svg-icon>
                     <span>已运行
                         <strong>{{ day }}</strong> 天
                         <strong>{{ hours }}</strong> 时
@@ -123,9 +123,10 @@ export default {
                 height: 20px;
                 align-items: center;
 
-                i {
-                    font-size: 14px;
-                    line-height: 20px;
+                svg {
+                    width: 19px;
+                    height: 19px;
+                    vertical-align: -4px;
                 }
 
                 span {

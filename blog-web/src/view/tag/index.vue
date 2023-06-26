@@ -3,7 +3,7 @@
         <div class="box">
             <div class="title">
                 <span>
-                    <i style="color: var(--theme-color);margin-right: 5px;" class="iconfont icon-biaoqian"></i>
+                    <i style="color: var(--theme-color);margin-right: 5px;" class="el-icon-position"></i>
                     搜索到
                     <em style="color: var(--theme-color);font-weight: 700;">{{ total }}</em>
                     条与
