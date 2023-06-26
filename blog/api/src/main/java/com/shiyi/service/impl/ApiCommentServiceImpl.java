@@ -39,7 +39,7 @@ public class ApiCommentServiceImpl implements ApiCommentService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult publicAddComment(Comment comment) {
+    public ResponseResult insertComment(Comment comment) {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("user-agent"));
         //获取ip地址
         String ipAddress = IpUtil.getIp2region(IpUtil.getIp(request));

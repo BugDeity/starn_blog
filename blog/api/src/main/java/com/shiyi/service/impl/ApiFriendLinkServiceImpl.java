@@ -31,7 +31,7 @@ public class ApiFriendLinkServiceImpl implements ApiFriendLinkService {
      * @return
      */
     @Override
-    public ResponseResult selectLinkList() {
+    public ResponseResult selectFriendLinkList() {
         List<ApiFriendLinkVO> list = friendLinkMapper.selectLinkList(UP.code);
         return ResponseResult.success(list);
     }
@@ -43,7 +43,7 @@ public class ApiFriendLinkServiceImpl implements ApiFriendLinkService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult insertLink(FriendLink friendLink) {
+    public ResponseResult insertFriendLink(FriendLink friendLink) {
 
         if (friendLink.getUrl().contains("shiyit.com") ||
                 friendLink.getUrl().contains("baidu.com")){

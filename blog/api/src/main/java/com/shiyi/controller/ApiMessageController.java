@@ -30,7 +30,7 @@ public class ApiMessageController {
     private final ApiMessageService messageService;
 
     @BusinessLogger(value = "留言模块-留言列表",type = "查询",desc = "留言列表")
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @RequestMapping(value = "/",method = RequestMethod.GET)
     @ApiOperation(value = "留言列表", httpMethod = "GET", response = ResponseResult.class, notes = "留言列表")
     public ResponseResult selectMessageList(){
         return messageService.selectMessageList();

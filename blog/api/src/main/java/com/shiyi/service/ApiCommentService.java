@@ -10,7 +10,7 @@ public interface ApiCommentService {
      * @param comment
      * @return
      */
-    ResponseResult publicAddComment(Comment comment);
+    ResponseResult insertComment(Comment comment);
 
     /**
      * 分页获取文章评论

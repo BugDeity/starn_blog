@@ -60,7 +60,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      * @return
      */
     @Override
-    public ResponseResult selectPublicArticleList(Integer categoryId,Integer tagId) {
+    public ResponseResult selectArticleList(Integer categoryId,Integer tagId) {
         Page<ApiArticleListVO> articlePage = articleMapper.selectArticleList(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
                 categoryId,tagId);
         articlePage.getRecords().forEach(this::setCommentAndLike);
@@ -72,7 +72,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      * @return
      */
     @Override
-    public ResponseResult selectPublicArticleInfo(Integer id) {
+    public ResponseResult selectArticleInfo(Integer id) {
         ApiArticleInfoVO apiArticleInfoVO = articleMapper.selectArticleByIdToVO(id);
         //获取标签
         List<Tags> list = tagsMapper.selectTagByArticleId(apiArticleInfoVO.getId());
@@ -104,6 +104,30 @@ public class ApiArticleServiceImpl implements ApiArticleService {
     }
 
     /**
+     *  搜索文章
+     * @return
+     */
+    @Override
+    public ResponseResult searchArticle(String keywords) {
+//        if (StringUtils.isBlank(keywords)) {
+//            throw new BusinessException(PARAMS_ILLEGAL.getDesc());
+//        }
+//        //获取搜索模式（es搜索或mysql搜索）
+//        SystemConfig systemConfig = systemConfigService.getCustomizeOne();
+//        String strategy = SearchModelEnum.getStrategy(systemConfig.getSearchModel());
+//        //搜索逻辑
+//        List<ArticleSearchVO> articleSearchVOS = searchStrategyContext.executeSearchStrategy(strategy, keywords);
+        Page<ApiArticleListVO> articlePage = articleMapper.publicPageSearchArticle(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
+                keywords);
+        articlePage.getRecords().forEach(item -> {
+            item.setTitle(item.getTitle().replaceAll("(?i)" + keywords, Constants.PRE_TAG + keywords + Constants.POST_TAG));
+            setCommentAndLike(item);
+        });
+
+        return ResponseResult.success(articlePage);
+    }
+
+    /**
      *  获取归档
      * @return
      */
@@ -124,30 +148,6 @@ public class ApiArticleServiceImpl implements ApiArticleService {
             result.add(map);
         }
         return ResponseResult.success(result).putExtra("total",articleList.size());
-    }
-
-    /**
-     *  搜索文章
-     * @return
-     */
-    @Override
-    public ResponseResult publicSearchArticle(String keywords) {
-//        if (StringUtils.isBlank(keywords)) {
-//            throw new BusinessException(PARAMS_ILLEGAL.getDesc());
-//        }
-//        //获取搜索模式（es搜索或mysql搜索）
-//        SystemConfig systemConfig = systemConfigService.getCustomizeOne();
-//        String strategy = SearchModelEnum.getStrategy(systemConfig.getSearchModel());
-//        //搜索逻辑
-//        List<ArticleSearchVO> articleSearchVOS = searchStrategyContext.executeSearchStrategy(strategy, keywords);
-        Page<ApiArticleListVO> articlePage = articleMapper.publicPageSearchArticle(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
-                keywords);
-        articlePage.getRecords().forEach(item -> {
-            item.setTitle(item.getTitle().replaceAll("(?i)" + keywords, Constants.PRE_TAG + keywords + Constants.POST_TAG));
-            setCommentAndLike(item);
-        });
-
-        return ResponseResult.success(articlePage);
     }
 
     /**
@@ -180,7 +180,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult publicInsertArticle(ArticleInsertDTO dto) {
+    public ResponseResult insertArticle(ArticleInsertDTO dto) {
         Article article = BeanCopyUtils.copyObject(dto, Article.class);
         article.setIsPublish(PublishEnum.AUDIO.code);
         if (article.getId() != null) {
@@ -210,7 +210,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      * @return
      */
     @Override
-    public ResponseResult publicSelectMyArticle() {
+    public ResponseResult selectMyArticle() {
         Page<ApiArticleListVO> list = articleMapper.publicSelectMyArticle(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString());
         return ResponseResult.success(list);
     }
@@ -222,7 +222,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult publicDeleteMyArticle(Long id) {
+    public ResponseResult deleteMyArticle(Long id) {
         Article article = articleMapper.selectById(id);
         if (!article.getUserId().equals(StpUtil.getLoginIdAsString())) {
             throw new BusinessException("只能删除自己的文章！");
@@ -238,7 +238,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      * @return
      */
     @Override
-    public ResponseResult publicSelectMyArticleInfo(Long id) {
+    public ResponseResult selectMyArticleInfo(Long id) {
         ArticleInsertDTO articleInsertDTO  =  articleMapper.publicSelectMyArticleInfo(id);
         if (!articleInsertDTO.getUserId().equals(StpUtil.getLoginIdAsString())) {
             throw new BusinessException("只能查看自己的文章！");

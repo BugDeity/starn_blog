@@ -18,31 +18,31 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/v1/article")
-@Api(tags = "文章管理-门户")
+@Api(tags = "文章API-V1")
 @RequiredArgsConstructor
 public class ApiArticleController {
 
     private final ApiArticleService articleService;
 
     @BusinessLogger(value = "首页-用户访问首页",type = "查询",desc = "查询所有文章")
-    @GetMapping(value = "/list")
+    @GetMapping(value = "/")
     @ApiOperation(value = "文章列表", httpMethod = "GET", response = ResponseResult.class, notes = "文章列表")
-    public ResponseResult selectPublicArticleList(Integer categoryId,Integer tagId) {
-        return  articleService.selectPublicArticleList(categoryId,tagId);
+    public ResponseResult selectArticleList(Integer categoryId,Integer tagId) {
+        return  articleService.selectArticleList(categoryId,tagId);
     }
 
     @BusinessLogger(value = "门户-用户查看文章详情",type = "查询",desc = "查看文章详情")
     @GetMapping(value = "/info")
     @ApiOperation(value = "文章详情", httpMethod = "GET", response = ResponseResult.class, notes = "文章详情")
-    public ResponseResult selectPublicArticleInfo(Integer id) {
-        return articleService.selectPublicArticleInfo(id);
+    public ResponseResult selectArticleInfo(Integer id) {
+        return articleService.selectArticleInfo(id);
     }
 
     @BusinessLogger(value = "门户-用户搜索文章",type = "查询",desc = "用户搜索文章")
     @GetMapping(value = "/search")
     @ApiOperation(value = "用户搜索文章", httpMethod = "GET", response = ResponseResult.class, notes = "用户搜索文章")
-    public ResponseResult publicSearchArticle(String keyword) {
-        return articleService.publicSearchArticle(keyword);
+    public ResponseResult searchArticle(String keyword) {
+        return articleService.searchArticle(keyword);
     }
 
     @BusinessLogger(value = "首页-归档",type = "查询",desc = "归档")
@@ -67,34 +67,34 @@ public class ApiArticleController {
     }
 
     @SaCheckLogin
-    @PostMapping(value = "/insert")
+    @PostMapping(value = "/")
     @BusinessLogger(value = "添加文章",type = "添加",desc = "添加文章")
     @ApiOperation(value = "添加文章", httpMethod = "POST", response = ResponseResult.class, notes = "添加文章")
-    public ResponseResult publicInsertArticle(@RequestBody ArticleInsertDTO dto) {
-        return articleService.publicInsertArticle(dto);
+    public ResponseResult insertArticle(@RequestBody ArticleInsertDTO dto) {
+        return articleService.insertArticle(dto);
     }
 
     @SaCheckLogin
-    @GetMapping(value = "/publicSelectMyArticle")
+    @GetMapping(value = "/selectMyArticle")
     @BusinessLogger(value = "查询我的文章",type = "查询",desc = "查询我的文章")
     @ApiOperation(value = "查询我的文章", httpMethod = "GET", response = ResponseResult.class, notes = "查询我的文章")
-    public ResponseResult publicSelectMyArticle() {
-        return articleService.publicSelectMyArticle();
+    public ResponseResult selectMyArticle() {
+        return articleService.selectMyArticle();
     }
 
     @SaCheckLogin
-    @DeleteMapping(value = "/publicDeleteMyArticle")
+    @DeleteMapping(value = "/")
     @BusinessLogger(value = "删除我的文章",type = "删除",desc = "删除我的文章")
     @ApiOperation(value = "删除我的文章", httpMethod = "DELETE", response = ResponseResult.class, notes = "删除我的文章")
-    public ResponseResult publicDeleteMyArticle(Long id) {
-        return articleService.publicDeleteMyArticle(id);
+    public ResponseResult deleteMyArticle(Long id) {
+        return articleService.deleteMyArticle(id);
     }
 
     @SaCheckLogin
-    @GetMapping(value = "/publicSelectMyArticleInfo")
+    @GetMapping(value = "/selectMyArticleInfo")
     @BusinessLogger(value = "我的文章详情",type = "查询",desc = "我的文章详情")
     @ApiOperation(value = "我的文章详情", httpMethod = "GET", response = ResponseResult.class, notes = "我的文章详情")
-    public ResponseResult publicSelectMyArticleInfo(Long id) {
-        return articleService.publicSelectMyArticleInfo(id);
+    public ResponseResult selectMyArticleInfo(Long id) {
+        return articleService.selectMyArticleInfo(id);
     }
 }

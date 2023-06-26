@@ -25,20 +25,20 @@ public class ApiUserController {
     @SaCheckLogin
     @BusinessLogger(value = "个人中心模块-获取用户信息",type = "修改",desc = "获取用户信息")
     @RequestMapping(value = "/info",method = RequestMethod.GET)
-    public ResponseResult publicSelectUserInfo(){
+    public ResponseResult selectUserInfo(){
         return userService.selectUserInfo();
     }
 
     @SaCheckLogin
     @BusinessLogger(value = "个人中心模块-修改用户信息",type = "修改",desc = "修改用户信息")
     @RequestMapping(value = "/",method = RequestMethod.PUT)
-    public ResponseResult publicUpdateUser(@RequestBody UserInfoDTO vo){
+    public ResponseResult updateUser(@RequestBody UserInfoDTO vo){
         return userService.updateUser(vo);
     }
 
     @RequestMapping(value = "selectUserInfoByToken",method = RequestMethod.GET)
     @ApiOperation(value = "根据token获取用户信息", httpMethod = "GET", response = ResponseResult.class, notes = "根据token获取用户信息")
-    public ResponseResult publicSelectUserInfoByToken(String token){
+    public ResponseResult selectUserInfoByToken(String token){
         return userService.selectUserInfoByToken(token);
     }
 

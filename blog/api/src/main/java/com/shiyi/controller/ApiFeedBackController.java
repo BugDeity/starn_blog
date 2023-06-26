@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/feedback")
 @RequiredArgsConstructor
-@Api(tags = "门户反馈管理")
+@Api(tags = "反馈API-V1")
 public class ApiFeedBackController {
 
     private final ApiFeedBackService feedBackService;
@@ -29,7 +29,7 @@ public class ApiFeedBackController {
     @PostMapping(value = "/")
     @ApiOperation(value = "添加反馈", httpMethod = "POST", response = ResponseResult.class, notes = "添加反馈")
     @BusinessLogger(value = "首页-用户添加反馈",type = "添加",desc = "添加反馈")
-    public ResponseResult addFeedback(@RequestBody FeedBack feedBack) {
+    public ResponseResult insertFeedback(@RequestBody FeedBack feedBack) {
         return  feedBackService.insertFeedback(feedBack);
     }
 

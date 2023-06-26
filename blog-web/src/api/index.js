@@ -2,21 +2,21 @@ import request from '@/utils/request'
 
 export function fetchArticleList(params) {
     return request({
-        url: '/v1/article/list',
+        url: '/v1/article/',
         method: 'get',
         params: params
     })
 }
 export function getMyArticle(params) {
     return request({
-        url: '/v1/article/publicSelectMyArticle',
+        url: '/v1/article/selectMyArticle',
         method: 'get',
         params: params
     })
 }
 export function deleteMyArticle(id) {
     return request({
-        url: '/v1/article/publicDeleteMyArticle',
+        url: '/v1/article/',
         method: 'delete',
         params: {
             id: id
@@ -25,7 +25,7 @@ export function deleteMyArticle(id) {
 }
 export function getMyArticleInfo(id) {
     return request({
-        url: '/v1/article/publicSelectMyArticleInfo',
+        url: '/v1/article/selectMyArticleInfo',
         method: 'get',
         params: {
             id: id
@@ -34,7 +34,7 @@ export function getMyArticleInfo(id) {
 }
 export function insertArticle(data) {
     return request({
-        url: '/v1/article/insert',
+        url: '/v1/article/',
         method: 'post',
         data
     })
@@ -82,7 +82,7 @@ export function fetchTagList() {
 
 export function featchComments(params) {
     return request({
-        url: '/v1/comment/selectCommentByArticleId',
+        url: '/v1/comment/',
         method: 'get',
         params: params
     })
@@ -95,7 +95,7 @@ export function newArticle() {
 }
 export function featchLinks() {
     return request({
-        url: '/v1/link/selectLinkList',
+        url: '/v1/link/',
         method: 'get',
     })
 }
@@ -134,7 +134,7 @@ export function getWebSiteInfo() {
 }
 export function listMessage() {
     return request({
-        url: '/v1/message/list',
+        url: '/v1/message/',
         method: 'get',
     })
 }
@@ -221,7 +221,7 @@ export function updatePassword(data) {
 
 export function featchCategory() {
     return request({
-        url: '/v1/category/list',
+        url: '/v1/category/',
         method: 'get'
     })
 }
@@ -250,14 +250,14 @@ export function getPayUrl(params) {
 // 聊天室接口
 export function getImHistory(params) {
     return request({
-        url: '/v1/im/history',
+        url: '/v1/im/',
         method: 'get',
         params: params
     })
 }
 export function getUserImHistoryList(params) {
     return request({
-        url: '/v1/im/userImHistory',
+        url: '/v1/im/selectUserImHistory',
         method: 'get',
         params: params
     })

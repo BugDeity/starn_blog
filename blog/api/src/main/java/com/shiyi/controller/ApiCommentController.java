@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/comment")
-@Api(tags = "评论接口")
+@Api(tags = "评论API-V1")
 @RequiredArgsConstructor
 public class ApiCommentController {
 
@@ -25,11 +25,11 @@ public class ApiCommentController {
     @RequestMapping(value = "/",method = RequestMethod.POST)
     @SaCheckLogin
     @ApiOperation(value = "添加评论", httpMethod = "POST", response = ResponseResult.class, notes = "添加评论")
-    public ResponseResult publicAddComment(@RequestBody Comment comment){
-        return commentService.publicAddComment(comment);
+    public ResponseResult insertComment(@RequestBody Comment comment){
+        return commentService.insertComment(comment);
     }
 
-    @RequestMapping(value = "selectCommentByArticleId",method = RequestMethod.GET)
+    @RequestMapping(value = "/",method = RequestMethod.GET)
     @ApiOperation(value = "根据文章id获取相关评论", httpMethod = "GET", response = ResponseResult.class, notes = "根据文章id获取相关评论")
     public ResponseResult selectCommentByArticleId(int pageNo,int pageSize,Long articleId){
         return commentService.selectCommentByArticleId(pageNo,pageSize,articleId);

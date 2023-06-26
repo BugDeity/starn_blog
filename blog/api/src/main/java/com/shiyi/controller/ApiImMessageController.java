@@ -20,7 +20,7 @@ public class ApiImMessageController {
     private final ApiImMessageService imMessageService;
 
     @SaCheckLogin
-    @GetMapping(value = "/history")
+    @GetMapping(value = "/")
     @BusinessLogger(value = "首页-获取历史聊天记录",type = "查询",desc = "获取历史聊天记录")
     @ApiOperation(value = "获取历史聊天记录", httpMethod = "GET", response = ResponseResult.class, notes = "获取历史聊天记录")
     public ResponseResult selectHistoryList() {
@@ -28,7 +28,7 @@ public class ApiImMessageController {
     }
 
     @SaCheckLogin
-    @GetMapping(value = "/userImHistory")
+    @GetMapping(value = "/selectUserImHistory")
     @BusinessLogger(value = "首页-获取单聊历史消息",type = "查询",desc = "获取单聊历史消息")
     @ApiOperation(value = "获取单聊历史消息", httpMethod = "GET", response = ResponseResult.class, notes = "获取单聊历史消息")
     public ResponseResult selectUserImHistoryList(String fromUserId,String toUserId) {

@@ -105,7 +105,7 @@ public class ApiUserServiceImpl implements ApiUserService {
      */
     @Override
     public ResponseResult wxIsLogin(String loginCode) {
-        UserInfoVO user = (UserInfoVO) redisService.getCacheObject(RedisConstants.WX_LOGIN_USER + loginCode.toLowerCase());
+        UserInfoVO user = (UserInfoVO) redisService.getCacheObject(RedisConstants.WX_LOGIN_USER + loginCode);
         if (user == null) {
             return ResponseResult.error("用户未被授权");
         }
@@ -121,9 +121,9 @@ public class ApiUserServiceImpl implements ApiUserService {
      */
     @Override
     public String wechatLogin(WxMpXmlMessage message) {
-        String content = message.getContent();
+        String content = message.getContent().toUpperCase();
         //先判断登录码是否已过期
-        boolean loginFlag = redisService.hasKey(RedisConstants.WX_LOGIN_USER_STATUE + content.toUpperCase());
+        boolean loginFlag = redisService.hasKey(RedisConstants.WX_LOGIN_USER_STATUE + content);
         if (!loginFlag) {
             return "验证码已过期";
         }
@@ -158,7 +158,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 
 
         //修改redis缓存 以便监听是否已经授权成功
-        redisService.setCacheObject(RedisConstants.WX_LOGIN_USER + message.getContent(), userInfoVO, 60, TimeUnit.SECONDS);
+        redisService.setCacheObject(RedisConstants.WX_LOGIN_USER + content, userInfoVO, 60, TimeUnit.SECONDS);
         return "网站登录成功！(若页面长时间未跳转请刷新验证码)";
     }
 
