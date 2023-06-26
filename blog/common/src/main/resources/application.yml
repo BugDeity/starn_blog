@@ -14,7 +14,7 @@ spring:
     url: jdbc:mysql://42.192.150.44:3306/blog_demo?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&tinyInt1isBit=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: queql
+    password:
     type: com.alibaba.druid.pool.DruidDataSource
     initial-size: 10
     max-active: 150
@@ -37,7 +37,7 @@ spring:
     host: 42.192.150.44
     port: 6379
     timeout: 3000
-    password: queql
+    password:
 
 #==============================IP限流次数和时间配置==============================
 IpLimit:
@@ -56,13 +56,13 @@ task:
 
 #==============================公众号配置==============================
 wechat:
-  app-id: wx353b7afac6ad0fa1
+  app-id:
 # 公众号AppSecret
-  secret: 65eb00eeebdd0ea03300036707c1ab98
+  secret:
 # 公众号Token
-  token: shiyi2022
+  token:
 # 公众号AES Key
-  aesKey: F4PBhRxwb9fCoe6TGfetnSMLtZObf29MhpGrFZXPzCF
+  aesKey:
 
 #==============================Sa-Token配置==============================
 sa-token:
@@ -113,7 +113,7 @@ knife4j:
     # Basic认证用户名
     username: admin
     # Basic认证密码
-    password: queql
+    password:
 
 #============================第三方登录配置信息===================================
 qq:
@@ -134,7 +134,6 @@ github:
   app-id: befd660732a0844e225a
   app-secret: c444b625f3463e9419cb36ef41acb59b2ef36228
   redirect-url: http://www.shiyit.com/shiyi/oauth/callback/github
-
 
 #百度推送
 baidu:
