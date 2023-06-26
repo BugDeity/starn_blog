@@ -140,7 +140,7 @@ export default {
             .commit {
                 position: absolute;
                 top: 0px;
-                height: 35px;
+                height: 37px;
                 width: 15%;
                 background-color: var(--theme-color);
                 border-top-right-radius: 30px;
