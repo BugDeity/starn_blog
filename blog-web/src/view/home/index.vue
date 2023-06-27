@@ -428,6 +428,8 @@ export default {
     .main-container {
         display: flex;
         justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
 
         .main {
             width: 100%;
@@ -601,15 +603,12 @@ export default {
 
 @media screen and (min-width: 1119px) {
 
-
-
-
     .main-container {
         display: flex;
         justify-content: center;
 
         .main {
-            width: 63%;
+            width: 70%;
             margin-top: 80px;
 
             .main-box {

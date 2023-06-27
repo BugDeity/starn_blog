@@ -3,7 +3,7 @@
         <div class="containner">
             <el-card class="titleBox">
                 <div class="title">
-                    <i class="iconfont icon-tupian"></i> 我的图库
+                    <i class="el-icon-picture"></i> 我的图库
                 </div>
                 <div class="photo">
                     <div class="photoItem" v-for="(item, index) in photoAlbumList" :key="index">
@@ -232,7 +232,7 @@ export default {
         justify-content: center;
 
         .containner {
-            width: 55%;
+            width: 70%;
             margin-top: 80px;
 
             /deep/ .el-card {
@@ -241,7 +241,6 @@ export default {
 
             .titleBox {
                 background-color: var(--background-color);
-                border-radius: 12px;
                 height: auto;
                 padding: 20px;
                 position: relative;

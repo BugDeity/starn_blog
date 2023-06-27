@@ -311,12 +311,11 @@ export default {
         }
 
         .link-content {
-            background-color: var(--background-color);
-            border-radius: 12px;
             padding: 20px;
             height: 100%;
-            width: 55%;
+            width: 70%;
             margin-top: 80px;
+            background-color: var(--background-color);
 
             &:hover {
                 box-shadow: 5px 4px 8px 6px rgba(7, 17, 27, .06);
@@ -376,7 +375,7 @@ export default {
             .links {
                 margin-left: 40px;
                 margin-top: 20px;
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(4, 1fr);
                 display: grid;
                 gap: 15px;
                 margin-bottom: 50px;

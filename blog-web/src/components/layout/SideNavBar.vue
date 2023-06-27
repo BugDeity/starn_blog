@@ -42,35 +42,35 @@
             <div class="menu-container">
                 <div class="menus-item">
                     <a @click="handleClike('/')">
-                        <i class="iconfont icon-home" /> 首页
+                        <i class="el-icon-star-off" /> 首页
                     </a>
                 </div>
                 <div class="menus-item">
                     <a @click="handleClike('/archive')">
-                        <i class="iconfont icon-guidangxiangmu" /> 归档
+                        <i class="el-icon-s-order" /> 归档
                     </a>
                 </div>
 
                 <div class="menus-item">
 
                     <a @click="handleClike('/categorys')">
-                        <i class="iconfont icon-fenlei" /> 分类
+                        <i class="el-icon-menu" /> 分类
                     </a>
                 </div>
                 <div class="menus-item">
                     <a @click="handleClike('/tag')">
-                        <i class="iconfont icon-biaoqian" /> 标签
+                        <i class="el-icon-discount" /> 标签
                     </a>
                 </div>
                 <div class="menus-item">
                     <a @click="handleClike('/photo')">
-                        <i class="iconfont icon-tupian" /> 画廊
+                        <i class="el-icon-picture" /> 画廊
                     </a>
                 </div>
 
                 <div class="menus-item">
                     <a @click="handleClike('/sponsor')">
-                        <i class="iconfont icon-shouye" /> 打赏
+                        <i class="iconfont icon-jineqiandaiyueshangjin" /> 打赏
                     </a>
                 </div>
                 <div class="menus-item">
@@ -80,24 +80,24 @@
                 </div>
                 <div class="menus-item">
                     <a @click="handleClike('/links')">
-                        <i class="iconfont icon-fenxiang" /> 友链
+                        <i class="el-icon-position" /> 友链
                     </a>
                 </div>
                 <div class="menus-item">
                     <a @click="handleClike('/about')">
-                        <i class="iconfont icon-guanyu1" /> 关于
+                        <i class="el-icon-info" /> 关于
                     </a>
                 </div>
 
                 <div class="menus-item" v-if="!isLogin">
-                    <a @click="openLogin"><i class="iconfont icon-gerenzhongxin" /> 登录 </a>
+                    <a @click="openLogin"><i class="el-icon-user-solid" /> 登录 </a>
                 </div>
                 <div v-else>
                     <div class="menus-item">
-                        <a @click="handleClike('/user')"><i class="iconfont icon-gerenzhongxin" /> 个人中心 </a>
+                        <a @click="handleClike('/user')"><i class="el-icon-user" /> 个人中心 </a>
                     </div>
                     <div class="menus-item">
-                        <a @click="logout"><i class="iconfont icon-denglu1" /> 退出</a>
+                        <a @click="logout"><i class="el-icon-switch-button" /> 退出</a>
                     </div>
                 </div>
             </div>

@@ -36,7 +36,7 @@
                     </span>
                 </li>
                 <li>
-                    <el-dropdown trigger="hover">
+                    <el-dropdown trigger="click">
                         <span class="el-dropdown-link" :class="path == '/archive' || path == '/categorys' || path == '/tag'
                             ? 'active' : ''">
                             文章归档<i class="el-icon-arrow-down el-icon--right"></i>
@@ -98,7 +98,7 @@
                     </span>
                 </li>
                 <li>
-                    <el-dropdown trigger="hover">
+                    <el-dropdown trigger="click">
                         <span class="el-dropdown-link">
                             关于本站<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
@@ -120,8 +120,7 @@
 
             <div class="searchBox" v-show="!noneInput">
                 <div class="search_bar search_open">
-                    <el-input :style="inputStyle" @focus="focus" @blur="blur" type="text" v-model="keywords"
-                        placeholder="想搜点什么呢..." />
+                    <el-input @focus="focus" @blur="blur" type="text" v-model="keywords" placeholder="想搜点什么呢..." />
                     <p class="search_ico" @click="search()">
                         <i class="iconfont icon-search"></i>
                     </p>
@@ -194,7 +193,6 @@ export default {
             keywords: null,
             user: this.$store.state.userInfo,
             style: null,
-            inputStyle: "",
             path: null,
             isMobile: false,
             noneInput: false,
@@ -422,6 +420,10 @@ export default {
                 overflow: hidden;
                 max-width: 1500px;
 
+                .el-dropdown-link {
+                    cursor: pointer;
+                }
+
                 li {
                     float: left;
                     display: block;
@@ -459,7 +461,7 @@ export default {
 
                     /deep/ .el-input__inner {
                         border: 1px solid #dcdfe6;
-                        background: #f5f6f7;
+                        background: var(--background-color);
                         width: 210px;
                         padding-left: 8px;
                         height: 35px;

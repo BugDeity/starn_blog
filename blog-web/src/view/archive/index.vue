@@ -238,11 +238,11 @@ export default {
 
         .archive-container {
             margin-top: 80px;
-            background-color: var(--background-color);
-            border-radius: 12px;
             padding: 20px;
             height: 100%;
-            width: 55%;
+            width: 70%;
+            text-align: center;
+            background-color: var(--background-color);
 
             .num {
                 margin-bottom: 15px;

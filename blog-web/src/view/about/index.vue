@@ -32,6 +32,11 @@ export default {
             height: 100%;
             width: 100%;
 
+            /deep/ .vuepress-markdown-body {
+                background-color: var(--background-color);
+                color: var(--article-color);
+            }
+
             .title {
                 font-size: 24px;
                 color: var(--article-color);
@@ -58,15 +63,19 @@ export default {
 
         .box1 {
             background-color: var(--background-color);
-            border-radius: 12px;
             padding: 20px;
             height: 100%;
-            width: 55%;
+            width: 70%;
             margin-top: 80px;
 
             &:hover {
                 box-shadow: 5px 4px 8px 6px rgba(7, 17, 27, .06);
                 transition: all .3s;
+            }
+
+            /deep/ .vuepress-markdown-body {
+                background-color: var(--background-color);
+                color: var(--article-color);
             }
 
             .title {

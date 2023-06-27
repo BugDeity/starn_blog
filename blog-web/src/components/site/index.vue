@@ -1,6 +1,6 @@
 <template>
     <el-card class="box">
-        <img src="https://www.ywsj.cf/themes/joe2.0/source/img/author_bg.jpg" alt="">
+        <img src="http://img.shiyit.com/beijing.jpg" alt="">
         <div class="user">
             <div class="avatar_wrapper">
                 <img :src="$store.state.webSiteInfo.authorAvatar" alt="">

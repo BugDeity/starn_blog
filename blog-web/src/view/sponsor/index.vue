@@ -287,12 +287,7 @@ export default {
         .sponsor-warpper {
             position: relative;
             margin-top: 80px;
-            width: 80%;
-
-            .wapper,
-            .content {
-                border-radius: 12px;
-            }
+            width: 70%;
 
             .wapper {
                 position: relative;
@@ -325,7 +320,8 @@ export default {
                         padding: 7px;
                         border-radius: 25px;
                         cursor: pointer;
-                        line-height: 35px;
+                        line-height: 20px;
+                        font-size: 0.8rem;
                     }
 
                     .qr {

@@ -297,7 +297,7 @@ export default {
 
         .main {
             margin-top: 80px;
-            width: 55%;
+            width: 70%;
 
             .header {
                 text-align: center;
