@@ -16,6 +16,7 @@
                             <div class="info">
                                 <span class="nickname">
                                     {{ item.fromUserNickname }}
+                                    <span v-if="item.fromUserId == 1" class="tag">官方</span>
                                     <span class="time" style="">{{ item.createTime }}</span>
                                 </span>
                                 <span v-if="!item.isWithdraw" v-html="item.content" class="messageContent"
@@ -33,6 +34,7 @@
                             <div class="info">
                                 <div class="nickname">
                                     <span style="margin-left: 3px;font-size: 12px;">{{ item.createTime }}</span>
+                                    <span v-if="item.fromUserId == 1" class="tag">官方</span>
                                     {{ item.fromUserNickname }}
                                 </div>
                                 <span v-if="!item.isWithdraw" v-html="item.content" class="nowMessageContent"
@@ -560,12 +562,23 @@ export default {
                         }
                     }
 
+                    .tag {
+                        color: red;
+                        border: 1px solid red;
+                        border-radius: 5px;
+                        padding: 1px;
+                        font-size: 0.5rem;
+                        margin-right: 3px;
+                        margin-left: 3px;
+                    }
+
                     .left {
                         padding: 5px 10px;
                         display: flex;
 
                         .info {
                             margin-left: 5px;
+                            color: var(--text-color);
 
                             .nickname {
                                 font-size: 0.8rem;
@@ -625,6 +638,7 @@ export default {
                             display: flex;
                             flex-direction: row-reverse;
                             flex-wrap: wrap;
+                            color: var(--text-color);
 
                             .nickname {
                                 display: inline-block;
