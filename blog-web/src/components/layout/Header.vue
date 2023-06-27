@@ -126,7 +126,7 @@
                     </p>
                 </div>
                 <!-- 热搜框 -->
-                <div class="hot_search_main" :style="style">
+                <div class="hot_search_main" :style="style" @mouseleave="blur">
                     <a @click="handleArticle(item.id)" href="javascript:;" v-for="(item, index) in $store.state.hotArticles"
                         :key="index">
                         <span :style="{ backgroundColor: `${colors[index]}` }">{{ index + 1 }}</span>
@@ -503,14 +503,14 @@ export default {
                     transform: translate3d(0, 15px, 0);
 
                     a {
-                        height: 40px;
+                        height: 30px;
                         text-decoration: none;
                         display: block;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
                         /* border-bottom: 1px solid #f2f6fc; */
-                        line-height: 40px;
+                        line-height: 30px;
                         padding: 4px 5px;
                         color: #606266;
                         font-size: 12px;

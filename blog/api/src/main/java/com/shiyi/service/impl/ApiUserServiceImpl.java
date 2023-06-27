@@ -134,7 +134,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 
             // 保存用户信息
             UserInfo userInfo = UserInfo.builder()
-                    .nickname("wechat-user")
+                    .nickname("WECHAT-" + RandomUtils.generationCapital(6))
                     .avatar("http://img.shiyit.com/66bb121d47e94b89945d29bb6e3e6cab.jpg")
                     .build();
             userInfoMapper.insert(userInfo);

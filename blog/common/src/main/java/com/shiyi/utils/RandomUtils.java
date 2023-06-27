@@ -11,7 +11,7 @@ public class RandomUtils {
 
     private static final  Random RANDOM = new Random();
 
-    private static final String LETTER="abcdefghijklmnopqrstuvwxyz";
+    private static final String LETTER = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     /**
      * 生成指定位数的随机小写字母字符串
@@ -25,10 +25,6 @@ public class RandomUtils {
             stringBuilder.append(c[RANDOM.nextInt(c.length)]);
         }
         return stringBuilder.toString();
-    }
-
-    public static Integer generationOneNumber(Integer number){
-        return RANDOM.nextInt(number)+1;
     }
 
     /**
