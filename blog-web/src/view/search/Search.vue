@@ -323,7 +323,7 @@ export default {
         position: relative;
 
         .box {
-            width: 50%;
+            width: 70%;
             height: 100%;
             padding: 10px;
             margin-top: 80px;
