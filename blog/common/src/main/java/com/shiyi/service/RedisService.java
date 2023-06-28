@@ -142,7 +142,7 @@ public interface RedisService {
     /**
      *  增加文字阅读量或标签点击量
      */
-    void incrArticle(Long id,String key);
+    void incrArticle(Long id,String key,String ip);
 
     void redisTimer();
 

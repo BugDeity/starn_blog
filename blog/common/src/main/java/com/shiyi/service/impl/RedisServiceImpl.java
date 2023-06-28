@@ -9,10 +9,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -275,15 +272,18 @@ public class RedisServiceImpl implements RedisService {
      */
     @Override
     @Async("threadPoolTaskExecutor")
-    public void incrArticle(Long id,String key) {
+    public void incrArticle(Long id,String key,String ip) {
         Map<String, Object> map = getCacheMap(key);
-        Integer value = (Integer) map.get(id.toString());
-        // 如果key存在就直接加一
-        if (value != null) {
-            map.put(id.toString(),value+1);
+        List<String> ipList = (List<String> ) map.get(id.toString());
+        if (ipList != null) {
+            if (!ipList.contains(ip)) {
+                ipList.add(ip);
+            }
         }else {
-            map.put(id.toString(),1);
+            ipList = new ArrayList<>();
+            ipList.add(ip);
         }
+        map.put(id.toString(),ipList);
         setCacheMap(key,map);
     }
 

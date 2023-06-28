@@ -69,9 +69,9 @@ public class BlogQuartz {
         // 取出所有数据更新到数据库
         for (Map.Entry<String, Object> stringEntry : map.entrySet()) {
             String id = stringEntry.getKey();
-            Integer value = (Integer) stringEntry.getValue();
+            List<String> list = (List<String>) stringEntry.getValue();
             Article article = Article.builder()
-                    .id(Long.parseLong(id)).quantity(value)
+                    .id(Long.parseLong(id)).quantity(list.size())
                     .build();
             articles.add(article);
         }

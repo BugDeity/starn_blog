@@ -110,7 +110,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         }
 
         //增加文章阅读量
-        redisService.incrArticle(id.longValue(),ARTICLE_READING);
+        redisService.incrArticle(id.longValue(),ARTICLE_READING,IpUtil.getIp(request));
         return ResponseResult.success(apiArticleInfoVO);
     }
 
