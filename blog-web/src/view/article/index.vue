@@ -235,8 +235,7 @@
                 <div class="directory">
                     <el-card class="directory-item">
                         <div slot="header" class="title">
-                            <i class="iconfont icon-menu_normal "></i>
-                            <span>文章目录</span>
+                            <span>目录</span>
                         </div>
 
                         <ul>
@@ -649,10 +648,10 @@ export default {
                     &::before {
                         content: "";
                         position: absolute;
-                        top: -40px;
+                        top: -80px;
                         left: 0;
                         width: 100%;
-                        height: 40px;
+                        height: 80px;
                         z-index: 2;
                         background: linear-gradient(180deg, rgba(55, 55, 55, 0), #ccc);
                     }
@@ -999,6 +998,7 @@ export default {
             }
 
             .box-article {
+
                 .warpper {
                     background-color: gray;
                     position: relative;
@@ -1008,10 +1008,10 @@ export default {
                     &::before {
                         content: "";
                         position: absolute;
-                        top: -40px;
+                        top: -80px;
                         left: 0;
                         width: 100%;
-                        height: 40px;
+                        height: 80px;
                         z-index: 2;
                         background: linear-gradient(180deg, rgba(55, 55, 55, 0), #ccc);
                     }
@@ -1236,12 +1236,6 @@ export default {
                     position: relative;
                     color: var(--text-color);
 
-                    .iconfont {
-                        font-size: 1.2rem;
-                    }
-
-
-
                     &:hover span {
                         color: var(--theme-color);
                     }
@@ -1351,13 +1345,14 @@ export default {
                 .directory-item {
                     background-color: var(--background-color);
 
+                    /deep/ .el-card__header {
+                        padding: 18px 20px;
+                    }
+
                     .title {
-                        padding: 10px 10px;
-                        color: var(--theme-color);
-                        font-weight: 700;
 
                         span {
-                            padding-left: 10px;
+                            color: var(--article-color);
                         }
                     }
 
