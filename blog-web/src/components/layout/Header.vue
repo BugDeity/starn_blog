@@ -225,7 +225,7 @@ export default {
 
     methods: {
         addArticle() {
-            if (!this.user) {
+            if (!this.userInfo) {
                 this.handleLogin()
                 return;
             }

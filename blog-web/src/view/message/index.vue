@@ -57,9 +57,9 @@ export default {
                 return false;
             }
             var message = {
-                avatar: user ? user.avatar : this.$store.state.webSiteInfo.touristAvatar,
+                avatar: this.user ? this.user.avatar : this.$store.state.webSiteInfo.touristAvatar,
                 status: 1,
-                nickname: user ? user.nickname : "游客",
+                nickname: this.user ? this.user.nickname : "游客",
                 content: this.content,
                 time: Math.floor(Math.random() * (10 - 7)) + 7
             };
