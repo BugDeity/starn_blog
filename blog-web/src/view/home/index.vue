@@ -398,6 +398,14 @@ export default {
     color: #409EFF;
 }
 
+/deep/ .el-tabs__nav-wrap::after {
+    background-color: var(--background-color);
+}
+
+/deep/ .el-tabs__active-bar {
+    background-color: var(--theme-color);
+}
+
 .banner {
     position: relative;
     height: 420px;

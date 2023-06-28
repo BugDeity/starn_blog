@@ -239,7 +239,7 @@ export default {
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })
         },
         focus() {
-            this.style = "transform:translate3d(0, 0, 0);opacity:1;visibility:visible;border: 1px solid #dcdfe6"
+            this.style = "transform:translate3d(0, 0, 0);opacity:1;visibility:visible;border: 1px solid var(--background-color)"
         },
         blur() {
             this.style = "opacity:0;visibility:hidden"
@@ -460,7 +460,7 @@ export default {
                     height: 60px;
 
                     /deep/ .el-input__inner {
-                        border: 1px solid #dcdfe6;
+                        border: 1px solid var(--input-boder);
                         background: var(--background-color);
                         width: 210px;
                         padding-left: 8px;
