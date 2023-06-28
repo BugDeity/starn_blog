@@ -85,6 +85,7 @@ export default {
                     message: '评论成功',
                     type: 'success'
                 });
+                this.$store.commit("isCommentFlag", true)
                 this.commentContent = ""
                 this.showBox = false
             }).catch(err => {

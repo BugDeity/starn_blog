@@ -39,7 +39,29 @@
                 <p>本文最后更新于 {{ formatDate(article.updateTime) }}，若内容或图片失效，请留言反馈。部分素材来自网络，若不小心影响到您的利益，请联系我们删除</p>
             </div>
             <!-- 文章内容 -->
-            <v-md-preview class="content" :text="this.article.contentMd" ref="preview" />
+            <div style="height: 100%;" class="box-article">
+                <v-md-preview :style="style" class="content" :text="this.article.contentMd" ref="preview" />
+                <div v-if="serceShow" class="warpper">
+                    <div class="item-title">
+                        <i class="el-icon-lock"></i> 该文章部分内容已隐藏
+                    </div>
+                    <div class="item-box">
+                        <span>
+                            {{ readTypeList[article.readType] }}
+                        </span>
+                        <div class="neirong">
+                            以下内容已隐藏，请{{ readDescList[article.readType] }}后查看
+                        </div>
+                        <el-button v-if="article.readType == 1" @click="checkLikeAndCoomment('请到文章内容下方完成评论')" class="btn"
+                            type="primary" size="small">立即评论</el-button>
+                        <el-button v-if="article.readType == 2" @click="checkLikeAndCoomment('请到文章内容左侧完成点赞')" class="btn"
+                            type="primary" size="small">立即点赞</el-button>
+                        <el-button v-if="article.readType == 3" @click="dialogVisible = true" class="btn" type="primary"
+                            size="small">立即验证</el-button>
+
+                    </div>
+                </div>
+            </div>
 
             <!-- 点赞和打赏 -->
             <div class="left-sidbarnav">
@@ -228,10 +250,29 @@
             </div>
 
         </div>
+
+        <!-- 公众号扫码验证框 -->
+        <el-dialog title="关注公众号验证" :visible.sync="dialogVisible">
+            <div style="text-align: center;">
+                <div>扫码关注公众号<span style="color: red;">【 拾壹学编程 】</span></div>
+                <div>回复<span style="color: red;">【 验证码 】</span>获取验证码</div>
+            </div>
+            <el-image class="wxImg" src="http://img.shiyit.com/wechatQr.jpg">
+                <div slot="error" class="image-slot">
+                    加载中<span class="dot">...</span>
+                </div>
+            </el-image>
+
+            <el-input wi v-model="code" placeholder="请输入验证码"></el-input>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="checkCode">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
-import { articleInfo, featchComments, articleLike } from '@/api'
+import { articleInfo, featchComments, articleLike, checkCode } from '@/api'
 import SiteInfo from '@/components/site/index.vue'
 import Comment from '@/components/comment/index.vue'
 export default {
@@ -247,8 +288,13 @@ export default {
                 tagList: [],
                 userInfo: {}
             },
+            code: null,
+            style: '',
             titles: [],
             imgList: [],
+            readTypeList: ['', '评论阅读', '点赞阅读', '扫码阅读'],
+            readDescList: ['', '评论', '点赞', '扫码回复验证码'],
+            dialogVisible: false,
             active: 0,
             fontNumber: 0,
             img: "https://foruda.gitee.com/avatar/1677050610632357168/5407895_quequnlong_1646130774.png",
@@ -262,11 +308,10 @@ export default {
                 articleId: this.$route.query.articleId,
             },
             commentPages: 0,
-            count: null,
-            timer: null,
             user: {},
             // 加载层信息
             loading: [],
+            serceShow: 0,
         }
     },
 
@@ -302,10 +347,28 @@ export default {
         // 监听滚动事件
         window.addEventListener('scroll', this.onScroll, false)
     },
+    computed: {
+        isCommentFlag() {
+            return this.$store.state.isCommentFlag
+        }
+    },
+    watch: {
+        isCommentFlag: function (newVal, oldVal) {
+            //插入需要在仓库数据变化时做的逻辑处理
+            if (newVal) {
+                this.checkAfter()
+            }
+        }
+    },
+
     created() {
         this.openLoading()
         articleInfo(this.articleId).then(res => {
             this.article = res.data
+            this.serceShow = this.article.readType
+            if (this.serceShow) {
+                this.style = "max-height: 1500px;overflow: hidden;"
+            }
             //修改标题
             document.title = this.article.title
             // 计算文章字数
@@ -317,6 +380,23 @@ export default {
         this.loading.close()
     },
     methods: {
+        checkLikeAndCoomment(desc) {
+            this.$message.info(desc)
+        },
+        checkCode() {
+            checkCode(this.code).then(res => {
+                this.$message.success("验证成功")
+                this.checkAfter()
+            }).catch(err => {
+                this.$message.error("验证失败")
+            })
+
+        },
+        checkAfter() {
+            this.dialogVisible = false
+            this.style = ''
+            this.serceShow = false
+        },
         previewImg(img) {
             this.$imagePreview({
                 images: this.imgList,
@@ -396,10 +476,6 @@ export default {
             }
         },
         like(articleId) {
-            if (this.count) {
-                this.$message.error('3秒后再操作');
-                return false;
-            }
 
             articleLike(articleId).then(res => {
                 if (this.article.isLike) {
@@ -412,23 +488,13 @@ export default {
                 } else {
                     this.article.likeCount++;
                     this.article.isLike = true
+                    if (this.article.readType == 2) {
+                        this.checkAfter()
+                    }
                     this.$message({
                         message: '点赞成功',
                         type: 'success'
                     });
-                }
-
-                const TIME_COUNT = 3;
-                if (!this.timer) {
-                    this.count = TIME_COUNT;
-                    this.timer = setInterval(() => {
-                        if (this.count > 0 && this.count <= 3) {
-                            this.count--;
-                        } else {
-                            clearInterval(this.timer);
-                            this.timer = null;
-                        }
-                    }, 1000);
                 }
             }).catch(err => {
                 this.$message.error(err.message);
@@ -436,10 +502,6 @@ export default {
 
         },
 
-    },
-    beforeDestroy() {
-        // 组件销毁时清除计时器
-        clearInterval(this.timer);
     },
 }
 </script>
@@ -449,7 +511,12 @@ export default {
     color: var(--article-color);
 }
 
+
 @media screen and (max-width: 1118px) {
+    /deep/ .el-dialog {
+        width: 100%;
+    }
+
     .article-info {
         display: flex;
         justify-content: center;
@@ -569,6 +636,59 @@ export default {
                     margin-left: 40px;
                     padding-right: 10px;
                     padding-bottom: 10px;
+                }
+            }
+
+            .box-article {
+                .warpper {
+                    background-color: gray;
+                    position: relative;
+                    height: 210px;
+                    padding: 5px;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: -40px;
+                        left: 0;
+                        width: 100%;
+                        height: 40px;
+                        z-index: 2;
+                        background: linear-gradient(180deg, rgba(55, 55, 55, 0), #ccc);
+                    }
+
+                    .item-box {
+                        border-radius: 10px;
+                        background-color: var(--background-color);
+                        height: 150px;
+                        margin-left: 10px;
+                        margin-right: 10px;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                        overflow: hidden;
+
+                        span {
+                            background: linear-gradient(135deg, #ff74cd 10%, #ec7d0b);
+                            border-top-left-radius: 10px;
+                            border-bottom-right-radius: 10px;
+                            padding: 5px;
+                            font-size: 0.9rem;
+                            color: #fff;
+                        }
+
+                        .neirong {
+                            text-align: center;
+                            margin-top: 15px;
+                            color: var(--text-color);
+                            font-size: 0.9rem;
+                        }
+
+                        .btn {
+                            margin: 0 auto;
+                            display: block;
+                            margin-top: 20px;
+                        }
+                    }
                 }
             }
 
@@ -737,6 +857,11 @@ export default {
 }
 
 @media screen and (min-width: 1119px) {
+
+    /deep/ .el-dialog {
+        width: 30%;
+    }
+
     .article-info {
         display: flex;
         justify-content: center;
@@ -870,6 +995,63 @@ export default {
                     margin-left: 40px;
                     padding-right: 10px;
                     padding-bottom: 10px;
+                }
+            }
+
+            .box-article {
+                .warpper {
+                    background-color: gray;
+                    position: relative;
+                    height: 210px;
+                    padding: 5px;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: -40px;
+                        left: 0;
+                        width: 100%;
+                        height: 40px;
+                        z-index: 2;
+                        background: linear-gradient(180deg, rgba(55, 55, 55, 0), #ccc);
+                    }
+
+                    .item-title {
+                        color: #fff;
+                    }
+
+                    .item-box {
+                        border-radius: 10px;
+                        background-color: var(--background-color);
+                        height: 150px;
+                        margin-left: 10px;
+                        margin-right: 10px;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                        overflow: hidden;
+
+                        span {
+                            background: linear-gradient(135deg, #ff74cd 10%, #ec7d0b);
+                            border-top-left-radius: 10px;
+                            border-bottom-right-radius: 10px;
+                            padding: 5px;
+                            font-size: 0.9rem;
+                            color: #fff;
+                        }
+
+                        .neirong {
+                            text-align: center;
+                            margin-top: 15px;
+                            color: var(--text-color);
+                            font-size: 0.9rem;
+                        }
+
+                        .btn {
+                            margin: 0 auto;
+                            display: block;
+                            margin-top: 20px;
+                        }
+                    }
                 }
             }
 
@@ -1202,5 +1384,13 @@ export default {
 
 
     }
+}
+
+
+.wxImg {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    height: 50%;
 }
 </style>

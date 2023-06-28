@@ -13,6 +13,7 @@ export default new Vuex.Store({
     userInfoDrawer: false,
     feedbackDialogVisible: false,
     userInfo: null,
+    isCommentFlag: false,
     articleDrawer: {
       flag: false,
       id: null
@@ -32,6 +33,9 @@ export default new Vuex.Store({
   mutations: {
     closeModel(state) {
       state.loginFlag = false;
+    },
+    isCommentFlag(state, newValue) {
+      state.isCommentFlag = newValue
     },
     setWebSiteInfo(state, newValue) {
       state.webSiteInfo = newValue

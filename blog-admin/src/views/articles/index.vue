@@ -94,7 +94,11 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="quantity" width="120" align="center" label="浏览量" />
+        <el-table-column align="center" width="120" label="阅读方式">
+          <template slot-scope="scope">
+            <el-tag :type="readTypeStyle[scope.row.readType]">{{ readTypeList[scope.row.readType] }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column width="200" align="center" prop="createTime" sortable label="添加时间">
           <template slot-scope="scope">
             <span>{{ dataFormat(scope.row.createTime) }}</span>
@@ -228,10 +232,11 @@
           </el-row>
           <el-row>
             <el-col :span="5">
-              <el-form-item :label-width="formLabelWidth" label="是否私密" prop="isSecret">
-                <el-radio-group v-model="article.isSecret" size="small">
-                  <el-radio v-for="(item, index) in secretList" :label="index" border>{{ item }}</el-radio>
-                </el-radio-group>
+              <el-form-item :label-width="formLabelWidth" label="阅读方式" prop="readType">
+                <el-select v-model="article.readType" placeholder="请选择阅读方式">
+                  <el-option v-for="(item, index) in readTypeList" :key="index" :label="item" :value="index">
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="5">
@@ -345,10 +350,11 @@ export default {
       },
       img: process.env.VUE_APP_IMG_API,
       BLOG_WEB_URL: process.env.VUE_APP_BLOG_WEB_API,
-      secretList: ["公开", "私密"],
+      readTypeList: ["无需验证", "评论阅读", "点赞阅读", "扫码阅读"],
       isOriginalList: ["转载", "原创"],
       yesOrNoList: ["否", "是"],
       yesOrNoStyle: ['danger', 'success'],
+      readTypeStyle: ['', 'info', 'warning', 'success'],
       publishList: ['下架', '发布'],
       total: null,
       multipleSelection: [],
@@ -369,7 +375,7 @@ export default {
         'summary': [{ required: true, message: '必填字段', trigger: 'blur' }],
         'tags': [{ required: true, message: '必填字段', trigger: 'blur' }],
         'categoryName': [{ required: true, message: '必填字段', trigger: 'blur' }],
-        'isSecret': [{ required: true, message: '必填字段', trigger: 'change' }],
+        'readType': [{ required: true, message: '必填字段', trigger: 'change' }],
         'isStick': [{ required: true, message: '必填字段', trigger: 'change' }],
         'isPublish': [{ required: true, message: '必填字段', trigger: 'change' }],
         'isOriginal': [{ required: true, message: '必填字段', trigger: 'change' }],

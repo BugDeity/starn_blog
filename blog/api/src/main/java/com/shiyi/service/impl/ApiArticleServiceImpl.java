@@ -10,6 +10,7 @@ import com.shiyi.common.ResponseResult;
 import com.shiyi.dto.ArticleInsertDTO;
 import com.shiyi.entity.*;
 import com.shiyi.enums.PublishEnum;
+import com.shiyi.enums.YesOrNoEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.mapper.*;
 import com.shiyi.service.ApiArticleService;
@@ -98,6 +99,16 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         User user = userMapper.selectById(apiArticleInfoVO.getUserId());
         UserInfo userInfo = userInfoMapper.selectById(user.getUserInfoId());
         apiArticleInfoVO.setUserInfo(userInfo);
+
+        //校验文章是否已经进行过验证
+        if(apiArticleInfoVO.getReadType() == 3){
+            List<Object> cacheList = redisService.getCacheList(RedisConstants.CHECK_CODE_IP);
+            String ip = IpUtil.getIp(request);
+            if (cacheList.contains(ip)) {
+                apiArticleInfoVO.setReadType(YesOrNoEnum.NO.getCode());
+            }
+        }
+
         //增加文章阅读量
         redisService.incrArticle(id.longValue(),ARTICLE_READING);
         return ResponseResult.success(apiArticleInfoVO);
@@ -254,7 +265,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      * @return
      */
     @Override
-    public ResponseResult checkSecret(String code) {
+    public ResponseResult checkCode(String code) {
         //校验验证码
         String key = RedisConstants.WECHAT_CODE + code;
         Object redisCode = redisService.getCacheObject(key);

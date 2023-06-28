@@ -30,8 +30,8 @@ public class SystemArticleListVO {
     @ApiModelProperty(value = "文章封面地址")
     private String avatar;
 
-    @ApiModelProperty(value = "是否是私密文章 0 否 1是")
-    private Integer isSecret;
+    @ApiModelProperty(value = "阅读方式 0无需验证 1：评论阅读 2：点赞阅读 3：扫码阅读")
+    private Integer readType;
 
     @ApiModelProperty(value = "是否置顶 0否 1是")
     private Integer isStick;

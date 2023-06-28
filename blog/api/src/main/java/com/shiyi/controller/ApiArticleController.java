@@ -59,11 +59,11 @@ public class ApiArticleController {
         return articleService.articleLike(articleId);
     }
 
-    @BusinessLogger(value = "文章详情-用户验证秘钥",type = "查询",desc = "验证秘钥")
-    @GetMapping(value = "/checkSecret")
-    @ApiOperation(value = "验证秘钥", httpMethod = "GET", response = ResponseResult.class, notes = "验证秘钥")
-    public ResponseResult checkSecret(String code) {
-        return articleService.checkSecret(code);
+    @BusinessLogger(value = "文章详情-校验公众号验证码",type = "查询",desc = "校验公众号验证码")
+    @GetMapping(value = "/checkCode")
+    @ApiOperation(value = "校验公众号验证码", httpMethod = "GET", response = ResponseResult.class, notes = "校验公众号验证码")
+    public ResponseResult checkCode(String code) {
+        return articleService.checkCode(code);
     }
 
     @SaCheckLogin

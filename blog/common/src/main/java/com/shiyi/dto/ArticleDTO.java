@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.shiyi.utils.DateUtil;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
@@ -24,7 +25,9 @@ public class ArticleDTO {
     private Integer quantity;
     private String content;
     private String contentMd;
-    private Integer isSecret;
+
+    @ApiModelProperty(value = "阅读方式 0无需验证 1：评论阅读 2：点赞阅读 3：扫码阅读")
+    private Integer readType;
     private Integer isStick;
     private Integer isOriginal;
     private String originalUrl;

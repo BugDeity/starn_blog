@@ -40,6 +40,9 @@ public class ApiArticleInfoVO {
     @ApiModelProperty(value = "是否置顶 0否 1是")
     private Integer isStick;
 
+    @ApiModelProperty(value = "阅读方式 0无需验证 1：评论阅读 2：点赞阅读 3：扫码阅读")
+    private Integer readType;
+
     @ApiModelProperty(value = "文章阅读量")
     private Integer quantity;
 

@@ -57,8 +57,8 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "发布状态 0：下架；1：上架")
     private Integer isPublish;
 
-    @ApiModelProperty(value = "是否是私密文章 0 否 1是")
-    private Integer isSecret;
+    @ApiModelProperty(value = "阅读方式 0无需验证 1：评论阅读 2：点赞阅读 3：扫码阅读")
+    private Integer readType;
 
     @ApiModelProperty(value = "是否置顶 0否 1是")
     private Integer isStick;

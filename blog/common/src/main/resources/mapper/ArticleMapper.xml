@@ -14,6 +14,7 @@
         <result column="create_time" jdbcType="DATE" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="read_type" jdbcType="INTEGER" property="readType"/>
         <association property="category" javaType="com.shiyi.entity.Category">
             <id property="id" column="cid" jdbcType="BIGINT"></id>
             <result property="name" column="cname" jdbcType="VARCHAR"></result>
@@ -59,7 +60,7 @@
                a.quantity,
                a.content,
                a.content_md,
-               a.is_secret,
+               a.read_type,
                a.is_stick,
                a.is_publish,
                a.is_original,
@@ -154,6 +155,7 @@
                a.quantity,
                a.create_time,
                a.update_time,
+               a.read_type,
                c.id   as cid,
                c.name as cname
         from b_article a

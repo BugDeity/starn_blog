@@ -56,6 +56,15 @@ export function articleInfo(id) {
         }
     })
 }
+export function checkCode(code) {
+    return request({
+        url: '/v1/article/checkCode',
+        method: 'get',
+        params: {
+            code: code
+        }
+    })
+}
 export function articleLike(id) {
     return request({
         url: '/v1/article/like',

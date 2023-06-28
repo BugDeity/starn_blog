@@ -45,7 +45,7 @@ public interface ApiArticleService {
      * @param code 验证码
      * @return
      */
-    public ResponseResult checkSecret(String code);
+    public ResponseResult checkCode(String code);
 
     /**
      * 用户添加文章
