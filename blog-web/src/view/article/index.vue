@@ -41,7 +41,7 @@
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">
                 <v-md-preview :style="style" class="content" :text="this.article.contentMd" ref="preview" />
-                <div v-if="serceShow" class="warpper">
+                <div v-if="article.readTType != 0 && !serceShow" class="warpper">
                     <div class="item-title">
                         <i class="el-icon-lock"></i> 该文章部分内容已隐藏
                     </div>
@@ -364,8 +364,8 @@ export default {
         this.openLoading()
         articleInfo(this.articleId).then(res => {
             this.article = res.data
-            this.serceShow = this.article.readType
-            if (this.serceShow) {
+            this.serceShow = this.article.activeReadType
+            if (this.article.readType != 0 && !this.serceShow) {
                 this.style = "max-height: 1500px;overflow: hidden;"
             }
             //修改标题
@@ -394,7 +394,7 @@ export default {
         checkAfter() {
             this.dialogVisible = false
             this.style = ''
-            this.serceShow = false
+            this.serceShow = true
         },
         previewImg(img) {
             this.$imagePreview({
@@ -475,30 +475,24 @@ export default {
             }
         },
         like(articleId) {
-
+            this.openLoading()
             articleLike(articleId).then(res => {
                 if (this.article.isLike) {
                     this.article.likeCount--;
                     this.article.isLike = false
-                    this.$message({
-                        message: '取消成功',
-                        type: 'success'
-                    });
+                    this.$message.success("取消成功");
                 } else {
                     this.article.likeCount++;
                     this.article.isLike = true
                     if (this.article.readType == 2) {
                         this.checkAfter()
                     }
-                    this.$message({
-                        message: '点赞成功',
-                        type: 'success'
-                    });
+                    this.$message.success("点赞成功");
                 }
             }).catch(err => {
                 this.$message.error(err.message);
             })
-
+            this.loading.close()
         },
 
     },

@@ -10,6 +10,7 @@ import com.shiyi.common.ResponseResult;
 import com.shiyi.dto.ArticleInsertDTO;
 import com.shiyi.entity.*;
 import com.shiyi.enums.PublishEnum;
+import com.shiyi.enums.ReadTypeEnum;
 import com.shiyi.enums.YesOrNoEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.mapper.*;
@@ -93,6 +94,17 @@ public class ApiArticleServiceImpl implements ApiArticleService {
             String articleLikeKey = ARTICLE_USER_LIKE + userId;
             if (redisService.sIsMember(articleLikeKey, id)) {
                 apiArticleInfoVO.setIsLike(true);
+                //校验文章用户是否已经点赞过
+                if(apiArticleInfoVO.getReadType() == ReadTypeEnum.LIKE.index){
+                    apiArticleInfoVO.setActiveReadType(true);
+                }
+            }
+            //校验文章用户是否已经评论过
+            if(apiArticleInfoVO.getReadType() == ReadTypeEnum.COMMENT.index){
+                Integer count = commentMapper.selectCount(new LambdaQueryWrapper<Comment>().eq(Comment::getUserId, userId));
+                if(count != null && count > 0) {
+                    apiArticleInfoVO.setActiveReadType(true);
+                }
             }
         }
         //获取文章作者信息
@@ -100,12 +112,12 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         UserInfo userInfo = userInfoMapper.selectById(user.getUserInfoId());
         apiArticleInfoVO.setUserInfo(userInfo);
 
-        //校验文章是否已经进行过验证
-        if(apiArticleInfoVO.getReadType() == 3){
+        //校验文章是否已经进行过扫码验证
+        if(apiArticleInfoVO.getReadType() == ReadTypeEnum.CODE.index){
             List<Object> cacheList = redisService.getCacheList(RedisConstants.CHECK_CODE_IP);
             String ip = IpUtil.getIp(request);
             if (cacheList.contains(ip)) {
-                apiArticleInfoVO.setReadType(YesOrNoEnum.NO.getCode());
+                apiArticleInfoVO.setActiveReadType(true);
             }
         }
 

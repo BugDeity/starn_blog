@@ -76,6 +76,9 @@ public class WebConfig implements Serializable {
     @ApiModelProperty(value = "邮箱")
     private String email;
 
+    @ApiModelProperty(value = "微信")
+    private String wechat;
+
     @ApiModelProperty(value = "显示的列表（用于控制邮箱、QQ、QQ群、Github、Gitee、微信是否显示在前端）")
     private String showList;
 

@@ -1129,6 +1129,7 @@ CREATE TABLE `b_web_config`  (
   `gitee` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'gitee地址',
   `qq_number` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'QQ号',
   `email` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `wechat` varchar(100) DEFAULT NULL COMMENT '微信',
   `show_list` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '显示的列表（用于控制邮箱、QQ、QQ群、Github、Gitee、微信是否显示在前端）',
   `login_type_list` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '登录方式列表（用于控制前端登录方式，如账号密码,码云,Github,QQ,微信）',
   `open_comment` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '1' COMMENT '是否开启评论(0:否 1:是)',
@@ -1145,6 +1146,6 @@ CREATE TABLE `b_web_config`  (
 -- ----------------------------
 -- Records of b_web_config
 -- ----------------------------
-INSERT INTO `b_web_config` VALUES (1, '\r\nhttp://img.shiyit.com/logo2.png', '拾壹博客', '哪有那么多的如果。', '拾壹,拾壹博客', '拾壹', '', '2021-11-27 13:43:16', '2022-01-20 13:30:44', 'http://www.shiyit.com', '', '', 'https://github.com/quequnlong', 'https://gitee.com/quequnlong', '1248954763', '1248954763@qq.com', '1,3,4,2', '1,3,2,5', '1', 1, 'http://img.shiyit.com/66bb121d47e94b89945d29bb6e3e6cab.jpg', '如入你眼，请上码云给仓库点上您的小星星', '一个小菜鸡', 'http://img.shiyit.com/author.jpg', '#### 前端用的vue，后端用的springboot\n\n[![buzhiming/拾壹博客](https://gitee.com/quequnlong/shiyi-blog/widgets/widget_card.svg?colors=4183c4,ffffff,ffffff,e3e9ed,666666,9b9b9b)](https://gitee.com/quequnlong/shiyi-blog)\n\n', 1);
+INSERT INTO `b_web_config` VALUES (1, '\r\nhttp://img.shiyit.com/logo2.png', '拾壹博客', '哪有那么多的如果。', '拾壹,拾壹博客', '拾壹', '', '2021-11-27 13:43:16', '2022-01-20 13:30:44', 'http://www.shiyit.com', '', '', 'https://github.com/quequnlong', 'https://gitee.com/quequnlong', '1248954763', '1248954763@qq.com','', '1,3,4,2', '1,3,2,5', '1', 1, 'http://img.shiyit.com/66bb121d47e94b89945d29bb6e3e6cab.jpg', '如入你眼，请上码云给仓库点上您的小星星', '一个小菜鸡', 'http://img.shiyit.com/author.jpg', '#### 前端用的vue，后端用的springboot\n\n[![buzhiming/拾壹博客](https://gitee.com/quequnlong/shiyi-blog/widgets/widget_card.svg?colors=4183c4,ffffff,ffffff,e3e9ed,666666,9b9b9b)](https://gitee.com/quequnlong/shiyi-blog)\n\n', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -37,18 +37,19 @@ export default {
             tagCloudList: []
         }
     },
-    created() {
-        document.scrollTop = 0
-        fetchTagList().then(res => {
-            this.tagCloudList = res.data;
-        });
-    },
+
     computed: {
         drawer: {
             set(value) {
                 this.$store.state.searchDrawer = value;
             },
             get() {
+                if (this.$store.state.searchDrawer) {
+                    document.scrollTop = 0
+                    fetchTagList().then(res => {
+                        this.tagCloudList = res.data;
+                    });
+                }
                 return this.$store.state.searchDrawer;
             }
         }

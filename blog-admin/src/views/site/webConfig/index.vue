@@ -193,6 +193,10 @@
               <el-input v-model="form.gitee" style="width: 400px"></el-input>
               <el-checkbox label="4" style="margin-left: 10px">在首页显示</el-checkbox>
             </el-form-item>
+            <el-form-item label="微信" prop="wechat">
+              <el-input v-model="form.wechat" style="width: 400px"></el-input>
+              <el-checkbox label="5" style="margin-left: 10px">在首页显示</el-checkbox>
+            </el-form-item>
           </el-checkbox-group>
           <el-form-item>
             <el-button v-if="canUpdate" type="primary" @click="submitForm()">保 存</el-button>

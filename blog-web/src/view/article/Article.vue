@@ -26,8 +26,7 @@
                 <el-col :span="8">
                     <el-form-item label="文章标签" prop="tagList">
                         <el-select v-model="article.tagList" :multiple-limit="3" multiple placeholder="请选择标签">
-                            <el-option v-for="item in $store.state.tagCloud" :key="item.id" :label="item.name"
-                                :value="item.id">
+                            <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -63,7 +62,7 @@
     </el-dialog>
 </template>
 <script>
-import { upload, featchCategory, insertArticle, getMyArticleInfo } from '@/api'
+import { upload, featchCategory, insertArticle, getMyArticleInfo, fetchTagList } from '@/api'
 export default {
     data() {
         return {
@@ -72,6 +71,7 @@ export default {
             categoryList: [],
             // 加载层信息
             loading: [],
+            tagList: [],
             rules: {
                 title: [
                     { required: true, message: '请输入文章名称', trigger: 'blur' },
@@ -104,12 +104,16 @@ export default {
             },
             get() {
                 if (this.$store.state.articleDrawer.flag) {
+                    console.log(233)
                     this.article = {
                         isOriginal: 1,
                         avatar: null,
                     }
                     featchCategory().then(res => {
                         this.categoryList = res.data
+                    })
+                    fetchTagList().then(res => {
+                        this.tagList = res.data
                     })
                     if (this.$store.state.articleDrawer.id) {
                         this.openLoading()

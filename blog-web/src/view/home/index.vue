@@ -194,7 +194,7 @@
                                     </span>
                                 </div>
                             </li>
-                            <li>
+                            <li v-show="isShow(5)">
                                 <div class="item wechat">
                                     <svg-icon icon-class="wechat" /> {{ $store.state.webSiteInfo.qqNumber }}
                                     <span title="点击复制" @click="copy($store.state.webSiteInfo.qqNumber)"

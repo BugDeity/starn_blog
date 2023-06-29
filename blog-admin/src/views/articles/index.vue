@@ -20,7 +20,7 @@
       <el-form-item label="发布状态">
         <el-select style="width: 130px" size="small" v-model="params.isPublish" filterable clearable reserve-keyword
           placeholder="是否发布" @change='handleFind'>
-          <el-option v-for="(item, index) in publishList" :key="index" :label="item" :value="index" />
+          <el-option v-for="(item, index) in publishList" :key="index" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -225,7 +225,10 @@
             <el-col :span="6.5">
               <el-form-item :label-width="formLabelWidth" label="是否发布" prop="isPublish">
                 <el-radio-group v-model="article.isPublish" size="small">
-                  <el-radio v-for="(item, index) in publishList" :key="index" :label="index" border>{{ item }}</el-radio>
+                  <el-radio v-for="(item, index) in   publishList  " :key="item.value" :label="parseInt(item.value)"
+                    border>
+                    {{ item.label }}
+                  </el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
@@ -234,7 +237,8 @@
             <el-col :span="5">
               <el-form-item :label-width="formLabelWidth" label="阅读方式" prop="readType">
                 <el-select v-model="article.readType" placeholder="请选择阅读方式">
-                  <el-option v-for="(item, index) in readTypeList" :key="index" :label="item" :value="index">
+                  <el-option v-for="(  item, index  ) in   readTypeList  " :key="index" :label="item"
+                    :value="index">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -242,7 +246,7 @@
             <el-col :span="5">
               <el-form-item :label-width="formLabelWidth" label="创作类型" prop="isOriginal">
                 <el-radio-group v-model="article.isOriginal" size="small">
-                  <el-radio v-for="(item, index) in isOriginalList" :label="index" border>{{ item }}</el-radio>
+                  <el-radio v-for="(  item, index  ) in   isOriginalList  " :label="index" border>{{ item }}</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
@@ -259,7 +263,7 @@
             <el-col :span="5">
               <el-form-item :label-width="formLabelWidth" label="是否首页轮播" prop="isCarousel">
                 <el-radio-group v-model="article.isCarousel" size="small">
-                  <el-radio v-for="(item, index) in yesOrNoList" :label="index" border>{{ item }}</el-radio>
+                  <el-radio v-for="(  item, index  ) in   yesOrNoList  " :label="index" border>{{ item }}</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
@@ -322,6 +326,7 @@ import {
   pubOrShelf,
   randomImg
 } from '@/api/articles'
+
 import { upload, delBatchFile } from '@/api/imgUpload'
 import { fetchTags } from '@/api/tags'
 import { fetchCategory } from '@/api/category'
@@ -355,7 +360,7 @@ export default {
       yesOrNoList: ["否", "是"],
       yesOrNoStyle: ['danger', 'success'],
       readTypeStyle: ['', 'info', 'warning', 'success'],
-      publishList: ['下架', '发布'],
+      publishList: [],
       total: null,
       multipleSelection: [],
       // 加载层信息
@@ -474,6 +479,7 @@ export default {
         let dictMap = response.data;
         this.dictYesOrNoList = dictMap.sys_yes_no.list
         this.yesOrNoDefaultValue = dictMap.sys_yes_no.defaultValue
+        this.publishList = dictMap.sys_publish_status.list
       }).catch(err => {
         console.error(err)
       })
