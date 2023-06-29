@@ -129,6 +129,15 @@ export function featchHomeData() {
         method: 'get',
     })
 }
+export function getHot(type) {
+    return request({
+        url: '/v1/hot',
+        method: 'get',
+        params: {
+            type: type
+        }
+    })
+}
 export function report() {
     return request({
         url: '/v1/report',

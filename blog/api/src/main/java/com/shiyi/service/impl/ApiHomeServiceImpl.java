@@ -1,6 +1,8 @@
 package com.shiyi.service.impl;
 
 
+import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.shiyi.common.RedisConstants;
 import com.shiyi.common.ResponseResult;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +44,11 @@ public class ApiHomeServiceImpl implements ApiHomeService {
     private final TagsMapper tagsMapper;
 
     private final CategoryMapper categoryMapper;
+
+    private final static String ak = "f94be500c45148bc185be24a38c04ad3";
+
+    private final static String sk = "27563ca627d5db0d57e831ca4de0f75f";
+
     /**
      * 添加访问量
      * @param request
@@ -114,4 +122,21 @@ public class ApiHomeServiceImpl implements ApiHomeService {
                 .putExtra("tagCount",tagCount).putExtra("webConfig",webConfig).putExtra("siteAccess", Optional.ofNullable(count).orElse(0))
                 .putExtra("visitorAccess",visitorAccess).putExtra("hotArticles",hotArticles);
     }
+
+    /**
+     * 获取各大平台的热搜
+     * @param type 平台
+     * @return
+     */
+    public ResponseResult hot(String type) {
+        String url = "https://www.coderutil.com/api/resou/v1/" + type;
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("access-key", ak);
+        paramMap.put("secret-key", sk);
+        String result= HttpUtil.get(url, paramMap);
+        JSONObject jsonObject = JSONObject.parseObject(result);
+        return ResponseResult.success(jsonObject);
+    }
+
+
 }

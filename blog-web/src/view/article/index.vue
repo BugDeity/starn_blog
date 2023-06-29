@@ -36,12 +36,13 @@
                     <i class="iconfont icon-tongzhi1"></i>
                     <span>温馨提示：</span>
                 </div>
-                <p>本文最后更新于 {{ formatDate(article.updateTime) }}，若内容或图片失效，请留言反馈。部分素材来自网络，若不小心影响到您的利益，请联系我们删除</p>
+                <p>本文最后更新于 {{ formatDate(article.updateTime == null ? article.createTime : article.updateTime)
+                }}，若内容或图片失效，请留言反馈。部分素材来自网络，若不小心影响到您的利益，请联系我们删除</p>
             </div>
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">
                 <v-md-preview :style="style" class="content" :text="this.article.contentMd" ref="preview" />
-                <div v-if="article.readTType != 0 && !serceShow" class="warpper">
+                <div v-if="article.readType != 0 && !serceShow" class="warpper">
                     <div class="item-title">
                         <i class="el-icon-lock"></i> 该文章部分内容已隐藏
                     </div>

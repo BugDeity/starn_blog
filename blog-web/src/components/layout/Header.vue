@@ -85,6 +85,13 @@
                 </li>
                 <li>
                     <span>
+                        <router-link :class="path == '/hot' ? 'active' : ''" :to="'/hot'">
+                            热搜
+                        </router-link>
+                    </span>
+                </li>
+                <li>
+                    <span>
                         <router-link :class="path == '/message' ? 'active' : ''" :to="'/message'">
                             留言板
                         </router-link>

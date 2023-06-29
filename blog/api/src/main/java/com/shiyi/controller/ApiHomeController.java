@@ -49,5 +49,11 @@ public class ApiHomeController {
         return homeService.selectPubicData();
     }
 
+    @GetMapping("/hot")
+    @ApiOperation(value = "获取各大平台热搜", httpMethod = "GET", response = ResponseResult.class, notes = "获取各大平台热搜")
+    public ResponseResult hot(String type){
+        return homeService.hot(type);
+    }
+
 }
 

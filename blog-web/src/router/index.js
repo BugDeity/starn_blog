@@ -91,9 +91,10 @@ const routes = [
                 component: resolve => require(["@/view/im/index"], resolve),
             },
             {
-                path: "/test",
-                component: resolve => require(["@/view/test/index"], resolve),
+                path: "/hot",
+                component: resolve => require(["@/view/search/Hot.vue"], resolve),
             },
+
         ],
     },
     {
