@@ -18,7 +18,7 @@
                         <svg-icon icon-class="hot"></svg-icon>
                     </div>
                     <ul>
-                        <li v-for="(item, index) in weiboList" :key="index">
+                        <li v-for="(item, index) in weiboList" :key="index" @click="go(item.url)">
                             <span class="index">{{ index + 1 }}</span>
                             <span>{{ item.keyword }}</span>
                         </li>
@@ -30,7 +30,7 @@
                         <svg-icon icon-class="hot"></svg-icon>
                     </div>
                     <ul>
-                        <li v-for="(item, index) in baiduList" :key="index">
+                        <li v-for="(item, index) in baiduList" :key="index" @click="go(item.url)">
                             <span class="index">{{ index + 1 }}</span>
                             <span>{{ item.keyword }}</span>
                         </li>
@@ -43,7 +43,7 @@
                         <svg-icon icon-class="hot"></svg-icon>
                     </div>
                     <ul>
-                        <li v-for="(item, index) in zhihuList" :key="index">
+                        <li v-for="(item, index) in zhihuList" :key="index" @click="go(item.url)">
                             <span class="index">{{ index + 1 }}</span>
                             <span>{{ item.keyword }}</span>
                         </li>
@@ -55,7 +55,7 @@
                         <svg-icon icon-class="hot"></svg-icon>
                     </div>
                     <ul>
-                        <li v-for="(item, index) in csdnList" :key="index">
+                        <li v-for="(item, index) in csdnList" :key="index" @click="go(item.url)">
                             <span class="index">{{ index + 1 }}</span>
                             <span>{{ item.keyword }}</span>
                         </li>
@@ -113,6 +113,9 @@ export default {
         this.loading.close()
     },
     methods: {
+        go(url) {
+            window.open(url, '_blank');
+        },
         handleCommit() {
             if (!this.text) {
                 this.$message.error("请输入搜索内容")
