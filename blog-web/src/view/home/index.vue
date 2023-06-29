@@ -196,9 +196,8 @@
                             </li>
                             <li v-show="isShow(5)">
                                 <div class="item wechat">
-                                    <svg-icon icon-class="wechat" /> {{ $store.state.webSiteInfo.qqNumber }}
-                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.qqNumber)"
-                                        class="copyBtn name">
+                                    <svg-icon icon-class="wechat" /> {{ $store.state.webSiteInfo.wechat }}
+                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.wechat)" class="copyBtn name">
                                         微信
                                     </span>
                                 </div>
