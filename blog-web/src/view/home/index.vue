@@ -214,7 +214,7 @@
                                 <div class="item">
                                     <el-image style="float: left;" :src="item.avatar" fit="fit" />
                                     <p class="info">
-                                        <a href="">{{ item.title }}</a>
+                                        <a href="javascript:;" @click="handleClick(item.id)">{{ item.title }}</a>
                                     </p>
                                     <p class="time">{{ item.createTime }}</p>
                                 </div>

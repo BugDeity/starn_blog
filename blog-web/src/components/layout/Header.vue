@@ -133,7 +133,7 @@
                     </p>
                 </div>
                 <!-- 热搜框 -->
-                <div class="hot_search_main" :style="style" @mouseleave="blur">
+                <div class="hot_search_main" :style="style">
                     <a @click="handleArticle(item.id)" href="javascript:;" v-for="(item, index) in $store.state.hotArticles"
                         :key="index">
                         <span :style="{ backgroundColor: `${colors[index]}` }">{{ index + 1 }}</span>

@@ -15,7 +15,6 @@ import com.shiyi.enums.YesOrNoEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.mapper.*;
 import com.shiyi.service.ArticleService;
-import com.shiyi.service.RedisService;
 import com.shiyi.service.SystemConfigService;
 import com.shiyi.strategy.context.SearchStrategyContext;
 import com.shiyi.utils.BeanCopyUtils;
@@ -36,7 +35,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
 import static com.shiyi.common.Constants.IMG_URL_API;
@@ -61,21 +59,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     private final SystemConfigService systemConfigService;
 
-    private final RedisService redisService;
-
     private final TagsMapper tagsMapper;
-
-    private final CommentMapper commentMapper;
 
     private final SearchStrategyContext searchStrategyContext;
 
     private final RestTemplate restTemplate;
 
-    private final HttpServletRequest request;
-
     private final ElasticsearchUtil elasticsearchUtil;
-
-    private final UserInfoMapper userInfoMapper;
 
     @Value("${baidu.url}")
     private String baiduUrl;

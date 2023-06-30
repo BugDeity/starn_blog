@@ -107,10 +107,10 @@
                                                     <h4 class="author">
                                                         <a :href="childrenItem.webSite" target="_blank" class="disabled">
                                                             <span class="bozhu"
-                                                                v-if="item.userId == articleUserId && item.userId != 1">
+                                                                v-if="childrenItem.userId == articleUserId && childrenItem.userId != 1">
                                                                 博主
                                                             </span>
-                                                            <span class="bozhu" v-if="item.userId == 1">
+                                                            <span class="bozhu" v-if="childrenItem.userId == 1">
                                                                 官方
                                                             </span>
                                                             {{ childrenItem.nickname }}

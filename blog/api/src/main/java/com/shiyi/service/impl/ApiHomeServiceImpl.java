@@ -10,9 +10,9 @@ import com.shiyi.entity.WebConfig;
 import com.shiyi.mapper.ArticleMapper;
 import com.shiyi.mapper.CategoryMapper;
 import com.shiyi.mapper.TagsMapper;
+import com.shiyi.mapper.WebConfigMapper;
 import com.shiyi.service.ApiHomeService;
 import com.shiyi.service.RedisService;
-import com.shiyi.service.WebConfigService;
 import com.shiyi.utils.IpUtil;
 import com.shiyi.vo.ApiArticleListVO;
 import com.shiyi.vo.ApiTagVO;
@@ -37,7 +37,7 @@ public class ApiHomeServiceImpl implements ApiHomeService {
 
     private final RedisService redisService;
 
-    private final WebConfigService webConfigService;
+    private final WebConfigMapper webConfigMapper;
 
     private final ArticleMapper articleMapper;
 
@@ -98,7 +98,7 @@ public class ApiHomeServiceImpl implements ApiHomeService {
      */
     public ResponseResult getWebSiteInfo() {
         //网站信息
-        WebConfig webConfig = webConfigService.getOne(new LambdaQueryWrapper<WebConfig>()
+        WebConfig webConfig = webConfigMapper.selectOne(new LambdaQueryWrapper<WebConfig>()
                 .select(WebConfig::getAuthorAvatar,WebConfig::getIsMusicPlayer,WebConfig::getAuthorInfo,WebConfig::getTouristAvatar,WebConfig::getBulletin,
                         WebConfig::getQqNumber,WebConfig::getGitee,WebConfig::getGithub,WebConfig::getLogo,WebConfig::getWechat,
                         WebConfig::getAboutMe,WebConfig::getEmail,WebConfig::getShowList,WebConfig::getLoginTypeList,

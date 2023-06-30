@@ -357,6 +357,7 @@ export default {
 
             .hot {
                 margin-top: 50px;
+                display: flex;
 
                 .weibo .title {
                     background-color: #d52c2b;

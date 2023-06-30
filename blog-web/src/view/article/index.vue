@@ -78,9 +78,9 @@
                 </el-tooltip>
 
                 <el-tooltip class="item" effect="dark" content="评论" placement="left">
-                    <div class="left-item" title="评论">
+                    <div class="left-item" title="评论" @click="handleGoPinglun">
                         <el-badge :value="article.commentCount" class="item">
-                            <span @click="handleGoPinglun">
+                            <span>
                                 <i class="iconfont icon-pinglun"></i>
                             </span>
                         </el-badge>

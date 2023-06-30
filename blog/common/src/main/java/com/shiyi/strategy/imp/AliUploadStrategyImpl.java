@@ -43,7 +43,6 @@ public class AliUploadStrategyImpl implements FileUploadStrategy {
         ali_endpoint = systemConfig.getAliYunEndpoint();
         ali_bucket = systemConfig.getAliYunBucket();
 
-        logger.info("------初始化阿里云上传配置文件成功-----");
     }
 
     /**

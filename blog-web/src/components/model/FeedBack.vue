@@ -34,15 +34,6 @@
 <script>
 import { addFeedback } from '@/api'
 export default {
-  metaInfo: {
-    meta: [{
-      name: 'keyWords',
-      content: "拾壹,www.shiyit.com,博客,个人博客,开源博客"  //变量或字符串
-    }, {
-      name: 'description',
-      content: "一个专注于技术分享的博客平台,大家以共同学习,乐于分享,拥抱开源的价值观进行学习交流"
-    }]
-  },
   data: function () {
     return {
       formLabelWidth: "80px",
