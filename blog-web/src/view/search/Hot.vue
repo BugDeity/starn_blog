@@ -3,7 +3,7 @@
         <div class="box">
             <div class="nav">
                 <div class="siteBox">
-                    <svg-icon :icon-class="svgList[tabPosition]"></svg-icon>
+                    <svg-icon :icon-class="svgList[selectSite]"></svg-icon>
                     <i @click="dialogVisible = true" class="el-icon-caret-bottom"></i>
                 </div>
                 <el-input class="input" v-model="text" placeholder="请输入内容"></el-input>
@@ -19,7 +19,10 @@
                     </div>
                     <ul>
                         <li v-for="(item, index) in weiboList" :key="index" @click="go(item.url)">
-                            <span class="index">{{ index + 1 }}</span>
+                            <span class="index">
+                                <svg-icon :style="color(index)" icon-class="xuhao"></svg-icon>
+                                {{ index + 1 }}
+                            </span>
                             <span>{{ item.keyword }}</span>
                         </li>
                     </ul>
@@ -31,7 +34,10 @@
                     </div>
                     <ul>
                         <li v-for="(item, index) in baiduList" :key="index" @click="go(item.url)">
-                            <span class="index">{{ index + 1 }}</span>
+                            <span class="index">
+                                <svg-icon :style="color(index)" icon-class="xuhao"></svg-icon>
+                                {{ index + 1 }}
+                            </span>
                             <span>{{ item.keyword }}</span>
                         </li>
                     </ul>
@@ -44,7 +50,10 @@
                     </div>
                     <ul>
                         <li v-for="(item, index) in zhihuList" :key="index" @click="go(item.url)">
-                            <span class="index">{{ index + 1 }}</span>
+                            <span class="index">
+                                <svg-icon :style="color(index)" icon-class="xuhao"></svg-icon>
+                                {{ index + 1 }}
+                            </span>
                             <span>{{ item.keyword }}</span>
                         </li>
                     </ul>
@@ -56,7 +65,10 @@
                     </div>
                     <ul>
                         <li v-for="(item, index) in csdnList" :key="index" @click="go(item.url)">
-                            <span class="index">{{ index + 1 }}</span>
+                            <span class="index">
+                                <svg-icon :style="color(index)" icon-class="xuhao"></svg-icon>
+                                {{ index + 1 }}
+                            </span>
                             <span>{{ item.keyword }}</span>
                         </li>
                     </ul>
@@ -90,6 +102,7 @@ export default {
             siteList: ['百度', 'Google', '知乎', 'Csdn', '码云', 'Github', '哔哩哔哩'],
             dialogVisible: false,
             tabPosition: 0,
+            selectSite: 0,
             svgList: ['baidu', 'google', 'zhihu', 'csdn', 'gitee', 'github', 'bili'],
             searchUrl: ['https://www.baidu.com/s?&wd=', 'https://www.google.com/search?q=', 'https://www.zhihu.com/search?type=content&q=',
                 'https://so.csdn.net/so/search?spm=1000.2115.3001.4498&q=', 'https://search.gitee.com/?skin=rec&type=repository&q=', 'https://github.com/search?q=', 'https://search.bilibili.com/all?keyword='],
@@ -113,6 +126,17 @@ export default {
         this.loading.close()
     },
     methods: {
+        color(index) {
+            if (index == 0) {
+                return "color:red"
+            }
+            if (index == 1) {
+                return "color:#ea9518"
+            }
+            if (index == 2) {
+                return "color:#1296db"
+            }
+        },
         go(url) {
             window.open(url, '_blank');
         },
@@ -121,10 +145,11 @@ export default {
                 this.$message.error("请输入搜索内容")
                 return;
             }
-            window.open(this.searchUrl[this.tabPosition] + this.text, '_blank');
+            window.open(this.searchUrl[this.selectSite] + this.text, '_blank');
         },
         handleClose() {
             this.dialogVisible = false
+            this.selectSite = this.tabPosition
             this.$message.success("切换成功")
         },
         // 打开加载层
@@ -163,7 +188,7 @@ export default {
 
                 .siteBox {
                     display: inline-block;
-                    height: 39px;
+                    height: 38px;
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-right: none;
@@ -192,7 +217,7 @@ export default {
 
                 .searchCommit {
                     display: inline-block;
-                    height: 39px;
+                    height: 38px;
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-left: none;
@@ -272,6 +297,7 @@ export default {
                                 background-color: #DCDFE6;
                             }
 
+
                             span {
                                 color: var(--text-color);
                             }
@@ -281,6 +307,18 @@ export default {
                                 text-align: center;
                                 width: 25px;
                                 height: 25px;
+                                position: relative;
+
+                                svg {
+                                    width: 30px;
+                                    height: 30px;
+                                    position: absolute;
+                                    top: -4px;
+                                    left: -3px;
+                                    fill: currentColor;
+                                    color: #bfbfbf;
+                                }
+
                             }
                         }
                     }
@@ -316,7 +354,7 @@ export default {
 
                 .siteBox {
                     display: inline-block;
-                    height: 39px;
+                    height: 38px;
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-right: none;
@@ -345,7 +383,7 @@ export default {
 
                 .searchCommit {
                     display: inline-block;
-                    height: 39px;
+                    height: 38px;
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-left: none;
@@ -435,6 +473,19 @@ export default {
                                 text-align: center;
                                 width: 25px;
                                 height: 25px;
+                                position: relative;
+                                margin-right: 10px;
+
+                                svg {
+                                    width: 30px;
+                                    height: 30px;
+                                    position: absolute;
+                                    top: -4px;
+                                    left: -3px;
+                                    fill: currentColor;
+                                    color: #bfbfbf;
+                                }
+
                             }
                         }
                     }
