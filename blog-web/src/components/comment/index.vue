@@ -198,6 +198,8 @@ export default {
             show: null,
             user: this.$store.state.userInfo,
             articleId: window.location.search.split("=")[1],
+            // 加载层信息
+            loading: [],
         }
     },
 
@@ -250,8 +252,10 @@ export default {
                 pageSize: 5,
                 articleId: this.articleId
             }
+            this.openLoading()
             featchComments(query).then(res => {
                 this.commentList = res.data.records
+                this.loading.close()
             })
         },
         addComment() {
@@ -286,6 +290,7 @@ export default {
 
         },
         moreComment() {
+            this.openLoading()
             this.pageNo++;
             let query = {
                 pageNo: this.pageNo,
@@ -296,6 +301,7 @@ export default {
                 res.data.records.forEach(item => {
                     this.commentList.push(item);
                 })
+                this.loading.close()
             })
         },
         addEmoji(obj) {
@@ -313,6 +319,15 @@ export default {
                 return `${month}/${date}`;
             }
             return `${year}-${month}-${date}`;
+        },
+        // 打开加载层
+        openLoading: function () {
+            this.loading = this.$loading({
+                lock: true,
+                text: "正在加载中~",
+                spinner: "el-icon-loading",
+                background: "rgba(0, 0, 0, 0.7)"
+            });
         },
     },
 }

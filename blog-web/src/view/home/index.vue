@@ -728,7 +728,7 @@ export default {
                                         left: 0;
                                         bottom: -5px;
                                         position: absolute;
-                                        width: 80%;
+                                        width: 100%;
                                         background: var(--theme-color);
                                         transform: scaleX(0);
                                         transition: all 0.5s;

@@ -458,7 +458,6 @@ export default {
 
     .im-warpper {
         color: var(--im-text-color);
-        border-radius: 12px;
         display: flex;
         border: 2px solid #cdcdcd;
         height: 100%;
