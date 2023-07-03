@@ -54,7 +54,7 @@ CREATE TABLE `b_article`  (
   `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '文章简介',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '文章内容 （最多两百字）',
   `content_md` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '文章内容md版',
-  `is_secret` int(0) NULL DEFAULT 0 COMMENT '是否是私密文章 0 否 1是',
+  `read_type` int(0) NULL DEFAULT 0 COMMENT '阅读方式 0无需验证 1：评论阅读 2：点赞阅读 3：扫码阅读',
   `is_stick` int(0) NULL DEFAULT 0 COMMENT '是否置顶 0否 1是',
   `is_publish` int(0) NULL DEFAULT 0 COMMENT '是否发布 0：下架 1：发布',
   `is_original` int(0) NULL DEFAULT NULL COMMENT '是否原创  0：转载 1:原创',
