@@ -75,6 +75,17 @@ public class ApiArticleListVO {
     private Object likeCount;
 
     /**
+     * 收藏量
+     */
+    private int collectCount;
+
+
+    /**
+     * 当前用户是否收藏
+     */
+    private Boolean isCollect;
+
+    /**
      * 发表时间
      */
     @JsonFormat(pattern = DateUtil.YYYY_MM_DD,timezone="GMT+8")

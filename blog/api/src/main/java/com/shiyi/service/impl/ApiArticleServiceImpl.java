@@ -68,7 +68,16 @@ public class ApiArticleServiceImpl implements ApiArticleService {
     public ResponseResult selectArticleList(Integer categoryId,Integer tagId) {
         Page<ApiArticleListVO> articlePage = articleMapper.selectArticleList(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
                 categoryId,tagId);
-        articlePage.getRecords().forEach(this::setCommentAndLike);
+        articlePage.getRecords().forEach(item ->{
+            setCommentAndLike(item);
+            int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId()));
+            item.setCollectCount(collectCount);
+            if (StpUtil.getLoginIdAsString() != null) {
+                collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId())
+                        .eq(Collect::getUserId,StpUtil.getLoginIdAsString()));
+                item.setIsCollect(collectCount > 0);
+            }
+        });
         return ResponseResult.success(articlePage);
     }
 

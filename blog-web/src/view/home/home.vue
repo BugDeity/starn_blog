@@ -20,7 +20,6 @@
 
         <!-- 登录模态框 -->
         <Login></Login>
-        <FeedBack></FeedBack>
         <SearchModle></SearchModle>
         <!-- 个人中心 -->
         <User></User>
@@ -38,7 +37,6 @@ import SearchModle from "@/components/layout/Search.vue";
 import Footer from '@/components/layout/Footer.vue'
 import Sidebar from '@/components/layout/Sidebar.vue'
 import Login from '@/components/model/Login.vue'
-import FeedBack from '@/components/model/FeedBack.vue'
 import User from '@/view/user/User.vue'
 import ArticleModel from '@/view/article/Article.vue'
 import { selectUserInfoByToken, getWebSiteInfo } from '@/api'
@@ -52,8 +50,7 @@ export default {
         SideNavBar,
         SearchModle,
         User,
-        ArticleModel,
-        FeedBack
+        ArticleModel
     },
     data() {
         return {
