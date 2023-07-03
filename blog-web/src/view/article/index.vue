@@ -1253,18 +1253,23 @@ export default {
                     }
 
                     .rewardItem {
-                        display: none;
                         position: absolute;
                         bottom: -150px;
-                        left: 50px;
+                        left: 52px;
                         margin: 0;
                         padding: 0 0 15px;
-                        width: 450px;
+                        width: 480px;
+                        background-color: #5956563e;
+                        height: 310px;
+                        border-radius: 5px;
+                        display: none;
 
                         .reward-img {
                             margin-left: 5px;
+                            margin-right: 5px;
                             width: 220px;
                             height: 300px;
+                            margin-top: 12px;
                         }
                     }
 

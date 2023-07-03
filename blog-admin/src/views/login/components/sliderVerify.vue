@@ -28,7 +28,14 @@
                 <!-- 按钮 -->
                 <div class="slider-button" id="slider-button" :style="{ left: sliderButtonLeft }">
                     <!-- 按钮图标 -->
-                    <div class="slider-button-icon" />
+                    <div class="slider-button-icon">
+                        <i style="
+    font-size: 30px;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+" class="el-icon-arrow-right"></i>
+                    </div>
                 </div>
             </div>
             <!--滑动条提示文字-->
@@ -507,6 +514,10 @@ export default {
 /*鼠标悬浮时的按钮样式*/
 .slider-button:hover {
     background: #1991FA
+}
+
+.slider-button:hover i {
+    color: #fff;
 }
 
 /*鼠标悬浮时的按钮图标样式*/
