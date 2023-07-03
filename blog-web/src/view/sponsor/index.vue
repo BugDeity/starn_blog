@@ -108,7 +108,7 @@ export default {
             this.isShow = true;
             getPayUrl(this.payData).then(res => {
                 this.img = res.data.payUrl
-            }).catch(res => {
+            }).catch(err => {
                 this.$message.error(err.message);
             })
         }
@@ -200,7 +200,9 @@ export default {
 
                                     input {
                                         width: 100%;
-                                        padding-left: 5px;
+                                        height: 100%;
+                                        border-radius: 5px;
+                                        border: 0;
                                     }
                                 }
                             }
@@ -375,7 +377,9 @@ export default {
 
                                     input {
                                         width: 100%;
-                                        padding-left: 5px;
+                                        height: 100%;
+                                        border-radius: 5px;
+                                        border: 0;
                                         cursor: pointer;
                                     }
                                 }

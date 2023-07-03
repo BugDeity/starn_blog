@@ -601,7 +601,7 @@ export default {
                     .messageContent,
                     .nowMessageContent {
                         display: inline-block;
-                        max-width: 400px;
+
                         color: #555;
                         padding: 5px;
                         border-radius: 3px;

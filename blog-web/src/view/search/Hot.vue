@@ -85,6 +85,7 @@
                 <el-button type="primary" @click="handleClose">确 定</el-button>
             </span>
         </el-dialog>
+
     </div>
 </template>
 <script>
@@ -188,7 +189,7 @@ export default {
 
                 .siteBox {
                     display: inline-block;
-                    height: 38px;
+                    height: 39px;
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-right: none;
@@ -217,7 +218,7 @@ export default {
 
                 .searchCommit {
                     display: inline-block;
-                    height: 38px;
+                    height: 39px;
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-left: none;
@@ -354,7 +355,7 @@ export default {
 
                 .siteBox {
                     display: inline-block;
-                    height: 38px;
+                    height: 39px;
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-right: none;
@@ -383,7 +384,7 @@ export default {
 
                 .searchCommit {
                     display: inline-block;
-                    height: 38px;
+                    height: 39px;
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-left: none;
