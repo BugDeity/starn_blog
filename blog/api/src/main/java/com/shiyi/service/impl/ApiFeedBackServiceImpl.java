@@ -1,5 +1,6 @@
 package com.shiyi.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.FeedBack;
 import com.shiyi.mapper.FeedBackMapper;
@@ -23,6 +24,7 @@ public class ApiFeedBackServiceImpl implements ApiFeedBackService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult insertFeedback(FeedBack feedBack) {
+        feedBack.setUserId(StpUtil.getLoginIdAsString());
         int rows = feedBackMapper.insert(feedBack);
         return rows > 0 ? ResponseResult.success() : ResponseResult.error("添加反馈失败");
     }

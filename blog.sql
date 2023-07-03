@@ -244,19 +244,34 @@ CREATE TABLE `b_exception_log`  (
 -- Table structure for b_feed_back
 -- ----------------------------
 DROP TABLE IF EXISTS `b_feed_back`;
-CREATE TABLE `b_feed_back`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮箱',
-  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
-  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '详细内容',
-  `img_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '图片地址',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '添加时间',
-  `type` int(0) NOT NULL COMMENT '反馈类型 1:需求 2：缺陷',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
+CREATE TABLE `b_feed_back` (
+   `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
+   `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户id',
+   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
+   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '详细内容',
+   `img_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '图片地址',
+   `create_time` datetime DEFAULT NULL COMMENT '添加时间',
+   `type` int NOT NULL COMMENT '反馈类型 1:需求 2：缺陷',
+   PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COMMENT = '反馈表';
 -- ----------------------------
 -- Records of b_feed_back
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for b_collect
+-- ----------------------------
+DROP TABLE IF EXISTS `b_collect`;
+CREATE TABLE `b_collect` (
+     `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+     `user_id` varchar(100) NOT NULL COMMENT '用户id',
+     `article_id` bigint NOT NULL COMMENT '文章id',
+     `create_time` datetime DEFAULT NULL COMMENT '收藏时间',
+     PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文章收藏表';
+
+-- ----------------------------
+-- Records of b_collect
 -- ----------------------------
 
 -- ----------------------------

@@ -49,6 +49,9 @@ export default new Vuex.Store({
     setDrawer(state, newValue) {
       state.drawer = newValue
     },
+    setUserInfoDrawer(state, newValue) {
+      state.userInfoDrawer = newValue
+    },
     setSearchDrawer(state, newValue) {
       state.searchDrawer = newValue
     },

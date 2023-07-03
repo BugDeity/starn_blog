@@ -1,7 +1,8 @@
 <template>
     <div class="userInfo-main">
         <el-drawer :append-to-body="true" title="我是标题" :with-header="false" :visible.sync="drawer" direction="rtl">
-            <el-tabs v-model="activeName" tab-position="left" type="border-card" @tab-click="handeClike">
+            <el-tabs style="height: calc(100vh - 50px);overflow: scroll;" v-model="activeName" tab-position="left"
+                type="border-card" @tab-click="handeClike">
                 <el-tab-pane name="user">
                     <span slot="label"><i class="el-icon-user-solid"></i> 个人中心</span>
                     <el-form label-position="left" label-width="60px" :model="form">
@@ -86,12 +87,71 @@
 
                     <el-empty v-else description="暂未发表任何文章"></el-empty>
                 </el-tab-pane>
+
+                <!-- 我的反馈 -->
+                <el-tab-pane name="feedback">
+                    <span slot="label"><i class="el-icon-tickets"></i> 我的反馈</span>
+                    <el-collapse value="1">
+                        <el-collapse-item title="反馈须知" name="1">
+                            <div>如碰到bug或者一些功能需求可再此向我反馈</div>
+                        </el-collapse-item>
+                    </el-collapse>
+                    <div style="position: relative;height: 600px;">
+                        <el-form style="" :rules="feedBackRules" ref="dataForm" label-position="left" :model="feedback">
+                            <el-form-item label="反馈类型" prop="type">
+                                <el-radio v-model="feedback.type" :label="1">需求</el-radio>
+                                <el-radio v-model="feedback.type" :label="2">缺陷</el-radio>
+                            </el-form-item>
+                            <el-form-item label="标题" prop="title" label-width="25%">
+                                <el-input placeholder="请输入标题" v-model="feedback.title" />
+                            </el-form-item>
+                            <div class="contentInput">
+                                <el-form-item label="描述" prop="content" label-width="25%">
+                                    <el-input :placeholder="feedback.type == 1 ? '请在此详细描述你的需求' : '请在此详细描述你的缺陷'" :rows="4"
+                                        type="textarea" v-model="feedback.content" />
+                                </el-form-item>
+                            </div>
+                            <el-button type="primary" @click="submit">确 定</el-button>
+                        </el-form>
+                    </div>
+                </el-tab-pane>
+
+                <!-- 我的收藏 -->
+                <el-tab-pane name="collect">
+                    <span slot="label"><i class="el-icon-tickets"></i> 我的收藏</span>
+                    <el-timeline v-if="collectList.length" style="overflow: scroll;height: 100%;">
+                        <el-timeline-item :timestamp="item.createTime" placement="top" v-for="(item, index) in collectList"
+                            :key="index">
+                            <el-card class="myCollect">
+                                <h4 @click="goArticleInfo(item.articleId)">{{ item.title }}</h4>
+                                <div class="box">
+                                    <div class="user">
+                                        <el-avatar class="avatar" :size="40" :src="item.avatar">
+                                            <img
+                                                src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+                                        </el-avatar>
+                                        <span class="nickname">{{ item.nickname }}</span>
+                                    </div>
+                                    <div class="btn">
+                                        <el-tooltip class="item" effect="dark" content="取消收藏" placement="top-start">
+                                            <el-button size="mini" type="danger" icon="el-icon-delete"
+                                                @click="cancelCollect(item.articleId)" circle></el-button>
+                                        </el-tooltip>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </el-timeline-item>
+                        <el-pagination background style="text-align: center;" layout="prev, pager, next" :total="pageTotal"
+                            @current-change="handlePage">
+                        </el-pagination>
+                    </el-timeline>
+                </el-tab-pane>
             </el-tabs>
         </el-drawer>
     </div>
 </template>
 <script>
-import { updateUserInfo, getUserInfo, upload, updatePassword, getMyArticle, deleteMyArticle } from '@/api'
+import { updateUserInfo, getUserInfo, upload, updatePassword, getMyArticle, deleteMyArticle, addFeedback, getCollect, cancelCollect } from '@/api'
 export default {
     data() {
         return {
@@ -99,11 +159,12 @@ export default {
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
             // 加载层信息
             loading: [],
-            activeName: 'user',
+            activeName: 'collect',
             statuTag: ['下架', '发布', '待审批'],
             statuTagStyle: ['danger', 'success', 'info'],
             files: {},
             articleList: [],
+            collectList: [],
             pageData: {
                 pageNo: 1,
                 pageSize: 5
@@ -120,7 +181,25 @@ export default {
                 new2Password: [
                     { required: true, message: '请输入确认密码', trigger: 'blur' }
                 ],
-            }
+            },
+
+            feedback: {
+                type: 1,
+                title: null,
+                content: null
+            },
+            feedBackRules: {
+                type: [
+                    { required: true, message: '必填字段', trigger: 'blur' },
+                ],
+                title: [
+                    { required: true, message: '必填字段', trigger: 'blur' },
+                ],
+                content: [
+                    { required: true, message: '必填字段', trigger: 'blur' },
+                ],
+            },
+
         };
     },
     computed: {
@@ -140,11 +219,27 @@ export default {
         },
     },
     methods: {
+        submit() {
+            this.$refs['dataForm'].validate((valid) => {
+                if (valid) {
+                    addFeedback(this.feedback).then(res => {
+                        this.$message.success("提交反馈成功");
+                        this.closeDialog()
+                    }).catch(err => {
+                    })
+                } else {
+                }
+            })
+        },
         goArticleInfo(id) {
+            this.close()
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })
         },
+        close() {
+            this.$store.commit("setUserInfoDrawer", false)
+        },
         handleUpdateArticle(id) {
-            this.$store.state.userInfoDrawer = false;
+            this.close()
             this.$store.state.articleDrawer.flag = true;
             this.$store.state.articleDrawer.id = id;
 
@@ -233,8 +328,21 @@ export default {
             })
             this.loading.close()
         },
+        selectMyCollect() {
+            this.openLoading()
+            getCollect(this.pageData).then(res => {
+                this.collectList = res.data.records;
+                this.pageTotal = res.data.total
+            }).catch(err => {
+                console.log(err)
+            })
+            this.loading.close()
+        },
         handeClike(event) {
-            console.log(event)
+            this.pageData = {
+                pageNo: 1,
+                pageSize: 5
+            }
             const index = event.paneName
             // 修改密码
             if (index == "password") {
@@ -242,7 +350,23 @@ export default {
             if (index == "article") {
                 this.selectMyArticleList()
             }
+            if (index == "feedback") {
+                this.feedback = { type: 1 }
+            }
+            if (index == "collect") {
+                this.selectMyCollect()
+            }
         },
+        cancelCollect(id) {
+            this.openLoading()
+            cancelCollect(id).then(res => {
+                this.$message.success("取消收藏成功")
+                this.selectMyCollect()
+                this.loading.close()
+            }).catch(err => {
+                this.$message.error(err.message)
+            })
+        }
     }
 };
 </script>
@@ -320,6 +444,43 @@ export default {
         }
     }
 
+}
+
+.myCollect {
+    h4 {
+        cursor: pointer;
+    }
+
+    .box {
+        height: 40px;
+        line-height: 40px;
+        position: relative;
+        margin-top: 20px;
+
+        .user {
+            display: inline-block;
+
+            .avatar {
+                vertical-align: middle;
+                display: inline-block;
+            }
+
+            .nickname {
+                margin-left: 5px;
+                color: var(--theme-color);
+            }
+        }
+
+        .btn {
+            float: right;
+
+            /deep/ .el-button {
+
+                margin-left: 10px;
+                display: inline-block;
+            }
+        }
+    }
 
 }
 </style> 

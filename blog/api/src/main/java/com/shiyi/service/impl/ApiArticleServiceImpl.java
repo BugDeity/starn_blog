@@ -57,6 +57,9 @@ public class ApiArticleServiceImpl implements ApiArticleService {
     private final ElasticsearchUtil elasticsearchUtil;
 
     private final UserInfoMapper userInfoMapper;
+
+    private final CollectMapper collectMapper;
+
     /**
      *  获取文章列表
      * @return
@@ -76,6 +79,9 @@ public class ApiArticleServiceImpl implements ApiArticleService {
     @Override
     public ResponseResult selectArticleInfo(Integer id) {
         ApiArticleInfoVO apiArticleInfoVO = articleMapper.selectArticleByIdToVO(id);
+        //获取收藏量
+        Integer collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, id));
+        apiArticleInfoVO.setCollectCount(collectCount);
         //获取标签
         List<Tags> list = tagsMapper.selectTagByArticleId(apiArticleInfoVO.getId());
         apiArticleInfoVO.setTagList(list);
@@ -106,6 +112,10 @@ public class ApiArticleServiceImpl implements ApiArticleService {
                     apiArticleInfoVO.setActiveReadType(true);
                 }
             }
+
+            //校验用户是否收藏文章
+            int collect = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getUserId, userId).eq(Collect::getArticleId, id));
+            apiArticleInfoVO.setIsCollect(collect);
         }
         //获取文章作者信息
         User user = userMapper.selectById(apiArticleInfoVO.getUserId());

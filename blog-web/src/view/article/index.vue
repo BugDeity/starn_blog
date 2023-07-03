@@ -77,6 +77,17 @@
                     </div>
                 </el-tooltip>
 
+                <el-tooltip class="item" effect="dark" content="收藏" placement="left">
+                    <div class="left-item" title="收藏" @click="handleCollect">
+                        <el-badge :value="article.collectCount" class="item">
+                            <span style="font-size: 20px;">
+                                <i v-if="article.isCollect" class="el-icon-star-on"></i>
+                                <i v-else class="el-icon-star-off"></i>
+                            </span>
+                        </el-badge>
+                    </div>
+                </el-tooltip>
+
                 <el-tooltip class="item" effect="dark" content="评论" placement="left">
                     <div class="left-item" title="评论" @click="handleGoPinglun">
                         <el-badge :value="article.commentCount" class="item">
@@ -272,7 +283,7 @@
     </div>
 </template>
 <script>
-import { articleInfo, featchComments, articleLike, checkCode } from '@/api'
+import { articleInfo, featchComments, articleLike, checkCode, collect, cancelCollect } from '@/api'
 import SiteInfo from '@/components/site/index.vue'
 import Comment from '@/components/comment/index.vue'
 export default {
@@ -432,6 +443,29 @@ export default {
                 spinner: "el-icon-loading",
                 background: "rgba(0, 0, 0, 0.7)"
             });
+        },
+        handleCollect() {
+            this.openLoading()
+            let id = this.article.id;
+            if (this.article.isCollect) {
+                cancelCollect(id).then(res => {
+                    this.article.collectCount--
+                    this.article.isCollect = 0
+                    this.$message.success("取消收藏成功")
+                    this.loading.close()
+                }).catch(err => {
+                    this.$message.error("取消收藏失败")
+                })
+            } else {
+                collect(id).then(res => {
+                    this.article.collectCount++
+                    this.article.isCollect = 1
+                    this.$message.success("收藏成功")
+                    this.loading.close()
+                }).catch(err => {
+                    this.$message.error("收藏失败")
+                })
+            }
         },
         handleGoPinglun() {
             document.getElementById("comment").scrollIntoView({ behavior: 'smooth' })

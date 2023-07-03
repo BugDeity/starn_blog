@@ -31,8 +31,8 @@ public class FeedBack implements Serializable {
       @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "邮箱")
-    private String email;
+    @ApiModelProperty(value = "用户id")
+    private String userId;
 
     @ApiModelProperty(value = "标题")
     private String title;

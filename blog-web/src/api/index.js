@@ -287,3 +287,27 @@ export function addFeedback(data) {
         data
     })
 }
+export function getCollect() {
+    return request({
+        url: '/v1/collect/',
+        method: 'get'
+    })
+}
+export function collect(id) {
+    return request({
+        url: '/v1/collect/collect',
+        method: 'get',
+        params: {
+            articleId: id
+        }
+    })
+}
+export function cancelCollect(id) {
+    return request({
+        url: '/v1/collect/',
+        method: 'delete',
+        params: {
+            articleId: id
+        }
+    })
+}

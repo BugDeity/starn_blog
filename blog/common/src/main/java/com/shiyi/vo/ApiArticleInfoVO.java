@@ -68,6 +68,12 @@ public class ApiArticleInfoVO {
     @ApiModelProperty(value = "当前用户是否点赞")
     private Boolean isLike = false;
 
+    @ApiModelProperty(value = "当前用户是否收藏")
+    private int isCollect;
+
+    @ApiModelProperty(value = "收藏量")
+    private int collectCount;
+
     @ApiModelProperty(value = "当前用户激活阅读方式 如已评论或已点赞或已扫码验证过")
     private Boolean activeReadType = false;
 
