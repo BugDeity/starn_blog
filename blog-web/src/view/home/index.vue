@@ -75,6 +75,16 @@
                                     <i class="el-icon-chat-dot-round"></i>{{ item.commentCount }}
                                 </span>
                                 <span class="item">
+                                    <span v-if="item.isCollect">
+                                        <i style="font-size: 1rem;" class="el-icon-star-on"></i>{{
+                                            item.collectCount }}
+                                    </span>
+                                    <span v-else>
+                                        <i style="font-size: 1rem;" class="el-icon-star-off"></i>{{ item.collectCount
+                                        }}
+                                    </span>
+                                </span>
+                                <span class="item">
                                     <i style="font-size: 0.8rem;" class="iconfont icon-dianzan1"></i>{{ item.likeCount }}
                                 </span>
                                 <span class="item">
