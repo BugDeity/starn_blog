@@ -15,7 +15,7 @@
                 <div class="rigthBox">
                     <div class="sendBox">
                         <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 100 }"
-                            placeholder="请输入笔记内容,支持【Mardown】语法" v-model="content">
+                            placeholder="请输入笔记内容,支持【Markdown】语法" v-model="content">
                         </el-input>
                         <div class="btn">
                             <el-button type="primary" @click="addNote">发布笔记</el-button>
@@ -147,6 +147,12 @@ export default {
                         zoom: 1;
                         border-radius: 5px;
 
+                        /deep/ .el-textarea__inner {
+                            background-color: var(--background-color) !important;
+                            color: var(--article-color);
+                            border: 1px solid #2c3e50;
+                        }
+
                         .btn {
                             float: right;
                             height: 50px;
@@ -173,6 +179,8 @@ export default {
 
                                     /deep/ .vuepress-markdown-body {
                                         padding: 0 !important;
+                                        background-color: var(--background-color) !important;
+                                        color: var(--article-color);
                                     }
                                 }
 
@@ -268,6 +276,11 @@ export default {
                         zoom: 1;
                         border-radius: 5px;
 
+                        /deep/ .el-textarea__inner {
+                            background-color: var(--background-color) !important;
+                            color: var(--article-color);
+                        }
+
                         .btn {
                             float: right;
                             height: 50px;
@@ -296,6 +309,8 @@ export default {
 
                                     /deep/ .vuepress-markdown-body {
                                         padding: 0 !important;
+                                        background-color: var(--background-color) !important;
+                                        color: var(--article-color);
                                     }
                                 }
 
