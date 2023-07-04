@@ -39,7 +39,7 @@
                         </ul>
                         <el-empty v-else description="本站暂未发布任何笔记"></el-empty>
                         <!-- 分页按钮 -->
-                        <div class="page" v-if="pageData.pageNo < pages">
+                        <div class="page" v-if="pageData.pageNo < pages" @click="handlePage">
                             加载更多
                         </div>
                     </div>
@@ -59,7 +59,7 @@ export default {
         return {
             pageData: {
                 pageNo: 1,
-                pageSize: 5
+                pageSize: 10
             },
             pages: 0,
             noteList: [],
@@ -72,6 +72,10 @@ export default {
         this.getNoteList()
     },
     methods: {
+        handlePage() {
+            this.pageData.pageNo++
+            this.getNoteList()
+        },
         addNote() {
             if (this.content == null || this.content == "") {
                 this.$message.error("内容不能为空！");
@@ -91,7 +95,7 @@ export default {
         getNoteList() {
             this.openLoading()
             getNote(this.pageData).then(res => {
-                this.noteList = res.data.records
+                this.noteList.push(...res.data.records)
                 this.pages = res.data.pages
                 this.loading.close()
             }).catch(err => {
@@ -168,7 +172,7 @@ export default {
                             .item {
                                 background-color: var(--background-color);
                                 margin-bottom: 15px;
-                                transition: box-shadow .35s, transform .35s;
+                                border-radius: 5px;
 
                                 .content {
                                     color: var(--article-color);
@@ -298,6 +302,7 @@ export default {
                                 padding: 10px;
                                 margin-bottom: 15px;
                                 transition: box-shadow .35s, transform .35s;
+                                border-radius: 5px;
 
                                 &:hover {
                                     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);

@@ -12,7 +12,7 @@
                     </span>
                 </p>
                 <p>
-                    2023 ©拾壹
+                    Copyright©2022-2023 <a href="https://gitee.com/quequnlong/shiyi-blog" target="_blank">拾壹博客</a>
                     <a href="https://beian.miit.gov.cn/" target="_blank" style="margin-left: 10px">{{
                         $store.state.webSiteInfo.recordNum
                     }}</a>
@@ -127,6 +127,7 @@ export default {
     .content {
         margin: 0 auto;
         position: relative;
+        text-align: center;
 
         .site {
             font-size: 14px;
@@ -139,7 +140,11 @@ export default {
 
             a {
                 text-decoration: none;
-                color: var(--theme-color);
+                color: var(--text-color);
+
+                &:hover {
+                    color: var(--theme-color);
+                }
             }
 
             .run_time {
