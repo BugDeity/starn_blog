@@ -72,7 +72,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
             setCommentAndLike(item);
             int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId()));
             item.setCollectCount(collectCount);
-            if (StpUtil.getLoginIdAsString() != null) {
+            if (StpUtil.getLoginIdDefaultNull() != null) {
                 collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId())
                         .eq(Collect::getUserId,StpUtil.getLoginIdAsString()));
                 item.setIsCollect(collectCount > 0);

@@ -12,6 +12,8 @@ import com.shiyi.mapper.UserInfoMapper;
 import com.shiyi.service.ApiCommentService;
 import com.shiyi.utils.HTMLUtils;
 import com.shiyi.utils.IpUtil;
+import com.shiyi.utils.PageUtils;
+import com.shiyi.vo.ApiArticleListVO;
 import com.shiyi.vo.ApiCommentListVO;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
@@ -96,5 +98,15 @@ public class ApiCommentServiceImpl implements ApiCommentService {
             }
         }
         return ResponseResult.success(pageList);
+    }
+
+    /**
+     * 获取我的评论
+     * @return
+     */
+    @Override
+    public ResponseResult selectMyComment() {
+        Page<ApiArticleListVO> result  = commentMapper.selectMyComment(new Page<ApiArticleListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString());
+        return ResponseResult.success(result);
     }
 }

@@ -72,27 +72,45 @@ const routes = [
             {
                 path: "/tag",
                 component: resolve => require(["@/view/tag/Tag"], resolve),
+                meta: {
+                    title: "文章标签"
+                }
             },
             {
                 path: "/tags",
                 name: "/tags",
                 component: resolve => require(["@/view/tag/index"], resolve),
+                meta: {
+                    title: "标签搜索"
+                }
             },
             {
                 path: "/photo",
                 component: resolve => require(["@/view/photo/index"], resolve),
+                meta: {
+                    title: "画廊"
+                }
             },
             {
                 path: "/sponsor",
                 component: resolve => require(["@/view/sponsor/index"], resolve),
+                meta: {
+                    title: "打赏名单"
+                }
             },
             {
                 path: "/im",
                 component: resolve => require(["@/view/im/index"], resolve),
+                meta: {
+                    title: "聊天室"
+                }
             },
             {
                 path: "/hot",
                 component: resolve => require(["@/view/search/Hot.vue"], resolve),
+                meta: {
+                    title: "热搜"
+                }
             },
 
         ],

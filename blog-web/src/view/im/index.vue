@@ -180,6 +180,7 @@ export default {
         }
     },
     created() {
+        document.title = "聊天室"
         this.init()
         document.oncontextmenu = new Function("event.returnValue=false");
         this.emojiList = require('@/assets/emoji.json');

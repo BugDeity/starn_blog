@@ -9,12 +9,6 @@
             </a>
         </router-link>
 
-        <a href="javascript:void(0)" title="反馈" class="joe_action_item fankui active" @click="openFeedBack()">
-            <el-tooltip class="item" effect="dark" content="反馈" placement="left">
-                <svg-icon icon-class="fankui"></svg-icon>
-            </el-tooltip>
-        </a>
-
         <a href="javascript:void(0)" class="joe_action_item theme active" @click="setSkin()">
             <el-tooltip class="item" effect="dark" content="切换主题" placement="left">
                 <svg-icon v-if="skin == 'deep'" icon-class="shallow"></svg-icon>
@@ -71,9 +65,6 @@ export default {
                 this.showBtn = false;
             }
         },
-        openFeedBack() {
-            this.$store.commit("setFeedbackDialogVisible", true)
-        },
         backTop() {
             var timer = setInterval(function () {
                 let osTop =
@@ -95,53 +86,48 @@ export default {
 .theme_main {
     position: fixed;
 
-    .joe_action_item.theme.active {
-        pointer-events: auto;
-        visibility: visible;
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        position: fixed;
-        bottom: 175px;
-        right: 10px;
-    }
-
-    .chat {
-        position: fixed;
-        bottom: 200px;
-        right: 10px;
-        margin-bottom: 10px;
-    }
-
-    .fankui {
-        position: fixed;
-        bottom: 125px;
-        right: 10px;
-        margin-bottom: 10px;
-    }
-
     a {
         display: block;
         height: 50px;
         position: relative;
     }
 
-    .joe_action_item svg {
-        position: absolute;
-        width: 25px;
-        height: 25px;
-        fill: var(--theme-color);
-        top: 9px;
-        right: 10px;
-
-    }
-
-    .joe_action_item.back2top.active {
+    .active {
         pointer-events: auto;
         visibility: visible;
         -webkit-transform: scale(1);
         transform: scale(1);
         position: fixed;
-        bottom: 100px;
+        bottom: 158px;
+        right: 10px;
+    }
+
+    .chat {
+        position: fixed;
+        bottom: 190px;
+        right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .joe_action_item {
+
+        svg {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            fill: var(--theme-color);
+            top: 9px;
+            right: 10px;
+        }
+    }
+
+    .back2top.active {
+        pointer-events: auto;
+        visibility: visible;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        position: fixed;
+        bottom: 110px;
         right: 10px;
         animation: fade-in 0.3s linear 1;
     }

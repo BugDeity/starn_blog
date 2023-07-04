@@ -3,6 +3,8 @@
         <el-drawer :append-to-body="true" title="我是标题" :with-header="false" :visible.sync="drawer" direction="rtl">
             <el-tabs style="height: calc(100vh - 50px);overflow: scroll;" v-model="activeName" tab-position="left"
                 type="border-card" @tab-click="handeClike">
+
+                <!-- 个人中心 -->
                 <el-tab-pane name="user">
                     <span slot="label"><i class="el-icon-user-solid"></i> 个人中心</span>
                     <el-form label-position="left" label-width="60px" :model="form">
@@ -30,34 +32,11 @@
                     </el-form>
                     <el-button type="primary" @click="update" round>提交</el-button>
                 </el-tab-pane>
-                <!-- 修改密码 -->
-                <el-tab-pane name="password">
-                    <span slot="label"><i class="el-icon-unlock"></i> 修改密码</span>
-                    <el-collapse value="1">
-                        <el-collapse-item title="修改密码须知" name="1">
-                            <div>此修改密码功能仅适用于账号和密码登录</div>
-                            <div>对于第三方登录的账号，无法进行密码修改</div>
-                        </el-collapse-item>
-                    </el-collapse>
-                    <el-form style="margin-top: 5px;" :rules="rules" ref="ruleForm" label-position="left"
-                        label-width="100px" :model="form">
-                        <el-form-item label="旧密码" prop="oldPassword">
-                            <el-input v-model="form.oldPassword"></el-input>
-                        </el-form-item>
-                        <el-form-item label="新密码" prop="newPassword">
-                            <el-input v-model="form.newPassword"></el-input>
-                        </el-form-item>
-                        <el-form-item label="确认密码" prop="new2Password">
-                            <el-input v-model="form.new2Password"></el-input>
-                        </el-form-item>
-                    </el-form>
-                    <el-button type="primary" @click="updatePassword" round>提交</el-button>
-                </el-tab-pane>
 
                 <!-- 我的文章 -->
                 <el-tab-pane name="article">
                     <span slot="label"><i class="el-icon-tickets"></i> 我的文章</span>
-                    <el-timeline v-if="articleList.length" style="overflow: scroll;height: 100%;">
+                    <el-timeline v-if="articleList.length">
                         <el-timeline-item :timestamp="item.createTime" placement="top" v-for="(item, index) in articleList"
                             :key="index">
                             <el-card class="myArticle">
@@ -80,17 +59,79 @@
                                 </div>
                             </el-card>
                         </el-timeline-item>
-                        <el-pagination background style="text-align: center;" layout="prev, pager, next" :total="pageTotal"
-                            @current-change="handlePage">
-                        </el-pagination>
+                        <div v-if="pageData.pageNo == pageTotal" style="text-align: center;color: var(--text-color);">
+                            我也是有底线的~~~</div>
+                        <div v-else style="text-align: center;">
+                            <span @click="handlePage('article')" class="pageBtn">加载更多</span>
+                        </div>
                     </el-timeline>
 
                     <el-empty v-else description="暂未发表任何文章"></el-empty>
                 </el-tab-pane>
 
+                <!-- 我的收藏 -->
+                <el-tab-pane name="collect">
+                    <span slot="label"><i class="el-icon-star-off"></i> 我的收藏</span>
+                    <el-timeline v-if="collectList.length">
+                        <el-timeline-item :timestamp="item.createTime2" placement="top" v-for="(item, index) in collectList"
+                            :key="index">
+                            <el-card class="myCollect">
+                                <h4 @click="goArticleInfo(item.id)">{{ item.title }}</h4>
+                                <div class="box">
+                                    <div class="user">
+                                        <el-avatar class="avatar" :size="40" :src="item.userAvatar">
+                                            <img
+                                                src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+                                        </el-avatar>
+                                        <span class="nickname">{{ item.username }}</span>
+                                    </div>
+                                    <div class="btn">
+                                        <el-tooltip class="item" effect="dark" content="取消收藏" placement="top-start">
+                                            <el-button size="mini" type="danger" icon="el-icon-delete"
+                                                @click="cancelCollect(item.id)" circle></el-button>
+                                        </el-tooltip>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </el-timeline-item>
+                        <div v-if="pageData.pageNo == pageTotal" style="text-align: center;color: var(--text-color);">
+                            我也是有底线的~~~</div>
+                        <div v-else style="text-align: center;">
+                            <span @click="handlePage('collect')" class="pageBtn">加载更多</span>
+                        </div>
+                    </el-timeline>
+                    <el-empty v-else description="暂未收藏文章"></el-empty>
+                </el-tab-pane>
+
+                <!-- 我的评论 -->
+                <el-tab-pane name="comment">
+                    <span slot="label"><i class="el-icon-chat-dot-round"></i> 我的评论</span>
+                    <el-timeline v-if="commentList.length">
+                        <el-timeline-item :timestamp="item.createTime2" placement="top" v-for="(item, index) in commentList"
+                            :key="index">
+                            <el-card class="myComent">
+                                <h4 @click="goArticleInfo(item.id)">{{ item.title }}</h4>
+                                <div class="box">
+                                    <div class="content">
+                                        {{ item.commentContent }}
+                                    </div>
+
+                                </div>
+                            </el-card>
+                        </el-timeline-item>
+                        <div v-if="pageData.pageNo == pageTotal" style="text-align: center;color: var(--text-color);">
+                            我也是有底线的~~~</div>
+                        <div v-else style="text-align: center;">
+                            <span @click="handlePage('comment')" class="pageBtn">加载更多</span>
+                        </div>
+                    </el-timeline>
+                    <el-empty v-else description="暂未评论过文章"></el-empty>
+
+                </el-tab-pane>
+
                 <!-- 我的反馈 -->
                 <el-tab-pane name="feedback">
-                    <span slot="label"><i class="el-icon-tickets"></i> 我的反馈</span>
+                    <span slot="label"><i class="el-icon-position"></i> 我的反馈</span>
                     <el-collapse value="1">
                         <el-collapse-item title="反馈须知" name="1">
                             <div>如碰到bug或者一些功能需求可再此向我反馈</div>
@@ -116,42 +157,38 @@
                     </div>
                 </el-tab-pane>
 
-                <!-- 我的收藏 -->
-                <el-tab-pane name="collect">
-                    <span slot="label"><i class="el-icon-tickets"></i> 我的收藏</span>
-                    <el-timeline v-if="collectList.length" style="overflow: scroll;height: 100%;">
-                        <el-timeline-item :timestamp="item.createTime" placement="top" v-for="(item, index) in collectList"
-                            :key="index">
-                            <el-card class="myCollect">
-                                <h4 @click="goArticleInfo(item.articleId)">{{ item.title }}</h4>
-                                <div class="box">
-                                    <div class="user">
-                                        <el-avatar class="avatar" :size="40" :src="item.avatar">
-                                            <img
-                                                src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
-                                        </el-avatar>
-                                        <span class="nickname">{{ item.nickname }}</span>
-                                    </div>
-                                    <div class="btn">
-                                        <el-tooltip class="item" effect="dark" content="取消收藏" placement="top-start">
-                                            <el-button size="mini" type="danger" icon="el-icon-delete"
-                                                @click="cancelCollect(item.articleId)" circle></el-button>
-                                        </el-tooltip>
-                                    </div>
-                                </div>
-                            </el-card>
-                        </el-timeline-item>
-                        <el-pagination background style="text-align: center;" layout="prev, pager, next" :total="pageTotal"
-                            @current-change="handlePage">
-                        </el-pagination>
-                    </el-timeline>
+                <!-- 修改密码 -->
+                <el-tab-pane name="password">
+                    <span slot="label"><i class="el-icon-unlock"></i> 修改密码</span>
+                    <el-collapse value="1">
+                        <el-collapse-item title="修改密码须知" name="1">
+                            <div>此修改密码功能仅适用于账号和密码登录</div>
+                            <div>对于第三方登录的账号，无法进行密码修改</div>
+                        </el-collapse-item>
+                    </el-collapse>
+                    <el-form style="margin-top: 5px;" :rules="rules" ref="ruleForm" label-position="left"
+                        label-width="100px" :model="form">
+                        <el-form-item label="旧密码" prop="oldPassword">
+                            <el-input v-model="form.oldPassword"></el-input>
+                        </el-form-item>
+                        <el-form-item label="新密码" prop="newPassword">
+                            <el-input v-model="form.newPassword"></el-input>
+                        </el-form-item>
+                        <el-form-item label="确认密码" prop="new2Password">
+                            <el-input v-model="form.new2Password"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <el-button type="primary" @click="updatePassword" round>提交</el-button>
                 </el-tab-pane>
             </el-tabs>
         </el-drawer>
     </div>
 </template>
 <script>
-import { updateUserInfo, getUserInfo, upload, updatePassword, getMyArticle, deleteMyArticle, addFeedback, getCollect, cancelCollect } from '@/api'
+import {
+    updateUserInfo, getUserInfo, upload, updatePassword, getMyArticle,
+    deleteMyArticle, addFeedback, getCollect, cancelCollect, getMyComment
+} from '@/api'
 export default {
     data() {
         return {
@@ -165,6 +202,7 @@ export default {
             files: {},
             articleList: [],
             collectList: [],
+            commentList: [],
             pageData: {
                 pageNo: 1,
                 pageSize: 5
@@ -314,15 +352,24 @@ export default {
                 this.$message.error(err.message);
             })
         },
-        handlePage(e) {
-            this.pageData.pageNo = e
-            this.selectMyArticleList()
+        handlePage(type) {
+            this.pageData.pageNo++
+            if (type == "article") {
+                this.selectMyArticleList()
+            }
+            if (type == "collect") {
+                this.selectMyCollect()
+            }
+
+            if (type == "comment") {
+                this.selectMyComment()
+            }
         },
         selectMyArticleList() {
             this.openLoading()
             getMyArticle(this.pageData).then(res => {
-                this.articleList = res.data.records;
-                this.pageTotal = res.data.total
+                this.articleList.push(...res.data.records);
+                this.pageTotal = res.data.pages
             }).catch(err => {
                 console.log(err)
             })
@@ -331,14 +378,25 @@ export default {
         selectMyCollect() {
             this.openLoading()
             getCollect(this.pageData).then(res => {
-                this.collectList = res.data.records;
-                this.pageTotal = res.data.total
+                this.collectList.push(...res.data.records);
+                this.pageTotal = res.data.pages
+            }).catch(err => {
+                console.log(err)
+            })
+            this.loading.close()
+        },
+        selectMyComment() {
+            this.openLoading()
+            getMyComment(this.pageData).then(res => {
+                this.commentList.push(...res.data.records);
+                this.pageTotal = res.data.pages
             }).catch(err => {
                 console.log(err)
             })
             this.loading.close()
         },
         handeClike(event) {
+
             this.pageData = {
                 pageNo: 1,
                 pageSize: 5
@@ -348,13 +406,20 @@ export default {
             if (index == "password") {
             }
             if (index == "article") {
+                this.articleList = []
                 this.selectMyArticleList()
             }
             if (index == "feedback") {
                 this.feedback = { type: 1 }
             }
             if (index == "collect") {
+                this.collectList = []
                 this.selectMyCollect()
+            }
+
+            if (index == "comment") {
+                this.commentList = []
+                this.selectMyComment()
             }
         },
         cancelCollect(id) {
@@ -418,7 +483,27 @@ export default {
     font-size: 1rem;
 }
 
-.myArticle {
+/deep/ .el-tabs__content {
+    padding: 10px;
+}
+
+.pageBtn {
+    text-align: center;
+    background-color: rgba(0, 0, 0, .8);
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50px;
+    margin: 0 auto;
+    margin-top: 20px;
+    cursor: pointer;
+    color: #fff;
+    display: inline-block;
+}
+
+.myArticle,
+.myCollect,
+.myComent {
     h4 {
         cursor: pointer;
     }
@@ -429,9 +514,7 @@ export default {
         position: relative;
         margin-top: 20px;
 
-        .statu {
-            display: inline-block;
-        }
+
 
         .btn {
             float: right;
@@ -442,45 +525,33 @@ export default {
                 display: inline-block;
             }
         }
+    }
+}
+
+.myArticle {
+    .statu {
+        display: inline-block;
     }
 
 }
 
 .myCollect {
-    h4 {
-        cursor: pointer;
-    }
+    .user {
+        display: inline-block;
 
-    .box {
-        height: 40px;
-        line-height: 40px;
-        position: relative;
-        margin-top: 20px;
-
-        .user {
+        .avatar {
+            vertical-align: middle;
             display: inline-block;
-
-            .avatar {
-                vertical-align: middle;
-                display: inline-block;
-            }
-
-            .nickname {
-                margin-left: 5px;
-                color: var(--theme-color);
-            }
         }
 
-        .btn {
-            float: right;
-
-            /deep/ .el-button {
-
-                margin-left: 10px;
-                display: inline-block;
-            }
+        .nickname {
+            margin-left: 5px;
+            color: var(--theme-color);
         }
     }
+}
 
+.myComent .box {
+    height: 100%;
 }
 </style> 

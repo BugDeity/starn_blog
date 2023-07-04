@@ -11,7 +11,6 @@ export default new Vuex.Store({
     siteAccess: 0,
     visitorAccess: 0,
     userInfoDrawer: false,
-    feedbackDialogVisible: false,
     userInfo: null,
     isCommentFlag: false,
     articleDrawer: {
@@ -63,9 +62,6 @@ export default new Vuex.Store({
     },
     setUserInfo(state, newValue) {
       state.userInfo = newValue
-    },
-    setFeedbackDialogVisible(state, newValue) {
-      state.feedbackDialogVisible = newValue
     },
   },
 

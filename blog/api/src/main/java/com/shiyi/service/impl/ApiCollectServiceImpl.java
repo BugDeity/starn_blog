@@ -8,9 +8,7 @@ import com.shiyi.entity.Collect;
 import com.shiyi.mapper.CollectMapper;
 import com.shiyi.service.ApiCollectService;
 import com.shiyi.utils.PageUtils;
-import com.shiyi.vo.ApiArticleInfoVO;
 import com.shiyi.vo.ApiArticleListVO;
-import com.shiyi.vo.ApiCollectListVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +25,7 @@ public class ApiCollectServiceImpl implements ApiCollectService {
      */
     @Override
     public ResponseResult selectCollectList() {
-        Page<ApiCollectListVO> result = collectMapper.selectCollectList(new Page<ApiCollectListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString());
+        Page<ApiArticleListVO> result = collectMapper.selectCollectList(new Page<ApiArticleListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString());
         return ResponseResult.success(result);
     }
 

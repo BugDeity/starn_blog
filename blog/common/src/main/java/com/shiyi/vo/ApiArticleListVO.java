@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 门户的文章列表vo多个地方使用到了 修改需谨慎
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -86,10 +89,21 @@ public class ApiArticleListVO {
     private Boolean isCollect;
 
     /**
-     * 发表时间
+     * 我的评论内容
+     */
+    private String commentContent;
+
+    /**
+     * 创建时间
      */
     @JsonFormat(pattern = DateUtil.YYYY_MM_DD,timezone="GMT+8")
     private Date createTime;
+
+    /**
+     * 带时分秒的时间格式
+     */
+    @JsonFormat(pattern = DateUtil.YYYY_MM_DD_HH_MM_SS,timezone="GMT+8")
+    private Date createTime2;
 
     /**
      * 标签集合

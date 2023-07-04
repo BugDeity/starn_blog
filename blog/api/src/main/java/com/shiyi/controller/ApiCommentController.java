@@ -34,4 +34,10 @@ public class ApiCommentController {
     public ResponseResult selectCommentByArticleId(int pageNo,int pageSize,Long articleId){
         return commentService.selectCommentByArticleId(pageNo,pageSize,articleId);
     }
+
+    @RequestMapping(value = "/getMyComment",method = RequestMethod.GET)
+    @ApiOperation(value = "获取我的评论", httpMethod = "GET", response = ResponseResult.class, notes = "获取我的评论")
+    public ResponseResult selectMyComment(){
+        return commentService.selectMyComment();
+    }
 }

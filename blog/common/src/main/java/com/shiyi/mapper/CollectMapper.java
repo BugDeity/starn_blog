@@ -3,7 +3,7 @@ package com.shiyi.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.entity.Collect;
-import com.shiyi.vo.ApiCollectListVO;
+import com.shiyi.vo.ApiArticleListVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +17,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CollectMapper extends BaseMapper<Collect> {
 
-    Page<ApiCollectListVO> selectCollectList(Page<ApiCollectListVO> tPage,@Param("userId") String userId);
+    Page<ApiArticleListVO> selectCollectList(Page<ApiArticleListVO> tPage, @Param("userId") String userId);
 }

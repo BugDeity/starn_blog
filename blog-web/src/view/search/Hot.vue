@@ -111,6 +111,7 @@ export default {
     },
 
     created() {
+        document.title = "网站热搜"
         this.openLoading()
         getHot("baidu").then(res => {
             this.baiduList = res.data.data

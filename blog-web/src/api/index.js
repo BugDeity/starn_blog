@@ -96,6 +96,13 @@ export function featchComments(params) {
         params: params
     })
 }
+export function getMyComment(params) {
+    return request({
+        url: '/v1/comment/getMyComment',
+        method: 'get',
+        params: params
+    })
+}
 export function newArticle() {
     return request({
         url: '/v1/upToDateArticle',

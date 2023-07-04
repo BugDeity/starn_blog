@@ -10,7 +10,7 @@ public interface ApiCommentService {
      * @param comment
      * @return
      */
-    ResponseResult insertComment(Comment comment);
+    public ResponseResult insertComment(Comment comment);
 
     /**
      * 分页获取文章评论
@@ -19,7 +19,13 @@ public interface ApiCommentService {
      * @param articleId
      * @return
      */
-    ResponseResult selectCommentByArticleId(int pageNo, int pageSize, Long articleId);
+    public ResponseResult selectCommentByArticleId(int pageNo, int pageSize, Long articleId);
+
+    /**
+     * 获取我的评论
+     * @return
+     */
+    public ResponseResult selectMyComment();
 
 
 }
