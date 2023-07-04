@@ -118,8 +118,8 @@ export default {
                 this.articleList.push(...res.data.records);
                 this.pages = res.data.pages
                 this.total = res.data.total
+                this.loading.close()
             })
-            this.loading.close()
         },
         // 打开加载层
         openLoading: function () {

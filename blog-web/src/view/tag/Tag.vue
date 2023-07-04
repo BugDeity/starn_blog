@@ -81,12 +81,10 @@ export default {
                 this.$refs.tag[i].className = "item-index"
             }
             this.$refs.tag[index].className = "item-index active"
-            this.openLoading()
             this.pageData.tagId = id
             this.pageData.pageNo = 1
             this.articleList = []
             this.fetchArticleList()
-            this.loading.close()
         },
         fetchTagList() {
             this.openLoading()
@@ -94,13 +92,15 @@ export default {
                 this.tagList = res.data
                 this.pageData.tagId = this.tagList[0].id
                 this.fetchArticleList()
+                this.loading.close()
             })
-            this.loading.close()
         },
         fetchArticleList() {
+            this.openLoading()
             fetchArticleList(this.pageData).then(res => {
                 this.articleList.push(...res.data.records)
                 this.pageTotal = res.data.pages
+                this.loading.close()
             })
         },
         // 打开加载层

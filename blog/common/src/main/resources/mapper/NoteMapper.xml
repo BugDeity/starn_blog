@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiyi.mapper.NoteMapper">
+
+
+    <select id="selectPublicNoteList" resultType="com.shiyi.vo.ApiNoteListVO">
+        select n.content,n.id,n.create_time,ui.avatar,ui.nickname from b_note n
+            left join b_user u on n.user_id=u.id
+            left join b_user_info ui on ui.id = u.user_info_id order by n.create_time desc
+    </select>
+</mapper>

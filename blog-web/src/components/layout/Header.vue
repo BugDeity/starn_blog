@@ -35,6 +35,7 @@
                         </router-link>
                     </span>
                 </li>
+
                 <li>
                     <el-dropdown trigger="click">
                         <span class="el-dropdown-link" :class="path == '/archive' || path == '/categorys' || path == '/tag'
@@ -55,6 +56,15 @@
                         </el-dropdown-menu>
                     </el-dropdown>
                 </li>
+
+                <li>
+                    <span>
+                        <router-link style="color: red;" :class="path == '/sponsor' ? 'active' : ''" :to="'/sponsor'">
+                            打赏名单
+                        </router-link>
+                    </span>
+                </li>
+
                 <li>
                     <span>
                         <router-link :class="path == '/photo' ? 'active' : ''" :to="'/photo'">
@@ -64,25 +74,13 @@
                 </li>
 
                 <li>
-                    <el-dropdown trigger="hover">
-                        <span class="el-dropdown-link">
-                            发现<i class="el-icon-arrow-down el-icon--right"></i>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-
-                            <a style="text-decoration: none;color: #71777c;" :href="adminUrl" target="_blank">
-                                <el-dropdown-item>后台管理</el-dropdown-item>
-                            </a>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                </li>
-                <li>
                     <span>
-                        <router-link style="color: red;" :class="path == '/sponsor' ? 'active' : ''" :to="'/sponsor'">
-                            打赏名单
+                        <router-link :class="path == '/note' ? 'active' : ''" :to="'/note'">
+                            笔记
                         </router-link>
                     </span>
                 </li>
+
                 <li>
                     <span>
                         <router-link :class="path == '/hot' ? 'active' : ''" :to="'/hot'">
@@ -118,6 +116,10 @@
                             <a style="text-decoration: none;color: #71777c;" href="https://gitee.com/quequnlong/shiyi-blog"
                                 target="_blank">
                                 <el-dropdown-item>网站源码</el-dropdown-item>
+                            </a>
+
+                            <a style="text-decoration: none;color: #71777c;" :href="adminUrl" target="_blank">
+                                <el-dropdown-item>后台管理</el-dropdown-item>
                             </a>
                         </el-dropdown-menu>
                     </el-dropdown>

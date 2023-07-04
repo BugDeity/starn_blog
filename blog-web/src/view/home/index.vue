@@ -1100,7 +1100,7 @@ export default {
                             padding-left: 10px;
                             padding-bottom: 10px;
                             height: auto;
-                            margin-top: 5px;
+                            margin-top: 10px;
 
                             span {
                                 text-decoration: none;
@@ -1108,7 +1108,7 @@ export default {
                                 padding: 5px;
                                 display: inline-block;
                                 margin-bottom: 10px;
-                                border-radius: 8px;
+                                border-radius: 6px;
                                 color: #fff;
                                 cursor: pointer;
                                 transition: all .3s;

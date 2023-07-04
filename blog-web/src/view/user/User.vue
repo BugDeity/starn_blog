@@ -53,7 +53,7 @@
                                         </el-tooltip>
                                         <el-tooltip class="item" effect="dark" content="删除" placement="top-start">
                                             <el-button size="mini" type="danger" icon="el-icon-delete"
-                                                @click="deleteArticle(item.id)" circle></el-button>
+                                                @click="deleteArticle(item.id, index)" circle></el-button>
                                         </el-tooltip>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                                     <div class="btn">
                                         <el-tooltip class="item" effect="dark" content="取消收藏" placement="top-start">
                                             <el-button size="mini" type="danger" icon="el-icon-delete"
-                                                @click="cancelCollect(item.id)" circle></el-button>
+                                                @click="cancelCollect(item.id, index)" circle></el-button>
                                         </el-tooltip>
                                     </div>
                                 </div>
@@ -281,11 +281,11 @@ export default {
             this.$store.state.articleDrawer.id = id;
 
         },
-        deleteArticle(id) {
+        deleteArticle(id, index) {
             this.$confirm('确认删除吗？')
                 .then(_ => {
                     deleteMyArticle(id).then(res => {
-                        this.selectMyArticleList()
+                        this.articleList.splice(index, 1)
                         this.$message.success("删除成功")
                     }).catch(err => {
                         this.$message.error(err.message)
@@ -421,15 +421,22 @@ export default {
                 this.selectMyComment()
             }
         },
-        cancelCollect(id) {
-            this.openLoading()
-            cancelCollect(id).then(res => {
-                this.$message.success("取消收藏成功")
-                this.selectMyCollect()
-                this.loading.close()
-            }).catch(err => {
-                this.$message.error(err.message)
-            })
+        cancelCollect(id, index) {
+            this.$confirm('确认取消收藏吗？')
+                .then(_ => {
+                    this.openLoading()
+                    cancelCollect(id).then(res => {
+                        this.$message.success("取消收藏成功")
+                        this.collectList.splice(index, 1)
+                        this.loading.close()
+                    }).catch(err => {
+                        this.$message.error(err.message)
+                    })
+                })
+                .catch(_ => {
+                    this.$message.info("取消关闭")
+                });
+
         }
     }
 };

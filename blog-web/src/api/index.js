@@ -318,3 +318,19 @@ export function cancelCollect(id) {
         }
     })
 }
+export function getNote(params) {
+    return request({
+        url: '/v1/note/',
+        method: 'get',
+        params: params
+    })
+}
+export function insertNote(content) {
+    return request({
+        url: '/v1/note/',
+        method: 'post',
+        params: {
+            content: content
+        }
+    })
+}

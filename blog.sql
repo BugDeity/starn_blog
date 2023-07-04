@@ -275,6 +275,21 @@ CREATE TABLE `b_collect` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for b_note
+-- ----------------------------
+DROP TABLE IF EXISTS `b_note`;
+CREATE TABLE `b_note` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `user_id` varchar(100) DEFAULT NULL COMMENT '用户id',
+  `content` mediumtext COMMENT '内容',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='笔记';
+-- ----------------------------
+-- Records of b_note
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for b_friend_link
 -- ----------------------------
 DROP TABLE IF EXISTS `b_friend_link`;

@@ -385,10 +385,10 @@ export default {
             // 计算文章字数
             this.fontNumber = this.deleteHTMLTag(this.article.content).length
             this.getCommens();
+            this.loading.close()
         }).catch(err => {
             this.$message.error(err.message);
         });
-        this.loading.close()
     },
     methods: {
         checkLikeAndCoomment(desc) {
@@ -528,6 +528,7 @@ export default {
                 this.$message.error(err.message);
             })
             this.loading.close()
+
         },
 
     },
@@ -1396,22 +1397,16 @@ export default {
                         padding: 5px 0;
                         margin-left: 30px;
                         margin-bottom: 10px;
-
-
                     }
 
                     .active,
                     .structure:hover {
                         color: var(--theme-color);
+
                     }
                 }
-
-
-
             }
         }
-
-
     }
 }
 

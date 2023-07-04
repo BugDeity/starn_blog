@@ -2,9 +2,6 @@ package com.shiyi.service.impl;
 
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.http.HttpUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -21,7 +18,6 @@ import com.shiyi.mapper.UserInfoMapper;
 import com.shiyi.mapper.UserMapper;
 import com.shiyi.service.ApiUserService;
 import com.shiyi.service.RedisService;
-import com.shiyi.service.WebConfigService;
 import com.shiyi.utils.*;
 import com.shiyi.vo.UserInfoVO;
 import com.shiyi.vo.WxUserInfoVO;
@@ -29,8 +25,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.zhyd.oauth.model.AuthResponse;
-import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,13 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.shiyi.common.ResultCode.*;
 
@@ -60,6 +50,8 @@ public class ApiUserServiceImpl implements ApiUserService {
     private final HttpServletRequest request;
 
     private final UserInfoMapper userInfoMapper;
+
+    private final String userAvatar = "http://img.shiyit.com/user.jpg";
 
 
     /**
@@ -135,7 +127,7 @@ public class ApiUserServiceImpl implements ApiUserService {
             // 保存用户信息
             UserInfo userInfo = UserInfo.builder()
                     .nickname("WECHAT-" + RandomUtils.generationCapital(6))
-                    .avatar("http://img.shiyit.com/66bb121d47e94b89945d29bb6e3e6cab.jpg")
+                    .avatar(userAvatar)
                     .build();
             userInfoMapper.insert(userInfo);
             // 保存账号信息

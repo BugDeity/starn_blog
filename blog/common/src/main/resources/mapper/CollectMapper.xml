@@ -5,7 +5,7 @@
     <select id="selectCollectList" resultType="com.shiyi.vo.ApiArticleListVO">
         select c.create_time as createTime2,a.title,a.id,ui.nickname as username,ui.avatar as userAvatar from b_collect c
             left join b_article a on c.article_id = a.id
-            left join b_user u on c.user_id = u.id
+            left join b_user u on a.user_id = u.id
             left join b_user_info ui on ui.id = u.user_info_id
         where c.user_id = #{userId} order by c.create_time desc
     </select>

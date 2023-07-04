@@ -112,6 +112,13 @@ const routes = [
                     title: "热搜"
                 }
             },
+            {
+                path: "/note",
+                component: resolve => require(["@/view/note/index.vue"], resolve),
+                meta: {
+                    title: "笔记"
+                }
+            },
 
         ],
     },

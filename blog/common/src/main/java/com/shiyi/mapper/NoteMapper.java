@@ -2,9 +2,8 @@ package com.shiyi.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.shiyi.entity.Collect;
-import com.shiyi.vo.ApiArticleListVO;
-import org.apache.ibatis.annotations.Param;
+import com.shiyi.entity.Note;
+import com.shiyi.vo.ApiNoteListVO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,11 +14,12 @@ import org.springframework.stereotype.Repository;
  * @since 2021-08-18
  */
 @Repository
-public interface CollectMapper extends BaseMapper<Collect> {
+public interface NoteMapper extends BaseMapper<Note> {
 
     /**
-     * 我的收藏列表
+     *  获取笔记列表
+     * @param apiNoteListVOPage
      * @return
      */
-    Page<ApiArticleListVO> selectCollectList(Page<ApiArticleListVO> tPage, @Param("userId") String userId);
+    Page<ApiNoteListVO> selectPublicNoteList(Page<ApiNoteListVO> apiNoteListVOPage);
 }
