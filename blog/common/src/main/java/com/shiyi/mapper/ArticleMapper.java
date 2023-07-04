@@ -106,19 +106,19 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @param keywords
      * @return
      */
-    Page<ApiArticleListVO> publicPageSearchArticle(@Param("page") Page<Object> objectPage, @Param("keywords") String keywords);
+    Page<ApiArticleListVO> selectSearchArticle(@Param("page") Page<Object> objectPage, @Param("keywords") String keywords);
 
 
     /**
      * 查询我的文章
      * @return
      */
-    Page<ApiArticleListVO> publicSelectMyArticle(@Param("page")Page<Object> objectPage,@Param("userId") String userId);
+    Page<ApiArticleListVO> selectMyArticle(@Param("page")Page<Object> objectPage,@Param("userId") String userId);
 
     /**
      * 获取我的文章详情
      * @param id
      * @return
      */
-    ArticleInsertDTO publicSelectMyArticleInfo(Long id);
+    ArticleInsertDTO selectMyArticleInfo(Long id);
 }

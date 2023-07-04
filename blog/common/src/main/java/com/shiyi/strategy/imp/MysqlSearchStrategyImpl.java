@@ -27,7 +27,7 @@ public class MysqlSearchStrategyImpl implements SearchStrategy {
     @Override
     public List<ApiArticleSearchVO> searchArticle(String keywords){
         // 搜索文章
-        Page<ApiArticleListVO> articlePage = articleMapper.publicPageSearchArticle(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
+        Page<ApiArticleListVO> articlePage = articleMapper.selectSearchArticle(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
                 keywords);
         articlePage.getRecords().forEach(item -> {
             List<Tags> list = tagsMapper.selectTagByArticleId(item.getId());

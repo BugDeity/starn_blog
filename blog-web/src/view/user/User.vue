@@ -115,7 +115,6 @@
                                     <div class="content">
                                         {{ item.commentContent }}
                                     </div>
-
                                 </div>
                             </el-card>
                         </el-timeline-item>
@@ -152,7 +151,7 @@
                                         type="textarea" v-model="feedback.content" />
                                 </el-form-item>
                             </div>
-                            <el-button type="primary" @click="submit">确 定</el-button>
+                            <el-button type="primary" @click="submit" round>确 定</el-button>
                         </el-form>
                     </div>
                 </el-tab-pane>

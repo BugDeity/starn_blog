@@ -99,7 +99,7 @@
         set is_stick = #{article.isStick}
         where id = #{article.id}
     </update>
-    <select id="publicPageSearchArticle" resultType="com.shiyi.vo.ApiArticleListVO">
+    <select id="selectSearchArticle" resultType="com.shiyi.vo.ApiArticleListVO">
         select a.id,
                a.title,
                a.avatar,
@@ -180,7 +180,7 @@
         from b_article where is_publish = 1
         order by quantity desc limit 5
     </select>
-    <select id="publicSelectMyArticle" resultType="com.shiyi.vo.ApiArticleListVO">
+    <select id="selectMyArticle" resultType="com.shiyi.vo.ApiArticleListVO">
         SELECT
         a.*,
         b.NAME AS categoryName
@@ -190,7 +190,7 @@
         where a.user_id =#{userId}
         order by a.create_time desc
     </select>
-    <select id="publicSelectMyArticleInfo" resultType="com.shiyi.dto.ArticleInsertDTO">
+    <select id="selectMyArticleInfo" resultType="com.shiyi.dto.ArticleInsertDTO">
         SELECT
             *
         FROM

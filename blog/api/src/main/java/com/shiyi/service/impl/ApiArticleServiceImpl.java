@@ -159,7 +159,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
 //        String strategy = SearchModelEnum.getStrategy(systemConfig.getSearchModel());
 //        //搜索逻辑
 //        List<ArticleSearchVO> articleSearchVOS = searchStrategyContext.executeSearchStrategy(strategy, keywords);
-        Page<ApiArticleListVO> articlePage = articleMapper.publicPageSearchArticle(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
+        Page<ApiArticleListVO> articlePage = articleMapper.selectSearchArticle(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
                 keywords);
         articlePage.getRecords().forEach(item -> {
             item.setTitle(item.getTitle().replaceAll("(?i)" + keywords, Constants.PRE_TAG + keywords + Constants.POST_TAG));
@@ -253,7 +253,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      */
     @Override
     public ResponseResult selectMyArticle() {
-        Page<ApiArticleListVO> list = articleMapper.publicSelectMyArticle(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString());
+        Page<ApiArticleListVO> list = articleMapper.selectMyArticle(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString());
         return ResponseResult.success(list);
     }
 
@@ -281,7 +281,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      */
     @Override
     public ResponseResult selectMyArticleInfo(Long id) {
-        ArticleInsertDTO articleInsertDTO  =  articleMapper.publicSelectMyArticleInfo(id);
+        ArticleInsertDTO articleInsertDTO  =  articleMapper.selectMyArticleInfo(id);
         if (!articleInsertDTO.getUserId().equals(StpUtil.getLoginIdAsString())) {
             throw new BusinessException("只能查看自己的文章！");
         }

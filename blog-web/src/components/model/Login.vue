@@ -3,7 +3,7 @@
         <el-dialog :lock-scroll="false" class="dialog" title="账号密码登录" :visible.sync="dialogFormVisible">
             <el-form :model="form" :rules="rules" ref="ruleForm">
                 <el-form-item label="账号" :label-width="formLabelWidth" prop="email">
-                    <el-input placeholder="请输入账号或邮箱号" v-model="form.email" autocomplete="off"></el-input>
+                    <el-input placeholder="请输入账号" v-model="form.email" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
                     <el-input placeholder="请输入密码" v-model="form.password" autocomplete="off" show-password></el-input>
@@ -76,7 +76,7 @@ export default {
             countdown: 60, // 倒计时初始值为 60 秒
             rules: {
                 email: [
-                    { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+                    { required: true, message: '请输入账号', trigger: 'blur' },
                 ],
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blur' },
@@ -118,18 +118,12 @@ export default {
                         wxIsLogin(this.wechatLoginCode).then(res => {
                             setToken(res.data.token)
                             this.close()
-                            location.reload()
                             if (res.data.email == null) {
-                                this.$message({
-                                    message: '请绑定邮箱以便及时收到回复',
-                                    type: 'warning'
-                                });
+                                this.$message.warning("请绑定邮箱以便及时收到回复");
                             } else {
-                                this.$message({
-                                    message: '登录成功',
-                                    type: 'success'
-                                });
+                                this.$message.success("登录成功");
                             }
+                            location.reload()
                         })
                     } else {
                         // 倒计时结束，处理逻辑
@@ -227,7 +221,7 @@ export default {
 
     @media screen and (min-width: 1119px) {
         /deep/ .el-dialog {
-            width: 20%;
+            width: 25%;
             border-radius: 10px;
         }
     }
