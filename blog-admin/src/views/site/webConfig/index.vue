@@ -185,6 +185,10 @@
               <el-input v-model="form.qqNumber" style="width: 400px"></el-input>
               <el-checkbox label="2" style="margin-left: 10px">在首页显示</el-checkbox>
             </el-form-item>
+            <el-form-item label="QQ群" prop="qqNumber">
+              <el-input v-model="form.qqGroup" style="width: 400px"></el-input>
+              <el-checkbox label="6" style="margin-left: 10px">在首页显示</el-checkbox>
+            </el-form-item>
             <el-form-item label="github" prop="github">
               <el-input v-model="form.github" style="width: 400px"></el-input>
               <el-checkbox label="3" style="margin-left: 10px">在首页显示</el-checkbox>

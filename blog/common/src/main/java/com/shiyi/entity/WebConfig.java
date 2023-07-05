@@ -73,6 +73,9 @@ public class WebConfig implements Serializable {
     @ApiModelProperty(value = "QQ号")
     private String qqNumber;
 
+    @ApiModelProperty(value = "QQ群")
+    private String qqGroup;
+
     @ApiModelProperty(value = "邮箱")
     private String email;
 

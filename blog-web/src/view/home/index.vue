@@ -171,13 +171,13 @@
                                     </span>
                                 </div>
                             </li>
-                            <li v-show="isShow(2)">
+                            <li v-show="isShow(6)">
                                 <div class="item qqgroup">
                                     <svg-icon icon-class="qqgroup" />
                                     <a href="javascript:;">
-                                        779881756
+                                        {{ $store.state.webSiteInfo.qqGroup }}
                                     </a>
-                                    <span title="点击复制" @click="copy('779881756')" class="copyBtn name">
+                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.qqGroup)" class="copyBtn name">
                                         QQ群
                                     </span>
                                 </div>
