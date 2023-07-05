@@ -29,9 +29,9 @@
                                     </span>
                                     <el-dropdown-menu slot="dropdown">
                                         <el-dropdown-item command="a">
-                                            <el-select v-model="chooseCategory" placeholder="请选择">
-                                                <el-option v-for="item in categoryList" :key="item.id" :label="item.name"
-                                                    :value="item">
+                                            <el-select v-model="chooseIndex" placeholder="请选择" @change="handleChange">
+                                                <el-option v-for="(item, index) in categoryList" :key="item.id"
+                                                    :label="item.name" :value="index">
                                                 </el-option>
                                             </el-select>
                                         </el-dropdown-item>
@@ -114,6 +114,7 @@ export default {
                     name: "全部"
                 }
             ],
+            chooseIndex: null,
             chooseCategory: null,
             content: ""
         }
@@ -127,6 +128,9 @@ export default {
         this.getNoteList()
     },
     methods: {
+        handleChange(index) {
+            this.chooseCategory = this.categoryList[index]
+        },
         generateCode() {
             this.content += "```使用Enter换行```"
         },
@@ -164,6 +168,7 @@ export default {
             insertNote(note).then(res => {
                 this.content = ""
                 this.chooseCategory = null
+                this.chooseIndex = null
                 this.$message.success("发布笔记成功");
                 this.pageData.pageNo = 1
                 this.loading.close()
