@@ -4,8 +4,15 @@
 
 
     <select id="selectPublicNoteList" resultType="com.shiyi.vo.ApiNoteListVO">
-        select n.content,n.id,n.create_time,ui.avatar,ui.nickname from b_note n
+        select n.content,n.id,n.create_time,ui.avatar,ui.nickname,c.name as categoryName from b_note n
             left join b_user u on n.user_id=u.id
-            left join b_user_info ui on ui.id = u.user_info_id order by n.create_time desc
+            left join b_user_info ui on ui.id = u.user_info_id
+            left join b_category c on n.category_id = c.id
+            <where>
+                <if test="categoryId != null">
+                    n.category_id = #{categoryId}
+                </if>
+            </where>
+        order by n.create_time desc
     </select>
 </mapper>

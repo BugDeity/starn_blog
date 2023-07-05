@@ -21,23 +21,23 @@ public class ApiNoteServiceImpl implements ApiNoteService {
     private final NoteMapper noteMapper;
 
     @Override
-    public ResponseResult selectNoteList() {
-        Page<ApiNoteListVO> result =  noteMapper.selectPublicNoteList(new Page<ApiNoteListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()));
+    public ResponseResult selectNoteList(Integer categoryId) {
+        Page<ApiNoteListVO> result =  noteMapper.selectPublicNoteList(new Page<ApiNoteListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()),categoryId);
         return ResponseResult.success(result);
     }
 
     /**
      * 添加笔记
-     * @param content 内容
+     * @param note 笔记对象
      * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult insertNote(String content) {
-        if (StringUtils.isBlank(content)) {
+    public ResponseResult insertNote(Note note) {
+        if (StringUtils.isBlank(note.getContent())) {
             throw new BusinessException("笔记内容不能为空！");
         }
-        Note note = Note.builder().userId(StpUtil.getLoginIdAsString()).content(content).build();
+        note.setUserId(StpUtil.getLoginIdAsString());
         noteMapper.insert(note);
         return ResponseResult.success();
     }

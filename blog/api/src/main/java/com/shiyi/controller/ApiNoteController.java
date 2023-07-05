@@ -2,6 +2,7 @@ package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.shiyi.common.ResponseResult;
+import com.shiyi.entity.Note;
 import com.shiyi.service.ApiNoteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,15 +24,15 @@ public class ApiNoteController {
 
     @GetMapping(value = "/")
     @ApiOperation(value = "笔记列表", httpMethod = "GET", response = ResponseResult.class, notes = "笔记列表")
-    public ResponseResult selectNoteList() {
-        return apiNoteService.selectNoteList();
+    public ResponseResult selectNoteList(Integer categoryId) {
+        return apiNoteService.selectNoteList(categoryId);
     }
 
     @SaCheckLogin
     @PostMapping(value = "/")
     @ApiOperation(value = "添加笔记", httpMethod = "POST", response = ResponseResult.class, notes = "添加笔记")
-    public ResponseResult insertNote(String content) {
-        return apiNoteService.insertNote(content);
+    public ResponseResult insertNote(@RequestBody  Note note) {
+        return apiNoteService.insertNote(note);
     }
 
 }

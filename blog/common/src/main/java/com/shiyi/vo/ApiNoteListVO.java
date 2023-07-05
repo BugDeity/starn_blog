@@ -25,6 +25,9 @@ public class ApiNoteListVO {
     @ApiModelProperty(value = "内容")
     private String content;
 
+    @ApiModelProperty(value = "分类名")
+    private String categoryName;
+
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = DateUtil.YYYY_MM_DD_HH_MM_SS,timezone="GMT+8")
     private Date createTime;

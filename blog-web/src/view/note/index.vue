@@ -2,14 +2,13 @@
     <div class='note-wapper'>
         <div class="main">
             <div class="note">
-                <div class="tag">
+                <div class="categoryBox">
                     <ul>
-                        <li>
-                            全部
+                        <li ref="categoryRef" :class="index ? 'category_item' : 'active'"
+                            @click="handleClike(item.id, index)" v-for="(item, index) in categoryList" :key="index">
+                            {{ item.name }}
                         </li>
-                        <li>
-                            日常开发
-                        </li>
+
                     </ul>
                 </div>
                 <div class="rigthBox">
@@ -17,8 +16,37 @@
                         <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 100 }"
                             placeholder="请输入笔记内容,支持【Markdown】语法" v-model="content">
                         </el-input>
-                        <div class="btn">
-                            <el-button type="primary" @click="addNote">发布笔记</el-button>
+                        <div class="bottom">
+                            <span class="category">
+                                <el-dropdown trigger="click" placement="bottom-start">
+                                    <span class="el-dropdown-link" style="cursor: pointer;">
+                                        <i class="el-icon-position"></i>
+                                        笔记分类
+                                    </span>
+                                    <el-dropdown-menu slot="dropdown">
+                                        <el-dropdown-item command="a">
+                                            <el-select v-model="chooseCategory" placeholder="请选择">
+                                                <el-option v-for="item in categoryList" :key="item.id" :label="item.name"
+                                                    :value="item">
+                                                </el-option>
+                                            </el-select>
+                                        </el-dropdown-item>
+                                    </el-dropdown-menu>
+                                </el-dropdown>
+                                <el-tag style="margin-left: 10px;" v-if="chooseCategory" type="success" size="small">{{
+                                    chooseCategory.name }}</el-tag>
+                            </span>
+                            <div class="btn">
+                                <div class="emoji-wrapper" v-show="chooseEmoji">
+                                    <span class="emoji-item" v-for="(item, index) of emojiList" :key="index"
+                                        @click="addEmoji(item)">
+                                        <span class="emoji">{{ item.emoji }}
+                                        </span>
+                                    </span>
+                                </div>
+                                <i class="iconfont icon-biaoqing" @click="chooseEmoji = !chooseEmoji"></i>
+                                <el-button type="primary" @click="addNote">发布笔记</el-button>
+                            </div>
                         </div>
                     </div>
 
@@ -30,6 +58,12 @@
                                     <el-avatar class="avatar" :src="item.avatar"></el-avatar>
                                     <span class="username">{{ item.nickname }}</span>
                                     <span class="time">{{ item.createTime }}</span>
+                                    <span class="categoryItem" v-if="item.categoryName">
+                                        <el-tag style="float: right;" size="small">
+                                            {{ item.categoryName }}
+                                        </el-tag>
+                                    </span>
+
                                 </div>
                                 <div class="content">
                                     <v-md-preview :text="item.content" ref="preview" />
@@ -52,29 +86,60 @@
 </template>
    
 <script>
-import { getNote, insertNote } from '@/api'
+import { getNote, insertNote, featchCategory } from '@/api'
 export default {
     name: '',
     data() {
         return {
             pageData: {
                 pageNo: 1,
-                pageSize: 10
+                pageSize: 8,
+                categoryId: null
             },
             pages: 0,
+            chooseEmoji: false,
             noteList: [],
             loading: [],
-            content: null
+            emojiList: [],
+            categoryList: [
+                {
+                    id: null,
+                    name: "全部"
+                }
+            ],
+            chooseCategory: null,
+            content: ""
         }
     },
 
     created() {
+        this.emojiList = require('@/assets/emoji.json');
+        featchCategory().then(respose => {
+            this.categoryList.push(...respose.data)
+        })
         this.getNoteList()
     },
     methods: {
+        handleClike(id, index) {
+            for (var i = 0; i < this.$refs.categoryRef.length; i++) {
+                this.$refs.categoryRef[i].className = "category_item"
+            }
+            this.$refs.categoryRef[index].className = "active"
+            this.pageData.pageNo = 1
+            this.pageData.categoryId = id
+            this.getNoteList()
+        },
         handlePage() {
             this.pageData.pageNo++
-            this.getNoteList()
+            this.openLoading()
+            getNote(this.pageData).then(res => {
+                this.noteList.push(...res.data.records)
+                this.pages = res.data.pages
+                this.loading.close()
+            }).catch(err => {
+                this.$message.error(err.message);
+                this.loading.close()
+            })
         },
         addNote() {
             if (this.content == null || this.content == "") {
@@ -82,9 +147,15 @@ export default {
                 return;
             }
             this.openLoading()
-            insertNote(this.content).then(res => {
+            let note = {
+                content: this.content,
+                categoryId: this.chooseCategory ? this.chooseCategory.id : null
+            }
+            insertNote(note).then(res => {
                 this.content = null
+                this.chooseCategory = null
                 this.$message.success("发布笔记成功");
+                this.pageData.pageNo = 1
                 this.loading.close()
                 this.getNoteList()
             }).catch(err => {
@@ -95,7 +166,7 @@ export default {
         getNoteList() {
             this.openLoading()
             getNote(this.pageData).then(res => {
-                this.noteList.push(...res.data.records)
+                this.noteList = res.data.records
                 this.pages = res.data.pages
                 this.loading.close()
             }).catch(err => {
@@ -111,6 +182,10 @@ export default {
                 spinner: "el-icon-loading",
                 background: "rgba(0, 0, 0, 0.7)"
             });
+        },
+        addEmoji(obj) {
+            this.content += obj.emoji
+            this.chooseEmoji = false
         },
     },
 }
@@ -136,7 +211,7 @@ export default {
                     list-style: none;
                 }
 
-                .tag {
+                .categoryBox {
                     display: none;
                 }
 
@@ -157,7 +232,7 @@ export default {
                             border: 1px solid #2c3e50;
                         }
 
-                        .btn {
+                        .bottom {
                             float: right;
                             height: 50px;
                             margin-top: 10px;
@@ -233,6 +308,14 @@ export default {
     }
 }
 
+/deep/ .el-dropdown-menu__item:hover {
+    background-color: var(--background-color);
+}
+
+/deep/ .el-input__inner {
+    background-color: var(--background-color);
+}
+
 @media screen and (min-width: 1119px) {
     .note-wapper {
         display: flex;
@@ -251,22 +334,29 @@ export default {
                     list-style: none;
                 }
 
-                .tag {
-                    width: 18%;
-                    margin-right: 20px;
+                .categoryBox {
+                    width: 12%;
+                    margin-right: 25px;
 
-                    li {
+                    .category_item,
+                    .active {
                         margin-bottom: 20px;
                         cursor: pointer;
-                        padding: 10px;
+                        padding: 8px;
                         text-align: center;
                         color: var(--article-color);
-
-                        &:hover {
-                            background-color: #c3c3c3;
-                            color: var(--theme-color);
-                        }
                     }
+
+                    .category_item:hover {
+                        background-color: #c3c3c3;
+                        color: var(--theme-color);
+                    }
+
+                    .active {
+                        background-color: #c3c3c3;
+                        color: var(--theme-color);
+                    }
+
                 }
 
                 .rigthBox {
@@ -285,10 +375,54 @@ export default {
                             color: var(--article-color);
                         }
 
-                        .btn {
-                            float: right;
+                        .bottom {
                             height: 50px;
                             margin-top: 10px;
+                            line-height: 50px;
+                            position: relative;
+
+                            .category {
+                                font-size: 0.9rem;
+                                color: #8a8888;
+                            }
+
+                            .btn {
+                                float: right;
+                                align-items: center;
+
+                                .emoji-wrapper {
+                                    background-color: var(--background-color);
+                                    max-height: 200px;
+                                    overflow-y: auto;
+                                    width: 500px;
+                                    border: 2px solid var(--border-line);
+                                    position: absolute;
+                                    top: -140px;
+                                    left: 0px;
+
+                                    .emoji-item {
+                                        cursor: pointer;
+                                        display: inline-block;
+
+                                        .emoji {
+                                            font-size: 20px;
+                                            padding: 3px;
+                                            border-radius: 10px;
+
+                                            &:hover {
+                                                background-color: rgb(221, 221, 221)
+                                            }
+                                        }
+                                    }
+                                }
+
+                                i {
+                                    font-size: 1.2rem;
+                                    margin-right: 20px;
+                                    cursor: pointer;
+                                    color: var(--text-color);
+                                }
+                            }
                         }
                     }
 
@@ -322,7 +456,6 @@ export default {
                                 .userInfo {
                                     align-items: center;
                                     height: 50px;
-                                    line-height: 50px;
                                     margin-bottom: 15px;
 
                                     .avatar {

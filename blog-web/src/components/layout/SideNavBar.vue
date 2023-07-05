@@ -63,6 +63,11 @@
                     </a>
                 </div>
                 <div class="menus-item">
+                    <a @click="handleClike('/note')">
+                        <i class="el-icon-edit" /> 笔记
+                    </a>
+                </div>
+                <div class="menus-item">
                     <a @click="handleClike('/photo')">
                         <i class="el-icon-picture" /> 画廊
                     </a>

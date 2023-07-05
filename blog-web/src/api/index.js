@@ -325,12 +325,10 @@ export function getNote(params) {
         params: params
     })
 }
-export function insertNote(content) {
+export function insertNote(data) {
     return request({
         url: '/v1/note/',
         method: 'post',
-        params: {
-            content: content
-        }
+        data
     })
 }
