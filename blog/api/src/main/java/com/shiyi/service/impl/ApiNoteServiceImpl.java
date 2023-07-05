@@ -1,6 +1,7 @@
 package com.shiyi.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Note;
@@ -22,7 +23,8 @@ public class ApiNoteServiceImpl implements ApiNoteService {
 
     @Override
     public ResponseResult selectNoteList(Integer categoryId) {
-        Page<ApiNoteListVO> result =  noteMapper.selectPublicNoteList(new Page<ApiNoteListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()),categoryId);
+        Page<ApiNoteListVO> result =  noteMapper.selectPublicNoteList(new Page<ApiNoteListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()),
+                categoryId,null);
         return ResponseResult.success(result);
     }
 
@@ -39,6 +41,36 @@ public class ApiNoteServiceImpl implements ApiNoteService {
         }
         note.setUserId(StpUtil.getLoginIdAsString());
         noteMapper.insert(note);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 获取我的笔记列表
+     * @return
+     */
+    @Override
+    public ResponseResult selectMyNote() {
+        Page<ApiNoteListVO> notePage = noteMapper.selectPublicNoteList(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
+                null,StpUtil.getLoginIdAsString());
+        return ResponseResult.success(notePage);
+    }
+
+    /**
+     * 删除我的笔记
+     * @param id 笔记id
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult deleteMyNote(Integer id) {
+        Note note = noteMapper.selectById(id);
+        if (note == null) {
+            throw new BusinessException("笔记不存在!");
+        }
+        if (!note.getUserId().equals(StpUtil.getLoginIdAsString())) {
+            throw new BusinessException("只能删除自己的笔记!");
+        }
+        noteMapper.deleteById(id);
         return ResponseResult.success();
     }
 }

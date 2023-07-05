@@ -16,10 +16,14 @@
                         <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 100 }"
                             placeholder="请输入笔记内容,支持【Markdown】语法" v-model="content">
                         </el-input>
+
                         <div class="bottom">
                             <span class="category">
+                                <span class="item" @click="generateCode">
+                                    &lt;&gt;代码块
+                                </span>
                                 <el-dropdown trigger="click" placement="bottom-start">
-                                    <span class="el-dropdown-link" style="cursor: pointer;">
+                                    <span class="el-dropdown-link item" style="cursor: pointer;">
                                         <i class="el-icon-position"></i>
                                         笔记分类
                                     </span>
@@ -57,7 +61,7 @@
                                 <div class="userInfo">
                                     <el-avatar class="avatar" :src="item.avatar"></el-avatar>
                                     <span class="username">{{ item.nickname }}</span>
-                                    <span class="time">{{ item.createTime }}</span>
+                                    <span class="time"> <i class="el-icon-time"></i> {{ item.createTime }}</span>
                                     <span class="categoryItem" v-if="item.categoryName">
                                         <el-tag style="float: right;" size="small">
                                             {{ item.categoryName }}
@@ -68,14 +72,17 @@
                                 <div class="content">
                                     <v-md-preview :text="item.content" ref="preview" />
                                 </div>
-
                             </li>
+                            <div v-if="pageData.pageNo == pages" style="text-align: center;color: var(--text-color);">
+                                我也是有底线的~~~</div>
+                            <!-- 分页按钮 -->
+                            <div class="page" v-else @click="handlePage">
+                                加载更多
+                            </div>
                         </ul>
                         <el-empty v-else description="本站暂未发布任何笔记"></el-empty>
-                        <!-- 分页按钮 -->
-                        <div class="page" v-if="pageData.pageNo < pages" @click="handlePage">
-                            加载更多
-                        </div>
+
+
                     </div>
 
                 </div>
@@ -120,6 +127,9 @@ export default {
         this.getNoteList()
     },
     methods: {
+        generateCode() {
+            this.content += "```使用Enter换行```"
+        },
         handleClike(id, index) {
             for (var i = 0; i < this.$refs.categoryRef.length; i++) {
                 this.$refs.categoryRef[i].className = "category_item"
@@ -152,7 +162,7 @@ export default {
                 categoryId: this.chooseCategory ? this.chooseCategory.id : null
             }
             insertNote(note).then(res => {
-                this.content = null
+                this.content = ""
                 this.chooseCategory = null
                 this.$message.success("发布笔记成功");
                 this.pageData.pageNo = 1
@@ -192,7 +202,19 @@ export default {
 </script>
    
 <style lang="scss" scoped>
+/deep/ .el-dropdown-menu__item:hover {
+    background-color: var(--background-color);
+}
+
+/deep/ .el-input__inner {
+    background-color: var(--background-color);
+}
+
 @media screen and (max-width: 1118px) {
+    /deep/ .vuepress-markdown-body div[class*=v-md-pre-wrapper-] {
+        margin: 0;
+    }
+
     .note-wapper {
         display: flex;
         justify-content: center;
@@ -221,7 +243,7 @@ export default {
                     .sendBox {
                         background-color: var(--background-color);
                         height: auto;
-                        padding: 10px;
+                        padding: 20px;
                         overflow: auto;
                         zoom: 1;
                         border-radius: 5px;
@@ -229,13 +251,56 @@ export default {
                         /deep/ .el-textarea__inner {
                             background-color: var(--background-color) !important;
                             color: var(--article-color);
-                            border: 1px solid #2c3e50;
                         }
 
                         .bottom {
-                            float: right;
                             height: 50px;
                             margin-top: 10px;
+                            line-height: 50px;
+                            position: relative;
+
+                            .category {
+                                font-size: 0.9rem;
+                                color: #8a8888;
+                            }
+
+                            .btn {
+                                float: right;
+                                align-items: center;
+
+                                .emoji-wrapper {
+                                    background-color: var(--background-color);
+                                    max-height: 200px;
+                                    overflow-y: auto;
+                                    width: 60%;
+                                    border: 2px solid var(--border-line);
+                                    position: absolute;
+                                    top: -140px;
+                                    left: 0px;
+
+                                    .emoji-item {
+                                        cursor: pointer;
+                                        display: inline-block;
+
+                                        .emoji {
+                                            font-size: 20px;
+                                            padding: 3px;
+                                            border-radius: 10px;
+
+                                            &:hover {
+                                                background-color: rgb(221, 221, 221)
+                                            }
+                                        }
+                                    }
+                                }
+
+                                i {
+                                    font-size: 1.2rem;
+                                    margin-right: 20px;
+                                    cursor: pointer;
+                                    color: var(--text-color);
+                                }
+                            }
                         }
                     }
 
@@ -246,15 +311,18 @@ export default {
 
                             .item {
                                 background-color: var(--background-color);
+                                padding: 10px;
                                 margin-bottom: 15px;
+                                transition: box-shadow .35s, transform .35s;
                                 border-radius: 5px;
+
+                                &:hover {
+                                    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+                                    transform: translateY(-2px)
+                                }
 
                                 .content {
                                     color: var(--article-color);
-
-                                    /deep/ .v-md-pre-wrapper {
-                                        margin: 0;
-                                    }
 
                                     /deep/ .vuepress-markdown-body {
                                         padding: 0 !important;
@@ -266,7 +334,6 @@ export default {
                                 .userInfo {
                                     align-items: center;
                                     height: 50px;
-                                    line-height: 50px;
                                     margin-bottom: 15px;
 
                                     .avatar {
@@ -306,14 +373,6 @@ export default {
             }
         }
     }
-}
-
-/deep/ .el-dropdown-menu__item:hover {
-    background-color: var(--background-color);
-}
-
-/deep/ .el-input__inner {
-    background-color: var(--background-color);
 }
 
 @media screen and (min-width: 1119px) {
@@ -383,7 +442,12 @@ export default {
 
                             .category {
                                 font-size: 0.9rem;
-                                color: #8a8888;
+
+                                .item {
+                                    cursor: pointer;
+                                    margin-right: 20px;
+                                    color: var(--text-color);
+                                }
                             }
 
                             .btn {

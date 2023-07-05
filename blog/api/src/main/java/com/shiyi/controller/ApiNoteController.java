@@ -35,4 +35,18 @@ public class ApiNoteController {
         return apiNoteService.insertNote(note);
     }
 
+    @SaCheckLogin
+    @GetMapping(value = "/getMyNote")
+    @ApiOperation(value = "我的笔记列表", httpMethod = "GET", response = ResponseResult.class, notes = "我的笔记列表")
+    public ResponseResult selectMyNote() {
+        return apiNoteService.selectMyNote();
+    }
+
+    @SaCheckLogin
+    @DeleteMapping(value = "/delete")
+    @ApiOperation(value = "删除笔记", httpMethod = "DELETE", response = ResponseResult.class, notes = "删除笔记")
+    public ResponseResult deleteMyNote(Integer id) {
+        return apiNoteService.deleteMyNote(id);
+    }
+
 }

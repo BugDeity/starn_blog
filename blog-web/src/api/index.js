@@ -332,3 +332,19 @@ export function insertNote(data) {
         data
     })
 }
+export function getMyNote(params) {
+    return request({
+        url: '/v1/note/getMyNote',
+        method: 'get',
+        params: params
+    })
+}
+export function deleteNote(id) {
+    return request({
+        url: '/v1/note/delete',
+        method: 'delete',
+        params: {
+            id: id
+        }
+    })
+}

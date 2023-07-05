@@ -128,6 +128,29 @@
 
                 </el-tab-pane>
 
+                <!-- 我的笔记 -->
+                <el-tab-pane name="note">
+                    <span slot="label"><i class="el-icon-notebook-1"></i> 我的笔记</span>
+                    <el-timeline v-if="noteList.length">
+                        <el-timeline-item :timestamp="item.createTime" placement="top" v-for="(item, index) in noteList"
+                            :key="index">
+                            <el-card class="myNote">
+                                <el-tag v-if="item.categoryName">{{ item.categoryName }}</el-tag>
+                                <el-button @click="handleDeleteNote(item.id, index)" style="float: right;" type="danger"
+                                    size="mini" icon="el-icon-delete" circle></el-button>
+                                <v-md-preview :text="item.content" ref="preview" />
+                            </el-card>
+                        </el-timeline-item>
+                        <div v-if="pageData.pageNo == pageTotal" style="text-align: center;color: var(--text-color);">
+                            我也是有底线的~~~</div>
+                        <div v-else style="text-align: center;">
+                            <span @click="handlePage('note')" class="pageBtn">加载更多</span>
+                        </div>
+                    </el-timeline>
+                    <el-empty v-else description="暂未发布过笔记"></el-empty>
+
+                </el-tab-pane>
+
                 <!-- 我的反馈 -->
                 <el-tab-pane name="feedback">
                     <span slot="label"><i class="el-icon-position"></i> 我的反馈</span>
@@ -186,7 +209,7 @@
 <script>
 import {
     updateUserInfo, getUserInfo, upload, updatePassword, getMyArticle,
-    deleteMyArticle, addFeedback, getCollect, cancelCollect, getMyComment
+    deleteMyArticle, addFeedback, getCollect, cancelCollect, getMyComment, getMyNote, deleteNote
 } from '@/api'
 export default {
     data() {
@@ -202,6 +225,7 @@ export default {
             articleList: [],
             collectList: [],
             commentList: [],
+            noteList: [],
             pageData: {
                 pageNo: 1,
                 pageSize: 5
@@ -281,6 +305,20 @@ export default {
             this.$store.state.articleDrawer.id = id;
 
         },
+        handleDeleteNote(id, index) {
+            this.$confirm('确认删除吗？')
+                .then(_ => {
+                    deleteNote(id).then(res => {
+                        this.noteList.splice(index, 1)
+                        this.$message.success("删除成功")
+                    }).catch(err => {
+                        this.$message.error(err.message)
+                    })
+                })
+                .catch(_ => {
+                    this.$message.info("取消关闭")
+                });
+        },
         deleteArticle(id, index) {
             this.$confirm('确认删除吗？')
                 .then(_ => {
@@ -294,7 +332,6 @@ export default {
                 .catch(_ => {
                     this.$message.info("取消关闭")
                 });
-
         },
         updatePassword() {
             this.$refs['ruleForm'].validate((valid) => {
@@ -363,6 +400,9 @@ export default {
             if (type == "comment") {
                 this.selectMyComment()
             }
+            if (type == "note") {
+                this.selectMyNote()
+            }
         },
         selectMyArticleList() {
             this.openLoading()
@@ -394,6 +434,16 @@ export default {
             })
             this.loading.close()
         },
+        selectMyNote() {
+            this.openLoading()
+            getMyNote(this.pageData).then(res => {
+                this.noteList.push(...res.data.records);
+                this.pageTotal = res.data.pages
+            }).catch(err => {
+                console.log(err)
+            })
+            this.loading.close()
+        },
         handeClike(event) {
 
             this.pageData = {
@@ -419,6 +469,10 @@ export default {
             if (index == "comment") {
                 this.commentList = []
                 this.selectMyComment()
+            }
+            if (index == "note") {
+                this.noteList = []
+                this.selectMyNote()
             }
         },
         cancelCollect(id, index) {
@@ -509,7 +563,8 @@ export default {
 
 .myArticle,
 .myCollect,
-.myComent {
+.myComent,
+.myNote {
     h4 {
         cursor: pointer;
     }
@@ -559,5 +614,11 @@ export default {
 
 .myComent .box {
     height: 100%;
+}
+
+.myNote {
+    /deep/ .vuepress-markdown-body {
+        padding: 0;
+    }
 }
 </style> 

@@ -16,4 +16,17 @@ public interface ApiNoteService {
      * @return
      */
     ResponseResult insertNote(Note note);
+
+    /**
+     * 获取我的笔记列表
+     * @return
+     */
+    ResponseResult selectMyNote();
+
+    /**
+     * 删除我的笔记
+     * @param id 笔记id
+     * @return
+     */
+    ResponseResult deleteMyNote(Integer id);
 }
