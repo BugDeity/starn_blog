@@ -171,6 +171,17 @@
                                     </span>
                                 </div>
                             </li>
+                            <li v-show="isShow(2)">
+                                <div class="item qqgroup">
+                                    <svg-icon icon-class="qqgroup" />
+                                    <a href="javascript:;">
+                                        779881756
+                                    </a>
+                                    <span title="点击复制" @click="copy('779881756')" class="copyBtn name">
+                                        QQ群
+                                    </span>
+                                </div>
+                            </li>
                             <li v-show="isShow(3)">
                                 <div class="item github">
                                     <svg-icon icon-class="github" />
@@ -220,7 +231,7 @@
                             <span>推荐文章</span>
                         </div>
                         <ul class="recomArticleUl">
-                            <li v-for="(item, index) in newArticleList">
+                            <li v-for="(   item, index   ) in    newArticleList   ">
                                 <div class="item">
                                     <el-image style="float: left;" :src="item.avatar" fit="fit" />
                                     <p class="info">
@@ -239,7 +250,7 @@
                         </div>
                         <div class="tag">
                             <span @click="handleTagClike(item)" :style="{ backgroundColor: `${randomColor()}` }"
-                                class="item" v-for="(item, index) in tagList" :key="index">
+                                class="item" v-for="(   item, index   ) in    tagList   " :key="index">
                                 {{ item.name }}
                             </span>
                         </div>
@@ -1066,6 +1077,14 @@ export default {
 
                                 .name {
                                     background-color: #409EFF;
+                                }
+                            }
+
+                            .qqgroup {
+                                border: 1px solid #ea9518;
+
+                                .name {
+                                    background-color: #ea9518;
                                 }
                             }
 

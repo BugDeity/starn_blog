@@ -49,7 +49,7 @@
                                     </span>
                                 </div>
                                 <i class="iconfont icon-biaoqing" @click="chooseEmoji = !chooseEmoji"></i>
-                                <el-button type="primary" @click="addNote">发布笔记</el-button>
+                                <el-button size="small" type="primary" @click="addNote">发布笔记</el-button>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                                 加载更多
                             </div>
                         </ul>
-                        <el-empty v-else description="本站暂未发布任何笔记"></el-empty>
+                        <el-empty v-else description="暂未发布笔记"></el-empty>
 
 
                     </div>

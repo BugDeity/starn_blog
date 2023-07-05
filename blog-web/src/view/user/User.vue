@@ -135,9 +135,11 @@
                         <el-timeline-item :timestamp="item.createTime" placement="top" v-for="(item, index) in noteList"
                             :key="index">
                             <el-card class="myNote">
-                                <el-tag v-if="item.categoryName">{{ item.categoryName }}</el-tag>
-                                <el-button @click="handleDeleteNote(item.id, index)" style="float: right;" type="danger"
-                                    size="mini" icon="el-icon-delete" circle></el-button>
+                                <div style="overflow: auto;zoom: 1;">
+                                    <el-tag size="mini" v-if="item.categoryName">{{ item.categoryName }}</el-tag>
+                                    <el-button @click="handleDeleteNote(item.id, index)" style="float: right;" type="danger"
+                                        size="mini" icon="el-icon-delete" circle></el-button>
+                                </div>
                                 <v-md-preview :text="item.content" ref="preview" />
                             </el-card>
                         </el-timeline-item>
