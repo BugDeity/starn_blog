@@ -399,12 +399,13 @@ export default {
                 }
 
                 .categoryBox {
-                    width: 12%;
-                    margin-right: 25px;
+                    width: 8%;
+                    margin-right: 30px;
+                    position: fixed;
 
                     .category_item,
                     .active {
-                        margin-bottom: 20px;
+                        margin-bottom: 10px;
                         cursor: pointer;
                         padding: 8px;
                         text-align: center;
@@ -424,7 +425,8 @@ export default {
                 }
 
                 .rigthBox {
-                    width: 100%;
+                    width: 75%;
+                    margin: 0 auto;
 
                     .sendBox {
                         background-color: var(--background-color);
@@ -433,6 +435,7 @@ export default {
                         overflow: auto;
                         zoom: 1;
                         border-radius: 5px;
+                        margin-left: 20px;
 
                         /deep/ .el-textarea__inner {
                             background-color: var(--background-color) !important;
@@ -497,6 +500,7 @@ export default {
 
                     .noteItem {
                         margin-top: 20px;
+                        margin-left: 20px;
 
                         ul {
 
