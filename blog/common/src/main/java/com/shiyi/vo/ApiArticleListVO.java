@@ -102,7 +102,7 @@ public class ApiArticleListVO {
     /**
      * 带时分秒的时间格式
      */
-    @JsonFormat(pattern = DateUtil.YYYY_MM_DD_HH_MM_SS,timezone="GMT+8")
+    @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date createTime2;
 
     /**

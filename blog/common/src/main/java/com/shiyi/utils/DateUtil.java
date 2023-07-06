@@ -18,6 +18,7 @@ public class DateUtil {
 
     public static final String STARTTIME = " 00:00:00";
     public static final String ENDTIME = " 23:59:59";
+
     public final static String FORMAT_STRING = "yyyy-MM-dd HH:mm:ss";
     public final static String[] REPLACE_STRING = new String[]{"GMT+0800", "GMT+08:00"};
     public final static String SPLIT_STRING = "(中国标准时间)";
@@ -33,8 +34,6 @@ public class DateUtil {
     public final static String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
 
     public static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
-
-    public final static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
     private static String[] parsePatterns = {
             "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",

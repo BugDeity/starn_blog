@@ -7,28 +7,22 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * 笔记列表vo
- */
 @Data
-public class ApiNoteListVO {
+public class SystemNoteListVO {
 
-    @ApiModelProperty(value = "id")
+    @ApiModelProperty(value = "主键ID")
     private Integer id;
 
     @ApiModelProperty(value = "用户昵称")
     private String nickname;
 
-    @ApiModelProperty(value = "用户头像")
-    private String avatar;
+    @ApiModelProperty(value = "分类名")
+    private String categoryName;
 
     @ApiModelProperty(value = "内容")
     private String content;
 
-    @ApiModelProperty(value = "分类名")
-    private String categoryName;
-
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "评论时间")
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date createTime;
 }

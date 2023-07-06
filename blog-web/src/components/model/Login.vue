@@ -18,10 +18,10 @@
                         <svg-icon icon-class="qq" />
                     </a>
 
-                    <a v-show="isShow(3)" @click="openAuthLogin('gitee')">
+                    <a v-show="isShow(4)" @click="openAuthLogin('gitee')">
                         <svg-icon icon-class="gitee" />
                     </a>
-                    <a v-show="isShow(4)" @click="openAuthLogin('weibo')">
+                    <a v-show="isShow(3)" @click="openAuthLogin('weibo')">
                         <svg-icon icon-class="weibo" />
                     </a>
                     <a v-show="isShow(5)" @click="openWechat">

@@ -3,16 +3,11 @@
     <!-- 查询和其他操作 -->
     <el-form v-show="showSearch" :inline="true" ref="form" :model="params" label-width="68px">
       <el-form-item label="友链名称">
-        <el-input style="width: 200px" size="small" v-model="params.name" placeholder="请输入友链名"/>
+        <el-input style="width: 200px" size="small" v-model="params.name" placeholder="请输入友链名" />
       </el-form-item>
       <el-form-item label="友链状态">
         <el-select @change="handleFind" size="small" v-model="params.status" clearable placeholder="友链状态">
-          <el-option
-            v-for="(item,index) in statusOptions"
-            :key="index"
-            :label="item"
-            :value="index"
-          ></el-option>
+          <el-option v-for="(item, index) in statusOptions" :key="index" :label="item" :value="index"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -23,23 +18,12 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          v-if="canAdd"
-          type="primary"
-          icon="el-icon-plus"
-          size="small"
-          @click="handleAdd"
-        >新增
+        <el-button v-if="canAdd" type="primary" icon="el-icon-plus" size="small" @click="handleAdd">新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          :disabled="!multipleSelection.length"
-          type="danger"
-          icon="el-icon-delete"
-          size="small"
-          @click="handleDelete"
-        >批量删除
+        <el-button :disabled="!multipleSelection.length" type="danger" icon="el-icon-delete" size="small"
+          @click="handleDelete">批量删除
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="fetchList"></right-toolbar>
@@ -47,20 +31,16 @@
 
 
     <div style="margin-top: 5px">
-      <el-table border :data="tableData" style="width: 100%" :default-sort="{prop: 'sort', order: 'descending'}"
-                @selection-change="handleSelectionChange">
-        <el-table-column type="selection" align="center"/>
+      <el-table border :data="tableData" style="width: 100%" :default-sort="{ prop: 'sort', order: 'descending' }"
+        @selection-change="handleSelectionChange">
+        <el-table-column type="selection" align="center" />
         <el-table-column label="网站图标" width="80" align="center">
           <template slot-scope="scope">
-            <img
-              v-if="scope.row.avatar"
-              :src="[scope.row.avatar]"
-              style="width: 50px;height:50px;"
-            >
+            <img v-if="scope.row.avatar" :src="[scope.row.avatar]" style="width: 50px;height:50px;">
           </template>
         </el-table-column>
-        <el-table-column prop="name" align="center" label="网站名称" width="180"/>
-        <el-table-column prop="info" align="center" width="180" label="网站描述"/>
+        <el-table-column prop="name" align="center" label="网站名称" width="180" />
+        <el-table-column prop="info" align="center" width="180" label="网站描述" />
         <el-table-column align="center" width="180" label="网站地址">
           <template slot-scope="scope">
             <el-link :underline="false" @click="onClick(scope.row.url)">{{ scope.row.url }}</el-link>
@@ -69,18 +49,18 @@
 
         <el-table-column align="center" prop="status" label="状态">
           <template slot-scope="scope">
-              <span>
-                   <el-tag :type="statusTypes[scope.row.status]">
-                     {{ statusOptions[scope.row.status] }}
-                   </el-tag>
-              </span>
+            <span>
+              <el-tag :type="statusTypes[scope.row.status]">
+                {{ statusOptions[scope.row.status] }}
+              </el-tag>
+            </span>
           </template>
         </el-table-column>
         <el-table-column align="center" prop="sort" sortable label="排序">
           <template slot-scope="scope">
-              <span>
-                   <el-tag type="warning">{{ scope.row.sort }}</el-tag>
-              </span>
+            <span>
+              <el-tag type="warning">{{ scope.row.sort }}</el-tag>
+            </span>
           </template>
         </el-table-column>
         <el-table-column align="center" prop="createTime" width="200" label="创建时间">
@@ -103,8 +83,8 @@
     <!--分页区域-->
     <div class="pagination-container" style="float: right;margin-bottom: 1.25rem;margin-top: 1.25rem;">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                     :current-page="params.pageNo" :page-size="params.pageSize" :page-sizes="[10, 20, 30]"
-                     layout="total, sizes,prev, pager, next,jumper" :total="total">
+        :current-page="params.pageNo" :page-size="params.pageSize" :page-sizes="[10, 20, 30]"
+        layout="total, sizes,prev, pager, next,jumper" :total="total">
       </el-pagination>
     </div>
 
@@ -134,12 +114,7 @@
 
         <el-form-item label="网站状态" :label-width="formLabelWidth" prop="status">
           <el-select v-model="form.status" size="small" placeholder="请选择">
-            <el-option
-              v-for="(item,index) in statusOptions"
-              :key="index"
-              :label="item"
-              :value="index"
-            ></el-option>
+            <el-option v-for="(item, index) in statusOptions" :key="index" :label="item" :value="index"></el-option>
           </el-select>
         </el-form-item>
 
@@ -160,10 +135,10 @@
   </div>
 </template>
 <script>
-import {fetchList, update, create, remove, top} from '@/api/friendLink'
-import {parseTime} from '@/utils'
-import {mapGetters} from "vuex";
-import {hasAuth} from "@/utils/auth";
+import { fetchList, update, create, remove, top } from '@/api/friendLink'
+import { parseTime } from '@/utils'
+import { mapGetters } from "vuex";
+import { hasAuth } from "@/utils/auth";
 
 export default {
 
@@ -191,31 +166,31 @@ export default {
       statusOptions: ["下架", "申请", "上架"],
       rules: {
         avatar: [
-          {required: true, message: '网站头像不能为空', trigger: 'blur'},
+          { required: true, message: '网站头像不能为空', trigger: 'blur' },
         ],
         name: [
-          {required: true, message: '网站名称不能为空', trigger: 'blur'},
-          {min: 1, max: 20, message: '长度在1到20个字符'},
+          { required: true, message: '网站名称不能为空', trigger: 'blur' },
+          { min: 1, max: 20, message: '长度在1到20个字符' },
         ],
         url: [
-          {required: true, message: '网站地址不能为空', trigger: 'blur'},
-          {pattern: /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/, message: '请输入有效的网站地址'},
+          { required: true, message: '网站地址不能为空', trigger: 'blur' },
+          { pattern: /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/, message: '请输入有效的网站地址' },
         ],
         info: [
-          {required: true, message: '网站简介不能为空', trigger: 'blur'}
+          { required: true, message: '网站简介不能为空', trigger: 'blur' }
         ],
-        email: [
-          {required: true,pattern: /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/, message: '请输入正确的邮箱'},
-        ],
+        // email: [
+        //   {required: true,pattern: /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/, message: '请输入正确的邮箱'},
+        // ],
         status: [
-          {required: true, message: '网站状态不能为空', trigger: 'blur'}
+          { required: true, message: '网站状态不能为空', trigger: 'blur' }
         ],
         reason: [
-          {required: true, message: '下架原因不能为空', trigger: 'blur'}
+          { required: true, message: '下架原因不能为空', trigger: 'blur' }
         ],
         sort: [
-          {required: true, message: '排序字段不能为空', trigger: 'blur'},
-          {pattern: /^[0-9]\d*$/, message: '排序字段只能为自然数'},
+          { required: true, message: '排序字段不能为空', trigger: 'blur' },
+          { pattern: /^[0-9]\d*$/, message: '排序字段只能为自然数' },
         ]
       }
     }

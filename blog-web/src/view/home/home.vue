@@ -78,13 +78,7 @@ export default {
             })
         }
         getWebSiteInfo().then(res => {
-            let siteCount = {
-                articleCount: res.extra.articleCount,
-                tagCount: res.extra.tagCount,
-                categoryCount: res.extra.categoryCount,
-            }
-            this.$store.commit("setWebSiteInfo", res.extra.webConfig)
-            this.$store.commit("setSiteCount", siteCount)
+            this.$store.commit("setWebSiteInfo", res.data)
             this.$store.commit("setHotArticles", res.extra.hotArticles)
 
             this.$store.state.siteAccess = res.extra.siteAccess

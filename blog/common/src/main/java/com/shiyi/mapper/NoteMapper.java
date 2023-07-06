@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.entity.Note;
 import com.shiyi.vo.ApiNoteListVO;
+import com.shiyi.vo.SystemNoteListVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -24,4 +25,12 @@ public interface NoteMapper extends BaseMapper<Note> {
      */
     Page<ApiNoteListVO> selectPublicNoteList(Page<ApiNoteListVO> apiNoteListVOPage,@Param("categoryId") Integer categoryId,
                                              @Param("userId") String userId);
+
+    /**
+     * 后台系统-获取笔记列表
+     * @param systemNoteListVOPage
+     * @return
+     */
+    Page<SystemNoteListVO> selectSystemNoteList(Page<SystemNoteListVO> systemNoteListVOPage);
+
 }

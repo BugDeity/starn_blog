@@ -9,34 +9,7 @@
                 <el-avatar :src="$store.state.webSiteInfo.authorAvatar"></el-avatar>
             </div>
             <!-- 博客信息 -->
-            <div class="blog-info-wrapper">
-                <div class="blog-info-data">
 
-                    <a @click="handleClike('/archive')">
-                        <div style="font-size: 0.875rem">文章</div>
-                        <div style="font-size: 1.125rem;">
-                            {{ $store.state.siteCount.articleCount }}
-                        </div>
-                    </a>
-                </div>
-                <div class="blog-info-data">
-
-                    <a @click="handleClike('/categorys')">
-                        <div style="font-size: 0.875rem">分类</div>
-                        <div style="font-size: 1.125rem">
-                            {{ $store.state.siteCount.categoryCount }}
-                        </div>
-                    </a>
-                </div>
-                <div class="blog-info-data">
-                    <a @click="handleClike('/tag')">
-                        <div style="font-size: 0.875rem">标签</div>
-                        <div style="font-size: 1.125rem">
-                            {{ $store.state.siteCount.tagCount }}
-                        </div>
-                    </a>
-                </div>
-            </div>
             <hr />
             <!-- 页面导航 -->
             <div class="menu-container">

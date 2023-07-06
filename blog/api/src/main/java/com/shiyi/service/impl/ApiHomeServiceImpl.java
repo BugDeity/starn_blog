@@ -106,20 +106,13 @@ public class ApiHomeServiceImpl implements ApiHomeService {
                         WebConfig::getQqGroup,WebConfig::getWebUrl, WebConfig::getSummary,WebConfig::getName,WebConfig::getKeyword)
                 .last(LIMIT_ONE));
 
-        //获取文章数
-        Integer articleCount = articleMapper.selectCount(null);
-        Integer categoryCount = categoryMapper.selectCount(null);
-        Integer tagCount = tagsMapper.selectCount(null);
-
         //获取访问量
         Object count = redisService.getCacheObject(RedisConstants.BLOG_VIEWS_COUNT);
         //获取访客量
         Long visitorAccess = redisService.getCacheSetKeyNumber(RedisConstants.UNIQUE_VISITOR);
         //热门文章
         List<ApiArticleListVO> hotArticles = articleMapper.selectHotArticleList();
-        return ResponseResult.success()
-                .putExtra("articleCount",articleCount).putExtra("categoryCount",categoryCount)
-                .putExtra("tagCount",tagCount).putExtra("webConfig",webConfig).putExtra("siteAccess", Optional.ofNullable(count).orElse(0))
+        return ResponseResult.success(webConfig).putExtra("siteAccess", Optional.ofNullable(count).orElse(0))
                 .putExtra("visitorAccess",visitorAccess).putExtra("hotArticles",hotArticles);
     }
 

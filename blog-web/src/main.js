@@ -29,7 +29,6 @@ import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
 
 import Prism from 'prismjs';
 import Clipboard from 'clipboard'
-
 Vue.prototype.Clipboard = Clipboard
 VueMarkdownEditor.use(vuepressTheme, {
   Prism,

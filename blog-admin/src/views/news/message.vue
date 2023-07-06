@@ -3,7 +3,7 @@
     <!-- 查询和其他操作 -->
     <el-form v-show="showSearch" :inline="true" ref="form" :model="params" label-width="68px">
       <el-form-item label="用户名称">
-        <el-input style="width: 200px" v-model="params.name" size="small"  placeholder="请输入昵称"/>
+        <el-input style="width: 200px" v-model="params.name" size="small" placeholder="请输入昵称" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="small" @click="handleFind">查找</el-button>
@@ -13,64 +13,46 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          v-if="canDelBatch"
-          :disabled="!multipleSelection.length"
-          type="danger"
-          icon="el-icon-delete"
-          size="small"
-          @click="handleDeleteBatch"
-        >批量删除
+        <el-button v-if="canDelBatch" :disabled="!multipleSelection.length" type="danger" icon="el-icon-delete"
+          size="small" @click="handleDeleteBatch">批量删除
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          v-if="canPassBatch"
-          :disabled="!multipleSelection.length"
-          type="success"
-          icon="el-icon-circle-check"
-          size="small"
-          @click="handlePassBatch(null)"
-        >批量通过
+        <el-button v-if="canPassBatch" :disabled="!multipleSelection.length" type="success" icon="el-icon-circle-check"
+          size="small" @click="handlePassBatch(null)">批量通过
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="fetchMessage"></right-toolbar>
     </el-row>
 
     <div style="margin-top: 5px">
-      <el-table
-        border
-        :data="tableData"
-        style="width: 100%"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column
-          type="selection"
-          align="center">
+      <el-table border :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" align="center">
         </el-table-column>
-        <el-table-column prop="avatar" align="center" label="头像">
+        <el-table-column prop="avatar" align="center" width="180" label="头像">
           <template slot-scope="scope">
             <el-avatar shape="square" :size="50" :src="scope.row.avatar"></el-avatar>
           </template>
         </el-table-column>
-        <el-table-column prop="nickname" align="center"  width="180" label="昵称" />
-        <el-table-column prop="content" align="center"  width="180" label="内容" />
+        <el-table-column prop="nickname" align="center" width="180" label="昵称" />
+        <el-table-column prop="content" align="center" width="250" label="内容" />
         <el-table-column prop="ipAddress" align="center" width="150" label="ip地址" />
-        <el-table-column prop="ipSource" align="center" width="160" label="ip来源" />
-        <el-table-column prop="status" align="center" label="状态" >
+        <el-table-column prop="ipSource" align="center" width="200" label="ip来源" />
+        <el-table-column prop="status" align="center" width="180" label="状态">
           <template slot-scope="scope">
             <el-tag type="success" v-if="scope.row.status === 1">正常</el-tag>
             <el-tag v-else type="info">审核中</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" width="160" align="center" label="留言时间" >
+        <el-table-column prop="createTime" align="center" label="留言时间">
           <template slot-scope="scope">
             <span>{{ formatTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="操作"  width="160" class-name="small-padding fixed-width">
+        <el-table-column align="center" label="操作" width="160" class-name="small-padding fixed-width">
           <template slot-scope="scope">
-            <el-button v-if="canPassBatch&&!scope.row.status" type="primary" size="mini" @click="handlePassBatch(scope)">通过</el-button>
+            <el-button v-if="canPassBatch && !scope.row.status" type="primary" size="mini"
+              @click="handlePassBatch(scope)">通过</el-button>
             <el-button v-if="canDel" size="mini" type="danger" @click="remove(scope)">删除</el-button>
           </template>
         </el-table-column>
@@ -80,17 +62,17 @@
     <!--分页区域-->
     <div class="pagination-container" style="float: right;margin-bottom: 1.25rem;margin-top: 1.25rem;">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                     :current-page="params.pageNo" :page-size="params.pageSize" :page-sizes="[10, 20, 30]"
-                     layout="total, sizes,prev, pager, next,jumper" :total="total">
+        :current-page="params.pageNo" :page-size="params.pageSize" :page-sizes="[10, 20, 30]"
+        layout="total, sizes,prev, pager, next,jumper" :total="total">
       </el-pagination>
     </div>
   </div>
 </template>
 <script>
-import {fetchMessage, passBatch,deleteBatch,remove} from '@/api/message'
-import {parseTime} from '@/utils'
-import {mapGetters} from "vuex";
-import {hasAuth} from "@/utils/auth";
+import { fetchMessage, passBatch, deleteBatch, remove } from '@/api/message'
+import { parseTime } from '@/utils'
+import { mapGetters } from "vuex";
+import { hasAuth } from "@/utils/auth";
 
 export default {
   data() {
@@ -136,21 +118,21 @@ export default {
         console.log(err)
       })
     },
-    resetQuery : function (){
+    resetQuery: function () {
       this.params.name = null
       this.params.pageNo = 1
       this.fetchMessage()
     },
-    handleFind : function (){
+    handleFind: function () {
       this.params.pageNo = 1
       this.fetchMessage()
     },
     handlePassBatch: function (scope) {
       let ids = []
-      if (scope != null){
+      if (scope != null) {
         ids.push(scope.row.id)
-      }else {
-        this.multipleSelection.forEach(item =>{
+      } else {
+        this.multipleSelection.forEach(item => {
           ids.push(item.id)
         })
       }
@@ -168,7 +150,7 @@ export default {
         type: 'warning'
       }).then(() => {
         let ids = []
-        this.multipleSelection.forEach(item =>{
+        this.multipleSelection.forEach(item => {
           ids.push(item.id)
         })
         deleteBatch(ids).then(res => {

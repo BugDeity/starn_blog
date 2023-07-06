@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
-import { setUser } from '@/utils/auth'
 export default new Vuex.Store({
   state: {
     skin: 'shallow',//shallow浅色模式  //deep深色模式
@@ -17,16 +16,10 @@ export default new Vuex.Store({
       flag: false,
       id: null
     },
-    siteCount: {
-      articleCount: 0,
-      tagCount: 0,
-      categoryCount: 0
-    },
     webSiteInfo: {
       loginTypeList: "",
       showList: "",
     },
-    noticeFlag: true,
     hotArticles: {},
   },
   mutations: {
@@ -56,9 +49,6 @@ export default new Vuex.Store({
     },
     setLoginFlag(state, newValue) {
       state.loginFlag = newValue
-    },
-    setSiteCount(state, newValue) {
-      state.siteCount = newValue
     },
     setUserInfo(state, newValue) {
       state.userInfo = newValue
