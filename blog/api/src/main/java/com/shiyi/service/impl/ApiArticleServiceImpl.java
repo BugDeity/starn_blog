@@ -13,6 +13,7 @@ import com.shiyi.enums.PublishEnum;
 import com.shiyi.enums.ReadTypeEnum;
 import com.shiyi.enums.YesOrNoEnum;
 import com.shiyi.exception.BusinessException;
+import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.mapper.*;
 import com.shiyi.service.ApiArticleService;
 import com.shiyi.service.RedisService;
@@ -66,17 +67,18 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      */
     @Override
     public ResponseResult selectArticleList(Integer categoryId,Integer tagId) {
-        Page<ApiArticleListVO> articlePage = articleMapper.selectArticleList(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
+        Page<ApiArticleListVO> articlePage = articleMapper.selectPublicArticleList(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
                 categoryId,tagId);
         articlePage.getRecords().forEach(item ->{
             setCommentAndLike(item);
-            int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId()));
-            item.setCollectCount(collectCount);
+            //判断当前登录用户是否收藏该文章 标记为收藏
             if (StpUtil.getLoginIdDefaultNull() != null) {
-                collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId())
+                int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId())
                         .eq(Collect::getUserId,StpUtil.getLoginIdAsString()));
                 item.setIsCollect(collectCount > 0);
             }
+            //格式化时间为几秒前 几分钟前等
+            item.setFormatCreateTime(RelativeDateFormat.format(item.getCreateTime()));
         });
         return ResponseResult.success(articlePage);
     }
@@ -164,6 +166,8 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         articlePage.getRecords().forEach(item -> {
             item.setTitle(item.getTitle().replaceAll("(?i)" + keywords, Constants.PRE_TAG + keywords + Constants.POST_TAG));
             setCommentAndLike(item);
+            //格式化时间为几秒前 几分钟前等
+            item.setFormatCreateTime(RelativeDateFormat.format(item.getCreateTime()));
         });
 
         return ResponseResult.success(articlePage);

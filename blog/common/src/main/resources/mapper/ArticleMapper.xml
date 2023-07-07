@@ -117,16 +117,18 @@
         where a.title like concat('%', #{keywords}, '%') and a.is_publish = 1 order by a.create_time desc
     </select>
 
-    <select id="selectArticleList" resultType="com.shiyi.vo.ApiArticleListVO">
+    <select id="selectPublicArticleList" resultType="com.shiyi.vo.ApiArticleListVO">
         select a.id, a.title, a.avatar,a.summary,a.quantity,a.is_stick,a.is_original,
                ui.nickname as username,
                ui.nickname,
                ui.avatar as userAvatar,
+               count(distinct cl.id) as collectCount,
                a.create_time
         from b_article a
         left join b_user b on a.user_id = b.id
         left join b_user_info ui on ui.id = b.user_info_id
         left join b_category c on a.category_id = c.id
+        left join b_collect cl on a.id = cl.article_id
         where a.is_publish = 1
         <if test="categoryId != null">
            and a.category_id = #{categoryId}
@@ -134,7 +136,7 @@
         <if test="tagId != null">
             and a.id in (select article_id from b_article_tag where tag_id =#{tagId})
         </if>
-        order by a.is_stick desc, a.create_time desc
+        group by a.id order by a.is_stick desc, a.create_time desc
     </select>
 
     <select id="selectListArchive" resultType="com.shiyi.vo.ApiArchiveVO">

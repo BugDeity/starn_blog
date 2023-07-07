@@ -54,7 +54,7 @@
                                 <i style="font-size: 0.8rem;" class="iconfont icon-dianzan1"></i>{{ item.likeCount }}
                             </span>
                             <span class="item">
-                                <i class="el-icon-time"></i>{{ item.createTime }}
+                                <i class="el-icon-time"></i>{{ item.formatCreateTime }}
                             </span>
                         </div>
                     </div>
@@ -115,8 +115,8 @@ export default {
                 this.articleList.push(...res.data.records);
                 this.pages = res.data.pages
                 this.total = res.data.total
+                this.loading.close()
             })
-            this.loading.close()
         },
         // 打开加载层
         openLoading: function () {

@@ -71,7 +71,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @param tagId 标签id
      * @return
      */
-    Page<ApiArticleListVO> selectArticleList(Page<Object> page,
+    Page<ApiArticleListVO> selectPublicArticleList(Page<Object> page,
                                              @Param("categoryId") Integer categoryId,@Param("tagId")Integer tagId);
 
 

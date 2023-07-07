@@ -3,7 +3,7 @@
 <mapper namespace="com.shiyi.mapper.CollectMapper">
 
     <select id="selectCollectList" resultType="com.shiyi.vo.ApiArticleListVO">
-        select c.create_time as createTime2,a.title,a.id,ui.nickname as username,ui.avatar as userAvatar from b_collect c
+        select c.create_time,a.title,a.id,ui.nickname as username,ui.avatar as userAvatar from b_collect c
             left join b_article a on c.article_id = a.id
             left join b_user u on a.user_id = u.id
             left join b_user_info ui on ui.id = u.user_info_id

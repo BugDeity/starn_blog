@@ -73,7 +73,7 @@
                 <el-tab-pane name="collect">
                     <span slot="label"><i class="el-icon-star-off"></i> 我的收藏</span>
                     <el-timeline v-if="collectList.length">
-                        <el-timeline-item :timestamp="item.createTime2" placement="top" v-for="(item, index) in collectList"
+                        <el-timeline-item :timestamp="item.createTime" placement="top" v-for="(item, index) in collectList"
                             :key="index">
                             <el-card class="myCollect">
                                 <h4 @click="goArticleInfo(item.id)">{{ item.title }}</h4>
@@ -107,7 +107,7 @@
                 <el-tab-pane name="comment">
                     <span slot="label"><i class="el-icon-chat-dot-round"></i> 我的评论</span>
                     <el-timeline v-if="commentList.length">
-                        <el-timeline-item :timestamp="item.createTime2" placement="top" v-for="(item, index) in commentList"
+                        <el-timeline-item :timestamp="item.createTime" placement="top" v-for="(item, index) in commentList"
                             :key="index">
                             <el-card class="myComent">
                                 <h4 @click="goArticleInfo(item.id)">{{ item.title }}</h4>

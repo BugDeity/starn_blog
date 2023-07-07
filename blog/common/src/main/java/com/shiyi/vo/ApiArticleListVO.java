@@ -93,17 +93,19 @@ public class ApiArticleListVO {
      */
     private String commentContent;
 
+
+
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = DateUtil.YYYY_MM_DD,timezone="GMT+8")
+    @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date createTime;
 
+
     /**
-     * 带时分秒的时间格式
+     * 格式化后的创建时间
      */
-    @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
-    private Date createTime2;
+    private String formatCreateTime;
 
     /**
      * 标签集合
