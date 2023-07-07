@@ -1,6 +1,7 @@
 package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.service.NoteService;
 import io.swagger.annotations.Api;
@@ -28,7 +29,7 @@ public class NoteController {
         return noteService.selectNoteList();
     }
 
-    @SaCheckLogin
+    @SaCheckPermission("/system/note/delete")
     @RequestMapping(value="/delete",method = RequestMethod.DELETE)
     @ApiOperation(value = "删除笔记", httpMethod = "DELETE", response = ResponseResult.class, notes = "删除笔记")
     public ResponseResult delete(@RequestBody List<Integer> ids){

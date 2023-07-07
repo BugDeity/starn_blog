@@ -39,6 +39,26 @@
             left join (select id,nickname,avatar,email,intro,web_site from b_user_info) b on a.user_info_id=b.id
         where username=#{username}
     </select>
+    <select id="selectInfoByUserId" resultType="com.shiyi.vo.UserInfoVO">
+        SELECT
+            u.id,
+            ui.nickname,
+            ui.avatar,
+            ui.intro,
+            ui.web_site,
+            count( DISTINCT a.id ) AS articleCount,
+            count( DISTINCT n.id ) AS noteCount,
+            count( DISTINCT c.id ) AS commentCount,
+            count( DISTINCT cl.id ) AS collectCount
+        FROM
+            b_user u
+                LEFT JOIN b_user_info ui ON u.user_info_id = ui.id
+                LEFT JOIN b_article a ON u.id = a.user_id
+                LEFT JOIN b_note n ON u.id = n.user_id
+                LEFT JOIN b_comment c ON c.user_id = u.id
+                LEFT JOIN b_collect cl ON cl.user_id = u.id
+        WHERE u.id = #{userId} group by u.id
+    </select>
 
     <update id="updateLoginInfo">
         update b_user set last_login_time = now(),ip_address=#{ip},ip_source=#{cityInfo},os=#{os},browser=#{browser} where id=#{loginId}

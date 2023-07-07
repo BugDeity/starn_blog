@@ -53,6 +53,26 @@ public class UserInfoVO {
     private String webSite;
 
     /**
+     * 文章量
+     */
+    private int articleCount;
+
+    /**
+     * 收藏量
+     */
+    private int collectCount;
+
+    /**
+     * 笔记量
+     */
+    private int noteCount;
+
+    /**
+     * 评论量
+     */
+    private int commentCount;
+
+    /**
      * token
      */
     private String token;

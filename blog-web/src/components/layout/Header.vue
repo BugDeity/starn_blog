@@ -233,6 +233,7 @@ export default {
     },
 
     methods: {
+
         addArticle() {
             if (!this.userInfo) {
                 this.handleLogin()
@@ -242,7 +243,8 @@ export default {
             this.$store.state.articleDrawer.id = null;
         },
         openUserInfoDrawer() {
-            this.$store.state.userInfoDrawer = true
+            this.$store.state.userInfoDrawer.flag = true;
+            this.$store.state.userInfoDrawer.name = null;
         },
         handleArticle(id) {
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })

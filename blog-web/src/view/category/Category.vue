@@ -24,16 +24,17 @@
                                 </div>
 
                                 <div class="tag">
-                                    <el-tag style="margin-right: 8px; cursor: pointer;"
+                                    <el-tag style="margin-right: 8px; cursor: pointer;" @click="handleTagClike(tag)"
                                         :type="tagStyle[Math.round(Math.random() * 4)]" size="small"
                                         v-for="tag in item.tagList" :key="tag.id">{{ tag.name
                                         }}</el-tag>
 
                                 </div>
                             </div>
-
                         </el-card>
                     </el-timeline-item>
+                    <div v-if="this.pageData.pageNo >= this.pageTotal" style="text-align: center;color: var(--text-color);">
+                        我也是有底线的~~~</div>
                 </el-timeline>
                 <el-empty v-else description="暂时没有该分类的文章"></el-empty>
             </div>
@@ -67,11 +68,13 @@ export default {
     },
 
     methods: {
+        handleTagClike(item) {
+            this.$router.push({ name: "/tags", query: { id: item.id, name: item.name } })
+        },
         handleArticleClike(id) {
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })
         },
         load() {
-
             if (this.pageData.pageNo < this.pageTotal) {
                 this, this.pageData.pageNo++;
                 this.fetchArticleList()
@@ -95,8 +98,8 @@ export default {
                 this.categoryList = res.data
                 this.pageData.categoryId = this.categoryList[0].id
                 this.fetchArticleList()
+                this.loading.close()
             })
-            this.loading.close()
         },
         fetchArticleList() {
             fetchArticleList(this.pageData).then(res => {

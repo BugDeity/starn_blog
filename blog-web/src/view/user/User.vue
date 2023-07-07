@@ -220,7 +220,7 @@ export default {
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
             // 加载层信息
             loading: [],
-            activeName: 'collect',
+            activeName: "user",
             statuTag: ['下架', '发布', '待审批'],
             statuTagStyle: ['danger', 'success', 'info'],
             files: {},
@@ -268,18 +268,50 @@ export default {
     computed: {
         drawer: {
             set(value) {
-                this.$store.state.userInfoDrawer = value;
+                this.$store.state.userInfoDrawer.name = null;
+                this.$store.state.userInfoDrawer.flag = value;
             },
             get() {
-                if (this.$store.state.userInfoDrawer) {
-                    this.activeName = 'user',
+                if (this.$store.state.userInfoDrawer.flag) {
+                    this.activeName = this.$store.state.userInfoDrawer.name ? this.$store.state.userInfoDrawer.name : 'user',
                         getUserInfo().then(res => {
                             this.form = res.data
                         })
                 }
-                return this.$store.state.userInfoDrawer;
+                return this.$store.state.userInfoDrawer.flag;
             }
         },
+    },
+    watch: {
+        activeName(newValue) {
+            this.pageData = {
+                pageNo: 1,
+                pageSize: 5
+            }
+            // 修改密码
+            if (newValue == "password") {
+            }
+            if (newValue == "article") {
+                this.articleList = []
+                this.selectMyArticleList()
+            }
+            if (newValue == "feedback") {
+                this.feedback = { type: 1 }
+            }
+            if (newValue == "collect") {
+                this.collectList = []
+                this.selectMyCollect()
+            }
+
+            if (newValue == "comment") {
+                this.commentList = []
+                this.selectMyComment()
+            }
+            if (newValue == "note") {
+                this.noteList = []
+                this.selectMyNote()
+            }
+        }
     },
     methods: {
         submit() {
@@ -299,7 +331,8 @@ export default {
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })
         },
         close() {
-            this.$store.commit("setUserInfoDrawer", false)
+            this.$store.state.userInfoDrawer.flag = false;
+            this.$store.state.userInfoDrawer.name = null;
         },
         handleUpdateArticle(id) {
             this.close()
@@ -411,71 +444,44 @@ export default {
             getMyArticle(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
                 this.pageTotal = res.data.pages
+                this.loading.close()
+
             }).catch(err => {
                 console.log(err)
             })
-            this.loading.close()
         },
         selectMyCollect() {
             this.openLoading()
             getCollect(this.pageData).then(res => {
                 this.collectList.push(...res.data.records);
                 this.pageTotal = res.data.pages
+                this.loading.close()
             }).catch(err => {
                 console.log(err)
             })
-            this.loading.close()
         },
         selectMyComment() {
             this.openLoading()
             getMyComment(this.pageData).then(res => {
                 this.commentList.push(...res.data.records);
                 this.pageTotal = res.data.pages
+                this.loading.close()
             }).catch(err => {
                 console.log(err)
             })
-            this.loading.close()
         },
         selectMyNote() {
             this.openLoading()
             getMyNote(this.pageData).then(res => {
                 this.noteList.push(...res.data.records);
                 this.pageTotal = res.data.pages
+                this.loading.close()
             }).catch(err => {
                 console.log(err)
             })
-            this.loading.close()
         },
         handeClike(event) {
 
-            this.pageData = {
-                pageNo: 1,
-                pageSize: 5
-            }
-            const index = event.paneName
-            // 修改密码
-            if (index == "password") {
-            }
-            if (index == "article") {
-                this.articleList = []
-                this.selectMyArticleList()
-            }
-            if (index == "feedback") {
-                this.feedback = { type: 1 }
-            }
-            if (index == "collect") {
-                this.collectList = []
-                this.selectMyCollect()
-            }
-
-            if (index == "comment") {
-                this.commentList = []
-                this.selectMyComment()
-            }
-            if (index == "note") {
-                this.noteList = []
-                this.selectMyNote()
-            }
         },
         cancelCollect(id, index) {
             this.$confirm('确认取消收藏吗？')

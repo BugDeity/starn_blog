@@ -33,6 +33,8 @@
 
                         </el-card>
                     </el-timeline-item>
+                    <div v-if="this.pageData.pageNo >= this.pageTotal" style="text-align: center;color: var(--text-color);">
+                        我也是有底线的~~~</div>
                 </el-timeline>
                 <el-empty v-else description="暂时没有该分类的文章"></el-empty>
             </div>
@@ -66,6 +68,7 @@ export default {
     },
 
     methods: {
+
         handleArticleClike(id) {
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })
         },

@@ -199,19 +199,13 @@ public class ApiUserServiceImpl implements ApiUserService {
      */
     @Override
     public ResponseResult selectUserInfoByToken(String token) {
-        log.info("根据token获取信息请求中，{}", token);
         Object userId = StpUtil.getLoginIdByToken(token);
         if (userId == null) {
             throw new BusinessException("无效的token");
-        } else {
-            User user = userMapper.selectById(userId.toString());
-            UserInfo userInfo = userInfoMapper.selectById(user.getUserInfoId());
-            UserInfoVO userInfoVO = UserInfoVO.builder().nickname(userInfo.getNickname())
-                    .avatar(userInfo.getAvatar()).intro(userInfo.getIntro()).id(user.getId())
-                    .build();
-
-            return ResponseResult.success(userInfoVO);
         }
+
+        UserInfoVO userInfoVO = userMapper.selectInfoByUserId(userId);
+        return ResponseResult.success(userInfoVO);
     }
 
     /**

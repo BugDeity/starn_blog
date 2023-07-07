@@ -123,7 +123,7 @@
                     <!-- 个人信息 -->
                     <el-card v-else class="box-card myUserInfo">
                         <div style="margin-bottom: 15px;margin-top: 10px;">
-                            <a href="javascript:;" @click="$store.state.userInfoDrawer = true" style="display: flex;">
+                            <a href="javascript:;" @click="openUserInfoDrawer(null)" style="display: flex;">
                                 <el-avatar style="border: 1px solid var(--border-line);"
                                     :src="$store.state.userInfo.avatar"></el-avatar>
                                 <div class="userInfo">
@@ -134,22 +134,39 @@
                             </a>
                         </div>
                         <div style="margin-bottom: 15px;margin-top: 30px;display: flex;">
-                            <span class="myArticle">
+                            <span class="myArticle" @click="openUserInfoDrawer('article')">
                                 <div>
-                                    0
+                                    {{ $store.state.userInfo.articleCount }}
                                 </div>
                                 <div class="name">
                                     文章
                                 </div>
                             </span>
-                            <span class="myComment">
+                            <span class="myComment" @click="openUserInfoDrawer('comment')">
                                 <div>
-                                    0
+                                    {{ $store.state.userInfo.commentCount }}
                                 </div>
                                 <div class="name">
                                     评论
                                 </div>
                             </span>
+                            <span class="myNote" @click="openUserInfoDrawer('note')">
+                                <div>
+                                    {{ $store.state.userInfo.noteCount }}
+                                </div>
+                                <div class="name">
+                                    笔记
+                                </div>
+                            </span>
+                            <span class="myCollect" @click="openUserInfoDrawer('collect')">
+                                <div>
+                                    {{ $store.state.userInfo.collectCount }}
+                                </div>
+                                <div class="name">
+                                    收藏
+                                </div>
+                            </span>
+
                         </div>
                     </el-card>
                     <!-- 关注我 -->
@@ -304,6 +321,10 @@ export default {
         this.fetchCategoryList()
     },
     methods: {
+        openUserInfoDrawer(value) {
+            this.$store.state.userInfoDrawer.flag = true;
+            this.$store.state.userInfoDrawer.name = value;
+        },
         handleTagClike(item) {
             this.$router.push({ name: "/tags", query: { id: item.id, name: item.name } })
         },
@@ -910,9 +931,13 @@ export default {
                         }
 
                         .myArticle,
-                        .myComment {
+                        .myComment,
+                        .myCollect,
+                        .myNote {
                             text-align: center;
                             margin-left: 20px;
+                            width: 20%;
+                            cursor: pointer;
 
                             .name {
                                 margin-top: 2px;

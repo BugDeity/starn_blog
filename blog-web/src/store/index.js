@@ -9,7 +9,7 @@ export default new Vuex.Store({
     searchDrawer: false,
     siteAccess: 0,
     visitorAccess: 0,
-    userInfoDrawer: false,
+    userInfoDrawer: { flag: false, name: null },
     userInfo: null,
     isCommentFlag: false,
     articleDrawer: {

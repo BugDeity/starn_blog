@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : 42.192.150.44
  Source Server Type    : MySQL
- Source Server Version : 80031
- Source Host           : localhost:3306
- Source Schema         : blog-demo
+ Source Server Version : 50742
+ Source Host           : 42.192.150.44:3306
+ Source Schema         : blog
 
  Target Server Type    : MySQL
- Target Server Version : 80031
+ Target Server Version : 50742
  File Encoding         : 65001
 
- Date: 15/06/2023 11:37:13
+ Date: 07/07/2023 11:18:32
 */
 
 SET NAMES utf8mb4;
@@ -22,20 +22,20 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `b_admin_log`;
 CREATE TABLE `b_admin_log`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作用户',
   `request_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求接口',
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求方式',
   `operation_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作名称',
   `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'ip',
   `source` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'ip来源',
-  `spend_time` bigint(0) NULL DEFAULT NULL COMMENT '请求接口耗时',
+  `spend_time` bigint(20) NULL DEFAULT NULL COMMENT '请求接口耗时',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `params_json` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '请求参数',
   `class_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类地址',
   `method_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '方法名',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1236 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1360 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_admin_log
@@ -46,92 +46,106 @@ CREATE TABLE `b_admin_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `b_article`;
 CREATE TABLE `b_article`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `user_id` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户id',
-  `category_id` bigint(0) NULL DEFAULT NULL COMMENT '分类id',
+  `category_id` bigint(20) NULL DEFAULT NULL COMMENT '分类id',
   `title` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '文章标题',
   `avatar` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文章封面地址',
   `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '文章简介',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '文章内容 （最多两百字）',
   `content_md` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '文章内容md版',
-  `read_type` int(0) NULL DEFAULT 0 COMMENT '阅读方式 0无需验证 1：评论阅读 2：点赞阅读 3：扫码阅读',
-  `is_stick` int(0) NULL DEFAULT 0 COMMENT '是否置顶 0否 1是',
-  `is_publish` int(0) NULL DEFAULT 0 COMMENT '是否发布 0：下架 1：发布',
-  `is_original` int(0) NULL DEFAULT NULL COMMENT '是否原创  0：转载 1:原创',
+  `read_type` int(2) NULL DEFAULT 0 COMMENT '阅读方式 0无需验证 1：评论阅读 2：点赞阅读 3：扫码阅读',
+  `is_stick` int(11) NULL DEFAULT 0 COMMENT '是否置顶 0否 1是',
+  `is_publish` int(11) NULL DEFAULT 0 COMMENT '是否发布 0：下架 1：发布',
+  `is_original` int(11) NULL DEFAULT 1 COMMENT '是否原创  0：转载 1:原创',
   `original_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '转载地址',
-  `quantity` bigint(0) NULL DEFAULT 0 COMMENT '文章阅读量',
+  `quantity` bigint(20) NULL DEFAULT 0 COMMENT '文章阅读量',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '说明',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'seo关键词',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
-  `is_carousel` int(0) NULL DEFAULT NULL COMMENT '是否首页轮播',
+  `is_carousel` int(11) NULL DEFAULT 0 COMMENT '是否首页轮播',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 130 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客文章表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 154 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客文章表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_article
 -- ----------------------------
-INSERT INTO `b_article` VALUES (14, '1', 12, '关于博客', 'https://tva2.sinaimg.cn/large/9bd9b167ly1g2rmpwaxkkj21hc0u0e81.jpg', '关于博客的一些介绍。', '<blockquote>\n<p>本文主要介绍博客用到的技术和一些功能详情</p>\n</blockquote>\n<h4><a id=\"1_1\"></a>1、博客使用到的技术</h4>\n<ol>\n<li>后端：springboot，mysql，es搜索引擎，以及redis</li>\n<li>前端：vue</li>\n</ol>\n<h4><a id=\"2_5\"></a>2、首页登录</h4>\n<p>本博客支持<a href=\"https://connect.qq.com/index.html\" target=\"_blank\">QQ</a>、<a href=\"https://gitee.com/api/v5/oauth_doc#/\" target=\"_blank\">gitee</a>、<a href=\"https://open.weibo.com/?bottomnav=1&amp;wvr=6\" target=\"_blank\">微博</a>、邮箱登录</p>\n<h4><a id=\"3_7\"></a>3、图片的存储</h4>\n<p>项目中图片存储采用的是<a href=\"https://www.qiniu.com/products/kodo\" target=\"_blank\">七牛云</a>平台的对象存储，因为只有七牛云每个月会有免费的一个额度，其他的都是需要收费的。</p>\n<h4><a id=\"4_9\"></a>4、首页的搜索</h4>\n<p>首页的搜索采用的是es的搜索，eslinux启动的话会占用比较高的一个内存，所以博主介意如需要使用es搜索的购买服务器时资金允许的情况下尽可能购买内存比较多的服务器。然后项目搜索的话主要是围绕文章的标题和内容进行的分词搜索。</p>\n<blockquote>\n<p>上面的话都是一些首页的介绍，原作者只是提供了一个模板，并没有提供后台管理的一个功能，所以我就自己写了一个后台管理，主要借用的是比较火的一个<a href=\"https://gitee.com/panjiachen/vue-admin-template\" target=\"_blank\">vue-admin-template</a>项目模板来进行的二次开发，由于时间有限，所以后台管理开发的功能并不是很多，但是也能进行一个简单的博客管理了。</p>\n</blockquote>\n<h3><a id=\"_14\"></a>后台管理</h3>\n<blockquote>\n<p><a href=\"http://www.shiyit.com/admin\" target=\"_blank\">后台地址</a><br />\n演示账号：test,密码：test</p>\n</blockquote>\n<h4><a id=\"1_17\"></a>1、登录界面</h4>\n<p><img src=\"http://img.shiyit.com/1639989154384.jpg\" alt=\"login.jpg\" /></p>\n<h4><a id=\"2_19\"></a>2、后台首页</h4>\n<p><img src=\"http://img.shiyit.com/1639989162006.png\" alt=\"adminhome1.png\" /><br />\n<img src=\"http://img.shiyit.com/1639989170907.png\" alt=\"adminhome2.png\" /></p>\n<h4><a id=\"3_22\"></a>3、文章管理</h4>\n<ol>\n<li>列表页<br />\n<img src=\"http://img.shiyit.com/1639989186471.png\" alt=\"文章列表.png\" /></li>\n<li>文章添加<br />\n<img src=\"http://img.shiyit.com/1639989202706.png\" alt=\"文章添加.png\" /><br />\n编辑器使用的是mavon-editor编辑器，如不会使用的可以点击下面的链接查看<br />\n<a href=\"https://blog.csdn.net/qq_43681948/article/details/101531303\" target=\"_blank\">Vue markdown编辑器</a></li>\n</ol>\n<h4><a id=\"4_29\"></a>4、标签管理</h4>\n<p><img src=\"http://img.shiyit.com/1639989247680.png\" alt=\"标签列表.png\" /></p>\n<h4><a id=\"5_31\"></a>5、日志管理</h4>\n<ol>\n<li>针对用户访问以及管理员操作和异常信息都做了一个日志的记录</li>\n</ol>\n<p><img src=\"http://img.shiyit.com/1639989291127.png\" alt=\"日志管理.png\" /></p>\n<h4><a id=\"6_35\"></a>6、系统管理</h4>\n<p><img src=\"http://img.shiyit.com/1639989383160.png\" alt=\"系统配置.png\" /></p>\n<h4><a id=\"7_37\"></a>7、监控中心</h4>\n<ol>\n<li>监控中心主要有服务器的监控和定时任务，定时任务支持自动添加修改删除功能，改了时间无需修改代码<br />\n<img src=\"http://img.shiyit.com/1639989456867.png\" alt=\"定时任务.png\" /></li>\n</ol>\n<h4><a id=\"_40\"></a>结尾</h4>\n<p>上述只是项目的一些基础的功能图片，小伙伴们可以自行登录去查看，后台管理所看到的菜单功能都已实现，还在着手后续的一些功能开发。后台管理全由我自己根据模板改造而来，毕竟我只会业余的前端技术，所以有所缺陷也属正常。如有比较有意思的功能欢迎各位小伙伴给我留言，作者觉得有意思的话就会着手开发。如本项目小伙伴觉得可以，希望能够码云star一下，万分感谢！！</p>\n<blockquote>\n<p>码云地址：<a href=\"https://gitee.com/quequnlong/vue-admin-blog\" target=\"_blank\">点我进入</a></p>\n</blockquote>\n<h1><a id=\"bye_43\"></a>bye</h1>\n', '> 本文主要介绍博客用到的技术和一些功能详情\n#### 1、博客使用到的技术\n1. 后端：springboot，mysql，es搜索引擎，以及redis\n2. 前端：vue\n\n#### 2、首页登录\n本博客支持[QQ](https://connect.qq.com/index.html)、[gitee](https://gitee.com/api/v5/oauth_doc#/)、[微博](https://open.weibo.com/?bottomnav=1&wvr=6)、邮箱登录\n#### 3、图片的存储\n项目中图片存储采用的是[七牛云](https://www.qiniu.com/products/kodo)平台的对象存储，因为只有七牛云每个月会有免费的一个额度，其他的都是需要收费的。\n#### 4、首页的搜索\n首页的搜索采用的是es的搜索，eslinux启动的话会占用比较高的一个内存，所以博主介意如需要使用es搜索的购买服务器时资金允许的情况下尽可能购买内存比较多的服务器。然后项目搜索的话主要是围绕文章的标题和内容进行的分词搜索。\n\n> 上面的话都是一些首页的介绍，原作者只是提供了一个模板，并没有提供后台管理的一个功能，所以我就自己写了一个后台管理，主要借用的是比较火的一个[vue-admin-template](https://gitee.com/panjiachen/vue-admin-template)项目模板来进行的二次开发，由于时间有限，所以后台管理开发的功能并不是很多，但是也能进行一个简单的博客管理了。\n\n###  后台管理\n> [后台地址](http://www.shiyit.com/admin)\n演示账号：test,密码：test\n#### 1、登录界面\n![login.jpg](http://img.shiyit.com/1639989154384.jpg)\n#### 2、后台首页\n![adminhome1.png](http://img.shiyit.com/1639989162006.png)\n![adminhome2.png](http://img.shiyit.com/1639989170907.png)\n#### 3、文章管理\n1. 列表页\n![文章列表.png](http://img.shiyit.com/1639989186471.png)\n2. 文章添加\n![文章添加.png](http://img.shiyit.com/1639989202706.png)\n编辑器使用的是mavon-editor编辑器，如不会使用的可以点击下面的链接查看\n[Vue markdown编辑器](https://blog.csdn.net/qq_43681948/article/details/101531303)\n#### 4、标签管理\n![标签列表.png](http://img.shiyit.com/1639989247680.png)\n#### 5、日志管理\n1. 针对用户访问以及管理员操作和异常信息都做了一个日志的记录\n\n![日志管理.png](http://img.shiyit.com/1639989291127.png)\n#### 6、系统管理\n![系统配置.png](http://img.shiyit.com/1639989383160.png)\n#### 7、监控中心\n1. 监控中心主要有服务器的监控和定时任务，定时任务支持自动添加修改删除功能，改了时间无需修改代码\n![定时任务.png](http://img.shiyit.com/1639989456867.png)\n#### 结尾\n上述只是项目的一些基础的功能图片，小伙伴们可以自行登录去查看，后台管理所看到的菜单功能都已实现，还在着手后续的一些功能开发。后台管理全由我自己根据模板改造而来，毕竟我只会业余的前端技术，所以有所缺陷也属正常。如有比较有意思的功能欢迎各位小伙伴给我留言，作者觉得有意思的话就会着手开发。如本项目小伙伴觉得可以，希望能够码云star一下，万分感谢！！\n> 码云地址：[点我进入](https://gitee.com/quequnlong/vue-admin-blog)\n# bye\n\n', 0, 0, 1, 1, NULL, 1746, '', '2021-10-15 09:57:22', 'blog,拾壹博客,博客', '2023-06-05 04:00:00', 0);
+INSERT INTO `b_article` VALUES (14, '1', 12, '关于博客', 'https://tva2.sinaimg.cn/large/9bd9b167ly1g2rmpwaxkkj21hc0u0e81.jpg', '关于博客的一些介绍。', '<blockquote>\n<p>本文主要介绍博客用到的技术和一些功能详情</p>\n</blockquote>\n<h4><a id=\"1_1\"></a>1、博客使用到的技术</h4>\n<ol>\n<li>后端：springboot，mysql，es搜索引擎，以及redis</li>\n<li>前端：vue</li>\n</ol>\n<h4><a id=\"2_5\"></a>2、首页登录</h4>\n<p>本博客支持<a href=\"https://connect.qq.com/index.html\" target=\"_blank\">QQ</a>、<a href=\"https://gitee.com/api/v5/oauth_doc#/\" target=\"_blank\">gitee</a>、<a href=\"https://open.weibo.com/?bottomnav=1&amp;wvr=6\" target=\"_blank\">微博</a>、邮箱登录</p>\n<h4><a id=\"3_7\"></a>3、图片的存储</h4>\n<p>项目中图片存储采用的是<a href=\"https://www.qiniu.com/products/kodo\" target=\"_blank\">七牛云</a>平台的对象存储，因为只有七牛云每个月会有免费的一个额度，其他的都是需要收费的。</p>\n<h4><a id=\"4_9\"></a>4、首页的搜索</h4>\n<p>首页的搜索采用的是es的搜索，eslinux启动的话会占用比较高的一个内存，所以博主介意如需要使用es搜索的购买服务器时资金允许的情况下尽可能购买内存比较多的服务器。然后项目搜索的话主要是围绕文章的标题和内容进行的分词搜索。</p>\n<blockquote>\n<p>上面的话都是一些首页的介绍，原作者只是提供了一个模板，并没有提供后台管理的一个功能，所以我就自己写了一个后台管理，主要借用的是比较火的一个<a href=\"https://gitee.com/panjiachen/vue-admin-template\" target=\"_blank\">vue-admin-template</a>项目模板来进行的二次开发，由于时间有限，所以后台管理开发的功能并不是很多，但是也能进行一个简单的博客管理了。</p>\n</blockquote>\n<h3><a id=\"_14\"></a>后台管理</h3>\n<blockquote>\n<p><a href=\"http://www.shiyit.com/admin\" target=\"_blank\">后台地址</a><br />\n演示账号：test,密码：test</p>\n</blockquote>\n<h4><a id=\"1_17\"></a>1、登录界面</h4>\n<p><img src=\"http://img.shiyit.com/1639989154384.jpg\" alt=\"login.jpg\" /></p>\n<h4><a id=\"2_19\"></a>2、后台首页</h4>\n<p><img src=\"http://img.shiyit.com/1639989162006.png\" alt=\"adminhome1.png\" /><br />\n<img src=\"http://img.shiyit.com/1639989170907.png\" alt=\"adminhome2.png\" /></p>\n<h4><a id=\"3_22\"></a>3、文章管理</h4>\n<ol>\n<li>列表页<br />\n<img src=\"http://img.shiyit.com/1639989186471.png\" alt=\"文章列表.png\" /></li>\n<li>文章添加<br />\n<img src=\"http://img.shiyit.com/1639989202706.png\" alt=\"文章添加.png\" /><br />\n编辑器使用的是mavon-editor编辑器，如不会使用的可以点击下面的链接查看<br />\n<a href=\"https://blog.csdn.net/qq_43681948/article/details/101531303\" target=\"_blank\">Vue markdown编辑器</a></li>\n</ol>\n<h4><a id=\"4_29\"></a>4、标签管理</h4>\n<p><img src=\"http://img.shiyit.com/1639989247680.png\" alt=\"标签列表.png\" /></p>\n<h4><a id=\"5_31\"></a>5、日志管理</h4>\n<ol>\n<li>针对用户访问以及管理员操作和异常信息都做了一个日志的记录</li>\n</ol>\n<p><img src=\"http://img.shiyit.com/1639989291127.png\" alt=\"日志管理.png\" /></p>\n<h4><a id=\"6_35\"></a>6、系统管理</h4>\n<p><img src=\"http://img.shiyit.com/1639989383160.png\" alt=\"系统配置.png\" /></p>\n<h4><a id=\"7_37\"></a>7、监控中心</h4>\n<ol>\n<li>监控中心主要有服务器的监控和定时任务，定时任务支持自动添加修改删除功能，改了时间无需修改代码<br />\n<img src=\"http://img.shiyit.com/1639989456867.png\" alt=\"定时任务.png\" /></li>\n</ol>\n<h4><a id=\"_40\"></a>结尾</h4>\n<p>上述只是项目的一些基础的功能图片，小伙伴们可以自行登录去查看，后台管理所看到的菜单功能都已实现，还在着手后续的一些功能开发。后台管理全由我自己根据模板改造而来，毕竟我只会业余的前端技术，所以有所缺陷也属正常。如有比较有意思的功能欢迎各位小伙伴给我留言，作者觉得有意思的话就会着手开发。如本项目小伙伴觉得可以，希望能够码云star一下，万分感谢！！</p>\n<blockquote>\n<p>码云地址：<a href=\"https://gitee.com/quequnlong/vue-admin-blog\" target=\"_blank\">点我进入</a></p>\n</blockquote>\n<h1><a id=\"bye_43\"></a>bye</h1>\n', '> 本文主要介绍博客用到的技术和一些功能详情\n#### 1、博客使用到的技术\n1. 后端：springboot，mysql，es搜索引擎，以及redis\n2. 前端：vue\n\n#### 2、首页登录\n本博客支持[QQ](https://connect.qq.com/index.html)、[gitee](https://gitee.com/api/v5/oauth_doc#/)、[微博](https://open.weibo.com/?bottomnav=1&wvr=6)、邮箱登录\n#### 3、图片的存储\n项目中图片存储采用的是[七牛云](https://www.qiniu.com/products/kodo)平台的对象存储，因为只有七牛云每个月会有免费的一个额度，其他的都是需要收费的。\n#### 4、首页的搜索\n首页的搜索采用的是es的搜索，eslinux启动的话会占用比较高的一个内存，所以博主介意如需要使用es搜索的购买服务器时资金允许的情况下尽可能购买内存比较多的服务器。然后项目搜索的话主要是围绕文章的标题和内容进行的分词搜索。\n\n> 上面的话都是一些首页的介绍，原作者只是提供了一个模板，并没有提供后台管理的一个功能，所以我就自己写了一个后台管理，主要借用的是比较火的一个[vue-admin-template](https://gitee.com/panjiachen/vue-admin-template)项目模板来进行的二次开发，由于时间有限，所以后台管理开发的功能并不是很多，但是也能进行一个简单的博客管理了。\n\n###  后台管理\n> [后台地址](http://www.shiyit.com/admin)\n演示账号：test,密码：test\n#### 1、登录界面\n![login.jpg](http://img.shiyit.com/1639989154384.jpg)\n#### 2、后台首页\n![adminhome1.png](http://img.shiyit.com/1639989162006.png)\n![adminhome2.png](http://img.shiyit.com/1639989170907.png)\n#### 3、文章管理\n1. 列表页\n![文章列表.png](http://img.shiyit.com/1639989186471.png)\n2. 文章添加\n![文章添加.png](http://img.shiyit.com/1639989202706.png)\n编辑器使用的是mavon-editor编辑器，如不会使用的可以点击下面的链接查看\n[Vue markdown编辑器](https://blog.csdn.net/qq_43681948/article/details/101531303)\n#### 4、标签管理\n![标签列表.png](http://img.shiyit.com/1639989247680.png)\n#### 5、日志管理\n1. 针对用户访问以及管理员操作和异常信息都做了一个日志的记录\n\n![日志管理.png](http://img.shiyit.com/1639989291127.png)\n#### 6、系统管理\n![系统配置.png](http://img.shiyit.com/1639989383160.png)\n#### 7、监控中心\n1. 监控中心主要有服务器的监控和定时任务，定时任务支持自动添加修改删除功能，改了时间无需修改代码\n![定时任务.png](http://img.shiyit.com/1639989456867.png)\n#### 结尾\n上述只是项目的一些基础的功能图片，小伙伴们可以自行登录去查看，后台管理所看到的菜单功能都已实现，还在着手后续的一些功能开发。后台管理全由我自己根据模板改造而来，毕竟我只会业余的前端技术，所以有所缺陷也属正常。如有比较有意思的功能欢迎各位小伙伴给我留言，作者觉得有意思的话就会着手开发。如本项目小伙伴觉得可以，希望能够码云star一下，万分感谢！！\n> 码云地址：[点我进入](https://gitee.com/quequnlong/vue-admin-blog)\n# bye\n\n', 0, 0, 1, 1, NULL, 30, '', '2021-10-15 09:57:22', 'blog,拾壹博客,博客', '2023-07-06 12:00:00', 0);
 
 -- ----------------------------
 -- Table structure for b_article_tag
 -- ----------------------------
 DROP TABLE IF EXISTS `b_article_tag`;
 CREATE TABLE `b_article_tag`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT,
-  `article_id` int(0) NOT NULL COMMENT '文章id',
-  `tag_id` int(0) NOT NULL COMMENT '标签id',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL COMMENT '文章id',
+  `tag_id` int(11) NOT NULL COMMENT '标签id',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `fk_article_tag_1`(`article_id`, `tag_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 729 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 810 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_article_tag
 -- ----------------------------
-INSERT INTO `b_article_tag` VALUES (664, 14, 1);
-INSERT INTO `b_article_tag` VALUES (665, 14, 10);
+INSERT INTO `b_article_tag` VALUES (779, 14, 10);
 
 -- ----------------------------
 -- Table structure for b_category
 -- ----------------------------
 DROP TABLE IF EXISTS `b_category`;
 CREATE TABLE `b_category`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '分类名称',
-  `click_volume` int(0) NULL DEFAULT 0,
-  `sort` int(0) NOT NULL COMMENT '排序',
+  `click_volume` int(11) NULL DEFAULT 0,
+  `sort` int(11) NOT NULL COMMENT '排序',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '最后更新时间',
-  `boutique` int(0) NULL DEFAULT NULL COMMENT '是否推荐',
+  `boutique` int(11) NULL DEFAULT NULL COMMENT '是否推荐',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面图',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `category_name`(`name`) USING BTREE COMMENT '博客分类名称'
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客分类表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_category
 -- ----------------------------
 INSERT INTO `b_category` VALUES (12, '项目介绍', 0, 8, '2021-12-29 10:21:40', '2022-01-20 17:50:32', 1, 'https://img.btstu.cn/api/images/5cc53ed5a7190.jpg');
 INSERT INTO `b_category` VALUES (13, '生活随笔', 0, 4, '2021-12-29 10:22:09', '2021-12-29 10:23:40', 0, 'https://img.btstu.cn/api/images/5cb68c37b8394.jpg');
-INSERT INTO `b_category` VALUES (16, '转载', 0, 3, '2021-12-29 10:41:45', '2023-06-01 17:50:57', 0, 'https://img.btstu.cn/api/images/5c9c3011bae52.jpg');
-INSERT INTO `b_category` VALUES (17, '后端框架', 0, 9, '2021-12-29 14:00:49', '2022-01-21 10:23:18', 1, 'https://img.btstu.cn/api/images/5cc81b00dd92d.jpg');
-INSERT INTO `b_category` VALUES (18, '搜索框架', 0, 5, '2021-12-29 14:01:09', NULL, 1, '\r\nhttp://img.shiyit.com/1639990013089.jpg');
-INSERT INTO `b_category` VALUES (19, '爬虫', 1, 1, '2022-01-07 17:08:57', '2022-01-21 10:23:01', 0, 'https://img.btstu.cn/api/images/5cb0332a3609e.jpg');
+INSERT INTO `b_category` VALUES (16, '运维部署', 0, 3, '2021-12-29 10:41:45', '2023-06-01 17:50:57', 0, 'https://img.btstu.cn/api/images/5c9c3011bae52.jpg');
+INSERT INTO `b_category` VALUES (17, '后端开发', 0, 9, '2021-12-29 14:00:49', '2022-01-21 10:23:18', 1, 'https://img.btstu.cn/api/images/5cc81b00dd92d.jpg');
+INSERT INTO `b_category` VALUES (19, '网络爬虫', 1, 1, '2022-01-07 17:08:57', '2022-01-21 10:23:01', 0, 'https://img.btstu.cn/api/images/5cb0332a3609e.jpg');
 INSERT INTO `b_category` VALUES (20, '小工具', 0, 7, '2022-01-14 15:05:58', '2022-01-20 17:46:18', 0, 'https://img.btstu.cn/api/images/5c9ae72db0524.jpg');
 INSERT INTO `b_category` VALUES (28, '数据库', 0, 0, '2022-02-18 16:01:07', '2022-02-18 08:01:06', 1, 'http://img.shiyit.com/db8abe546b7f415c9acb243efeb070c6.jpg');
-INSERT INTO `b_category` VALUES (29, 'linux', 0, 0, '2022-07-06 10:09:33', '2022-07-06 10:09:32', 0, 'https://img.btstu.cn/api/images/5cb45123b5f2c.jpg');
+INSERT INTO `b_category` VALUES (31, '前端开发', 0, 1, '2023-06-21 15:04:31', '2023-06-21 07:04:30', 0, 'https://img.btstu.cn/api/images/5cc80efeb268e.jpg');
+
+-- ----------------------------
+-- Table structure for b_collect
+-- ----------------------------
+DROP TABLE IF EXISTS `b_collect`;
+CREATE TABLE `b_collect`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户id',
+  `article_id` bigint(20) NOT NULL COMMENT '文章id',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '收藏时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文章收藏表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of b_collect
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for b_comment
 -- ----------------------------
 DROP TABLE IF EXISTS `b_comment`;
 CREATE TABLE `b_comment`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `user_id` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论人ID',
-  `article_id` bigint(0) NOT NULL COMMENT '文章id',
+  `article_id` bigint(20) NOT NULL COMMENT '文章id',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
   `reply_user_id` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '回复人id',
-  `parent_id` int(0) NULL DEFAULT NULL COMMENT '父id',
+  `parent_id` int(11) NULL DEFAULT NULL COMMENT '父id',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '评论时间',
   `browser` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `browser_version` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -139,7 +153,7 @@ CREATE TABLE `b_comment`  (
   `system_version` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `ip_address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'ip地址',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 527 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 583 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_comment
@@ -150,14 +164,14 @@ CREATE TABLE `b_comment`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `b_dict`;
 CREATE TABLE `b_dict`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典名称',
   `type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '字典类型',
   `is_publish` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1' COMMENT '是否发布(1:是，0:否)',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
-  `sort` int(0) NULL DEFAULT 0 COMMENT '排序',
+  `sort` int(11) NULL DEFAULT 0 COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
 
@@ -179,17 +193,17 @@ INSERT INTO `b_dict` VALUES (9, '任务执行策略', 'sys_job_misfire', '1', '�
 -- ----------------------------
 DROP TABLE IF EXISTS `b_dict_data`;
 CREATE TABLE `b_dict_data`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `dict_id` bigint(0) NOT NULL COMMENT '字典类型id',
+  `id` bigint(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `dict_id` bigint(10) NOT NULL COMMENT '字典类型id',
   `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '字典标签',
   `value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '字典键值',
   `style` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '回显样式',
   `is_default` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '是否默认（1是 0否）',
-  `sort` int(0) NULL DEFAULT NULL COMMENT '排序',
+  `sort` int(10) NULL DEFAULT NULL COMMENT '排序',
   `is_publish` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '是否发布(1:是，0:否)',
   `remark` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_dict_data
@@ -202,9 +216,9 @@ INSERT INTO `b_dict_data` VALUES (5, 5, '开启', '1', 'success', '1', 1, '1', '
 INSERT INTO `b_dict_data` VALUES (6, 5, '关闭', '0', 'warning', '0', 2, '1', '系统开关 关闭');
 INSERT INTO `b_dict_data` VALUES (7, 3, 'ES搜素', '1', 'success', '0', 1, '1', '搜索模式：开启ElasticSearch全文检索');
 INSERT INTO `b_dict_data` VALUES (8, 3, 'SQL搜索', '0', 'warning', '1', 2, '1', '搜索模式：SQL搜索');
-INSERT INTO `b_dict_data` VALUES (9, 6, '邮箱', '1', 'primary', '0', 1, '1', '邮箱账号密码登录');
+INSERT INTO `b_dict_data` VALUES (9, 6, '账号', '1', 'primary', '0', 1, '1', '账号密码登录');
 INSERT INTO `b_dict_data` VALUES (10, 6, 'QQ', '2', 'success', '1', 2, '1', 'QQ登录');
-INSERT INTO `b_dict_data` VALUES (11, 6, '微博', '4', 'danger', '0', 3, '1', '微博登录');
+INSERT INTO `b_dict_data` VALUES (11, 6, '微博', '3', 'danger', '0', 3, '1', '微博登录');
 INSERT INTO `b_dict_data` VALUES (12, 1, '男', '1', '', '1', 1, '1', '性别 男');
 INSERT INTO `b_dict_data` VALUES (13, 1, '女', '0', '', '1', 0, '1', '性别 女');
 INSERT INTO `b_dict_data` VALUES (14, 7, '默认', 'DEFAULT', 'primary', '1', 1, '1', '默认分组');
@@ -215,15 +229,17 @@ INSERT INTO `b_dict_data` VALUES (18, 9, '默认策略', '0', '', '1', 1, '1', '
 INSERT INTO `b_dict_data` VALUES (19, 9, '立即执行', '1', '', '0', 2, '1', '立即执行');
 INSERT INTO `b_dict_data` VALUES (20, 9, '执行一次', '2', '', '0', 3, '1', '执行一次');
 INSERT INTO `b_dict_data` VALUES (21, 9, '放弃执行', '3', '', '0', 4, '1', '放弃执行');
-INSERT INTO `b_dict_data` VALUES (22, 6, '码云', '3', 'danger', '0', 4, '1', 'gitee登录');
+INSERT INTO `b_dict_data` VALUES (22, 6, '码云', '4', 'danger', '0', 4, '1', 'gitee登录');
 INSERT INTO `b_dict_data` VALUES (23, 6, '微信', '5', 'success', '1', 5, '1', '微信登录');
+INSERT INTO `b_dict_data` VALUES (24, 2, '待审批', '2', 'info', '1', 0, '1', NULL);
+INSERT INTO `b_dict_data` VALUES (25, 6, 'github', '6', 'info', '1', 0, '1', 'github登录');
 
 -- ----------------------------
 -- Table structure for b_exception_log
 -- ----------------------------
 DROP TABLE IF EXISTS `b_exception_log`;
 CREATE TABLE `b_exception_log`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'IP',
   `ip_source` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'ip来源',
@@ -234,7 +250,7 @@ CREATE TABLE `b_exception_log`  (
   `exception_message` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '异常简单信息,等同于e.getMessage',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '发生时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 80 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_exception_log
@@ -244,50 +260,19 @@ CREATE TABLE `b_exception_log`  (
 -- Table structure for b_feed_back
 -- ----------------------------
 DROP TABLE IF EXISTS `b_feed_back`;
-CREATE TABLE `b_feed_back` (
-   `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
-   `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户id',
-   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
-   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '详细内容',
-   `img_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '图片地址',
-   `create_time` datetime DEFAULT NULL COMMENT '添加时间',
-   `type` int NOT NULL COMMENT '反馈类型 1:需求 2：缺陷',
-   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COMMENT = '反馈表';
+CREATE TABLE `b_feed_back`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户id',
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '详细内容',
+  `img_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '图片地址',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '添加时间',
+  `type` int(11) NOT NULL COMMENT '反馈类型 1:需求 2：缺陷',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
 -- ----------------------------
 -- Records of b_feed_back
--- ----------------------------
-
--- ----------------------------
--- Table structure for b_collect
--- ----------------------------
-DROP TABLE IF EXISTS `b_collect`;
-CREATE TABLE `b_collect` (
-     `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-     `user_id` varchar(100) NOT NULL COMMENT '用户id',
-     `article_id` bigint NOT NULL COMMENT '文章id',
-     `create_time` datetime DEFAULT NULL COMMENT '收藏时间',
-     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文章收藏表';
-
--- ----------------------------
--- Records of b_collect
--- ----------------------------
-
--- ----------------------------
--- Table structure for b_note
--- ----------------------------
-DROP TABLE IF EXISTS `b_note`;
-CREATE TABLE `b_note` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `user_id` varchar(100) DEFAULT NULL COMMENT '用户id',
-  `content` mediumtext COMMENT '内容',
-  `category_id` int DEFAULT NULL COMMENT '分类id',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='笔记';
--- ----------------------------
--- Records of b_note
 -- ----------------------------
 
 -- ----------------------------
@@ -295,15 +280,15 @@ CREATE TABLE `b_note` (
 -- ----------------------------
 DROP TABLE IF EXISTS `b_friend_link`;
 CREATE TABLE `b_friend_link`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站名称',
   `url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站地址',
   `avatar` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '网站头像地址',
   `info` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '网站描述',
   `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮箱',
-  `sort` int(0) NULL DEFAULT 0 COMMENT '排序',
+  `sort` int(11) NULL DEFAULT 0 COMMENT '排序',
   `reason` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '下架原因',
-  `status` int(0) NOT NULL DEFAULT 0 COMMENT 'ENUM-状态:\"0,下架;1,申请;2:上架\"',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT 'ENUM-状态:\"0,下架;1,申请;2:上架\"',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -312,14 +297,14 @@ CREATE TABLE `b_friend_link`  (
 -- ----------------------------
 -- Records of b_friend_link
 -- ----------------------------
-INSERT INTO `b_friend_link` VALUES (4, '拾壹博客', 'http://www.shiyit.com', '\r\nhttp://img.shiyit.com/logo2.png', '哪有那么多的如果', '2484913345@qq.com', 1, NULL, 2, '2022-12-13 09:16:15', '2022-12-13 09:16:15');
+INSERT INTO `b_friend_link` VALUES (4, '拾壹博客', 'http://www.shiyit.com', 'http://img.shiyit.com/logo-ico.png', '一个专注技术分享的平台', '2484913345@qq.com', 1, NULL, 2, '2022-12-13 09:16:15', '2022-12-13 09:16:15');
 
 -- ----------------------------
 -- Table structure for b_im_message
 -- ----------------------------
 DROP TABLE IF EXISTS `b_im_message`;
 CREATE TABLE `b_im_message`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `to_user_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT '发送用户id',
   `from_user_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT '接收用户id',
   `to_user_avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT '发送用户头像',
@@ -327,9 +312,9 @@ CREATE TABLE `b_im_message`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '发送时间',
   `ip_source` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT 'ip地址',
   `ip` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT '发送用户ip',
-  `is_withdraw` int(0) NULL DEFAULT NULL COMMENT '消息是否撤回 0：未撤回  1：撤回',
+  `is_withdraw` int(1) NULL DEFAULT NULL COMMENT '消息是否撤回 0：未撤回  1：撤回',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 284 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_german2_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 316 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_german2_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_im_message
@@ -340,7 +325,7 @@ CREATE TABLE `b_im_message`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `b_job`;
 CREATE TABLE `b_job`  (
-  `job_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+  `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务ID',
   `job_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '任务名称',
   `job_group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
   `invoke_target` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '调用目标字符串',
@@ -354,24 +339,24 @@ CREATE TABLE `b_job`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注信息',
   PRIMARY KEY (`job_id`, `job_name`, `job_group`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_job
 -- ----------------------------
-INSERT INTO `b_job` VALUES (1, '自动更新文章阅读数', 'DEFAULT', 'blogQuartz.updateReadQuantity', '0 0 4 * * ?', '3', '1', '0', '拾壹', '2021-12-08 17:16:40', '', NULL, '');
-INSERT INTO `b_job` VALUES (2, '系统默认（无参）', 'DEFAULT', 'blogQuartz.ryNoParams', '0/10 * * * * ?', '3', '1', '1', '拾壹', '2021-12-09 09:09:21', '', NULL, '');
+INSERT INTO `b_job` VALUES (2, '系统默认（无参）', 'DEFAULT', 'blogQuartz.ryNoParams', '0/10 * * * * ?', '3', '1', '1', '拾壹', '2021-12-09 09:09:21', '', '2023-06-30 14:50:29', '');
 INSERT INTO `b_job` VALUES (3, '系统默认（有参）', 'DEFAULT', 'blogQuartz.ryParams(\'ry\')', '0/15 * * * * ?', '3', '1', '1', '拾壹', '2021-12-09 09:09:21', '', NULL, '');
-INSERT INTO `b_job` VALUES (6, '定时修改标签的点击量', 'DEFAULT', 'blogQuartz.updateTagsClickVolume', '0 0 3 * * ?', '0', '1', '0', '拾壹', '2021-12-17 15:37:20', 'shiyi', '2022-12-13 09:23:50', '1');
-INSERT INTO `b_job` VALUES (7, '定时删除当天验证通过的ip', 'DEFAULT', 'blogQuartz.removeCodePassInIp', '0 30 23 * * ?', '0', '1', '0', '拾壹', '2022-01-11 16:39:42', 'shiyi', '2022-12-13 09:23:35', '1');
+INSERT INTO `b_job` VALUES (6, '定时修改标签的点击量', 'DEFAULT', 'blogQuartz.updateTagsClickVolume', '0 0 3 * * ?', '0', '1', '1', '拾壹', '2021-12-17 15:37:20', 'shiyi', '2022-12-13 09:23:50', '1');
+INSERT INTO `b_job` VALUES (8, '定时修改文章阅读量', 'SYSTEM', 'blogQuartz.updateReadQuantity', '0 0 4 * * ?', '0', '1', '0', 'shiyi', '2023-06-30 10:55:03', '', NULL, '1');
+INSERT INTO `b_job` VALUES (9, '定时删除当天校验通过的IP', 'SYSTEM', 'blogQuartz.removeCodePassInIp', '0 30 23 * * ?', '0', '0', '0', 'shiyi', '2023-06-30 10:56:31', 'shiyi', '2023-06-30 10:56:35', '1');
 
 -- ----------------------------
 -- Table structure for b_job_log
 -- ----------------------------
 DROP TABLE IF EXISTS `b_job_log`;
 CREATE TABLE `b_job_log`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
-  `job_id` bigint(0) NOT NULL COMMENT '任务ID',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
+  `job_id` bigint(20) NOT NULL COMMENT '任务ID',
   `job_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务名称',
   `job_group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务组名',
   `invoke_target` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '调用目标字符串',
@@ -382,7 +367,7 @@ CREATE TABLE `b_job_log`  (
   `start_time` datetime(0) NULL DEFAULT NULL COMMENT '开始时间',
   `stop_time` datetime(0) NULL DEFAULT NULL COMMENT '结束时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1423 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1487 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_job_log
@@ -393,23 +378,23 @@ CREATE TABLE `b_job_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `b_menu`;
 CREATE TABLE `b_menu`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `parent_id` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '上级资源ID',
-  `url` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'url',
-  `component` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '资源编码',
-  `title` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '资源名称',
-  `level` int(0) NULL DEFAULT NULL COMMENT '资源级别',
-  `sort_no` int(0) NULL DEFAULT NULL COMMENT '排序',
-  `icon` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '资源图标',
-  `type` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '类型 menu、button',
-  `remarks` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `parent_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '上级资源ID',
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'url',
+  `component` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '资源编码',
+  `title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '资源名称',
+  `level` int(11) NULL DEFAULT NULL COMMENT '资源级别',
+  `sort_no` int(11) NULL DEFAULT NULL COMMENT '排序',
+  `icon` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '资源图标',
+  `type` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型 menu、button',
+  `remarks` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `redirect` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '重定向地址',
-  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '跳转地址',
-  `hidden` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否隐藏',
+  `redirect` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '重定向地址',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '跳转地址',
+  `hidden` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否隐藏',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 272 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统管理-权限资源表 ' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 275 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统管理-权限资源表 ' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_menu
@@ -560,26 +545,46 @@ INSERT INTO `b_menu` VALUES (268, '266', '/system/comment/deleteBatch', '', '批
 INSERT INTO `b_menu` VALUES (269, '164', 'cache', '/listener/cache', '缓存监控', 1, 5, 'el-icon-hot-water', 'menu', '', NULL, NULL, NULL, 'caches', '1');
 INSERT INTO `b_menu` VALUES (270, '269', '/system/home/cache', '', '获取缓存监控', 2, 1, NULL, 'btn', '', NULL, NULL, NULL, NULL, '0');
 INSERT INTO `b_menu` VALUES (271, '27', '/system/article/top', '', '置顶文章', 2, 5, NULL, 'btn', '', NULL, NULL, NULL, NULL, '0');
+INSERT INTO `b_menu` VALUES (272, '26', 'note', '/articles/note', '笔记管理', 1, 4, 'el-icon-notebook-1', 'menu', '', NULL, NULL, NULL, 'note', '1');
+INSERT INTO `b_menu` VALUES (273, '272', '/system/note/list', '', '列表', 2, 1, NULL, 'btn', '', NULL, NULL, NULL, NULL, '0');
+INSERT INTO `b_menu` VALUES (274, '272', '/system/note/delete', '', '删除', 2, 2, NULL, 'btn', '', NULL, NULL, NULL, NULL, '0');
 
 -- ----------------------------
 -- Table structure for b_message
 -- ----------------------------
 DROP TABLE IF EXISTS `b_message`;
 CREATE TABLE `b_message`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `ip_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `ip_source` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `time` tinyint(0) NULL DEFAULT NULL,
-  `status` int(0) NULL DEFAULT NULL COMMENT '状态 0:审核  1：正常',
+  `time` tinyint(10) NULL DEFAULT NULL,
+  `status` int(1) NULL DEFAULT NULL COMMENT '状态 0:审核  1：正常',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 620 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 651 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_message
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for b_note
+-- ----------------------------
+DROP TABLE IF EXISTS `b_note`;
+CREATE TABLE `b_note`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户id',
+  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
+  `category_id` int(11) NULL DEFAULT NULL COMMENT '分类id',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '笔记' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of b_note
 -- ----------------------------
 
 -- ----------------------------
@@ -587,8 +592,8 @@ CREATE TABLE `b_message`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `b_photo`;
 CREATE TABLE `b_photo`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `album_id` int(0) NOT NULL COMMENT '相册id',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `album_id` int(11) NOT NULL COMMENT '相册id',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '照片名',
   `info` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '照片描述',
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '照片地址',
@@ -610,11 +615,11 @@ INSERT INTO `b_photo` VALUES (4, 2, '壁纸2', '壁纸1', 'http://img.shiyit.com
 -- ----------------------------
 DROP TABLE IF EXISTS `b_photo_album`;
 CREATE TABLE `b_photo_album`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '相册名',
   `info` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '相册描述',
   `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '相册封面',
-  `status` int(0) NOT NULL DEFAULT 0 COMMENT '状态值 0公开 1私密',
+  `status` int(1) NOT NULL DEFAULT 0 COMMENT '状态值 0公开 1私密',
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -631,14 +636,14 @@ INSERT INTO `b_photo_album` VALUES (2, '壁纸', '壁纸', '', 0, '2023-06-15 11
 -- ----------------------------
 DROP TABLE IF EXISTS `b_role`;
 CREATE TABLE `b_role`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `code` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '角色编码',
-  `name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '角色名称',
-  `remarks` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '角色描述',
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色编码',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称',
+  `remarks` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色描述',
   `created_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统管理-角色表 ' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统管理-角色表 ' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_role
@@ -653,169 +658,18 @@ INSERT INTO `b_role` VALUES (6, 'user', '用户', '网站的发文博主', '2023
 -- ----------------------------
 DROP TABLE IF EXISTS `b_role_menu`;
 CREATE TABLE `b_role_menu`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `role_id` int(0) NULL DEFAULT NULL COMMENT '角色ID',
-  `menu_id` int(0) NULL DEFAULT NULL COMMENT '菜单ID',
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `role_id` int(10) NULL DEFAULT NULL COMMENT '角色ID',
+  `menu_id` int(10) NULL DEFAULT NULL COMMENT '菜单ID',
   `created_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `last_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `role_id`(`role_id`, `menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11972 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统管理 - 角色-权限资源关联表 ' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12121 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统管理 - 角色-权限资源关联表 ' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_role_menu
 -- ----------------------------
-INSERT INTO `b_role_menu` VALUES (11663, 1, 1, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11664, 1, 2, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11665, 1, 3, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11666, 1, 4, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11667, 1, 5, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11668, 1, 6, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11669, 1, 7, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11670, 1, 185, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11671, 1, 8, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11672, 1, 9, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11673, 1, 10, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11674, 1, 11, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11675, 1, 12, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11676, 1, 13, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11677, 1, 14, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11678, 1, 15, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11679, 1, 16, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11680, 1, 17, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11681, 1, 18, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11682, 1, 19, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11683, 1, 20, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11684, 1, 21, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11685, 1, 22, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11686, 1, 23, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11687, 1, 24, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11688, 1, 25, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11689, 1, 182, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11690, 1, 183, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11691, 1, 184, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11692, 1, 26, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11693, 1, 27, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11694, 1, 28, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11695, 1, 29, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11696, 1, 30, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11697, 1, 31, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11698, 1, 32, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11699, 1, 33, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11700, 1, 215, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11701, 1, 253, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11702, 1, 262, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11703, 1, 271, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11704, 1, 35, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11705, 1, 36, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11706, 1, 37, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11707, 1, 38, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11708, 1, 39, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11709, 1, 40, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11710, 1, 189, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11711, 1, 216, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11712, 1, 223, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11713, 1, 224, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11714, 1, 225, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11715, 1, 226, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11716, 1, 227, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11717, 1, 228, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11718, 1, 229, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11719, 1, 230, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11720, 1, 41, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11721, 1, 51, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11722, 1, 52, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11723, 1, 53, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11724, 1, 54, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11725, 1, 55, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11726, 1, 254, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11727, 1, 169, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11728, 1, 170, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11729, 1, 173, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11730, 1, 174, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11731, 1, 176, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11732, 1, 177, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11733, 1, 171, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11734, 1, 172, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11735, 1, 175, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11736, 1, 178, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11737, 1, 179, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11738, 1, 180, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11739, 1, 181, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11740, 1, 186, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11741, 1, 187, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11742, 1, 188, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11743, 1, 217, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11744, 1, 218, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11745, 1, 219, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11746, 1, 220, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11747, 1, 221, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11748, 1, 56, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11749, 1, 57, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11750, 1, 58, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11751, 1, 250, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11752, 1, 59, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11753, 1, 60, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11754, 1, 251, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11755, 1, 61, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11756, 1, 62, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11757, 1, 252, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11758, 1, 63, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11759, 1, 64, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11760, 1, 65, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11761, 1, 260, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11762, 1, 66, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11763, 1, 67, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11764, 1, 248, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11765, 1, 261, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11766, 1, 164, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11767, 1, 165, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11768, 1, 166, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11769, 1, 191, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11770, 1, 192, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11771, 1, 193, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11772, 1, 194, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11773, 1, 195, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11774, 1, 196, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11775, 1, 197, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11776, 1, 198, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11777, 1, 203, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11778, 1, 199, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11779, 1, 200, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11780, 1, 201, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11781, 1, 202, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11782, 1, 263, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11783, 1, 264, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11784, 1, 265, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11785, 1, 269, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11786, 1, 270, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11787, 1, 245, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11788, 1, 47, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11789, 1, 48, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11790, 1, 49, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11791, 1, 50, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11792, 1, 246, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11793, 1, 247, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11794, 1, 256, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11795, 1, 257, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11796, 1, 258, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11797, 1, 266, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11798, 1, 267, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11799, 1, 268, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11800, 1, 249, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11801, 1, 231, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11802, 1, 232, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11803, 1, 233, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11804, 1, 234, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11805, 1, 235, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11806, 1, 236, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11807, 1, 237, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11808, 1, 238, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11809, 1, 239, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11810, 1, 241, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11811, 1, 242, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11812, 1, 243, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
-INSERT INTO `b_role_menu` VALUES (11813, 1, 244, '2022-04-25 10:34:01', '2022-04-25 10:34:01');
 INSERT INTO `b_role_menu` VALUES (11814, 5, 1, '2023-06-08 09:18:26', '2023-06-08 09:18:26');
 INSERT INTO `b_role_menu` VALUES (11815, 5, 2, '2023-06-08 09:18:26', '2023-06-08 09:18:26');
 INSERT INTO `b_role_menu` VALUES (11816, 5, 3, '2023-06-08 09:18:26', '2023-06-08 09:18:26');
@@ -967,45 +821,213 @@ INSERT INTO `b_role_menu` VALUES (11968, 6, 32, '2023-06-11 09:02:17', '2023-06-
 INSERT INTO `b_role_menu` VALUES (11969, 6, 262, '2023-06-11 09:02:17', '2023-06-11 09:02:17');
 INSERT INTO `b_role_menu` VALUES (11970, 6, 26, '2023-06-11 09:02:17', '2023-06-11 09:02:17');
 INSERT INTO `b_role_menu` VALUES (11971, 6, 27, '2023-06-11 09:02:17', '2023-06-11 09:02:17');
+INSERT INTO `b_role_menu` VALUES (11972, 1, 1, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11973, 1, 2, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11974, 1, 3, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11975, 1, 4, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11976, 1, 5, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11977, 1, 6, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11978, 1, 7, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11979, 1, 185, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11980, 1, 8, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11981, 1, 9, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11982, 1, 10, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11983, 1, 11, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11984, 1, 12, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11985, 1, 13, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11986, 1, 14, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11987, 1, 15, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11988, 1, 16, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11989, 1, 17, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11990, 1, 18, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11991, 1, 19, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11992, 1, 20, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11993, 1, 21, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11994, 1, 22, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11995, 1, 23, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11996, 1, 24, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11997, 1, 25, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11998, 1, 182, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (11999, 1, 183, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12000, 1, 184, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12001, 1, 26, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12002, 1, 27, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12003, 1, 28, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12004, 1, 29, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12005, 1, 30, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12006, 1, 31, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12007, 1, 32, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12008, 1, 33, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12009, 1, 215, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12010, 1, 253, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12011, 1, 262, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12012, 1, 271, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12013, 1, 35, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12014, 1, 36, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12015, 1, 37, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12016, 1, 38, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12017, 1, 39, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12018, 1, 40, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12019, 1, 189, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12020, 1, 216, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12021, 1, 223, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12022, 1, 224, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12023, 1, 225, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12024, 1, 226, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12025, 1, 227, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12026, 1, 228, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12027, 1, 229, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12028, 1, 230, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12029, 1, 272, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12030, 1, 273, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12031, 1, 274, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12032, 1, 41, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12033, 1, 51, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12034, 1, 52, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12035, 1, 53, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12036, 1, 54, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12037, 1, 55, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12038, 1, 254, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12039, 1, 169, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12040, 1, 170, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12041, 1, 173, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12042, 1, 174, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12043, 1, 176, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12044, 1, 177, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12045, 1, 171, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12046, 1, 172, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12047, 1, 175, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12048, 1, 178, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12049, 1, 179, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12050, 1, 180, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12051, 1, 181, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12052, 1, 186, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12053, 1, 187, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12054, 1, 188, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12055, 1, 56, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12056, 1, 57, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12057, 1, 58, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12058, 1, 250, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12059, 1, 59, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12060, 1, 60, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12061, 1, 251, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12062, 1, 61, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12063, 1, 62, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12064, 1, 252, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12065, 1, 63, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12066, 1, 64, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12067, 1, 65, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12068, 1, 260, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12069, 1, 66, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12070, 1, 67, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12071, 1, 248, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12072, 1, 261, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12073, 1, 164, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12074, 1, 165, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12075, 1, 166, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12076, 1, 191, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12077, 1, 192, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12078, 1, 193, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12079, 1, 194, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12080, 1, 195, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12081, 1, 196, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12082, 1, 197, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12083, 1, 198, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12084, 1, 203, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12085, 1, 199, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12086, 1, 200, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12087, 1, 201, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12088, 1, 202, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12089, 1, 263, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12090, 1, 264, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12091, 1, 265, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12092, 1, 269, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12093, 1, 270, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12094, 1, 245, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12095, 1, 47, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12096, 1, 48, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12097, 1, 49, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12098, 1, 50, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12099, 1, 246, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12100, 1, 247, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12101, 1, 256, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12102, 1, 257, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12103, 1, 258, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12104, 1, 266, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12105, 1, 267, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12106, 1, 268, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12107, 1, 249, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12108, 1, 231, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12109, 1, 232, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12110, 1, 233, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12111, 1, 234, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12112, 1, 235, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12113, 1, 236, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12114, 1, 237, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12115, 1, 238, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12116, 1, 239, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12117, 1, 241, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12118, 1, 242, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12119, 1, 243, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+INSERT INTO `b_role_menu` VALUES (12120, 1, 244, '2023-07-06 07:06:42', '2023-07-06 07:06:42');
+
+-- ----------------------------
+-- Table structure for b_sponsor
+-- ----------------------------
+DROP TABLE IF EXISTS `b_sponsor`;
+CREATE TABLE `b_sponsor`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户id',
+  `order_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '翼支付订单id',
+  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '打赏金额',
+  `is_pay` int(11) NULL DEFAULT NULL COMMENT '是否支付',
+  `pay_type` int(11) NULL DEFAULT NULL COMMENT '支付方式',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of b_sponsor
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for b_system_config
 -- ----------------------------
 DROP TABLE IF EXISTS `b_system_config`;
 CREATE TABLE `b_system_config`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `qi_niu_access_key` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '七牛云公钥',
-  `qi_niu_secret_key` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '七牛云私钥',
-  `qi_niu_area` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '七牛云存储区域 华东（z0），华北(z1)，华南(z2)，北美(na0)，东南亚(as0)',
-  `qi_niu_bucket` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '七牛云上传空间',
-  `qi_niu_picture_base_url` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '七牛云域名前缀：http://images.moguit.cn',
-  `upload_qi_niu` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '文件上传七牛云(0:否， 1:是)',
-  `open_email_activate` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否开启注册用户邮件激活(0:否， 1:是)',
-  `start_email_notification` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '0' COMMENT '是否开启邮件通知(0:否， 1:是)',
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `qi_niu_access_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '七牛云公钥',
+  `qi_niu_secret_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '七牛云私钥',
+  `qi_niu_area` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '七牛云存储区域 华东（z0），华北(z1)，华南(z2)，北美(na0)，东南亚(as0)',
+  `qi_niu_bucket` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '七牛云上传空间',
+  `qi_niu_picture_base_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '七牛云域名前缀：http://images.moguit.cn',
+  `upload_qi_niu` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件上传七牛云(0:否， 1:是)',
+  `open_email_activate` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否开启注册用户邮件激活(0:否， 1:是)',
+  `start_email_notification` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否开启邮件通知(0:否， 1:是)',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `open_dashboard_notification` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '0' COMMENT '是否开启仪表盘通知(0:否， 1:是)',
-  `dashboard_notification_md` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '仪表盘通知【用于首次登录弹框】MD',
-  `dashboard_notification` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '仪表盘通知【用于首次登录弹框】',
-  `search_model` int(0) NOT NULL DEFAULT 0 COMMENT '搜索模式【0:SQL搜索 、1：全文检索】',
-  `email_host` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '邮箱地址',
-  `email_username` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '邮箱发件人',
-  `email_password` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '邮箱授权码',
-  `email_port` int(0) NULL DEFAULT NULL COMMENT '邮箱发送端口',
-  `open_email` int(0) NULL DEFAULT NULL COMMENT '启用邮箱发送',
-  `local_file_url` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '本地文件地址',
-  `file_upload_way` int(0) NULL DEFAULT NULL COMMENT '文件上传方式 1:本地 2：七牛云',
-  `ali_yun_access_key` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '阿里云ak',
-  `ali_yun_secret_key` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '阿里云sk',
-  `ali_yun_bucket` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '阿里云存储桶名',
-  `ali_yun_endpoint` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '阿里云Endpoint',
+  `open_dashboard_notification` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '是否开启仪表盘通知(0:否， 1:是)',
+  `dashboard_notification_md` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '仪表盘通知【用于首次登录弹框】MD',
+  `dashboard_notification` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '仪表盘通知【用于首次登录弹框】',
+  `search_model` int(1) NOT NULL DEFAULT 0 COMMENT '搜索模式【0:SQL搜索 、1：全文检索】',
+  `email_host` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱地址',
+  `email_username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱发件人',
+  `email_password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱授权码',
+  `email_port` int(10) NULL DEFAULT NULL COMMENT '邮箱发送端口',
+  `open_email` int(1) NULL DEFAULT NULL COMMENT '启用邮箱发送',
+  `local_file_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '本地文件地址',
+  `file_upload_way` int(1) NULL DEFAULT NULL COMMENT '文件上传方式 1:本地 2：七牛云',
+  `ali_yun_access_key` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '阿里云ak',
+  `ali_yun_secret_key` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '阿里云sk',
+  `ali_yun_bucket` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '阿里云存储桶名',
+  `ali_yun_endpoint` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '阿里云Endpoint',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统配置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_system_config
 -- ----------------------------
-INSERT INTO `b_system_config` VALUES (1, '', '', '', '', 'htt://img.shiyit.com/', '1', '0', '0', '2021-11-26 15:41:36', '2021-11-26 15:41:36', '1', '欢迎来到拾壹博客项目，开源项目离不开大家的支持，希望小伙伴能随手点赞一下，你的点赞就是我维护的动力~\n\n博主使用笔记本开发的项目，所以页面中表格的列在大屏显示器中会显示宽度的不均衡，如需要可以自行调整。\n\n项目源码：[点我传送](https://gitee.com/quequnlong/shiyi-blog)，项目官网：[点我传送](http://www.shiyit.com)\n\n项目还在开发阶段，如有不善的地方欢迎各位小伙伴多多反馈\n\n最低配置：1核2G \n\n推荐配置：2核4G [【狂欢特惠】](https://cloud.tencent.com/act/new?channel=sp&fromSource=gwzcw.5433948.5433948.5433948&utm_medium=cpc&utm_id=gwzcw.5433948.5433948.5433948&bd_vid=6261311440599794431)\n\n服务器和域名等服务的购买和续费都会产生一定的费用，为了维持项目的正常运作，如果觉得本项目对您有帮助的话\n\n欢迎朋友能够给予一些支持，非常感谢~（ps.. 小伙伴赞赏的时候可以备注一下下~）\n|支付宝|微信|\n|-|-|-|\n|![支付宝](http://img.shiyit.com/1639990067114.png)|![微信](http://img.shiyit.com/1639990061772.png)|\n', '<p>欢迎来到拾壹博客项目，开源项目离不开大家的支持，希望小伙伴能随手点赞一下，你的点赞就是我维护的动力~</p>\n<p>博主使用笔记本开发的项目，所以页面中表格的列在大屏显示器中会显示宽度的不均衡，如需要可以自行调整。</p>\n<p>项目源码：<a href=\"https://gitee.com/quequnlong/shiyi-blog\" target=\"_blank\">点我传送</a>，项目官网：<a href=\"http://www.shiyit.com\" target=\"_blank\">点我传送</a></p>\n<p>项目还在开发阶段，如有不善的地方欢迎各位小伙伴多多反馈</p>\n<p>最低配置：1核2G</p>\n<p>推荐配置：2核4G <a href=\"https://cloud.tencent.com/act/new?channel=sp&amp;fromSource=gwzcw.5433948.5433948.5433948&amp;utm_medium=cpc&amp;utm_id=gwzcw.5433948.5433948.5433948&amp;bd_vid=6261311440599794431\" target=\"_blank\">【狂欢特惠】</a></p>\n<p>服务器和域名等服务的购买和续费都会产生一定的费用，为了维持项目的正常运作，如果觉得本项目对您有帮助的话</p>\n<p>欢迎朋友能够给予一些支持，非常感谢~（ps… 小伙伴赞赏的时候可以备注一下下~）</p>\n<table>\n<thead>\n<tr>\n<th>支付宝</th>\n<th>微信</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><img src=\"http://img.shiyit.com/1639990067114.png\" alt=\"支付宝\" /></td>\n<td><img src=\"http://img.shiyit.com/1639990061772.png\" alt=\"微信\" /></td>\n</tr>\n</tbody>\n</table>\n', 0, '', '', '', 587, 1, 'http://www.shiyit.com/shiyi/img/', 1, '', '', '', '');
+INSERT INTO `b_system_config` VALUES (1, '', '', '', '', '', '1', '0', '0', '2021-11-26 15:41:36', '2021-11-26 15:41:36', '1', '欢迎来到拾壹博客项目，开源项目离不开大家的支持，希望小伙伴能随手点赞一下，你的点赞就是我维护的动力~\n\n博主使用笔记本开发的项目，所以页面中表格的列在大屏显示器中会显示宽度的不均衡，如需要可以自行调整。\n\n项目源码：[点我传送](https://gitee.com/quequnlong/shiyi-blog)，项目官网：[点我传送](http://www.shiyit.com)\n\n项目还在开发阶段，如有不善的地方欢迎各位小伙伴多多反馈\n\n最低配置：1核2G \n\n推荐配置：2核4G [【狂欢特惠】](https://cloud.tencent.com/act/new?channel=sp&fromSource=gwzcw.5433948.5433948.5433948&utm_medium=cpc&utm_id=gwzcw.5433948.5433948.5433948&bd_vid=6261311440599794431)\n\n服务器和域名等服务的购买和续费都会产生一定的费用，为了维持项目的正常运作，如果觉得本项目对您有帮助的话\n\n欢迎朋友能够给予一些支持，非常感谢~（ps.. 小伙伴赞赏的时候可以备注一下下~）\n|支付宝|微信|\n|-|-|-|\n|![支付宝](http://img.shiyit.com/1639990067114.png)|![微信](http://img.shiyit.com/1639990061772.png)|\n', '<p>欢迎来到拾壹博客项目，开源项目离不开大家的支持，希望小伙伴能随手点赞一下，你的点赞就是我维护的动力~</p>\n<p>博主使用笔记本开发的项目，所以页面中表格的列在大屏显示器中会显示宽度的不均衡，如需要可以自行调整。</p>\n<p>项目源码：<a href=\"https://gitee.com/quequnlong/shiyi-blog\" target=\"_blank\">点我传送</a>，项目官网：<a href=\"http://www.shiyit.com\" target=\"_blank\">点我传送</a></p>\n<p>项目还在开发阶段，如有不善的地方欢迎各位小伙伴多多反馈</p>\n<p>最低配置：1核2G</p>\n<p>推荐配置：2核4G <a href=\"https://cloud.tencent.com/act/new?channel=sp&amp;fromSource=gwzcw.5433948.5433948.5433948&amp;utm_medium=cpc&amp;utm_id=gwzcw.5433948.5433948.5433948&amp;bd_vid=6261311440599794431\" target=\"_blank\">【狂欢特惠】</a></p>\n<p>服务器和域名等服务的购买和续费都会产生一定的费用，为了维持项目的正常运作，如果觉得本项目对您有帮助的话</p>\n<p>欢迎朋友能够给予一些支持，非常感谢~（ps… 小伙伴赞赏的时候可以备注一下下~）</p>\n<table>\n<thead>\n<tr>\n<th>支付宝</th>\n<th>微信</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><img src=\"http://img.shiyit.com/1639990067114.png\" alt=\"支付宝\" /></td>\n<td><img src=\"http://img.shiyit.com/1639990061772.png\" alt=\"微信\" /></td>\n</tr>\n</tbody>\n</table>\n', 0, '', '', '', 587, 1, 'http://www.shiyit.com/shiyi/img/', 1, '', '', '', '');
 INSERT INTO `b_system_config` VALUES (2, '', '', 'z0', '', 'http://img.shiyit.com/', '1', '1', '1', '2021-11-26 15:41:36', '2021-11-26 15:41:36', '1', '欢迎来到拾壹博客项目，开源项目离不开大家的支持，希望小伙伴能随手点赞一下，你的点赞就是我维护的动力~\n\n博主使用笔记本开发的项目，所以页面中表格的列在大屏显示器中会显示宽度的不均衡，如需要可以自行调整。\n\n项目源码：[点我传送](https://gitee.com/quequnlong/shiyi-blog)，项目官网：[点我传送](http://www.shiyit.com)\n\n项目还在开发阶段，如有不善的地方欢迎各位小伙伴多多反馈\n\n最低配置：1核2G \n\n推荐配置：2核4G [【狂欢特惠】](https://cloud.tencent.com/act/new?channel=sp&fromSource=gwzcw.5433948.5433948.5433948&utm_medium=cpc&utm_id=gwzcw.5433948.5433948.5433948&bd_vid=6261311440599794431)\n\n服务器和域名等服务的购买和续费都会产生一定的费用，为了维持项目的正常运作，如果觉得本项目对您有帮助的话\n\n欢迎朋友能够给予一些支持，非常感谢~（ps.. 小伙伴赞赏的时候可以备注一下下~）\n|支付宝|微信|\n|-|-|-|\n|![支付宝](http://img.shiyit.com/1639990067114.png)|![微信](http://img.shiyit.com/1639990061772.png)|\n', '<p>欢迎来到拾壹博客项目，开源项目离不开大家的支持，希望小伙伴能随手点赞一下，你的点赞就是我维护的动力~</p>\n<p>博主使用笔记本开发的项目，所以页面中表格的列在大屏显示器中会显示宽度的不均衡，如需要可以自行调整。</p>\n<p>项目源码：<a href=\"https://gitee.com/quequnlong/shiyi-blog\" target=\"_blank\">点我传送</a>，项目官网：<a href=\"http://www.shiyit.com\" target=\"_blank\">点我传送</a></p>\n<p>项目还在开发阶段，如有不善的地方欢迎各位小伙伴多多反馈</p>\n<p>最低配置：1核2G</p>\n<p>推荐配置：2核4G <a href=\"https://cloud.tencent.com/act/new?channel=sp&amp;fromSource=gwzcw.5433948.5433948.5433948&amp;utm_medium=cpc&amp;utm_id=gwzcw.5433948.5433948.5433948&amp;bd_vid=6261311440599794431\" target=\"_blank\">【狂欢特惠】</a></p>\n<p>服务器和域名等服务的购买和续费都会产生一定的费用，为了维持项目的正常运作，如果觉得本项目对您有帮助的话</p>\n<p>欢迎朋友能够给予一些支持，非常感谢~（ps… 小伙伴赞赏的时候可以备注一下下~）</p>\n<table>\n<thead>\n<tr>\n<th>支付宝</th>\n<th>微信</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><img src=\"http://img.shiyit.com/1639990067114.png\" alt=\"支付宝\" /></td>\n<td><img src=\"http://img.shiyit.com/1639990061772.png\" alt=\"微信\" /></td>\n</tr>\n</tbody>\n</table>\n', 1, 'smtp.qq.com', 'xxx@qq.com', NULL, 587, 1, NULL, 1, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
@@ -1013,87 +1035,84 @@ INSERT INTO `b_system_config` VALUES (2, '', '', 'z0', '', 'http://img.shiyit.co
 -- ----------------------------
 DROP TABLE IF EXISTS `b_tags`;
 CREATE TABLE `b_tags`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '标签名称',
-  `click_volume` int(0) NULL DEFAULT 0,
-  `sort` int(0) NOT NULL COMMENT '排序',
+  `click_volume` int(10) NULL DEFAULT 0,
+  `sort` int(11) NOT NULL COMMENT '排序',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '最后更新时间',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面图',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `tag_name`(`name`) USING BTREE COMMENT '博客标签名称'
-) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客标签表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客标签表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_tags
 -- ----------------------------
-INSERT INTO `b_tags` VALUES (1, 'springboot', 842, 0, '2021-11-12 14:43:27', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5c9382680025d.jpg');
-INSERT INTO `b_tags` VALUES (2, 'elasticsearch', 737, 0, '2021-11-12 14:43:27', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5cc80ef99520b.jpg');
+INSERT INTO `b_tags` VALUES (1, 'Spring Boot', 842, 0, '2021-11-12 14:43:27', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5c9382680025d.jpg');
+INSERT INTO `b_tags` VALUES (2, 'Elasticsearch', 737, 0, '2021-11-12 14:43:27', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5cc80ef99520b.jpg');
 INSERT INTO `b_tags` VALUES (10, 'blog', 679, 0, '2021-11-12 14:43:27', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5cb4511f52d8d.jpg');
-INSERT INTO `b_tags` VALUES (12, 'vue', 300, 0, '2021-12-29 14:01:50', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5ca410147e9b5.jpg');
-INSERT INTO `b_tags` VALUES (13, 'springcloud', 759, 0, '2021-12-29 14:02:32', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5cce8fe36ec7b.jpg');
-INSERT INTO `b_tags` VALUES (14, 'webmagic', 583, 0, '2022-01-07 17:09:12', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5c99b5ad13661.jpg');
-INSERT INTO `b_tags` VALUES (17, 'redis', 395, 0, '2022-01-25 14:09:03', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5ccfc701d50b6.jpg');
-INSERT INTO `b_tags` VALUES (18, 'linux', 491, 0, '2022-01-25 14:09:17', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5cbed13725679.jpg');
-INSERT INTO `b_tags` VALUES (31, 'mysql', 516, 0, '2022-02-18 16:01:07', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5c9475cb01f51.jpg');
-INSERT INTO `b_tags` VALUES (32, 'nginx', 442, 0, '2022-04-13 17:48:08', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5c9b0958195c8.jpg');
-INSERT INTO `b_tags` VALUES (42, 'spring', 447, 0, '2022-04-19 08:19:24', '2023-06-05 03:00:00', NULL);
-INSERT INTO `b_tags` VALUES (44, 'java', 230, 0, '2022-07-26 15:13:46', '2023-06-05 03:00:00', NULL);
+INSERT INTO `b_tags` VALUES (12, 'Vue', 300, 0, '2021-12-29 14:01:50', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5ca410147e9b5.jpg');
+INSERT INTO `b_tags` VALUES (13, 'Spring Cloud', 759, 0, '2021-12-29 14:02:32', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5cce8fe36ec7b.jpg');
+INSERT INTO `b_tags` VALUES (17, 'Redis', 395, 0, '2022-01-25 14:09:03', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5ccfc701d50b6.jpg');
+INSERT INTO `b_tags` VALUES (18, 'Linux', 491, 0, '2022-01-25 14:09:17', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5cbed13725679.jpg');
+INSERT INTO `b_tags` VALUES (31, 'Mysql', 516, 0, '2022-02-18 16:01:07', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5c9475cb01f51.jpg');
+INSERT INTO `b_tags` VALUES (32, 'Nginx', 442, 0, '2022-04-13 17:48:08', '2023-06-05 03:00:00', 'https://img.btstu.cn/api/images/5c9b0958195c8.jpg');
 INSERT INTO `b_tags` VALUES (51, '异步', 92, 0, '2023-04-03 11:30:54', '2023-06-05 03:00:00', NULL);
-INSERT INTO `b_tags` VALUES (52, '数据库', 27, 0, '2023-04-12 12:14:50', '2023-06-05 03:00:00', NULL);
-INSERT INTO `b_tags` VALUES (54, 'markdown', 33, 0, '2023-04-12 12:27:50', '2023-06-05 03:00:00', NULL);
-INSERT INTO `b_tags` VALUES (55, 'html', 30, 0, '2023-04-12 12:27:50', '2023-06-05 03:00:00', NULL);
+INSERT INTO `b_tags` VALUES (56, 'Css', 0, 0, '2023-06-27 16:02:14', '2023-06-27 08:02:14', NULL);
+INSERT INTO `b_tags` VALUES (57, 'Java Script', 0, 1, '2023-06-27 16:02:33', '2023-06-27 08:02:32', NULL);
+INSERT INTO `b_tags` VALUES (58, 'C语言', 0, 1, '2023-07-03 08:55:46', '2023-07-03 00:55:46', NULL);
 
 -- ----------------------------
 -- Table structure for b_user
 -- ----------------------------
 DROP TABLE IF EXISTS `b_user`;
 CREATE TABLE `b_user`  (
-  `id` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '主键ID',
-  `username` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '账号',
-  `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '登录密码',
+  `id` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键ID',
+  `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '账号',
+  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录密码',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `status` int(0) NULL DEFAULT 1 COMMENT '状态 0:禁用 1:正常',
-  `login_type` int(0) NULL DEFAULT NULL COMMENT '登录方式',
-  `user_info_id` bigint(0) NULL DEFAULT NULL COMMENT '用户详情id',
-  `role_id` bigint(0) NULL DEFAULT NULL COMMENT '角色id',
-  `ip_address` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'ip地址',
-  `ip_source` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'ip来源',
-  `os` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '登录系统',
+  `status` int(10) NULL DEFAULT 1 COMMENT '状态 0:禁用 1:正常',
+  `login_type` int(10) NULL DEFAULT NULL COMMENT '登录方式',
+  `user_info_id` bigint(10) NULL DEFAULT NULL COMMENT '用户详情id',
+  `role_id` bigint(20) NULL DEFAULT NULL COMMENT '角色id',
+  `ip_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip地址',
+  `ip_source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip来源',
+  `os` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录系统',
   `last_login_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '最后登录时间',
-  `browser` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '浏览器',
+  `browser` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '浏览器',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统管理-用户基础信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统管理-用户基础信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_user
 -- ----------------------------
-INSERT INTO `b_user` VALUES ('1', 'admin', 'NLJ3Gidivf3vouOjYLIvuA==', '2021-09-27 15:43:45', '2022-03-10 17:59:40', 1, 1, 1, 1, '58.20.50.137', '中国-湖南省-长沙市', 'Windows 10', '2023-06-15 03:10:38', 'Chrome 11');
-INSERT INTO `b_user` VALUES ('15', 'test', 'NLJ3Gidivf3vouOjYLIvuA==', '2021-11-14 12:35:03', '2022-12-13 14:08:33', 1, 1, 2, 5, '119.145.9.69', '中国-广东省-深圳市', 'Windows 10', '2023-06-15 03:01:24', 'Chrome 11');
+INSERT INTO `b_user` VALUES ('1', 'admin', 'NLJ3Gidivf3vouOjYLIvuA==', '2021-09-27 15:43:45', '2022-03-10 17:59:40', 1, 1, 1, 1, '183.214.109.163', '中国-湖南省-长沙市', 'Windows 10', '2023-07-06 07:04:25', 'Chrome 11');
+INSERT INTO `b_user` VALUES ('15', 'test', 'NLJ3Gidivf3vouOjYLIvuA==', '2021-11-14 12:35:03', '2022-12-13 14:08:33', 1, 1, 2, 5, '113.57.114.138', '中国-湖北省-武汉市', 'Windows 10', '2023-07-07 02:57:17', 'Chrome 11');
 
 -- ----------------------------
 -- Table structure for b_user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `b_user_info`;
 CREATE TABLE `b_user_info`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '邮箱号',
-  `nickname` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户昵称',
-  `avatar` varchar(1024) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '用户头像',
-  `intro` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '用户简介',
-  `web_site` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '个人网站',
-  `is_disable` int(0) NOT NULL DEFAULT 1 COMMENT '是否禁用',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱号',
+  `nickname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户昵称',
+  `avatar` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户头像',
+  `intro` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户简介',
+  `web_site` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '个人网站',
+  `is_disable` int(1) NOT NULL DEFAULT 1 COMMENT '是否禁用',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 944 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1021 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_user_info
 -- ----------------------------
-INSERT INTO `b_user_info` VALUES (1, 'shiyi@blog.com', '拾壹', 'http://img.shiyit.com/author.jpg', NULL, NULL, 1, NULL, '2023-06-14 15:17:30');
+INSERT INTO `b_user_info` VALUES (1, 'shiyi@blog.com', '拾壹', '\r\nhttp://img.shiyit.com/1644807308537.jpg', '哈哈哈', 'www.shiyit.com', 1, NULL, '2023-07-05 15:13:15');
 INSERT INTO `b_user_info` VALUES (2, 'test', '演示账号', 'http://img.shiyit.com/1645512111007.png', NULL, NULL, 1, NULL, '2023-06-12 09:50:23');
 
 -- ----------------------------
@@ -1101,8 +1120,8 @@ INSERT INTO `b_user_info` VALUES (2, 'test', '演示账号', 'http://img.shiyit.
 -- ----------------------------
 DROP TABLE IF EXISTS `b_user_log`;
 CREATE TABLE `b_user_log`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `user_id` bigint(0) NULL DEFAULT NULL COMMENT '操作用户ID',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '操作用户ID',
   `ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'ip地址',
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作地址',
   `type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作类型',
@@ -1114,7 +1133,7 @@ CREATE TABLE `b_user_log`  (
   `browser` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '浏览器',
   `client_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '客户端类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 216524 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 238357 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_user_log
@@ -1125,13 +1144,13 @@ CREATE TABLE `b_user_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `b_user_role`;
 CREATE TABLE `b_user_role`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `role_id` int(0) NULL DEFAULT NULL COMMENT '角色ID',
-  `user_id` int(0) NULL DEFAULT NULL COMMENT '用户ID',
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `role_id` int(10) NULL DEFAULT NULL COMMENT '角色ID',
+  `user_id` int(10) NULL DEFAULT NULL COMMENT '用户ID',
   `created_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `last_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统管理 - 用户角色关联表 ' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统管理 - 用户角色关联表 ' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_user_role
@@ -1144,40 +1163,40 @@ INSERT INTO `b_user_role` VALUES (34, 5, 15, '2021-11-14 12:35:03', '2021-11-14 
 -- ----------------------------
 DROP TABLE IF EXISTS `b_web_config`;
 CREATE TABLE `b_web_config`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `logo` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'logo(文件UID)',
-  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '网站名称',
-  `summary` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '介绍',
-  `keyword` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '关键字',
-  `author` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '作者',
-  `record_num` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '备案号',
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `logo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'logo(文件UID)',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '网站名称',
+  `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '介绍',
+  `keyword` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '关键字',
+  `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '作者',
+  `record_num` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '备案号',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `web_url` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '网站地址',
-  `ali_pay` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '支付宝收款码FileId',
-  `weixin_pay` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '微信收款码FileId',
-  `github` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'github地址',
-  `gitee` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'gitee地址',
-  `qq_number` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'QQ号',
-  `qq_group` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'QQ群',
-  `email` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '邮箱',
-  `wechat` varchar(100) DEFAULT NULL COMMENT '微信',
-  `show_list` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '显示的列表（用于控制邮箱、QQ、QQ群、Github、Gitee、微信是否显示在前端）',
-  `login_type_list` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '登录方式列表（用于控制前端登录方式，如账号密码,码云,Github,QQ,微信）',
-  `open_comment` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '1' COMMENT '是否开启评论(0:否 1:是)',
+  `web_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '网站地址',
+  `ali_pay` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '支付宝收款码FileId',
+  `weixin_pay` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '微信收款码FileId',
+  `github` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'github地址',
+  `gitee` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'gitee地址',
+  `qq_number` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'QQ号',
+  `qq_group` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'QQ群',
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `wechat` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '微信',
+  `show_list` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '显示的列表（用于控制邮箱、QQ、QQ群、Github、Gitee、微信是否显示在前端）',
+  `login_type_list` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录方式列表（用于控制前端登录方式，如账号密码,码云,Github,QQ,微信）',
+  `open_comment` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '是否开启评论(0:否 1:是)',
   `open_admiration` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否开启赞赏(0:否， 1:是)',
-  `tourist_avatar` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '游客头像',
-  `bulletin` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '公告',
-  `author_info` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '作者简介',
-  `author_avatar` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '作者头像',
-  `about_me` varchar(350) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '关于我',
-  `is_music_player` int(0) NULL DEFAULT 0 COMMENT '是否开启音乐播放器',
+  `tourist_avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '游客头像',
+  `bulletin` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公告',
+  `author_info` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作者简介',
+  `author_avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作者头像',
+  `about_me` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '关于我',
+  `is_music_player` int(10) NULL DEFAULT 0 COMMENT '是否开启音乐播放器',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '网站配置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '网站配置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b_web_config
 -- ----------------------------
-INSERT INTO `b_web_config` VALUES (1, '\r\nhttp://img.shiyit.com/logo2.png', '拾壹博客', '哪有那么多的如果。', '拾壹,拾壹博客', '拾壹', '', '2021-11-27 13:43:16', '2022-01-20 13:30:44', 'http://www.shiyit.com', '', '', 'https://github.com/quequnlong', 'https://gitee.com/quequnlong', '1248954763', '1248954763@qq.com','', '1,3,4,2', '1,3,2,5', '1', 1, 'http://img.shiyit.com/66bb121d47e94b89945d29bb6e3e6cab.jpg', '如入你眼，请上码云给仓库点上您的小星星', '一个小菜鸡', 'http://img.shiyit.com/author.jpg', '#### 前端用的vue，后端用的springboot\n\n[![buzhiming/拾壹博客](https://gitee.com/quequnlong/shiyi-blog/widgets/widget_card.svg?colors=4183c4,ffffff,ffffff,e3e9ed,666666,9b9b9b)](https://gitee.com/quequnlong/shiyi-blog)\n\n', 1);
+INSERT INTO `b_web_config` VALUES (1, 'http://img.shiyit.com/logo-ico.png', '拾壹博客', '一个专注技术分享的平台', '拾壹,拾壹博客', '拾壹', '湘ICP备2022002110号-1', '2021-11-27 13:43:16', '2022-01-20 13:30:44', 'http://www.shiyit.com', 'http://img.shiyit.com/alipay.jpg', '\r\nhttp://img.shiyit.com/wxpay.jpg', 'https://github.com/quequnlong', 'https://gitee.com/quequnlong', '1248954763', '779881756', '1248954763@qq.com', '1248954763', '1,3,4,2,5,6', '1,2,5,6,4', '1', 1, 'http://img.shiyit.com/66bb121d47e94b89945d29bb6e3e6cab.jpg', '如果本项目对你有帮助，请前往码云给仓库点上你的小星星', '正在努力搬砖~~~~', '\r\nhttp://img.shiyit.com/1644807308537.jpg', '#### 关于我\n拾壹是一个并非科班的java博主，目前正在努力学习Java和前端技术\n\n#### 源码\n目前博客源码已经开源至[码云](https://gitee.com/quequnlong/shiyi-blog)，感兴趣的小伙伴可以star fork关注一下下~\nGitee地址：[https://gitee.com/quequnlong/shiyi-blog](https://gitee.com/quequnlong/shiyi-blog)\n#### 项目框架\n前端使用了vue+elmentui，可以使小伙伴们能够更加容易得进行扩展\n\n后端使用的springboot框架\n\n\n\n\n\n', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
