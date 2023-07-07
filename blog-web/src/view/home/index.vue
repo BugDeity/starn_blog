@@ -69,23 +69,26 @@
                             <div class="articleOhter">
 
                                 <span class="item">
-                                    <i class="el-icon-view"></i>{{ item.quantity }}
+                                    <i class="el-icon-view"></i>
+                                    <span class="name">阅读</span>{{ item.quantity }}
                                 </span>
                                 <span class="item">
-                                    <i class="el-icon-chat-dot-round"></i>{{ item.commentCount }}
+                                    <i class="el-icon-chat-dot-round"></i>
+                                    <span class="name">评论</span>{{ item.commentCount }}
                                 </span>
                                 <span class="item">
                                     <span v-if="item.isCollect">
-                                        <i style="font-size: 1rem;" class="el-icon-star-on"></i>{{
-                                            item.collectCount }}
+                                        <i style="font-size: 1rem;" class="el-icon-star-on"></i>
+                                        <span class="name">收藏</span>{{ item.collectCount }}
                                     </span>
                                     <span v-else>
-                                        <i style="font-size: 1rem;" class="el-icon-star-off"></i>{{ item.collectCount
-                                        }}
+                                        <i style="font-size: 1rem;" class="el-icon-star-off"></i>
+                                        <span class="name">收藏</span>{{ item.collectCount }}
                                     </span>
                                 </span>
                                 <span class="item">
-                                    <i style="font-size: 0.8rem;" class="iconfont icon-dianzan1"></i>{{ item.likeCount }}
+                                    <i style="font-size: 0.8rem;" class="iconfont icon-dianzan1"></i>
+                                    <span class="name">赞</span>{{ item.likeCount }}
                                 </span>
                                 <span class="item">
                                     <i class="el-icon-time"></i>{{ item.formatCreateTime }}
@@ -639,7 +642,11 @@ export default {
                                 display: block;
 
                                 .item {
-                                    margin-right: 8px;
+                                    margin-right: 10px;
+
+                                    .name {
+                                        margin-right: 3px;
+                                    }
 
                                     i {
                                         margin-right: 3px;
@@ -865,14 +872,12 @@ export default {
                                 color: var(--text-color);
 
                                 .item {
-                                    margin-right: 8px;
+                                    margin-right: 10px;
 
-                                    .item-img {
-                                        overflow: hidden;
-                                        width: 100px;
-                                        height: 75px;
-                                        display: inline-block;
+                                    .name {
+                                        margin-right: 3px;
                                     }
+
 
                                     i {
                                         margin-right: 3px;

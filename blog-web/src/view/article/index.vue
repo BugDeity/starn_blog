@@ -32,12 +32,9 @@
                 </time>
             </div>
             <div class="tips">
-                <div class="tipsName">
-                    <i class="iconfont icon-tongzhi1"></i>
-                    <span>温馨提示：</span>
-                </div>
-                <p>本文最后更新于 {{ formatDate(article.updateTime == null ? article.createTime : article.updateTime)
-                }}，若内容或图片失效，请留言反馈。部分素材来自网络，若不小心影响到您的利益，请联系我们删除</p>
+                <i class="el-icon-message-solid"></i>
+                <span>温馨提示：本文最后更新于 {{ formatDate(article.updateTime == null ? article.createTime : article.updateTime)
+                }}，若内容或图片失效，请留言反馈。部分素材来自网络，若不小心影响到您的利益，请联系我们删除</span>
             </div>
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">
@@ -415,7 +412,6 @@ export default {
             this.dialogVisible = false
             this.style = ''
             this.serceShow = true
-            document.documentElement.scrollTop = 0
         },
         previewImg(img) {
             this.$imagePreview({
@@ -530,6 +526,8 @@ export default {
                     this.article.isLike = true
                     if (this.article.readType == 2) {
                         this.checkAfter()
+                        document.documentElement.scrollTop = 0
+
                     }
                     this.$message.success("点赞成功");
                 }
@@ -655,25 +653,15 @@ export default {
             }
 
             .tips {
-                color: #db7c22;
-                background-color: var(--article-tips-color);
-                border: 1px solid var(--article-tips-border);
+                border-left: 5px solid #50bfff;
+                background-color: var(--tips-backgroud-color);
+                color: #888;
                 border-radius: 5px;
-                margin-bottom: 20px;
+                padding: 10px;
 
-                .tipsName {
-                    margin-left: 20px;
-                    margin-top: 10px;
-
-                    span {
-                        padding-left: 5px;
-                    }
-                }
-
-                p {
-                    margin-left: 40px;
-                    padding-right: 10px;
-                    padding-bottom: 10px;
+                i {
+                    color: #50bfff;
+                    margin-right: 5px;
                 }
             }
 
@@ -1014,25 +1002,15 @@ export default {
             }
 
             .tips {
-                color: #db7c22;
-                background-color: var(--article-tips-color);
-                border: 1px solid var(--article-tips-border);
+                border-left: 5px solid #50bfff;
+                background-color: var(--tips-backgroud-color);
+                color: #888;
                 border-radius: 5px;
-                margin-bottom: 20px;
+                padding: 10px;
 
-                .tipsName {
-                    margin-left: 20px;
-                    margin-top: 10px;
-
-                    span {
-                        padding-left: 5px;
-                    }
-                }
-
-                p {
-                    margin-left: 40px;
-                    padding-right: 10px;
-                    padding-bottom: 10px;
+                i {
+                    color: #50bfff;
+                    margin-right: 5px;
                 }
             }
 
@@ -1384,6 +1362,7 @@ export default {
                     margin-left: 10px;
                     margin-right: 20px;
                     color: var(--text-color);
+                    width: 20%;
 
                     .name {
                         margin-top: 2px;
