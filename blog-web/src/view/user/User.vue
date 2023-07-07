@@ -445,7 +445,6 @@ export default {
                 this.articleList.push(...res.data.records);
                 this.pageTotal = res.data.pages
                 this.loading.close()
-
             }).catch(err => {
                 console.log(err)
             })

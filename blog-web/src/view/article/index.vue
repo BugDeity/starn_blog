@@ -98,10 +98,18 @@
                     </div>
                 </el-tooltip>
 
+                <el-tooltip class="item" effect="dark" content="开启沉浸式阅读" placement="left">
+                    <div class="left-item" title="开启沉浸式阅读" @click="rightShow = !rightShow">
+                        <span>
+                            <i class="iconfont icon-full-screen"></i>
+                        </span>
+                    </div>
+                </el-tooltip>
+
                 <el-tooltip class="item" effect="dark" content="打赏" placement="left">
                     <div class="left-item rewardMain" title="打赏">
                         <span class="reward-btn">
-                            <i class="iconfont icon-jineqiandaiyueshangjin"></i>
+                            <i class="iconfont icon-dashang1"></i>
                         </span>
                         <!-- 二维码 -->
                         <div class="rewardItem">
@@ -190,8 +198,8 @@
                     :articleUserId="article.userId" />
             </div>
         </el-card>
-        <!-- 文章目录 -->
-        <div class="sidebar">
+        <!-- 右边侧边栏 -->
+        <div class="sidebar" v-if="rightShow">
             <div style="position: sticky;top:70px;">
                 <el-card class="box-card articleUser">
                     <div style="margin-bottom: 15px;margin-top: 10px;">
@@ -259,7 +267,6 @@
                     </el-card>
                 </div>
             </div>
-
         </div>
 
         <!-- 公众号扫码验证框 -->
@@ -299,6 +306,7 @@ export default {
                 tagList: [],
                 userInfo: {}
             },
+            rightShow: true,
             code: null,
             style: '',
             titles: [],
@@ -407,6 +415,7 @@ export default {
             this.dialogVisible = false
             this.style = ''
             this.serceShow = true
+            document.documentElement.scrollTop = 0
         },
         previewImg(img) {
             this.$imagePreview({
@@ -670,7 +679,7 @@ export default {
 
             .box-article {
                 .warpper {
-                    background-color: gray;
+                    background-color: #c0c4cc;
                     position: relative;
                     height: 210px;
                     padding: 5px;
@@ -1030,7 +1039,7 @@ export default {
             .box-article {
 
                 .warpper {
-                    background-color: gray;
+                    background-color: #c0c4cc;
                     position: relative;
                     height: 210px;
                     padding: 5px;
@@ -1266,12 +1275,20 @@ export default {
                     position: relative;
                     color: var(--text-color);
 
-                    &:hover span {
-                        color: var(--theme-color);
+                    &:hover {
+                        span {
+                            color: var(--theme-color);
+                        }
+
+                        background-color: rgba(25, 153, 153, 0.2);
                     }
 
-                    .icon-dianzan4 {
-                        color: var(--theme-color);
+                    i {
+                        font-size: 20px;
+                    }
+
+                    .el-icon-star-on {
+                        font-size: 25px;
                     }
 
                     .like-count {
