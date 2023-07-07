@@ -71,9 +71,12 @@ public class ApiArticleServiceImpl implements ApiArticleService {
                 categoryId,tagId);
         articlePage.getRecords().forEach(item ->{
             setCommentAndLike(item);
+            //获取文章
+            int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId()));
+            item.setCollectCount(collectCount);
             //判断当前登录用户是否收藏该文章 标记为收藏
             if (StpUtil.getLoginIdDefaultNull() != null) {
-                int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId())
+                collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId())
                         .eq(Collect::getUserId,StpUtil.getLoginIdAsString()));
                 item.setIsCollect(collectCount > 0);
             }
@@ -166,8 +169,6 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         articlePage.getRecords().forEach(item -> {
             item.setTitle(item.getTitle().replaceAll("(?i)" + keywords, Constants.PRE_TAG + keywords + Constants.POST_TAG));
             setCommentAndLike(item);
-            //格式化时间为几秒前 几分钟前等
-            item.setFormatCreateTime(RelativeDateFormat.format(item.getCreateTime()));
         });
 
         return ResponseResult.success(articlePage);
