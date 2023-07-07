@@ -1,9 +1,10 @@
 package com.shiyi.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.shiyi.common.ResponseResult;
+import com.shiyi.entity.Tags;
 import com.shiyi.mapper.TagsMapper;
 import com.shiyi.service.ApiTagService;
-import com.shiyi.vo.ApiTagVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class ApiTagServiceImpl implements ApiTagService {
      */
     @Override
     public ResponseResult selectTagList() {
-        List<ApiTagVO> tags = tagsMapper.selectListCountArticle();
+        List<Tags> tags = tagsMapper.selectList(new LambdaQueryWrapper<Tags>().orderByDesc(Tags::getSort));
         return ResponseResult.success(tags);
     }
 }

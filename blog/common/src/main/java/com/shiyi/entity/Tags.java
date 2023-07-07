@@ -36,9 +36,6 @@ public class Tags implements Serializable {
     @ApiModelProperty(value = "标签名称")
     private String name;
 
-    @ApiModelProperty(value = "封面图")
-    private String avatar;
-
     @ApiModelProperty(value = "排序")
     private int sort;
 

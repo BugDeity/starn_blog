@@ -27,8 +27,8 @@ public class ApiArticleController {
     @BusinessLogger(value = "首页-用户访问首页",type = "查询",desc = "查询所有文章")
     @GetMapping(value = "/")
     @ApiOperation(value = "文章列表", httpMethod = "GET", response = ResponseResult.class, notes = "文章列表")
-    public ResponseResult selectArticleList(Integer categoryId,Integer tagId) {
-        return  articleService.selectArticleList(categoryId,tagId);
+    public ResponseResult selectArticleList(Integer categoryId,Integer tagId,String orderByDescColumn) {
+        return  articleService.selectArticleList(categoryId,tagId,orderByDescColumn);
     }
 
     @BusinessLogger(value = "门户-用户查看文章详情",type = "查询",desc = "查看文章详情")

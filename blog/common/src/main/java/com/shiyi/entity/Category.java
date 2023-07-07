@@ -42,6 +42,9 @@ public class Category implements Serializable {
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
+    @ApiModelProperty(value = "图标")
+    private String icon;
+
     @ApiModelProperty(value = "创建时间")
       @TableField(fill = FieldFill.INSERT)
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
@@ -52,9 +55,5 @@ public class Category implements Serializable {
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date updateTime;
 
-    @ApiModelProperty(value = "是否首页推荐")
-    private int boutique;
 
-    @ApiModelProperty(value = "封面图")
-    private String avatar;
 }

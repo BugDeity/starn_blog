@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.shiyi.common.RedisConstants;
 import com.shiyi.common.ResponseResult;
+import com.shiyi.entity.Tags;
 import com.shiyi.entity.WebConfig;
 import com.shiyi.mapper.ArticleMapper;
 import com.shiyi.mapper.CategoryMapper;
@@ -15,7 +16,6 @@ import com.shiyi.service.ApiHomeService;
 import com.shiyi.service.RedisService;
 import com.shiyi.utils.IpUtil;
 import com.shiyi.vo.ApiArticleListVO;
-import com.shiyi.vo.ApiTagVO;
 import com.shiyi.vo.SystemArticleListVO;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
@@ -84,7 +84,7 @@ public class ApiHomeServiceImpl implements ApiHomeService {
         List<SystemArticleListVO> articles = articleMapper.selectListByBanner();
 
         //获取标签云
-        List<ApiTagVO> tags = tagsMapper.selectListCountArticle();
+        List<Tags> tags = tagsMapper.selectList(null);
         //最新文章
         List<ApiArticleListVO> apiArticleListVOS = articleMapper.selectUpToDateArticle();
 

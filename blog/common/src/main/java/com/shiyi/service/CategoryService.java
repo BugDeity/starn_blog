@@ -21,7 +21,7 @@ public interface CategoryService extends IService<Category> {
      * @param name 分类名
      * @return
      */
-    ResponseResult listCategory(String name);
+    ResponseResult selectCategoryList(String name);
 
     /**
      * 分类详情

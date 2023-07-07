@@ -3,7 +3,6 @@ package com.shiyi.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.entity.Tags;
-import com.shiyi.vo.ApiTagVO;
 import com.shiyi.vo.SystemTagListVo;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
@@ -61,11 +60,5 @@ public interface TagsMapper extends BaseMapper<Tags> {
      * @return
      */
     List<Tags> selectTagByArticleId(Long articleId);
-
-    /**
-     * 首页标签墙
-     * @return
-     */
-    List<ApiTagVO> selectListCountArticle();
 
 }

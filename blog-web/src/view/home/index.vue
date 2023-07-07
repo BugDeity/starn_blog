@@ -22,10 +22,10 @@
 
             <!-- 热门分类 -->
             <div class="hot_category">
-                <el-tabs v-model="activeName">
-                    <el-tab-pane class="categoryItem" v-for="item in categoryList" :key="item.id">
-                        <span @click="handleTabClick(item.id)" slot="label">
-                            <i class="el-icon-folder-opened"></i>
+                <el-tabs v-model="activeName" @tab-click="handleTabClick">
+                    <el-tab-pane class="categoryItem" v-for="(item, index) in categoryList" :name="index + ''" :key="index">
+                        <span slot="label">
+                            <i :class="item.icon"></i>
                             {{ item.name }}
                         </span>
                     </el-tab-pane>
@@ -298,12 +298,20 @@ export default {
             },
             // 加载层信息
             loading: [],
-            activeName: null,
+            activeName: "0",
             bannerList: [],
             categoryList: [
                 {
                     id: null,
-                    name: "最新"
+                    name: "最新",
+                    icon: "el-icon-news",
+                    desc: "create_time"
+                },
+                {
+                    id: null,
+                    name: "最热",
+                    icon: "el-icon-tableware",
+                    desc: "quantity"
                 }
             ],
             articleList: [],
@@ -354,15 +362,17 @@ export default {
                 clipboard.destroy()
             })
         },
-        handleTabClick(id) {
+        handleTabClick(tab) {
             this.openLoading()
+            let item = this.categoryList[tab.index]
             this.pageData.pageNo = 1
-            this.pageData.categoryId = id
+            this.pageData.categoryId = item.id
+            this.pageData.orderByDescColumn = item.desc
             fetchArticleList(this.pageData).then(res => {
                 this.articleList = res.data.records;
                 this.pageTotal = res.data.pages
+                this.loading.close()
             })
-            this.loading.close()
         },
         handleLogin() {
             this.$store.state.loginFlag = true

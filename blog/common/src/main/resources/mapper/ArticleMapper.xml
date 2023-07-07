@@ -134,7 +134,15 @@
         <if test="tagId != null">
             and a.id in (select article_id from b_article_tag where tag_id =#{tagId})
         </if>
-         order by a.is_stick desc, a.create_time desc
+         order by a.is_stick desc,
+        <choose>
+            <when test="orderByDescColumn != null and orderByDescColumn != ''">
+                    a.${orderByDescColumn} desc
+            </when>
+            <otherwise>
+                a.create_time desc
+            </otherwise>
+        </choose>
     </select>
 
     <select id="selectListArchive" resultType="com.shiyi.vo.ApiArchiveVO">

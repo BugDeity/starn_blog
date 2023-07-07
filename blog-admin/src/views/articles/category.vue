@@ -28,9 +28,9 @@
       <el-table border :data="tableData" style="width: 100%" :default-sort="{ prop: 'sort', order: 'descending' }"
         @selection-change="handleSelectionChange">
         <el-table-column align="center" type="selection" />
-        <el-table-column width="170" align="center" label="封面">
+        <el-table-column width="170" align="center" label="图标">
           <template slot-scope="scope">
-            <el-image style="border-radius: 5px;" class="category-cover" :src="scope.row.avatar" />
+            <i :class="scope.row.icon"></i>
           </template>
         </el-table-column>
         <el-table-column prop="name" align="center" label="分类名" width="180" />
@@ -73,24 +73,13 @@
     <el-dialog center :title="title" :visible.sync="dialogFormVisible">
 
       <el-form :rules="rules" ref="dataForm" :model="category">
-
-        <el-form-item label="封面图" prop="avatar" :label-width="formLabelWidth">
-          <el-popover placement="top" width="160" trigger="hover" v-model="visible">
-            <p>随机获取一张图片</p>
-            <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-              <el-button type="primary" size="mini" @click="randomImg()">确定</el-button>
-            </div>
-            <svg-icon slot="reference" icon-class="wenhao" />
-          </el-popover>
-          <el-upload style="width: 80px;height: 80px;position: relative;top: -40px;right: -20px;" class="avatar-uploader"
-            :show-file-list="false" ref="upload" name="filedatas" :action="uploadPictureHost"
-            :before-upload="uploadBefore" :http-request="uploadSectionFile" multiple>
-            <img v-if="category.avatar" :src="category.avatar" class="imgAvatar" style="width: 100%;height: 100%;">
-            <i v-else class="el-icon-plus avatar-img-icon"></i>
-          </el-upload>
+        <el-form-item label="图标" :label-width="formLabelWidth" prop="icon">
+          <el-input v-model="category.icon" placeholder="请输入前图标名称">
+            <el-button slot="append" icon="el-icon-setting" @click="openIconsDialog('prefix-icon')">
+              选择
+            </el-button>
+          </el-input>
         </el-form-item>
-
         <el-form-item label="分类名" prop="name" :label-width="formLabelWidth">
           <el-input v-model="category.name"></el-input>
         </el-form-item>
@@ -103,16 +92,19 @@
         <el-button type="primary" @click="submit">确认</el-button>
       </div>
     </el-dialog>
+    <icons-dialog :visible.sync="iconsVisible" :current="category.icon" @select="setIcon" />
   </div>
 </template>
 <script>
 import { fetchCategory, add, info, update, deleteBatch, top, remove } from '@/api/category'
-import { randomImg } from '@/api/articles'
 import { parseTime } from '@/utils'
 import { hasAuth } from '@/utils/auth'
 import { mapGetters } from 'vuex'
-import { upload } from '@/api/imgUpload'
+import IconsDialog from "../../components/IconsDialog";
 export default {
+  components: {
+    IconsDialog
+  },
   data() {
     return {
       uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
@@ -127,6 +119,7 @@ export default {
       total: null,
       multipleSelection: [],
       title: null,
+      iconsVisible: false,
       category: {},
       params: {
         name: null,
@@ -174,6 +167,13 @@ export default {
     },
   },
   methods: {
+    openIconsDialog: function (model) {
+      this.iconsVisible = true
+      this.currentIconModel = model
+    },
+    setIcon: function (val) {
+      this.category.icon = val
+    },
     fetchCategory: function () {
       fetchCategory(this.params).then(res => {
         this.tableData = res.data.records
@@ -331,122 +331,7 @@ export default {
     dataFormat: function (time) {
       return parseTime(time)
     },
-    uploadBefore: function () {
-      this.openLoading()
-    },
-    uploadSectionFile: function (param) {
-      this.files = param.file
-      // FormData 对象
-      var formData = new FormData()
-      // 文件对象
-      formData.append('multipartFile', this.files)
-      upload(formData).then(res => {
-        this.category.avatar = res.data
-      })
-      this.loading.close()
-    },
-    randomImg: function () {
-      this.openLoading()
-      randomImg().then(res => {
-        this.category.avatar = res.data;
-        this.visible = false
-        this.loading.close()
-      }).catch(err => {
-        console.error(err)
-      });
-      this.loading.close()
-    },
   }
 }
 </script>
-<style>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  overflow: hidden;
-  width: 200px;
-  height: 110px;
-}
-
-.avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
-}
-
-.avatar-img-icon {
-  font-size: 28px;
-  color: #8c939d;
-  line-height: 110px;
-  text-align: center;
-}
-
-.imgAvatar {
-  width: 200px;
-  height: 110px;
-  display: block;
-}
-
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  margin: 0, 0, 0, 10px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-#imgIcon {
-  color: #fff;
-  font-size: 1.5rem;
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  bottom: 1.4rem;
-}
-
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 195px;
-  height: 105px;
-  line-height: 105px;
-  text-align: center;
-}
-
-.imgBody {
-  width: 195px;
-  height: 105px;
-  border: solid 2px #ffffff;
-  float: left;
-  position: relative;
-}
-
-.uploadImgBody {
-  margin-left: 5px;
-  width: 195px;
-  height: 105px;
-  border: dashed 1px #c0c0c0;
-  float: left;
-  position: relative;
-}
-
-.uploadImgBody :hover {
-  border: dashed 1px #00ccff;
-}
-
-.inputClass {
-  position: absolute;
-}
-
-.category-cover {
-  position: relative;
-  width: 100%;
-  height: 80px;
-  border-radius: 4px;
-}
-</style>
 

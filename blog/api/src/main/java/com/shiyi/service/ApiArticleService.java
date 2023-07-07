@@ -9,7 +9,7 @@ public interface ApiArticleService {
      * 首页分页获取文章
      * @return
      */
-    public ResponseResult selectArticleList(Integer categoryId, Integer tagId);
+    public ResponseResult selectArticleList(Integer categoryId, Integer tagId,String orderByDescColumn);
 
     /**
      * 首页获取文章详情

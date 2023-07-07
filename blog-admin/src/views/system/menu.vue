@@ -3,9 +3,7 @@
     <div class="app-container">
       <!-- 查询和其他操作 -->
       <el-row>
-        <el-button size="small" v-if="canAdd" type="primary" icon="el-icon-plus"
-                   @click="handleCreate(0)"
-        >添加
+        <el-button size="small" v-if="canAdd" type="primary" icon="el-icon-plus" @click="handleCreate(0)">添加
         </el-button>
       </el-row>
       <el-table :data="menuData" style="width: 100%">
@@ -37,9 +35,9 @@
                 <el-table-column label width="100" align="center">
                   <template slot-scope="scope_child">
                     <span v-if="scope_child.row.icon != null">
-                         <i v-if="scope_child.row.icon.indexOf('el-') >-1" :class="scope_child.row.icon"></i>
-                          <svg-icon :icon-class="scope_child.row.icon"/>
-                   </span>
+                      <i v-if="scope_child.row.icon.indexOf('el-') > -1" :class="scope_child.row.icon"></i>
+                      <svg-icon :icon-class="scope_child.row.icon" />
+                    </span>
                   </template>
                 </el-table-column>
 
@@ -65,10 +63,10 @@
 
                 <el-table-column align="center" min-width="230">
                   <template slot-scope="scope_child">
-                    <el-button v-if="canUpdate" type="primary" size="mini"  @click="handleUpdate(scope_child.row)">
+                    <el-button v-if="canUpdate" type="primary" size="mini" @click="handleUpdate(scope_child.row)">
                       编辑
                     </el-button>
-                    <el-button v-if="canDel" size="mini"  type="danger" @click="remove(scope_child)">删除</el-button>
+                    <el-button v-if="canDel" size="mini" type="danger" @click="remove(scope_child)">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -98,10 +96,10 @@
 
         <el-table-column label="图标" width="100" align="center">
           <template slot-scope="scope">
-          <span v-if="scope.row.icon != null">
-                         <i v-if="scope.row.icon.indexOf('el-') >-1" :class="scope.row.icon"></i>
-                          <svg-icon :icon-class="scope.row.icon"/>
-                   </span>
+            <span v-if="scope.row.icon != null">
+              <i v-if="scope.row.icon.indexOf('el-') > -1" :class="scope.row.icon"></i>
+              <svg-icon :icon-class="scope.row.icon" />
+            </span>
           </template>
         </el-table-column>
 
@@ -127,11 +125,11 @@
 
         <el-table-column label="操作" align="center" min-width="270">
           <template slot-scope="scope">
-            <el-button v-if="canUpdate" type="primary" size="mini"  @click="handleUpdate(scope.row)">编辑</el-button>
-            <el-button type="warning" size="mini" v-if="canAdd&&scope.row.level === 0"
-                       @click="handleCreate(scope.row.id)">添加下级
+            <el-button v-if="canUpdate" type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button type="warning" size="mini" v-if="canAdd && scope.row.level === 0"
+              @click="handleCreate(scope.row.id)">添加下级
             </el-button>
-            <el-button v-if="canDel" size="mini"  type="danger" @click="remove(scope)">删除</el-button>
+            <el-button v-if="canDel" size="mini" type="danger" @click="remove(scope)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -166,17 +164,12 @@
                 </el-form-item>-->
         <el-form-item prop="hidden" label="是否显示" :label-width="formLabelWidth">
           <el-radio-group v-model="form.hidden" size="small">
-            <el-radio v-for="(item,index) in hiddenOptions" :key="index" :label="index" border>{{ item }}</el-radio>
+            <el-radio v-for="(item, index) in hiddenOptions" :key="index" :label="index" border>{{ item }}</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="菜单级别" :label-width="formLabelWidth" prop="level">
           <el-select v-model="form.level" placeholder="请选择">
-            <el-option
-              v-for="(item,index) in menuLevelOptions"
-              :key="index"
-              :label="item"
-              :value="index"
-            ></el-option>
+            <el-option v-for="(item, index) in menuLevelOptions" :key="index" :label="item" :value="index"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="排序" prop="sortNo" :label-width="formLabelWidth">
@@ -191,14 +184,14 @@
         <el-button type="primary" @click="submit">确 定</el-button>
       </div>
     </el-dialog>
-    <icons-dialog :visible.sync="iconsVisible" :current="form.icon" @select="setIcon"/>
+    <icons-dialog :visible.sync="iconsVisible" :current="form.icon" @select="setIcon" />
   </div>
 </template>
 <script>
-import {fetchMenu, createMenu, removeMenu, updateMenu} from '@/api/system'
+import { fetchMenu, createMenu, removeMenu, updateMenu } from '@/api/system'
 import IconsDialog from "../../components/IconsDialog";
-import {mapGetters} from "vuex";
-import {hasAuth} from "@/utils/auth";
+import { mapGetters } from "vuex";
+import { hasAuth } from "@/utils/auth";
 
 export default {
   components: {
@@ -222,27 +215,27 @@ export default {
       menuData: [],
       rules: {
         url: [
-          {required: true, message: '请输入url', trigger: 'change'}
+          { required: true, message: '请输入url', trigger: 'change' }
         ],
         icon: [
-          {required: true, message: '请选择图标', trigger: 'change'}
+          { required: true, message: '请选择图标', trigger: 'change' }
         ],
         level: [
-          {required: true, message: '请选择菜单级别', trigger: 'change'}
+          { required: true, message: '请选择菜单级别', trigger: 'change' }
         ],
         component: [
-          {required: true, message: '请输入路由地址', trigger: 'change'}
+          { required: true, message: '请输入路由地址', trigger: 'change' }
         ],
         hidden: [
-          {required: true, message: '请选择是否显示', trigger: 'change'}
+          { required: true, message: '请选择是否显示', trigger: 'change' }
         ],
         title: [
-          {required: true, message: '请输入菜单名称', trigger: 'change'},
-          {min: 1, max: 6, message: '长度在1到6个字符'},
+          { required: true, message: '请输入菜单名称', trigger: 'change' },
+          { min: 1, max: 6, message: '长度在1到6个字符' },
         ],
         sortNo: [
-          {required: true, message: '请输入排序', trigger: 'change'},
-          {pattern: /^[0-9]\d*$/, message: '排序字段只能为自然数'},
+          { required: true, message: '请输入排序', trigger: 'change' },
+          { pattern: /^[0-9]\d*$/, message: '排序字段只能为自然数' },
         ]
       }
     }
@@ -270,7 +263,7 @@ export default {
       fetchMenu(this.query).then(res => {
         this.menuData = res.data
         this.menuData.forEach(item => {
-          if (item.children){
+          if (item.children) {
             item.children.forEach(children => {
               children.children = [];
             })

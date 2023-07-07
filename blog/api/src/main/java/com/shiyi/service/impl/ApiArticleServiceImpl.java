@@ -66,9 +66,9 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      * @return
      */
     @Override
-    public ResponseResult selectArticleList(Integer categoryId,Integer tagId) {
+    public ResponseResult selectArticleList(Integer categoryId,Integer tagId,String orderByDescColumn) {
         Page<ApiArticleListVO> articlePage = articleMapper.selectPublicArticleList(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
-                categoryId,tagId);
+                categoryId,tagId,orderByDescColumn);
         articlePage.getRecords().forEach(item ->{
             setCommentAndLike(item);
             //获取文章

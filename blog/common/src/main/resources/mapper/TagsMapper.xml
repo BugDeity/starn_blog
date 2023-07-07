@@ -15,7 +15,7 @@
 
 
     <select id="selectPageRecord" resultType="com.shiyi.vo.SystemTagListVo">
-        select a.id,a.name,a.sort,a.click_volume,a.create_time,a.avatar,b.articleCount from b_tags a
+        select a.id,a.name,a.sort,a.click_volume,a.create_time,b.articleCount from b_tags a
             left join (select tag_id,count(id) as articleCount from b_article_tag GROUP BY tag_id) b on a.id=b.tag_id
         <where>
             <if test="name != null">
@@ -37,14 +37,6 @@
 
     <select id="selectTagByArticleId" resultType="com.shiyi.entity.Tags">
         select * from b_tags where id in (select tag_id from b_article_tag where article_id=#{articleId})
-    </select>
-
-    <select id="selectListCountArticle" resultType="com.shiyi.vo.ApiTagVO">
-        select t.id, t.name, count(at.article_id) as articleCount,t.avatar
-        from b_tags t
-                 left join b_article_tag at
-        on t.id = at.tag_id
-        group by t.id order by t.sort desc
     </select>
 
 </mapper>

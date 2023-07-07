@@ -28,11 +28,6 @@
       <el-table border :data="tableData" style="width: 100%" :default-sort="{ prop: 'sort', order: 'descending' }"
         @selection-change="handleSelectionChange">
         <el-table-column align="center" type="selection" />
-        <el-table-column width="170" align="center" label="封面">
-          <template slot-scope="scope">
-            <el-image style="border-radius: 5px;" class="tag-cover" :src="scope.row.avatar" />
-          </template>
-        </el-table-column>
         <el-table-column prop="name" align="center" label="标签名" width="180" />
         <el-table-column prop="articleCount" align="center" label="文章量" />
         <el-table-column align="center" prop="sort" sortable label="排序">
@@ -74,22 +69,6 @@
     <el-dialog center :title="title" :visible.sync="dialogFormVisible">
 
       <el-form :rules="rules" ref="dataForm" :model="tag">
-        <el-form-item label="封面图" prop="avatar" :label-width="formLabelWidth">
-          <el-popover placement="top" width="160" trigger="hover" v-model="visible">
-            <p>随机获取一张图片</p>
-            <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-              <el-button type="primary" size="mini" @click="randomImg()">确定</el-button>
-            </div>
-            <svg-icon slot="reference" icon-class="wenhao" />
-          </el-popover>
-          <el-upload style="width: 80px;height: 80px;position: relative;top: -40px;right: -20px;" class="avatar-uploader"
-            :show-file-list="false" ref="upload" name="filedatas" :action="uploadPictureHost"
-            :before-upload="uploadBefore" :http-request="uploadSectionFile" multiple>
-            <img v-if="tag.avatar" :src="tag.avatar" class="imgAvatar" style="width: 100%;height: 100%;">
-            <i v-else class="el-icon-plus avatar-img-icon"></i>
-          </el-upload>
-        </el-form-item>
         <el-form-item label="标签名" prop="name" :label-width="formLabelWidth">
           <el-input v-model="tag.name"></el-input>
         </el-form-item>
@@ -109,12 +88,9 @@ import { fetchTags, remove, add, info, update, deleteBatch, top } from '@/api/ta
 import { parseTime } from '@/utils'
 import { hasAuth } from '@/utils/auth'
 import { mapGetters } from 'vuex'
-import { randomImg } from '@/api/articles'
-import { upload } from '@/api/imgUpload'
 export default {
   data() {
     return {
-      uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
       // 加载层信息
       loading: [],
       tableData: [],
@@ -170,31 +146,6 @@ export default {
     },
   },
   methods: {
-    randomImg: function () {
-      this.openLoading()
-      randomImg().then(res => {
-        this.tag.avatar = res.data;
-        this.visible = false
-        this.loading.close()
-      }).catch(err => {
-        console.error(err)
-      });
-      this.loading.close()
-    },
-    uploadBefore: function () {
-      this.openLoading()
-    },
-    uploadSectionFile: function (param) {
-      this.files = param.file
-      // FormData 对象
-      var formData = new FormData()
-      // 文件对象
-      formData.append('multipartFile', this.files)
-      upload(formData).then(res => {
-        this.tag.avatar = res.data
-      })
-      this.loading.close()
-    },
     fetchTags: function () {
       fetchTags(this.params).then(res => {
         this.tableData = res.data.records

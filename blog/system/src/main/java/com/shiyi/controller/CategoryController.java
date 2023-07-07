@@ -34,7 +34,7 @@ public class CategoryController {
     @SaCheckLogin
     @ApiOperation(value = "分类列表", httpMethod = "GET", response = ResponseResult.class, notes = "分类列表")
     public ResponseResult list(String name){
-        return categoryService.listCategory(name);
+        return categoryService.selectCategoryList(name);
     }
 
     @RequestMapping(value = "/info",method = RequestMethod.GET)

@@ -21,6 +21,12 @@ public class SystemCategoryListVO {
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
+    @ApiModelProperty(value = "图标")
+    private String icon;
+
+    @ApiModelProperty(value = "文章量")
+    private int articleCount;
+
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date createTime;
@@ -29,12 +35,4 @@ public class SystemCategoryListVO {
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date updateTime;
 
-    @ApiModelProperty(value = "是否首页推荐")
-    private int boutique;
-
-    @ApiModelProperty(value = "封面图")
-    private String avatar;
-
-    @ApiModelProperty(value = "文章量")
-    private int articleCount;
 }
