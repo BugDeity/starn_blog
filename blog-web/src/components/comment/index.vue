@@ -260,7 +260,7 @@ export default {
         },
         addComment() {
             if (this.user == null) {
-                this.$store.state.loginFlag = true;
+                this.$store.commit("setLoginFlag", true)
                 return
             }
             if (!this.commentContent) {

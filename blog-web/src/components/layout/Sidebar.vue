@@ -1,13 +1,11 @@
 <template>
     <div class="theme_main">
 
-        <router-link :to="'/im'">
-            <a href="javascript:void(0)" class="joe_action_item chat active">
-                <el-tooltip class="item" effect="dark" content="聊天室" placement="left">
-                    <svg-icon icon-class="charRoom"></svg-icon>
-                </el-tooltip>
-            </a>
-        </router-link>
+        <a href="javascript:void(0)" @click="handleGoIm" class="joe_action_item chat active">
+            <el-tooltip class="item" effect="dark" content="聊天室" placement="left">
+                <svg-icon icon-class="charRoom"></svg-icon>
+            </el-tooltip>
+        </a>
 
         <a href="javascript:void(0)" class="joe_action_item theme active" @click="setSkin()">
             <el-tooltip class="item" effect="dark" content="切换主题" placement="left">
@@ -40,6 +38,13 @@ export default {
     },
 
     methods: {
+        handleGoIm() {
+            if (!this.$store.state.userInfo) {
+                this.$store.commit("setLoginFlag", true)
+                return;
+            }
+            this.$router.push({ path: "/im" })
+        },
         setSkin() {
             this.skin = getSkin()
             let val = ''

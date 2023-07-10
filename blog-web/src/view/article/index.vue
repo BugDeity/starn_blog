@@ -539,11 +539,10 @@ export default {
                     }
                     this.$message.success("点赞成功");
                 }
+                this.loading.close()
             }).catch(err => {
                 this.$message.error(err.message);
             })
-            this.loading.close()
-
         },
 
     },

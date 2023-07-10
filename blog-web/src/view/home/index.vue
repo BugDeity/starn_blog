@@ -35,7 +35,7 @@
             <!-- 文章列表 -->
             <div class="content">
                 <div class="articleBox" v-if="articleList.length > 0">
-                    <el-card class="articleItem" v-for="item in articleList" :key="item.id">
+                    <el-card class="articleItem" v-for="(item, index) in articleList" :key="item.id">
                         <div class="articleInfo">
                             <div class="articleInfo-item">
                                 <el-tooltip class="item" effect="dark" content="原创文章" placement="top-start">
