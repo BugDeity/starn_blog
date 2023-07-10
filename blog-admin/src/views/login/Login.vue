@@ -229,7 +229,7 @@ $light_gray: #eee;
                     left: 0;
                     background-image: linear-gradient(0deg,
                             transparent,
-                            #74efff,
+                            #ff74ba,
                             transparent);
                     animation: two 4s linear infinite;
                 }
@@ -270,7 +270,7 @@ $light_gray: #eee;
                     right: -100%;
                     background-image: linear-gradient(270deg,
                             transparent,
-                            #74ff7b,
+                            #74ff97,
                             transparent);
                     animation: three 4s linear 3s infinite;
                 }
