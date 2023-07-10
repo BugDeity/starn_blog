@@ -33,7 +33,7 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import('@/views/login/Login'),
     hidden: true
   },
 
@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'dashboard',affix: true }
+      meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
   },
   /*{
@@ -144,7 +144,7 @@ export const constantRoutes = [
     ]
   },*/
   // 404 page must be placed at the end !!!
- // { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 /* 动态路由 */
@@ -152,7 +152,7 @@ export const asyncRoutes = [
 ]
 
 const createRouter = () => new Router({
-   //mode: 'history', // 去掉url中的#
+  //mode: 'history', // 去掉url中的#
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
