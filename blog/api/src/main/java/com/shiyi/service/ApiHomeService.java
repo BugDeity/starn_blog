@@ -24,4 +24,17 @@ public interface ApiHomeService {
      * @return
      */
     public ResponseResult getWebSiteInfo();
+
+    /**
+     * 获取各大平台的热搜
+     * @param type 平台
+     * @return
+     */
+    public ResponseResult hot(String type);
+
+    /**
+     * 获取每日推荐歌曲
+     * @return
+     */
+    public ResponseResult getMusic();
 }

@@ -121,15 +121,35 @@ public class ApiHomeServiceImpl implements ApiHomeService {
      * @param type 平台
      * @return
      */
+    @Override
     public ResponseResult hot(String type) {
         String url = "https://www.coderutil.com/api/resou/v1/" + type;
-        HashMap<String, Object> paramMap = new HashMap<>();
-        paramMap.put("access-key", ak);
-        paramMap.put("secret-key", sk);
-        String result= HttpUtil.get(url, paramMap);
-        JSONObject jsonObject = JSONObject.parseObject(result);
+        JSONObject jsonObject = sendHttpUrl(url);
         return ResponseResult.success(jsonObject);
     }
 
 
+    /**
+     * 获取每日推荐歌曲
+     * @return
+     */
+    @Override
+    public ResponseResult getMusic() {
+        String url = "https://www.coderutil.com/api/music/v1/recommend";
+        JSONObject jsonObject = sendHttpUrl(url);
+        return ResponseResult.success(jsonObject);
+    }
+
+    /**
+     * 发送api接口请求
+     * @param url 接口地址
+     * @return
+     */
+    private static JSONObject sendHttpUrl(String url) {
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("access-key", ak);
+        paramMap.put("secret-key", sk);
+        String result= HttpUtil.get(url, paramMap);
+        return JSONObject.parseObject(result);
+    }
 }

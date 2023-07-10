@@ -122,13 +122,16 @@
 
             </div>
             <!-- 移动端点赞 -->
-            <div class="mobile-sidbarnav">
-                <div class="dianzan-item" @click="like(article.id)">
-                    <span>
-                        <svg-icon v-if="article.isLike" icon-class="axsxdianzan"></svg-icon>
-                        <svg-icon v-else icon-class="axdianzan"></svg-icon>
-                    </span>
-                    <span v-if="article.likeCount" class="like-count">{{ article.likeCount }}</span>
+            <div class="dianzanBox">
+                <div class="dianzan-item">
+                    <div>
+                        <span @click="like(article.id)">
+                            <svg-icon v-if="article.isLike" icon-class="axsxdianzan"></svg-icon>
+                            <svg-icon v-else icon-class="axdianzan"></svg-icon>
+                        </span>
+                    </div>
+
+                    <div v-if="article.likeCount" class="likeCountItem">{{ article.likeCount }}人已点赞</div>
                 </div>
             </div>
 
@@ -334,6 +337,7 @@ export default {
     mounted() {
         window.setTimeout(() => {
             if (this.$refs.preview) {
+                //生成目录
                 const anchors = this.$refs.preview.$el.querySelectorAll('h1,h2,h3,h4,h5,h6');
                 if (anchors) {
                     const titles = Array.from(anchors).filter((title) => !!title.innerText.trim());
@@ -358,6 +362,12 @@ export default {
                         that.previewImg(e.target.currentSrc);
                     });
                 }
+                //添加代码复制按钮复制成功提示
+                document.addEventListener("click", e => {
+                    if (e.target.className === "v-md-copy-code-btn") {
+                        this.$message.success("复制成功")
+                    }
+                })
             }
         }, 500)
         // 监听滚动事件
@@ -526,8 +536,6 @@ export default {
                     this.article.isLike = true
                     if (this.article.readType == 2) {
                         this.checkAfter()
-                        document.documentElement.scrollTop = 0
-
                     }
                     this.$message.success("点赞成功");
                 }
@@ -563,7 +571,7 @@ export default {
             width: 100%;
             margin-top: 60px;
             background-color: var(--background-color);
-
+            padding: 10px;
 
             .category {
                 margin-right: 10px;
@@ -789,21 +797,11 @@ export default {
                 display: none;
             }
 
-            .mobile-sidbarnav {
+            .dianzanBox {
                 text-align: center;
 
-
                 .dianzan-item {
-                    width: 40px;
-                    height: 40px;
-                    line-height: 40px;
-                    margin: 0 auto;
-                    position: relative;
-
-                    .like-count {
-                        position: absolute;
-                        bottom: -26px;
-                        left: 17px;
+                    .likeCountItem {
                         color: var(--text-color);
                         font-size: 12px;
                     }
@@ -1231,7 +1229,7 @@ export default {
                 }
             }
 
-            .mobile-sidbarnav {
+            .dianzanBox {
                 display: none;
             }
 

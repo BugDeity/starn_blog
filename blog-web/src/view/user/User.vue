@@ -1,6 +1,7 @@
 <template>
     <div class="userInfo-main">
-        <el-drawer :append-to-body="true" title="我是标题" :with-header="false" :visible.sync="drawer" direction="rtl">
+        <el-drawer class="drawer" :append-to-body="true" title="我是标题" :with-header="false" :visible.sync="drawer"
+            direction="rtl">
             <el-tabs style="height: calc(100vh - 50px);overflow: scroll;" v-model="activeName" tab-position="left"
                 type="border-card" @tab-click="handeClike">
 
@@ -503,6 +504,16 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@media screen and (max-width: 1118px) {
+    /deep/ .el-drawer {
+        width: 90% !important;
+    }
+
+    /deep/ .el-tabs__item {
+        padding: 0 5px !important;
+    }
+}
+
 /deep/ .el-tabs {
     height: -webkit-fill-available;
 }

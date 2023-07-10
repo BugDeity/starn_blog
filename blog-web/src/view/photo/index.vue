@@ -232,7 +232,7 @@ export default {
         justify-content: center;
 
         .containner {
-            width: 70%;
+            width: 60%;
             margin-top: 80px;
 
             /deep/ .el-card {

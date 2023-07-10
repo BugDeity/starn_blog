@@ -138,7 +138,7 @@ export default {
                 color: var(--theme-color);
                 font-size: 1rem;
                 font-weight: bold;
-                border-bottom: 2px dashed #569ffb;
+                border-bottom: 2px dashed var(--theme-color);
 
                 span {
                     margin-right: 20px;
@@ -225,7 +225,7 @@ export default {
                     width: 11px;
                     height: 11px;
                     border-radius: 100%;
-                    background-color: #91c2fc;
+                    background-color: var(--theme-color);
                     position: absolute;
                     left: -15px;
                 }
@@ -239,7 +239,7 @@ export default {
                     width: 3px;
                     height: calc(100% + 30px);
                     /*加上10px是item底部的margin*/
-                    background-color: #91c2fc;
+                    background-color: var(--theme-color);
                     position: absolute;
                     top: 0;
                     left: -11px;
@@ -248,12 +248,12 @@ export default {
                 &:hover {
                     &::before {
                         transform: scale3d(1.2, 1.2, 1);
-                        background-color: #569ffb;
+                        background-color: var(--theme-color);
                     }
 
                     &::after {
                         transform: scale3d(1.1, 1, 1);
-                        background-color: #569ffb;
+                        background-color: var(--theme-color);
                     }
 
                     .item-index {
@@ -397,7 +397,7 @@ export default {
                     width: 11px;
                     height: 11px;
                     border-radius: 100%;
-                    background-color: #91c2fc;
+                    background-color: var(--theme-color);
                     position: absolute;
                     left: -15px;
                 }
@@ -411,7 +411,7 @@ export default {
                     width: 3px;
                     height: calc(100% + 30px);
                     /*加上10px是item底部的margin*/
-                    background-color: #91c2fc;
+                    background-color: var(--theme-color);
                     position: absolute;
                     top: 0;
                     left: -11px;
@@ -420,17 +420,17 @@ export default {
                 &:hover {
                     &::before {
                         transform: scale3d(1.2, 1.2, 1);
-                        background-color: #569ffb;
+                        background-color: var(--theme-color);
                     }
 
                     &::after {
                         transform: scale3d(1.1, 1, 1);
-                        background-color: #569ffb;
+                        background-color: var(--theme-color);
                     }
 
                     .item-index {
                         transform: scale3d(1.01, 1.01, 1);
-                        color: var(--text-color);
+                        color: var(--theme-color);
                     }
                 }
 

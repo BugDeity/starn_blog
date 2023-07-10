@@ -173,7 +173,7 @@ export default {
                         border: 1px solid var(--border-line);
                         border-radius: 4px;
                         text-align: center;
-                        padding: 6px 16px;
+                        padding: 10px 16px;
                         font-size: 14px;
                         transition: all .3s;
                         outline: none;

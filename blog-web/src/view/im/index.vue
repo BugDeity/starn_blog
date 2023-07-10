@@ -483,7 +483,7 @@ export default {
 
                 .onlineLi {
                     cursor: pointer;
-                    padding-left: 5px;
+                    padding: 5px;
                     height: 30px;
                     line-height: 30px;
                     border-radius: 5px;

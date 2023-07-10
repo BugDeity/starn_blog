@@ -145,6 +145,12 @@ export function getHot(type) {
         }
     })
 }
+export function getMusic() {
+    return request({
+        url: '/v1/music',
+        method: 'get'
+    })
+}
 export function report() {
     return request({
         url: '/v1/report',

@@ -154,12 +154,12 @@
                         <img v-else :src="userInfo.avatar" alt="" />
                     </div>
                     <el-dropdown-menu slot="dropdown" v-if="userInfo">
-                        <el-dropdown-item>
-                            <span @click="openUserInfoDrawer">个人中心</span>
-                        </el-dropdown-item>
-                        <el-dropdown-item> <a href="javascript:;" @click="logout"
-                                style="text-decoration: none;color: #71777c;">退出登录</a>
-                        </el-dropdown-item>
+                        <a style="text-decoration: none;color: #71777c;" @click="openUserInfoDrawer">
+                            <el-dropdown-item>个人中心</el-dropdown-item>
+                        </a>
+                        <a style="text-decoration: none;color: #71777c;" @click="logout">
+                            <el-dropdown-item>退出登录</el-dropdown-item>
+                        </a>
                     </el-dropdown-menu>
 
                     <el-dropdown-menu slot="dropdown" v-else>
@@ -229,7 +229,6 @@ export default {
             this.isMobile = val < 1119
             this.noneInput = val < 1410
         }
-
     },
 
     methods: {

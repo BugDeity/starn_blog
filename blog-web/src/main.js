@@ -33,7 +33,6 @@ Vue.prototype.Clipboard = Clipboard
 VueMarkdownEditor.use(vuepressTheme, {
   Prism,
 });
-
 Vue.use(VueMarkdownEditor);
 VMdPreview.use(vuepressTheme, {
   Prism

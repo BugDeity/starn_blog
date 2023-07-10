@@ -183,6 +183,7 @@ export default {
                 margin: 0 auto;
                 display: block;
                 width: 100%;
+                height: 40px;
 
                 /deep/ .el-input__inner {
                     border-radius: 0 !important;
@@ -190,7 +191,7 @@ export default {
 
                 .siteBox {
                     display: inline-block;
-                    height: 39px;
+                    height: calc(100% - 2px);
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-right: none;
@@ -219,7 +220,7 @@ export default {
 
                 .searchCommit {
                     display: inline-block;
-                    height: 39px;
+                    height: calc(100% - 2px);
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-left: none;
@@ -347,6 +348,7 @@ export default {
                 margin: 0 auto;
                 display: block;
                 width: 70%;
+                height: 40px;
 
                 /deep/ .el-input__inner {
                     border-radius: 0 !important;
@@ -356,9 +358,9 @@ export default {
 
                 .siteBox {
                     display: inline-block;
-                    height: 39px;
-                    line-height: 36px;
+                    height: calc(100% - 2px);
                     border: 1px solid #DCDFE6;
+                    line-height: 36px;
                     border-right: none;
                     padding-left: 20px;
                     padding-right: 20px;
@@ -385,7 +387,7 @@ export default {
 
                 .searchCommit {
                     display: inline-block;
-                    height: 39px;
+                    height: calc(100% - 2px);
                     line-height: 36px;
                     border: 1px solid #DCDFE6;
                     border-left: none;

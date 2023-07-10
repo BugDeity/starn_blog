@@ -67,7 +67,6 @@
                             </div>
 
                             <div class="articleOhter">
-
                                 <span class="item">
                                     <i class="el-icon-view"></i>
                                     <span class="name">阅读</span>{{ item.quantity }}
@@ -172,6 +171,17 @@
 
                         </div>
                     </el-card>
+
+                    <!-- 今日歌曲推荐 -->
+                    <el-card class="music" v-if="audio.length">
+                        <div class="title">
+                            今日歌曲推荐
+                        </div>
+                        <div>
+                            <a-player :music="audio[0]" :list="audio" autoplay ref="music" />
+                        </div>
+                    </el-card>
+
                     <!-- 关注我 -->
                     <el-card class="box-card guanzhu">
                         <div slot="header" class="clearfix">
@@ -283,17 +293,21 @@
 </template>
 
 <script>
-import { fetchArticleList, featchHomeData, featchCategory } from '@/api'
+import { fetchArticleList, featchHomeData, featchCategory, getMusic } from '@/api'
 import SiteInfo from '@/components/site/index.vue'
 import Notcie from '@/components/notice/index.vue'
+import APlayer from 'vue-aplayer'
+
 export default {
     components: {
         SiteInfo,
-        Notcie
+        Notcie,
+        APlayer
     },
     name: 'Home',
     data() {
         return {
+            audio: [],
             emojis: [],
             pageData: {
                 pageNo: 1,
@@ -325,13 +339,36 @@ export default {
 
         };
     },
-    // require引用：
     mounted() {
+        //设置音乐列表为隐藏
+        window.setTimeout(() => {
+            if (this.$refs.music != undefined) {
+                this.$refs.music.showList = false
+            }
+        }, 400)
+    },
+    // require引用：
+    created() {
         this.fetchArticleList()
         this.getHomeData()
         this.fetchCategoryList()
+        this.getMusic()
     },
     methods: {
+        getMusic() {
+            getMusic().then(res => {
+                let musicList = res.data.data.songs
+                for (let i = 0; i < musicList.length; i++) {
+                    const music = {
+                        title: musicList[i].title,
+                        artist: musicList[i].singer,
+                        url: musicList[i].songUrl,
+                        pic: musicList[i].imageUrl
+                    }
+                    this.audio.push(music)
+                }
+            })
+        },
         openUserInfoDrawer(value) {
             this.$store.state.userInfoDrawer.flag = true;
             this.$store.state.userInfoDrawer.name = value;
@@ -382,7 +419,6 @@ export default {
         },
         // 分页
         onPage() {
-
             this.pageData.pageNo++;
             this.fetchArticleList()
 
@@ -402,7 +438,6 @@ export default {
         },
         getHomeData() {
             featchHomeData().then(res => {
-                //this.categoryList = res.extra.categories
                 this.bannerList = res.extra.articles
                 this.tagList = res.extra.tagCloud
                 this.newArticleList = res.extra.newArticleList
@@ -1179,6 +1214,21 @@ export default {
                             }
                         }
 
+                    }
+
+                    .music {
+                        width: 100%;
+                        margin-top: 20px;
+                        background-color: var(--background-color);
+
+                        .title {
+                            padding: 10px;
+                            color: var(--text-color);
+                        }
+
+                        .aplayer {
+                            margin-left: 10px;
+                        }
                     }
                 }
             }
