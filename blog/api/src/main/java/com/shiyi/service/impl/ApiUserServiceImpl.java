@@ -51,7 +51,9 @@ public class ApiUserServiceImpl implements ApiUserService {
 
     private final UserInfoMapper userInfoMapper;
 
-    private final String userAvatar = "http://img.shiyit.com/user.jpg";
+    private final String[] userAvatarList = {"http://img.shiyit.com/avatars/buxie.png","http://img.shiyit.com/avatars/daizhi.png",
+            "http://img.shiyit.com/avatars/fennu.png","http://img.shiyit.com/avatars/jingxi.png","http://img.shiyit.com/avatars/kaixin.png",
+            "http://img.shiyit.com/avatars/shuanshuai.png"};
 
 
     /**
@@ -127,7 +129,7 @@ public class ApiUserServiceImpl implements ApiUserService {
             // 保存用户信息
             UserInfo userInfo = UserInfo.builder()
                     .nickname("WECHAT-" + RandomUtils.generationCapital(6))
-                    .avatar(userAvatar)
+                    .avatar(userAvatarList[RandomUtils.generationNumber(userAvatarList.length)])
                     .build();
             userInfoMapper.insert(userInfo);
             // 保存账号信息
@@ -161,7 +163,7 @@ public class ApiUserServiceImpl implements ApiUserService {
      */
     @Override
     public ResponseResult getWechatLoginCode() {
-        String code = "DL" + RandomUtils.generationNumber(4);
+        String code = "DL" + RandomUtils.generationNumberChar(4);
         redisService.setCacheObject(RedisConstants.WX_LOGIN_USER_STATUE + code, false, 60, TimeUnit.SECONDS);
         return ResponseResult.success(code);
     }

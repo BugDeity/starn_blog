@@ -60,7 +60,7 @@ public class ApiWeChatController {
             log.info("公众号请求类型:{};内容为:{}", message.getMsgType(), content);
             if (WxConsts.XmlMsgType.TEXT.equals(message.getMsgType())){
                 if ("验证码".equals(content)) {
-                    String code = RandomUtils.generationNumber(6);
+                    String code = RandomUtils.generationNumberChar(6);
                     String msg = MessageFormat.format("您的本次验证码:{0},该验证码30分钟内有效。", code);
                     redisService.setCacheObject(RedisConstants.WECHAT_CODE+code,code,30, TimeUnit.MINUTES);
                     return returnMsg(msg, message);

@@ -184,174 +184,348 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
-.Loginbody {
-    height: 100%;
-    width: 100%;
+@media screen and (max-width: 1118px) {
 
-    .header {
-        display: flex;
+    .Loginbody {
         height: 100%;
         width: 100%;
 
-        .login-left {
-            background-image: url("http://img.shiyit.com/adminBj.jpg");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            margin-right: 50px;
-            width: 70%;
-            position: relative;
+        .header {
+            display: flex;
+            height: 100%;
+            width: 100%;
 
+            .login-left {
+                display: none;
+
+            }
+
+            .login-right {
+                width: 100%;
+                display: flex;
+                background-color: #ecf5ff;
+                padding: 20px;
+
+                .login-form {
+                    width: 500px;
+                    height: 450px;
+                    max-width: 100%;
+                    padding: 35px 35px 15px 35px;
+                    border: 1px solid #409eff;
+                    border-radius: 5px;
+                    margin: auto;
+                    position: relative;
+                    overflow: hidden;
+
+                    &::before {
+                        content: ' ';
+                        position: absolute;
+                        width: 4px;
+                        height: 100%;
+                        top: -100%;
+                        left: 0;
+                        background-image: linear-gradient(0deg,
+                                transparent,
+                                #ff74ba,
+                                transparent);
+                        animation: two 4s linear infinite;
+                    }
+
+                    &::after {
+                        content: ' ';
+                        position: absolute;
+                        width: 4px;
+                        height: 100%;
+                        bottom: -100%;
+                        right: 0;
+                        background-image: linear-gradient(360deg,
+                                transparent,
+                                #74efff,
+                                transparent);
+                        animation: four 4s linear 2s infinite;
+                    }
+
+                    i {
+                        position: absolute;
+                        display: inline-block;
+                        height: 4px;
+                        width: 100%;
+                    }
+
+                    .bottom {
+                        bottom: 0;
+                        left: -100%;
+                        background-image: linear-gradient(270deg,
+                                transparent,
+                                #b574ff,
+                                transparent);
+                        animation: one 4s linear 1s infinite;
+                    }
+
+                    .top {
+                        top: 0;
+                        right: -100%;
+                        background-image: linear-gradient(270deg,
+                                transparent,
+                                #74ff97,
+                                transparent);
+                        animation: three 4s linear 3s infinite;
+                    }
+                }
+
+                @keyframes one {
+                    0% {
+                        left: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        left: 100%;
+                    }
+                }
+
+                @keyframes two {
+                    0% {
+                        top: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        top: 100%;
+                    }
+                }
+
+                @keyframes three {
+                    0% {
+                        right: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        right: 100%;
+                    }
+                }
+
+                @keyframes four {
+                    0% {
+                        bottom: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        bottom: 100%;
+
+                    }
+                }
+
+                .title {
+                    font-size: 26px;
+                    font-weight: 400;
+                    color: #303133;
+                    margin: 0px auto 40px auto;
+                    text-align: center;
+                    font-weight: bold;
+                    font-weight: 400;
+                }
+
+                .show-pwd {
+                    position: absolute;
+                    right: 10px;
+                    top: 7px;
+                    font-size: 16px;
+                    color: $dark_gray;
+                    cursor: pointer;
+                    user-select: none;
+
+                    svg {
+                        vertical-align: 5px;
+                    }
+                }
+            }
         }
 
-        .login-right {
-            width: 30%;
-            display: flex;
-            background-color: #fff;
-
-            .login-form {
-                width: 500px;
-                height: 450px;
-                max-width: 100%;
-                padding: 35px 35px 15px 35px;
-                border: 1px solid #409eff;
-                border-radius: 5px;
-                margin: auto;
-                position: relative;
-                overflow: hidden;
-
-                &::before {
-                    content: ' ';
-                    position: absolute;
-                    width: 4px;
-                    height: 100%;
-                    top: -100%;
-                    left: 0;
-                    background-image: linear-gradient(0deg,
-                            transparent,
-                            #ff74ba,
-                            transparent);
-                    animation: two 4s linear infinite;
-                }
-
-                &::after {
-                    content: ' ';
-                    position: absolute;
-                    width: 4px;
-                    height: 100%;
-                    bottom: -100%;
-                    right: 0;
-                    background-image: linear-gradient(360deg,
-                            transparent,
-                            #74efff,
-                            transparent);
-                    animation: four 4s linear 2s infinite;
-                }
-
-                i {
-                    position: absolute;
-                    display: inline-block;
-                    height: 4px;
-                    width: 100%;
-                }
-
-                .bottom {
-                    bottom: 0;
-                    left: -100%;
-                    background-image: linear-gradient(270deg,
-                            transparent,
-                            #b574ff,
-                            transparent);
-                    animation: one 4s linear 1s infinite;
-                }
-
-                .top {
-                    top: 0;
-                    right: -100%;
-                    background-image: linear-gradient(270deg,
-                            transparent,
-                            #74ff97,
-                            transparent);
-                    animation: three 4s linear 3s infinite;
-                }
-            }
-
-            @keyframes one {
-                0% {
-                    left: -100%;
-                }
-
-                50%,
-                100% {
-                    left: 100%;
-                }
-            }
-
-            @keyframes two {
-                0% {
-                    top: -100%;
-                }
-
-                50%,
-                100% {
-                    top: 100%;
-                }
-            }
-
-            @keyframes three {
-                0% {
-                    right: -100%;
-                }
-
-                50%,
-                100% {
-                    right: 100%;
-                }
-            }
-
-            @keyframes four {
-                0% {
-                    bottom: -100%;
-                }
-
-                50%,
-                100% {
-                    bottom: 100%;
-
-                }
-            }
-
-            .title {
-                font-size: 26px;
-                font-weight: 400;
-                color: #303133;
-                margin: 0px auto 40px auto;
-                text-align: center;
-                font-weight: bold;
-                font-weight: 400;
-            }
-
-            .show-pwd {
-                position: absolute;
-                right: 10px;
-                top: 7px;
-                font-size: 16px;
-                color: $dark_gray;
-                cursor: pointer;
-                user-select: none;
-
-                svg {
-                    vertical-align: 5px;
-                }
-            }
+        .el-login-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
         }
     }
+}
 
-    .el-login-footer {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        right: 0;
+
+@media screen and (min-width: 1119px) {
+    .Loginbody {
+        height: 100%;
+        width: 100%;
+
+        .header {
+            display: flex;
+            height: 100%;
+            width: 100%;
+
+            .login-left {
+                background-image: url("http://img.shiyit.com/adminBj.jpg");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                width: 70%;
+                position: relative;
+
+            }
+
+            .login-right {
+                width: 30%;
+                display: flex;
+                background-color: #ecf5ff;
+                padding: 20px;
+
+                .login-form {
+                    width: 500px;
+                    height: 450px;
+                    max-width: 100%;
+                    padding: 35px 35px 15px 35px;
+                    border: 1px solid #409eff;
+                    border-radius: 5px;
+                    margin: auto;
+                    position: relative;
+                    overflow: hidden;
+
+                    &::before {
+                        content: ' ';
+                        position: absolute;
+                        width: 4px;
+                        height: 100%;
+                        top: -100%;
+                        left: 0;
+                        background-image: linear-gradient(0deg,
+                                transparent,
+                                #ff74ba,
+                                transparent);
+                        animation: two 4s linear infinite;
+                    }
+
+                    &::after {
+                        content: ' ';
+                        position: absolute;
+                        width: 4px;
+                        height: 100%;
+                        bottom: -100%;
+                        right: 0;
+                        background-image: linear-gradient(360deg,
+                                transparent,
+                                #74efff,
+                                transparent);
+                        animation: four 4s linear 2s infinite;
+                    }
+
+                    i {
+                        position: absolute;
+                        display: inline-block;
+                        height: 4px;
+                        width: 100%;
+                    }
+
+                    .bottom {
+                        bottom: 0;
+                        left: -100%;
+                        background-image: linear-gradient(270deg,
+                                transparent,
+                                #b574ff,
+                                transparent);
+                        animation: one 4s linear 1s infinite;
+                    }
+
+                    .top {
+                        top: 0;
+                        right: -100%;
+                        background-image: linear-gradient(270deg,
+                                transparent,
+                                #74ff97,
+                                transparent);
+                        animation: three 4s linear 3s infinite;
+                    }
+                }
+
+                @keyframes one {
+                    0% {
+                        left: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        left: 100%;
+                    }
+                }
+
+                @keyframes two {
+                    0% {
+                        top: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        top: 100%;
+                    }
+                }
+
+                @keyframes three {
+                    0% {
+                        right: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        right: 100%;
+                    }
+                }
+
+                @keyframes four {
+                    0% {
+                        bottom: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        bottom: 100%;
+
+                    }
+                }
+
+                .title {
+                    font-size: 26px;
+                    font-weight: 400;
+                    color: #303133;
+                    margin: 0px auto 40px auto;
+                    text-align: center;
+                    font-weight: bold;
+                    font-weight: 400;
+                }
+
+                .show-pwd {
+                    position: absolute;
+                    right: 10px;
+                    top: 7px;
+                    font-size: 16px;
+                    color: $dark_gray;
+                    cursor: pointer;
+                    user-select: none;
+
+                    svg {
+                        vertical-align: 5px;
+                    }
+                }
+            }
+        }
+
+        .el-login-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
     }
 }
 </style>

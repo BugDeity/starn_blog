@@ -32,11 +32,19 @@ public class RandomUtils {
      * @param number
      * @return
      */
-    public static String generationNumber(Integer number){
+    public static String generationNumberChar(Integer number){
         StringBuilder stringBuilder = new StringBuilder();
         for( int i = 0; i < number; i ++) {
             stringBuilder.append(RANDOM.nextInt(10));
         }
         return stringBuilder.toString();
+    }
+
+    /**
+     * 随机生成一个数字
+     * @return
+     */
+    public static Integer generationNumber(int number){
+        return RANDOM.nextInt(number);
     }
 }

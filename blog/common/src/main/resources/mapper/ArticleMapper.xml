@@ -10,6 +10,8 @@
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="content_md" jdbcType="INTEGER" property="contentMd"/>
+        <result column="is_original" jdbcType="INTEGER" property="isOriginal"/>
+        <result column="original_url" jdbcType="INTEGER" property="originalUrl"/>
         <result column="quantity" jdbcType="INTEGER" property="quantity"/>
         <result column="create_time" jdbcType="DATE" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
@@ -149,7 +151,7 @@
         select id,
                title,
                DATE_FORMAT(create_time, '%Y-%c') as 'time', create_time as formatTime
-        from b_article
+        from b_article where is_publish = 1
         order by create_time desc
     </select>
     <select id="selectArticleByIdToVO" resultMap="selectArticleByIdToVOMap">
@@ -164,6 +166,8 @@
                a.create_time,
                a.update_time,
                a.read_type,
+               a.is_original,
+               a.original_url,
                c.id   as cid,
                c.name as cname
         from b_article a

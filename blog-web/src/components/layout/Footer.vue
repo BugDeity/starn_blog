@@ -29,7 +29,7 @@
                 </span>
 
                 <span class="site_uv">
-                    <i class="iconfont icon-zongfangkeliang"></i>
+                    <i class="el-icon-user-solid"></i>
                     访客量
                     <em class="uv_num">
                         {{ this.$store.state.visitorAccess }}

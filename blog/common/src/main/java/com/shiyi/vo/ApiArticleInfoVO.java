@@ -40,6 +40,12 @@ public class ApiArticleInfoVO {
     @ApiModelProperty(value = "是否置顶 0否 1是")
     private Integer isStick;
 
+    @ApiModelProperty(value = "是否原创  0：转载 1:原创")
+    private Integer isOriginal;
+
+    @ApiModelProperty(value = "转载地址")
+    private String originalUrl;
+
     @ApiModelProperty(value = "阅读方式 0无需验证 1：评论阅读 2：点赞阅读 3：扫码阅读")
     private Integer readType;
 

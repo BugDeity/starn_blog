@@ -165,9 +165,19 @@
             <!-- 版权 -->
             <div class="copyright">
                 <div class="copyrightItem">
+                    <svg-icon :icon-class="article.isOriginal ? 'yuanchuang' : 'zhuanzai'"></svg-icon>
+                    <span class="text name">创作类型:</span>
+                    <span class="text"> {{ article.isOriginal ? '原创' : '转载' }}</span>
+                </div>
+                <div class="copyrightItem" v-if="article.isOriginal">
                     <svg-icon icon-class="copyright"></svg-icon>
                     <span class="text name">版权归属:</span>
                     <span class="text"> {{ article.username }}</span>
+                </div>
+                <div class="copyrightItem" v-else>
+                    <svg-icon icon-class="link"></svg-icon>
+                    <span class="text name">转载链接:</span>
+                    <a href="" class="text"> {{ article.originalUrl }}</a>
                 </div>
                 <div class="copyrightItem">
                     <svg-icon icon-class="link"></svg-icon>
@@ -410,11 +420,15 @@ export default {
             this.$message.info(desc)
         },
         checkCode() {
+            if (!this.code) {
+                this.$message.error("验证码不能为空！")
+                return;
+            }
             checkCode(this.code).then(res => {
                 this.$message.success("验证成功")
                 this.checkAfter()
             }).catch(err => {
-                this.$message.error("验证失败")
+                this.$message.error(err.message)
             })
 
         },
@@ -557,7 +571,7 @@ export default {
 
 @media screen and (max-width: 1118px) {
     /deep/ .el-dialog {
-        width: 100%;
+        width: 90%;
     }
 
     .article-info {
@@ -882,7 +896,8 @@ export default {
 @media screen and (min-width: 1119px) {
 
     /deep/ .el-dialog {
-        width: 30%;
+        width: 25%;
+        border-radius: 10px;
     }
 
     .article-info {
@@ -1078,6 +1093,7 @@ export default {
                     margin-top: 10px;
                     transition: box-shadow .35s, transform .35s;
                     cursor: pointer;
+                    max-height: 500px;
 
                     &:hover {
                         box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2);

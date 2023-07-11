@@ -173,14 +173,14 @@
                     </el-card>
 
                     <!-- 今日歌曲推荐 -->
-                    <el-card class="music" v-if="audio.length">
+                    <!-- <el-card class="music" v-if="audio.length">
                         <div class="title">
                             今日歌曲推荐
                         </div>
                         <div>
-                            <a-player :music="audio[0]" :list="audio" autoplay ref="music" />
+                            <a-player :music="audio[0]" :list="audio"  ref="music" />
                         </div>
-                    </el-card>
+                    </el-card> -->
 
                     <!-- 关注我 -->
                     <el-card class="box-card guanzhu">
@@ -352,7 +352,7 @@ export default {
         this.fetchArticleList()
         this.getHomeData()
         this.fetchCategoryList()
-        this.getMusic()
+        //this.getMusic()
     },
     methods: {
         getMusic() {

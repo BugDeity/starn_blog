@@ -19,6 +19,7 @@
                                     <span v-if="item.fromUserId == 1" class="tag">官方</span>
                                     <span class="time" style="">{{ item.createTime }}</span>
                                 </span>
+
                                 <span v-if="!item.isWithdraw" v-html="item.content" class="messageContent"
                                     @contextmenu.prevent="openMenu($event, item, index)">
                                 </span>
@@ -612,6 +613,7 @@ export default {
                         background-color: var(--im-box-backgroudColor);
                         border-radius: 2px 18px 18px;
                         padding: 8px;
+                        max-width: 50%;
                     }
 
 
@@ -626,6 +628,7 @@ export default {
                             background-color: var(--im-user-box-backgroudColor);
                             border-radius: 18px 2px 18px 18px;
                             padding: 8px;
+                            max-width: 50%;
                         }
 
                         img {
