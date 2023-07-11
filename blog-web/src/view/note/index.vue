@@ -4,8 +4,8 @@
             <div class="note">
                 <div class="categoryBox">
                     <ul>
-                        <li ref="categoryRef" :class="index ? 'category_item' : 'active'"
-                            @click="handleClike(item.id, index)" v-for="(item, index) in categoryList" :key="index">
+                        <li ref="categoryRef" :class="index ? 'category_item' : 'active'" @click="handleClike(item, index)"
+                            v-for="(item, index) in categoryList" :key="index">
                             {{ item.name }}
                         </li>
 
@@ -82,7 +82,6 @@
                         </ul>
                         <el-empty v-else description="暂未发布笔记"></el-empty>
 
-
                     </div>
 
                 </div>
@@ -108,14 +107,12 @@ export default {
             noteList: [],
             loading: [],
             emojiList: [],
-            categoryList: [
-                {
-                    id: null,
-                    name: "全部"
-                }
-            ],
-            chooseIndex: null,
-            chooseCategory: null,
+            categoryList: [],
+            chooseIndex: 0,
+            chooseCategory: {
+                id: null,
+                name: "全部"
+            },
             content: ""
         }
     },
@@ -124,6 +121,11 @@ export default {
         this.emojiList = require('@/assets/emoji.json');
         featchCategory().then(respose => {
             this.categoryList.push(...respose.data)
+            this.categoryList.unshift(
+                {
+                    id: null,
+                    name: "全部"
+                })
         })
         this.getNoteList()
     },
@@ -134,13 +136,16 @@ export default {
         generateCode() {
             this.content += "```使用Enter换行```"
         },
-        handleClike(id, index) {
+        handleClike(item, index) {
             for (var i = 0; i < this.$refs.categoryRef.length; i++) {
                 this.$refs.categoryRef[i].className = "category_item"
             }
             this.$refs.categoryRef[index].className = "active"
+            this.chooseCategory = item
+            this.chooseIndex = index
+
             this.pageData.pageNo = 1
-            this.pageData.categoryId = id
+            this.pageData.categoryId = item.id
             this.getNoteList()
         },
         handlePage() {
@@ -167,8 +172,6 @@ export default {
             }
             insertNote(note).then(res => {
                 this.content = ""
-                this.chooseCategory = null
-                this.chooseIndex = null
                 this.$message.success("发布笔记成功");
                 this.pageData.pageNo = 1
                 this.loading.close()
@@ -405,7 +408,7 @@ export default {
 
                     .category_item,
                     .active {
-                        margin-bottom: 10px;
+                        margin-bottom: 5px;
                         cursor: pointer;
                         padding: 8px;
                         text-align: center;
@@ -418,8 +421,8 @@ export default {
                     }
 
                     .active {
-                        background-color: #c3c3c3;
-                        color: var(--theme-color);
+                        background-color: var(--theme-color);
+                        color: var(--baise);
                     }
 
                 }

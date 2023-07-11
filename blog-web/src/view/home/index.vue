@@ -339,14 +339,14 @@ export default {
 
         };
     },
-    mounted() {
-        //设置音乐列表为隐藏
-        window.setTimeout(() => {
-            if (this.$refs.music != undefined) {
-                this.$refs.music.showList = false
-            }
-        }, 400)
-    },
+    // mounted() {
+    //     //设置音乐列表为隐藏
+    //     window.setTimeout(() => {
+    //         if (this.$refs.music != undefined) {
+    //             this.$refs.music.showList = false
+    //         }
+    //     }, 400)
+    // },
     // require引用：
     created() {
         this.fetchArticleList()

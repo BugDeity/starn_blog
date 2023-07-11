@@ -99,10 +99,9 @@ CREATE TABLE `b_category`  (
   `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '分类名称',
   `click_volume` int(11) NULL DEFAULT 0,
   `sort` int(11) NOT NULL COMMENT '排序',
+  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '图标',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '最后更新时间',
-  `boutique` int(11) NULL DEFAULT NULL COMMENT '是否推荐',
-  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面图',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `category_name`(`name`) USING BTREE COMMENT '博客分类名称'
 ) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客分类表' ROW_FORMAT = Dynamic;
