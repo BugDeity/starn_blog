@@ -53,7 +53,10 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <v-md-editor v-model="article.contentMd" @upload-image="handleUploadImage" :disabled-menus="[]"></v-md-editor>
+            <el-form-item label="文章内容" prop="contentMd">
+                <mavon-editor placeholder="输入文章内容..." style="height: 500px" ref=md v-model="article.contentMd"
+                    @imgDel="imgDel" @change="" @imgAdd="imgAdd" />
+            </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button @click="handleClose">取 消</el-button>
@@ -71,6 +74,7 @@ export default {
             categoryList: [],
             // 加载层信息
             loading: [],
+            img: process.env.VUE_APP_IMG_API,
             tagList: [],
             rules: {
                 title: [
@@ -94,6 +98,9 @@ export default {
                 originalUrl: [
                     { required: true, message: '请输入转载地址', trigger: 'blur' },
                 ],
+                contentMd: [
+                    { required: true, message: '请输入文章内容', trigger: 'blur' },
+                ],
             }
         };
     },
@@ -104,7 +111,6 @@ export default {
             },
             get() {
                 if (this.$store.state.articleDrawer.flag) {
-                    console.log(233)
                     this.article = {
                         isOriginal: 1,
                         avatar: null,
@@ -128,6 +134,18 @@ export default {
         },
     },
     methods: {
+        imgAdd: function (pos, $file) {
+            var formdata = new FormData();
+            formdata.append('multipartFile', $file);
+            upload(formdata).then(res => {
+                this.$refs.md.$img2Url(pos, res.data);
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        imgDel: function (filename) {
+            delBatchFile(filename[0].split(this.img)[1])
+        },
         submit() {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {

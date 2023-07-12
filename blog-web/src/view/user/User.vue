@@ -31,7 +31,7 @@
                             <el-input v-model="form.email"></el-input>
                         </el-form-item>
                     </el-form>
-                    <el-button type="primary" @click="update" round>提交</el-button>
+                    <el-button type="primary" @click="update">提交</el-button>
                 </el-tab-pane>
 
                 <!-- 我的文章 -->
