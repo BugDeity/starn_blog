@@ -275,6 +275,22 @@ CREATE TABLE `b_feed_back`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for b_followed
+-- ----------------------------
+DROP TABLE IF EXISTS `b_followed`;
+CREATE TABLE `b_followed` (
+      `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+      `user_id` varchar(100) COLLATE utf8mb4_german2_ci NOT NULL COMMENT '用户id',
+      `followed_user_id` varchar(100) COLLATE utf8mb4_german2_ci DEFAULT NULL COMMENT '关注的用户id',
+      `create_time` datetime DEFAULT NULL COMMENT '关注时间',
+      PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci COMMENT='用户关注表';
+
+-- ----------------------------
+-- Records of b_followed
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for b_friend_link
 -- ----------------------------
 DROP TABLE IF EXISTS `b_friend_link`;
@@ -301,22 +317,37 @@ INSERT INTO `b_friend_link` VALUES (4, '拾壹博客', 'http://www.shiyit.com', 
 -- ----------------------------
 -- Table structure for b_im_message
 -- ----------------------------
-DROP TABLE IF EXISTS `b_im_message`;
-CREATE TABLE `b_im_message`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `to_user_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT '发送用户id',
-  `from_user_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT '接收用户id',
-  `to_user_avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT '发送用户头像',
-  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL COMMENT '发送内容',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '发送时间',
-  `ip_source` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT 'ip地址',
-  `ip` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT '发送用户ip',
-  `is_withdraw` int(1) NULL DEFAULT NULL COMMENT '消息是否撤回 0：未撤回  1：撤回',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 316 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_german2_ci ROW_FORMAT = Dynamic;
+CREATE TABLE `b_im_message` (
+    `id` varchar(100) COLLATE utf8mb4_german2_ci NOT NULL COMMENT '主键',
+    `to_user_id` varchar(200) COLLATE utf8mb4_german2_ci DEFAULT NULL COMMENT '发送用户id',
+    `from_user_id` varchar(200) COLLATE utf8mb4_german2_ci DEFAULT NULL COMMENT '接收用户id',
+    `to_user_avatar` varchar(100) COLLATE utf8mb4_german2_ci DEFAULT NULL COMMENT '发送用户头像',
+    `content` mediumtext COLLATE utf8mb4_german2_ci COMMENT '发送内容',
+    `create_time` datetime DEFAULT NULL COMMENT '发送时间',
+    `ip_source` varchar(100) COLLATE utf8mb4_german2_ci DEFAULT NULL COMMENT 'ip地址',
+    `ip` varchar(100) COLLATE utf8mb4_german2_ci DEFAULT NULL COMMENT '发送用户ip',
+    `is_withdraw` int(1) DEFAULT NULL COMMENT '消息是否撤回 0：未撤回  1：撤回',
+    `is_read` int(1) DEFAULT NULL COMMENT '是否已读',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci COMMENT='聊天消息表';;
 
 -- ----------------------------
 -- Records of b_im_message
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for b_im_room
+-- ----------------------------
+CREATE TABLE `b_im_room` (
+     `id` varchar(100) NOT NULL COMMENT '主键',
+     `type` int(11) NOT NULL COMMENT '房间类型 0：群聊 1私聊',
+     `member` varchar(255) NOT NULL COMMENT '房间成员 逗号分隔',
+     `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+     PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户消息房间表';
+
+-- ----------------------------
+-- Records of b_im_room
 -- ----------------------------
 
 -- ----------------------------

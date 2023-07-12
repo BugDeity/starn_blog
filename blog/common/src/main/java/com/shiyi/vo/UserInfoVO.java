@@ -73,6 +73,16 @@ public class UserInfoVO {
     private int commentCount;
 
     /**
+     * 粉丝量
+     */
+    private int fansCount;
+
+    /**
+     * 七天关注量
+     */
+    private int qiDayFollowedCount;
+
+    /**
      * token
      */
     private String token;

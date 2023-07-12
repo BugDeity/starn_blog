@@ -1,6 +1,6 @@
 <template>
     <div class="im-main">
-        <div class="im-warpper">
+        <div id="im" class="im-warpper">
             <el-card class="item">
                 <!-- 标题 -->
                 <div class="title">{{ title }}</div>
@@ -17,13 +17,13 @@
                                 <span class="nickname">
                                     {{ item.fromUserNickname }}
                                     <span v-if="item.fromUserId == 1" class="tag">官方</span>
-                                    <span class="time" style="">{{ item.createTime }}</span>
+                                    <span class="time" style="">{{ item.createTimeStr }}</span>
                                 </span>
 
                                 <span v-if="!item.isWithdraw" v-html="item.content" class="messageContent"
                                     @contextmenu.prevent="openMenu($event, item, index)">
                                 </span>
-                                <span v-else>
+                                <span v-else style="color: var(--text-color);">
                                     " {{ item.fromUserNickname }} " 撤回了一条消息
                                 </span>
                             </div>
@@ -34,14 +34,14 @@
                                 :title="item.fromUserNickname">
                             <div class="info">
                                 <div class="nickname">
-                                    <span style="margin-left: 3px;font-size: 12px;">{{ item.createTime }}</span>
+                                    <span style="margin-left: 3px;font-size: 12px;">{{ item.createTimeStr }}</span>
                                     <span v-if="item.fromUserId == 1" class="tag">官方</span>
                                     {{ item.fromUserNickname }}
                                 </div>
                                 <span v-if="!item.isWithdraw" v-html="item.content" class="nowMessageContent"
                                     @contextmenu.prevent="openMenu($event, item, index)">
                                 </span>
-                                <span v-else>
+                                <span style="color: var(--text-color);" v-else>
                                     " {{ item.fromUserNickname }} " 撤回了一条消息
                                 </span>
 
@@ -89,11 +89,7 @@
                         <img :src="$store.state.webSiteInfo.logo" alt="">
                         <span>拾壹博客交流群</span>
                     </li>
-                </ul>
-                <div class="onlineCount">当前在线人数：{{ onlineUserList.length }}</div>
-
-                <ul class="online-item">
-                    <li ref="olineItem" class="onlineLi" v-for="(item, index) in onlineUserList" :key="index"
+                    <li ref="room" class="onlineLi" v-for="(item, index) in roomList" :key="index"
                         @click="selectUserIm(item, index)">
                         <img :src="item.avatar" alt="">
                         <span>{{ item.nickname }}</span>
@@ -108,7 +104,7 @@
 
 <script>
 let socket;
-import { getImHistory, getUserImHistoryList } from '@/api'
+import { getImHistory, getUserImHistoryList, send, getRoomList, addRoom } from '@/api'
 export default {
 
     data() {
@@ -129,25 +125,21 @@ export default {
             selectIndex: null,
             title: "拾壹博客交流群",
             lastIndex: null,
+            userId: this.$route.query.userId,
             pageData: {
                 pageNo: 1,
                 pageSize: 10
             },
             onlineUserList: [],
+            roomList: [],
             selectUserOnline: null,
         }
     },
 
     mounted() {
-        const bc = new BroadcastChannel('my-channel');
-        bc.onmessage = (event) => {
-            const { userValue } = event.data;
-            if (userValue !== this.user) { // 如果cookie值有变化，则更新数据
-                this.user = JSON.parse(userValue);
-            }
-        }
         document.addEventListener("click", this.handleClose)
         window.addEventListener('keydown', this.handkeyEnter, true)//开启监听键盘按下事件
+        document.getElementById("im").oncontextmenu = new Function("event.returnValue=false");
     },
     watch: {
         //   监听属性对象，newValue为新的值，也就是改变后的值
@@ -181,19 +173,18 @@ export default {
         }
     },
     created() {
-        document.title = "聊天室"
         this.init()
-        document.oncontextmenu = new Function("event.returnValue=false");
         this.emojiList = require('@/assets/emoji.json');
     },
     methods: {
         //选择用户单聊
         selectUserIm(item, index) {
+
             if (this.lastIndex != null) {
-                this.$refs.olineItem[this.lastIndex].className = "onlineLi"
+                this.$refs.room[this.lastIndex].className = "onlineLi"
             }
             if (index != null) {
-                this.$refs.olineItem[index].className += " active"
+                this.$refs.room[index].className += " active"
                 this.$refs.groud.className = "onlineLi"
                 this.lastIndex = index
             } else {
@@ -210,13 +201,9 @@ export default {
                 this.getHistoryList()
                 return;
             }
-            if (item.id == this.user.id) {
-                this.$message.error('不能对自己发送消息');
-                return;
-            }
             this.title = item.nickname
             this.pageData.fromUserId = this.user.id
-            this.pageData.toUserId = item.id
+            this.pageData.toUserId = item.receiveId
             this.messages = []
             this.selectUserOnline = item
             getUserImHistoryList(this.pageData).then(res => {
@@ -316,6 +303,7 @@ export default {
         //添加表情
         addEmoji(obj, e) {
             this.text += obj.emoji;
+            this.emojiShow = false
         },
         //发送消息
         send() {
@@ -341,14 +329,16 @@ export default {
                             fromUserId: this.user.id,
                             fromUserAvatar: this.user.avatar,
                             fromUserNickname: this.user.nickname,
-                            toUserId: this.selectUserOnline.id,
+                            toUserId: this.selectUserOnline.receiveId,
                             toUserAvatar: this.selectUserOnline.avatar,
                             toUserNickname: this.selectUserOnline.nickname,
                             content: this.text,
                         }
                     }
                 }
-                socket.send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
+                //发送消息
+                send(JSON.stringify(message))
+                //socket.send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
                 // this.messages.push(message)
                 // 构建消息内容，本人消息
                 this.text = "";
@@ -376,6 +366,17 @@ export default {
                 socket.onopen = function () {
 
                     console.log("websocket已打开");
+                    //获取房间列表
+                    getRoomList().then(res => {
+                        _this.roomList = res.data
+                    })
+                    if (_this.userId != null) {
+                        addRoom(_this.userId).then(res => {
+                            _this.roomList.unshift(res.data)
+                        }).catch(err => {
+                            _this.$message.error(err.message)
+                        })
+                    }
                     //连接成功后获取历史聊天记录
                     _this.getHistoryList()
 
@@ -384,23 +385,19 @@ export default {
                 socket.onmessage = function (msg) {
                     console.log("收到数据====" + msg.data)
                     let data = JSON.parse(msg.data)
-                    //在线用户
-                    if (data.type == 3) {
-                        _this.onlineUserList = data.ext.userOnlineList
-                        return;
-                    }
+
                     //群聊
                     if (data.code == 2) {
                         if (_this.selectUserOnline) {
                             return;
                         }
                         // 这是撤回的逻辑
-                        if (data.messageData.index != null) {
-                            _this.messages[data.messageData.index].content = data.messageData.content
-                            _this.messages[data.messageData.index].isWithdraw = 1
+                        if (data.index != null) {
+                            _this.messages[data.index].content = data.content
+                            _this.messages[data.index].isWithdraw = 1
                             return;
                         }
-                        _this.messages.push(data.messageData)
+                        _this.messages.push(data)
                         return;
                     }
                     //单聊
@@ -408,14 +405,14 @@ export default {
                         if (!_this.selectUserOnline) {
                             return;
                         }
-                        if (_this.selectUserOnline.id == data.messageData.fromUserId || _this.selectUserOnline.id == data.messageData.toUserId) {
+                        if (_this.selectUserOnline.receiveId == data.fromUserId || _this.selectUserOnline.receiveId == data.toUserId) {
                             //这是撤回的逻辑
-                            if (data.messageData.index != null) {
-                                _this.messages[data.messageData.index].content = data.messageData.content
-                                _this.messages[data.messageData.index].isWithdraw = 1
+                            if (data.index != null) {
+                                _this.messages[data.index].content = data.content
+                                _this.messages[data.index].isWithdraw = 1
                                 return;
                             }
-                            _this.messages.push(data.messageData)
+                            _this.messages.push(data)
                             return;
                         }
                         return;
@@ -461,7 +458,7 @@ export default {
     .im-warpper {
         color: var(--im-text-color);
         display: flex;
-        border: 2px solid #cdcdcd;
+        border: 2px solid var(--border-line);
         height: 100%;
         margin-top: 80px;
 
@@ -470,7 +467,7 @@ export default {
         .online {
             width: 220px;
             background-color: var(--im-backgroudColor);
-            border-left: 1px solid #cdcdcd;
+            border-left: 1px solid var(--border-line);
             background-color: #2e3238;
             padding: 10px;
             color: #fff;
@@ -517,13 +514,13 @@ export default {
         .item {
             background-color: var(--im-backgroudColor);
             width: 100%;
-
             box-shadow: none;
 
 
             .title {
                 text-align: center;
                 padding: 10px 0;
+                font-size: 18px;
             }
 
             .messageBox,
@@ -603,17 +600,17 @@ export default {
                     .messageContent,
                     .nowMessageContent {
                         display: inline-block;
-
                         color: #555;
-                        padding: 5px;
                         border-radius: 3px;
+                        margin-top: 5px;
+                        max-width: 400px;
+                        padding: 8px;
                     }
 
                     .messageContent {
                         background-color: var(--im-box-backgroudColor);
                         border-radius: 2px 18px 18px;
-                        padding: 8px;
-                        max-width: 50%;
+
                     }
 
 
@@ -627,8 +624,6 @@ export default {
                         .nowMessageContent {
                             background-color: var(--im-user-box-backgroudColor);
                             border-radius: 18px 2px 18px 18px;
-                            padding: 8px;
-                            max-width: 50%;
                         }
 
                         img {
@@ -659,7 +654,7 @@ export default {
 
 
             .input-box {
-                border-top: 1px solid #fff;
+                border-top: 1px solid #999;
                 margin-top: 20px;
                 position: relative;
 
@@ -678,7 +673,7 @@ export default {
 
                 .emoji-wrapper {
                     background-color: var(--background-color);
-                    width: 400px;
+                    width: 380px;
                     height: 200px;
                     overflow-y: auto;
                     border-radius: 5px;
@@ -706,6 +701,8 @@ export default {
                     outline: none;
                     resize: none;
                     background-color: var(--im-backgroudColor);
+                    color: var(--text-color);
+                    font-size: 14px;
                 }
 
                 .btn {
@@ -729,11 +726,11 @@ export default {
                 position: fixed; //关键样式设置固定定位
                 list-style-type: none;
                 padding: 5px 0;
-                font-size: 12px;
+                font-size: 14px;
                 font-weight: 400;
                 color: #333;
                 box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
-                width: 100px;
+                width: 150px;
                 border-bottom-left-radius: 0 !important;
                 border-bottom-right-radius: 0 !important;
 
@@ -741,9 +738,15 @@ export default {
                     margin: 0;
                     padding: 7px 16px;
                     cursor: pointer;
+                    border-bottom: 1px solid #999;
+
 
                     &:hover {
-                        background: #eee;
+                        background: #ddaec8;
+                    }
+
+                    &:last-child {
+                        border: 0;
                     }
 
                     i {

@@ -71,6 +71,4 @@ public interface ApiUserService {
      */
     public void authLogin(AuthResponse response, String source, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException;
 
-
-
 }

@@ -20,7 +20,7 @@
                         <div class="bottom">
                             <span class="category">
                                 <span class="item" @click="generateCode">
-                                    &lt;&gt;代码块
+                                    <i class="iconfont icon-code"></i> 代码块
                                 </span>
                                 <el-dropdown trigger="click" placement="bottom-start">
                                     <span class="el-dropdown-link item" style="cursor: pointer;">
@@ -61,7 +61,7 @@
                                 <div class="userInfo">
                                     <el-avatar class="avatar" :src="item.avatar"></el-avatar>
                                     <span class="username">{{ item.nickname }}</span>
-                                    <span class="time"> <i class="el-icon-time"></i> {{ item.createTime }}</span>
+                                    <span class="time"> <i class="el-icon-time"></i> {{ item.createTimeStr }}</span>
                                     <span class="categoryItem" v-if="item.categoryName">
                                         <el-tag style="float: right;" size="small">
                                             {{ item.categoryName }}
@@ -116,7 +116,18 @@ export default {
             content: ""
         }
     },
-
+    mounted() {
+        window.setTimeout(() => {
+            if (this.$refs.preview) {
+                //添加代码复制按钮复制成功提示
+                document.addEventListener("click", e => {
+                    if (e.target.className === "v-md-copy-code-btn") {
+                        this.$message.success("复制成功")
+                    }
+                })
+            }
+        }, 500)
+    },
     created() {
         this.emojiList = require('@/assets/emoji.json');
         featchCategory().then(respose => {

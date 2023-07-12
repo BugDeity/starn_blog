@@ -168,7 +168,33 @@
                                     收藏
                                 </div>
                             </span>
+                            <span class="myFans">
+                                <div>
+                                    {{ $store.state.userInfo.fansCount }}
+                                </div>
+                                <div class="name">
+                                    粉丝
+                                </div>
+                            </span>
+                        </div>
 
+                        <div class="qidayBox">
+                            <span class="qidayFans">
+                                <div class="name">
+                                    7日新增粉丝量
+                                </div>
+                                <div>
+                                    {{ $store.state.userInfo.qiDayFollowedCount }}
+                                </div>
+                            </span>
+                            <span class="qidayYuedu">
+                                <div class="name">
+                                    7日新增阅读量
+                                </div>
+                                <div>
+                                    0
+                                </div>
+                            </span>
                         </div>
                     </el-card>
 
@@ -965,6 +991,17 @@ export default {
 
                         }
 
+                        .qidayBox {
+                            display: flex;
+                            background-color: var(--home-user-back-color);
+                            padding: 10px 0;
+
+                            .qidayFans,
+                            .qidayYuedu {
+                                width: 50%;
+                            }
+                        }
+
                         .userInfo {
                             margin-left: 10px;
 
@@ -983,7 +1020,10 @@ export default {
                         .myArticle,
                         .myComment,
                         .myCollect,
-                        .myNote {
+                        .myNote,
+                        .myFans,
+                        .qidayFans,
+                        .qidayYuedu {
                             text-align: center;
                             margin-left: 20px;
                             width: 20%;

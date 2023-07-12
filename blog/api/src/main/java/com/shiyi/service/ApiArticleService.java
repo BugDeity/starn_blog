@@ -65,13 +65,19 @@ public interface ApiArticleService {
      * @param id
      * @return
      */
-    ResponseResult deleteMyArticle(Long id);
+    public ResponseResult deleteMyArticle(Long id);
 
     /**
      * 获取我的文章详情
      * @param id
      * @return
      */
-    ResponseResult selectMyArticleInfo(Long id);
+    public ResponseResult selectMyArticleInfo(Long id);
 
+    /**
+     * 根据文章id获取作者信息
+     * @param id 文章id
+     * @return
+     */
+    public ResponseResult selectUserInfoByArticleId(Integer id);
 }

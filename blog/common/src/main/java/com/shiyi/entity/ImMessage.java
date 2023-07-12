@@ -1,6 +1,8 @@
 package com.shiyi.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.shiyi.utils.DateUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -28,8 +30,8 @@ public class ImMessage implements Serializable {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "主键id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    private String id;
 
     @ApiModelProperty(value = "发送用户Id")
     private String toUserId;
@@ -52,8 +54,12 @@ public class ImMessage implements Serializable {
     @ApiModelProperty(value = "是否撤回")
     private int isWithdraw;
 
+    @ApiModelProperty(value = "消息类型 1私聊 2群聊")
+    private Integer code;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
+    @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date createTime;
 
 

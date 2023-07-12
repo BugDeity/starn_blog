@@ -31,4 +31,7 @@ public class ApiNoteListVO {
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date createTime;
+
+    @ApiModelProperty(value = "格式化后的创建时间")
+    private String createTimeStr;
 }

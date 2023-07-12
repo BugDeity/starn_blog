@@ -56,6 +56,15 @@ export function articleInfo(id) {
         }
     })
 }
+export function selectUserInfoByArticleId(id) {
+    return request({
+        url: '/v1/article/selectUserInfoByArticleId',
+        method: 'get',
+        params: {
+            id: id
+        }
+    })
+}
 export function checkCode(code) {
     return request({
         url: '/v1/article/checkCode',
@@ -286,6 +295,30 @@ export function getImHistory(params) {
         params: params
     })
 }
+export function getRoomList() {
+    return request({
+        url: '/v1/im/getRoomList',
+        method: 'get'
+    })
+}
+export function addRoom(userId) {
+    return request({
+        url: '/v1/im/addRoom',
+        method: 'post',
+        params: {
+            userId: userId
+        }
+    })
+}
+export function send(message) {
+    return request({
+        url: '/v1/im/chat',
+        method: 'get',
+        params: {
+            message: message
+        }
+    })
+}
 export function getUserImHistoryList(params) {
     return request({
         url: '/v1/im/selectUserImHistory',
@@ -351,6 +384,24 @@ export function deleteNote(id) {
         method: 'delete',
         params: {
             id: id
+        }
+    })
+}
+export function followedUser(userId) {
+    return request({
+        url: '/v1/followed/insertFollowed',
+        method: 'post',
+        params: {
+            userId: userId
+        }
+    })
+}
+export function deleteFollowedUser(userId) {
+    return request({
+        url: '/v1/followed/deleteFollowed',
+        method: 'delete',
+        params: {
+            userId: userId
         }
     })
 }

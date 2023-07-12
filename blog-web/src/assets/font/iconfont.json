@@ -123,6 +123,13 @@
       "font_class": "dashang1",
       "unicode": "e600",
       "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "120787063",
+      "name": "代码",
+      "font_class": "code",
+      "unicode": "e615",
+      "unicode_decimal": 58901
     }
   ]
 }

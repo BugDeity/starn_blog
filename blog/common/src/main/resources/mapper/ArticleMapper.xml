@@ -157,8 +157,6 @@
     <select id="selectArticleByIdToVO" resultMap="selectArticleByIdToVOMap">
         select a.id,
                a.user_id,
-               ui.nickname,
-               ui.avatar,
                a.title,
                a.content,
                a.content_md,
@@ -172,8 +170,6 @@
                c.name as cname
         from b_article a
                  left join b_category c on a.category_id = c.id
-                 left join b_user b on a.user_id = b.id
-                 left join b_user_info ui on ui.id = b.user_info_id
         where a.id = #{id}
     </select>
     <select id="selectListByBanner" resultType="com.shiyi.vo.SystemArticleListVO">

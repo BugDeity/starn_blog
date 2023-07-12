@@ -77,6 +77,9 @@ public class ApiArticleInfoVO {
     @ApiModelProperty(value = "当前用户是否收藏")
     private int isCollect;
 
+    @ApiModelProperty(value = "当前用户是否关注作者")
+    private int isFollowed;
+
     @ApiModelProperty(value = "收藏量")
     private int collectCount;
 

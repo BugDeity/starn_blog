@@ -3,12 +3,8 @@ package com.shiyi.im;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shiyi.service.ApiImMessageService;
-import com.shiyi.service.ImMessageService;
-import com.shiyi.utils.DateUtil;
 import com.shiyi.utils.SpringUtils;
 import com.shiyi.vo.ImMessageVO;
-import com.shiyi.vo.ImOnlineUserVO;
-import com.shiyi.vo.WsMessageVO;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -69,48 +65,35 @@ public class WebSocketSimpleChannelInboundHandler extends SimpleChannelInboundHa
         // 获取并解析客户端向服务端发送的 json 消息
         String message = ((TextWebSocketFrame) frame).text();
         logger.info("来自客户端的消息：{}", message);
-        JSONObject json = JSONObject.parseObject(message);
         try {
-            String uuid = UUID.randomUUID().toString();
-            String time = DateUtil.dateTimeToStr(new Date(), DateUtil.YYYY_MM_DD_HH_MM);
-            json.put("id", uuid);
-            json.put("createTime", time);
-
-            int code = json.getIntValue("code");
-            ApiImMessageService imMessageService = getImMessageService();
-
-            switch (code) {
+            ImMessageVO imMessageVO = JSONObject.parseObject(message, ImMessageVO.class);
+            switch (imMessageVO.getCode()) {
                 //群聊
                 case MessageCodeConstant.GROUP_CHAT_CODE:
-                    ImMessageVO messageData = json.getObject("messageData", ImMessageVO.class);
-                    imMessageService.updateOrInsert(messageData);
                     //向连接上来的客户端广播消息
-                    SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(json)));
+                    SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(message));
                     break;
                 //私聊
                 case MessageCodeConstant.PRIVATE_CHAT_CODE:
-                     messageData = json.getObject("messageData", ImMessageVO.class);
-                    imMessageService.updateOrInsert(messageData);
                     //接收人id
-                    String toUserId = messageData.getToUserId();
-                    String fromUserId = messageData.getFromUserId();
-                    String msg = JSONObject.toJSONString(json);
+                    String toUserId = imMessageVO.getToUserId();
+                    String fromUserId = imMessageVO.getFromUserId();
                     // 点对点挨个给接收人发送消息
                     for (Map.Entry<String, Channel> entry : SessionHolder.channelMap.entrySet()) {
                         String userId = entry.getKey();
                         Channel channel = entry.getValue();
                         if (toUserId.equals(userId)) {
-                            channel.writeAndFlush(new TextWebSocketFrame(msg));
+                            channel.writeAndFlush(new TextWebSocketFrame(message));
                         }
                     }
                     // 如果发给别人，给自己也发一条
                     if (!toUserId.equals(fromUserId)) {
-                        SessionHolder.channelMap.get(fromUserId).writeAndFlush(new TextWebSocketFrame(msg));
+                        SessionHolder.channelMap.get(fromUserId).writeAndFlush(new TextWebSocketFrame(message));
                     }
                     break;
                 case MessageCodeConstant.SYSTEM_MESSAGE_CODE:
                     //向连接上来的客户端广播消息
-                    SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(json)));
+                    SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(message));
                     break;
                 //pong
                 case MessageCodeConstant.PONG_CHAT_CODE:
@@ -213,15 +196,11 @@ public class WebSocketSimpleChannelInboundHandler extends SimpleChannelInboundHa
             logger.info("握手成功，客户端请求uri：{}", request.uri());
 
             // 推送用户上线消息，更新客户端在线用户列表
-            Set<String> userList = SessionHolder.channelMap.keySet();
-            ApiImMessageService imMessageService = getImMessageService();
-            List<ImOnlineUserVO> onlineUserList = imMessageService.selectOnlineUserList(userList);
-            WsMessageVO msg = new WsMessageVO();
-            Map<String, Object> ext = new HashMap<>();
-            ext.put("userOnlineList", onlineUserList);
-            msg.setExt(ext);
+//            Set<String> userList = SessionHolder.channelMap.keySet();
+//            ApiImMessageService imMessageService = getImMessageService();
+//            List<ImOnlineUserVO> onlineUserList = imMessageService.selectOnlineUserList(userList);
+            ImMessageVO msg = new ImMessageVO();
             msg.setCode(MessageCodeConstant.SYSTEM_MESSAGE_CODE);
-            msg.setType(MessageTypeConstant.UPDATE_USERLIST_SYSTEM_MESSGAE);
             SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(msg)));
 
         }

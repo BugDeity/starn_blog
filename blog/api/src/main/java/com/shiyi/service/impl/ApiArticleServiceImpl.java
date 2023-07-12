@@ -24,6 +24,7 @@ import com.shiyi.utils.PageUtils;
 import com.shiyi.vo.ApiArchiveVO;
 import com.shiyi.vo.ApiArticleInfoVO;
 import com.shiyi.vo.ApiArticleListVO;
+import com.shiyi.vo.UserInfoVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
     private final UserInfoMapper userInfoMapper;
 
     private final CollectMapper collectMapper;
+    private final FollowedMapper followedMapper;
 
     /**
      *  获取文章列表
@@ -130,11 +132,12 @@ public class ApiArticleServiceImpl implements ApiArticleService {
             //校验用户是否收藏文章
             int collect = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getUserId, userId).eq(Collect::getArticleId, id));
             apiArticleInfoVO.setIsCollect(collect);
+
+            //校验用户是否关注该文章作者
+            int followed = followedMapper.selectCount(new LambdaQueryWrapper<Followed>().eq(Followed::getUserId, userId)
+                    .eq(Followed::getFollowedUserId, apiArticleInfoVO.getUserId()));
+            apiArticleInfoVO.setIsFollowed(followed);
         }
-        //获取文章作者信息
-        User user = userMapper.selectById(apiArticleInfoVO.getUserId());
-        UserInfo userInfo = userInfoMapper.selectById(user.getUserInfoId());
-        apiArticleInfoVO.setUserInfo(userInfo);
 
         //校验文章是否已经进行过扫码验证
         if(apiArticleInfoVO.getReadType() == ReadTypeEnum.CODE.index){
@@ -306,6 +309,18 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         List<Long> tagList = tags.stream().map(Tags::getId).collect(Collectors.toList());
         articleInsertDTO.setTagList(tagList);
         return ResponseResult.success(articleInsertDTO);
+    }
+
+    /**
+     * 根据文章id获取作者信息
+     * @param id 文章id
+     * @return
+     */
+    @Override
+    public ResponseResult selectUserInfoByArticleId(Integer id) {
+        Article article = articleMapper.selectById(id);
+        UserInfoVO userInfoVO = userMapper.selectInfoByUserId(article.getUserId());
+        return ResponseResult.success(userInfoVO);
     }
 
     /**

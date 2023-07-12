@@ -38,6 +38,12 @@ public class ApiArticleController {
         return articleService.selectArticleInfo(id);
     }
 
+    @GetMapping(value = "/selectUserInfoByArticleId")
+    @ApiOperation(value = "根据文章id获取作者信息", httpMethod = "GET", response = ResponseResult.class, notes = "根据文章id获取作者信息")
+    public ResponseResult selectUserInfoByArticleId(Integer id) {
+        return articleService.selectUserInfoByArticleId(id);
+    }
+
     @BusinessLogger(value = "门户-用户搜索文章",type = "查询",desc = "用户搜索文章")
     @GetMapping(value = "/search")
     @ApiOperation(value = "用户搜索文章", httpMethod = "GET", response = ResponseResult.class, notes = "用户搜索文章")

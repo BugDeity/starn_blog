@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Note;
 import com.shiyi.exception.BusinessException;
+import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.mapper.NoteMapper;
 import com.shiyi.service.ApiNoteService;
 import com.shiyi.utils.PageUtils;
@@ -25,6 +26,9 @@ public class ApiNoteServiceImpl implements ApiNoteService {
     public ResponseResult selectNoteList(Integer categoryId) {
         Page<ApiNoteListVO> result =  noteMapper.selectPublicNoteList(new Page<ApiNoteListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()),
                 categoryId,null);
+        result.getRecords().forEach(item ->{
+            item.setCreateTimeStr(RelativeDateFormat.format(item.getCreateTime()));
+        });
         return ResponseResult.success(result);
     }
 

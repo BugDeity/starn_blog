@@ -3,16 +3,29 @@ package com.shiyi.im;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.shiyi.vo.WsMessageVO;
+import com.shiyi.common.ResponseResult;
+import com.shiyi.entity.ImMessage;
+import com.shiyi.service.ApiImMessageService;
+import com.shiyi.utils.SpringUtils;
+import com.shiyi.vo.ImMessageVO;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
+
+@Service
+@RequiredArgsConstructor
 public class WebSocketInfoService {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSocketInfoService.class);
+
 
     /**
      * 清除会话信息
@@ -29,7 +42,7 @@ public class WebSocketInfoService {
      * 广播 ping 信息
      */
     public void sendPing() {
-        WsMessageVO webSocketMessage = new WsMessageVO();
+        ImMessageVO webSocketMessage = new ImMessageVO();
         webSocketMessage.setCode(MessageCodeConstant.PING_MESSAGE_CODE);
         String message = JSONObject.toJSONString(webSocketMessage);
         TextWebSocketFrame tws = new TextWebSocketFrame(message);
@@ -57,6 +70,34 @@ public class WebSocketInfoService {
                 }
             }
         }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void chat(String message,HttpServletRequest request) {
+
+        ImMessageVO messageData = parseMessage(message);
+        ApiImMessageService imMessageService = getImMessageService();
+        messageData = imMessageService.updateOrInsert(messageData,request);
+
+        if (messageData.getToUserId() != null) {
+            messageData.setCode(MessageCodeConstant.PRIVATE_CHAT_CODE);
+        }else {
+            messageData.setCode(MessageCodeConstant.GROUP_CHAT_CODE);
+        }
+
+        message = JSONObject.toJSONString(messageData);
+        TextWebSocketFrame tws = new TextWebSocketFrame(message);
+        SessionHolder.channelGroup.writeAndFlush(tws);
+    }
+
+    @NotNull
+    private static ApiImMessageService getImMessageService() {
+        return SpringUtils.getBean(ApiImMessageService.class);
+    }
+
+    private ImMessageVO parseMessage(String message){
+        JSONObject jsonObject = JSONObject.parseObject(message);
+        return jsonObject.getObject("messageData", ImMessageVO.class);
     }
 
 }

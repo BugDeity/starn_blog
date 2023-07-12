@@ -6,6 +6,7 @@ import com.shiyi.entity.ImMessage;
 import com.shiyi.vo.ImMessageVO;
 import com.shiyi.vo.ImOnlineUserVO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +29,7 @@ public interface ApiImMessageService {
      * 添加或修改消息（如发送消息和撤回消息）
      * @param obj
      */
-    void updateOrInsert(ImMessageVO obj);
+    ImMessageVO updateOrInsert(ImMessageVO obj, HttpServletRequest request);
 
     /**
      * 获取在线用户列表
@@ -40,4 +41,17 @@ public interface ApiImMessageService {
      * @return
      */
     ResponseResult selectUserImHistoryList(String fromUserId, String toUserId);
+
+    /**
+     * 获取房间列表
+     * @return
+     */
+    ResponseResult selectRoomList();
+
+    /**
+     * 创建房间
+     * @param userId
+     * @return
+     */
+    ResponseResult addRoom(String userId);
 }

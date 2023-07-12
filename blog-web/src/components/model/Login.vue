@@ -117,6 +117,7 @@ export default {
                         // 轮询判断用户是否已经登录
                         wxIsLogin(this.wechatLoginCode).then(res => {
                             setToken(res.data.token)
+                            this.$store.commit("setUserInfo", res.data)
                             this.close()
                             if (res.data.email == null) {
                                 this.$message.warning("请绑定邮箱以便及时收到回复");
@@ -147,12 +148,9 @@ export default {
                     //发送登录请求
                     emailLogin(this.form).then(res => {
                         setToken(res.data.token)
+                        this.$store.commit("setUserInfo", res.data)
                         this.close()
-                        location.reload()
-                        this.$message({
-                            message: '登录成功',
-                            type: 'success'
-                        });
+                        this.$message.success("登录成功");
                         location.reload()
                     }).catch(err => {
                         this.$message.error(err.message);
@@ -187,16 +185,6 @@ export default {
             //保留当前路径
             this.settingUrl()
             openAuthUrl(source).then(res => {
-                window.open(res.data);
-            });
-        },
-        giteeLogin() {
-
-        },
-        weiboLogin() {
-            //保留当前路径
-            this.settingUrl()
-            openAuthUrl("weibo").then(res => {
                 window.open(res.data);
             });
         },

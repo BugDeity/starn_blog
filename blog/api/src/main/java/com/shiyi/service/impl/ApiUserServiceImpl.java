@@ -14,6 +14,7 @@ import com.shiyi.entity.UserInfo;
 import com.shiyi.enums.LoginTypeEnum;
 import com.shiyi.enums.UserStatusEnum;
 import com.shiyi.exception.BusinessException;
+import com.shiyi.mapper.FollowedMapper;
 import com.shiyi.mapper.UserInfoMapper;
 import com.shiyi.mapper.UserMapper;
 import com.shiyi.service.ApiUserService;
@@ -50,6 +51,8 @@ public class ApiUserServiceImpl implements ApiUserService {
     private final HttpServletRequest request;
 
     private final UserInfoMapper userInfoMapper;
+
+    private final FollowedMapper followedMapper;
 
     private final String[] userAvatarList = {"http://img.shiyit.com/avatars/buxie.png","http://img.shiyit.com/avatars/daizhi.png",
             "http://img.shiyit.com/avatars/fennu.png","http://img.shiyit.com/avatars/jingxi.png","http://img.shiyit.com/avatars/kaixin.png",
@@ -207,6 +210,8 @@ public class ApiUserServiceImpl implements ApiUserService {
         }
 
         UserInfoVO userInfoVO = userMapper.selectInfoByUserId(userId);
+        int  followedCount = followedMapper.countQiDay(userInfoVO.getId());
+        userInfoVO.setQiDayFollowedCount(followedCount);
         return ResponseResult.success(userInfoVO);
     }
 

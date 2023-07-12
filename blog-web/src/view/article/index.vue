@@ -9,21 +9,22 @@
 
             <div class="article-desc">
                 <div class="article-item">
-                    <img :src="article.avatar" @error="img" alt="">
+                    <img :src="userInfo.avatar" @error="img" alt="">
                     <div class="meta">
                         <div class="author">
-                            <a class="link" href="#" :title="article.username">{{ article.username }}</a>
+                            <a class="link" href="#">{{ userInfo.nickname }}</a>
                         </div>
                         <div class="item">
-                            <span class="">{{ formatDate(article.createTime) }}</span>
-                            <span class="line">/</span>
-                            <span class="text">{{ article.commentCount }} 评论</span>
-                            <span class="line">/</span>
-                            <span class="text">{{ article.likeCount == null ? 0 : article.likeCount }} 点赞</span>
-                            <span class="line">/</span>
-                            <span class="text">{{ article.quantity }} 阅读</span>
-                            <span class="line">/</span>
-                            <span class="text">{{ fontNumber }} 字</span>
+                            <span class="text textItem"> <i class="el-icon-time"></i> {{ formatDate(article.createTime)
+                            }}</span>
+                            <span class="text textItem"><i class="el-icon-chat-dot-round"></i> {{ article.commentCount }}
+                                评论</span>
+                            <span class="text textItem">
+                                <i style="font-size: 0.7rem;" class="iconfont icon-dianzan1"></i>
+                                {{ article.likeCount == null ? 0 : article.likeCount }} 点赞
+                            </span>
+                            <span class="text"><i class="el-icon-view"></i> {{ article.quantity }} 阅读</span>
+
                         </div>
                     </div>
                 </div>
@@ -172,7 +173,7 @@
                 <div class="copyrightItem" v-if="article.isOriginal">
                     <svg-icon icon-class="copyright"></svg-icon>
                     <span class="text name">版权归属:</span>
-                    <span class="text"> {{ article.username }}</span>
+                    <span class="text"> {{ userInfo.nickname }}</span>
                 </div>
                 <div class="copyrightItem" v-else>
                     <svg-icon icon-class="link"></svg-icon>
@@ -214,15 +215,14 @@
                 <el-card class="box-card articleUser">
                     <div style="margin-bottom: 15px;margin-top: 10px;">
                         <a href="javascript:;" style="display: flex;">
-                            <el-avatar style="border: 1px solid var(--border-line);"
-                                :src="article.userInfo.avatar"></el-avatar>
+                            <el-avatar style="border: 1px solid var(--border-line);" :src="userInfo.avatar"></el-avatar>
                             <div class="userInfo">
                                 <p class="nickname">
-                                    {{ article.userInfo.nickname }}
-                                    <el-tag v-if="article.userId != 1" size="mini" type="warning">博主</el-tag>
+                                    {{ userInfo.nickname }}
+                                    <el-tag v-if="article.userId != 1" size="mini" type="warning">作者</el-tag>
                                     <el-tag v-else size="mini" type="danger">官方</el-tag>
                                 </p>
-                                <p class="intor">{{ article.userInfo.intro ? article.userInfo.intro : '这个博主很懒，什么都没有留下' }}
+                                <p class="intor">{{ userInfo.intro ? userInfo.intro : '这个博主很懒，什么都没有留下' }}
                                 </p>
                             </div>
                         </a>
@@ -230,7 +230,7 @@
                     <div style="margin-bottom: 15px;margin-top: 30px;display: flex;">
                         <span class="myArticle">
                             <div>
-                                0
+                                {{ userInfo.articleCount }}
                             </div>
                             <div class="name">
                                 文章
@@ -238,7 +238,7 @@
                         </span>
                         <span class="myComment">
                             <div>
-                                0
+                                {{ userInfo.commentCount }}
                             </div>
                             <div class="name">
                                 评论
@@ -246,7 +246,7 @@
                         </span>
                         <span class="myComment">
                             <div>
-                                0
+                                {{ userInfo.fansCount }}
                             </div>
                             <div class="name">
                                 粉丝
@@ -260,6 +260,14 @@
                                 关注
                             </div>
                         </span>
+                    </div>
+                    <div class="userBtn">
+                        <el-button v-if="article.isFollowed" type="info" class="guanzhuBtn"
+                            @click="handleDeleteFollowedUser"> <i class="el-icon-delete"></i>
+                            取消关注</el-button>
+                        <el-button v-else type="danger" class="guanzhuBtn" @click="handleFollowedUser"> <i
+                                class="el-icon-sugar"></i> 关注</el-button>
+                        <el-button type="primary" @click="handleGoIm"><i class="el-icon-chat-dot-round"></i> 私信</el-button>
                     </div>
                 </el-card>
                 <div class="directory">
@@ -300,7 +308,7 @@
     </div>
 </template>
 <script>
-import { articleInfo, featchComments, articleLike, checkCode, collect, cancelCollect } from '@/api'
+import { articleInfo, featchComments, articleLike, checkCode, collect, cancelCollect, followedUser, deleteFollowedUser, selectUserInfoByArticleId } from '@/api'
 import SiteInfo from '@/components/site/index.vue'
 import Comment from '@/components/comment/index.vue'
 export default {
@@ -310,11 +318,12 @@ export default {
     },
     data() {
         return {
+            userInfo: {},
             article: {
                 category: {},
                 comments: [],
                 tagList: [],
-                userInfo: {}
+
             },
             rightShow: true,
             code: null,
@@ -398,6 +407,13 @@ export default {
     },
 
     created() {
+        //获取文章作者信息
+        selectUserInfoByArticleId(this.articleId).then(res => {
+            this.userInfo = res.data
+        }).catch(err => {
+            this.$message.error(err.message);
+        });
+
         this.openLoading()
         articleInfo(this.articleId).then(res => {
             this.article = res.data
@@ -407,15 +423,41 @@ export default {
             }
             //修改标题
             document.title = this.article.title
-            // 计算文章字数
-            this.fontNumber = this.deleteHTMLTag(this.article.content).length
             this.getCommens();
             this.loading.close()
         }).catch(err => {
             this.$message.error(err.message);
         });
+
     },
     methods: {
+        handleGoIm() {
+            this.$router.push({ path: "/im", query: { userId: this.userInfo.id } })
+        },
+        handleFollowedUser() {
+            this.openLoading()
+            followedUser(this.article.userId).then(res => {
+                this.article.isFollowed = 1
+                this.$message.success("关注成功");
+                this.userInfo.fansCount++
+                this.loading.close()
+            }).catch(err => {
+                this.$message.error(err.message);
+                this.loading.close()
+            });
+        },
+        handleDeleteFollowedUser() {
+            this.openLoading()
+            deleteFollowedUser(this.article.userId).then(res => {
+                this.article.isFollowed = 0
+                this.$message.success("取消关注成功");
+                this.userInfo.fansCount--
+                this.loading.close()
+            }).catch(err => {
+                this.$message.error(err.message);
+                this.loading.close()
+            });
+        },
         checkLikeAndCoomment(desc) {
             this.$message.info(desc)
         },
@@ -519,12 +561,6 @@ export default {
             }
             return `${year}-${month}-${date}`;
         },
-        deleteHTMLTag(content) {
-            return content ? content
-                .replace(/<\/?[^>]*>/g, "")
-                .replace(/[|]*\n/, "")
-                .replace(/&npsp;/gi, "") : 0;
-        },
         handleAnchorClick(anchor) {
             const { preview } = this.$refs;
             const { lineIndex } = anchor;
@@ -587,9 +623,7 @@ export default {
             padding: 10px;
 
             .category {
-                margin-right: 10px;
                 border-radius: 5px;
-                cursor: pointer;
             }
 
             .article-title {
@@ -658,9 +692,9 @@ export default {
                             align-items: center;
                             width: 100%;
 
-                            .line,
-                            .text {
-                                margin: 0 5px
+                            .textItem::after {
+                                content: "/";
+                                margin: 0 5px;
                             }
                         }
                     }
@@ -838,7 +872,6 @@ export default {
                     padding: 10px 10px;
                     height: 100%;
                     line-height: 26px;
-                    margin-bottom: 10px;
 
                     svg {
                         width: 18px;
@@ -918,10 +951,11 @@ export default {
             }
 
             .category {
-                margin-right: 10px;
                 border-radius: 5px;
                 cursor: pointer;
                 transition: transform .5s;
+                height: 30px;
+                line-height: 30px;
 
                 &:hover {
                     transform: scale(1.1);
@@ -993,9 +1027,9 @@ export default {
                             display: flex;
                             align-items: center;
 
-                            .line,
-                            .text {
-                                margin: 0 5px
+                            .textItem::after {
+                                content: "/";
+                                margin: 0 5px;
                             }
                         }
                     }
@@ -1209,7 +1243,6 @@ export default {
                     padding: 10px 10px;
                     height: 100%;
                     line-height: 26px;
-                    margin-bottom: 10px;
 
                     svg {
                         width: 18px;
@@ -1379,6 +1412,22 @@ export default {
 
                     .name {
                         margin-top: 2px;
+                    }
+                }
+
+                .userBtn {
+                    display: flex;
+                    margin-top: 20px;
+
+                    /deep/ .el-button {
+                        border-radius: 50px;
+                        width: 45%;
+                        padding: 8px 20px;
+                    }
+
+                    .guanzhuBtn {
+                        margin-left: 10px;
+                        margin-right: 15px;
                     }
                 }
             }

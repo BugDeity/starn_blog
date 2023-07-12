@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1688700472457') format('truetype');
+  src: url('iconfont.ttf?t=1689122861241') format('truetype');
 }
 
 .iconfont {
@@ -77,5 +77,9 @@
 
 .icon-dashang1:before {
   content: "\e600";
+}
+
+.icon-code:before {
+  content: "\e615";
 }
 

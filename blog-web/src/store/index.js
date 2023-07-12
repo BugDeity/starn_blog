@@ -10,7 +10,7 @@ export default new Vuex.Store({
     siteAccess: 0,
     visitorAccess: 0,
     userInfoDrawer: { flag: false, name: null },
-    userInfo: null,
+    userInfo: sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : null,
     isCommentFlag: false,
     articleDrawer: {
       flag: false,
@@ -52,6 +52,7 @@ export default new Vuex.Store({
     },
     setUserInfo(state, newValue) {
       state.userInfo = newValue
+      sessionStorage.setItem("user", JSON.stringify(newValue))
     },
   },
 
