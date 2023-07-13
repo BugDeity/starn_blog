@@ -1,4 +1,4 @@
-import { getSkin } from '@/utils/auth'
+import { getSkin } from '@/utils/cookieUtil'
 export const setSkin = function () {
     setTimeout(() => {
         let skin = getSkin()

@@ -59,7 +59,7 @@
 
 <script>
 import { emailLogin, wxIsLogin, openAuthUrl, getWechatLoginCode } from "@/api";
-import { setUrl, setToken } from '@/utils/auth'
+import { setUrl, setToken } from '@/utils/cookieUtil'
 
 export default {
     data: function () {

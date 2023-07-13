@@ -101,9 +101,6 @@ const routes = [
             {
                 path: "/im",
                 component: resolve => require(["@/view/im/index"], resolve),
-                meta: {
-                    title: "聊天室"
-                }
             },
             {
                 path: "/hot",

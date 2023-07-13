@@ -7,7 +7,7 @@
 <script>
 
 import { report } from '@/api'
-import { setSkin, getSkin } from '@/utils/auth'
+import { setSkin, getSkin } from '@/utils/cookieUtil'
 export default {
   name: 'App',
 

@@ -30,6 +30,7 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import Prism from 'prismjs';
 import Clipboard from 'clipboard'
+
 Vue.prototype.Clipboard = Clipboard
 
 Vue.use(mavonEditor)

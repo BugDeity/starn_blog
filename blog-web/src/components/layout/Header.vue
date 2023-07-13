@@ -188,7 +188,7 @@
 </template>
 <script>
 import { logout } from '@/api'
-import { removeToken } from '@/utils/auth'
+import { removeToken } from '@/utils/cookieUtil'
 export default {
     name: 'Header',
     props: {

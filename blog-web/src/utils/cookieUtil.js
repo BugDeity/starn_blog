@@ -21,3 +21,9 @@ export function setUrl(value) {
 export function getUrl() {
     return window.sessionStorage.getItem("baseUrl")
 }
+export function setNotice(value) {
+    return Cookies.set("webNotice", value, { expires: 90 });
+}
+export function getNotice() {
+    return Cookies.get("webNotice");
+}

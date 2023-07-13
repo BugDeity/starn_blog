@@ -14,9 +14,10 @@
                     </el-carousel>
                 </div>
 
-                <div class="tuijian" style="">
-                    <SiteInfo />
-                    <Notcie />
+                <div class="tuijian">
+                    <!-- <SiteInfo />
+                    <Notcie /> -->
+                    <Calendar></Calendar>
                 </div>
             </div>
 
@@ -322,13 +323,15 @@
 import { fetchArticleList, featchHomeData, featchCategory, getMusic } from '@/api'
 import SiteInfo from '@/components/site/index.vue'
 import Notcie from '@/components/notice/index.vue'
+import Calendar from '@/components/calendar/index.vue'
 import APlayer from 'vue-aplayer'
-
+// import Calendar from 'vue-calendar-component';
 export default {
     components: {
         SiteInfo,
         Notcie,
-        APlayer
+        APlayer,
+        Calendar
     },
     name: 'Home',
     data() {
@@ -381,6 +384,15 @@ export default {
         //this.getMusic()
     },
     methods: {
+        clickDay(data) {
+            console.log(data); //选中某天
+        },
+        changeDate(data) {
+            console.log(data); //左右点击切换月份
+        },
+        clickToday(data) {
+            console.log(data); // 跳到了本月
+        },
         getMusic() {
             getMusic().then(res => {
                 let musicList = res.data.data.songs
@@ -762,6 +774,15 @@ export default {
                             margin-top: 20px;
                         }
                     }
+
+                    /deep/ .wh_content_all {
+                        background-color: var(--theme-color);
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+
+                    }
+
+
                 }
             }
 
@@ -1032,6 +1053,11 @@ export default {
                             .name {
                                 margin-top: 2px;
                             }
+                        }
+
+                        .qidayFans,
+                        .qidayYuedu {
+                            margin: 0;
                         }
                     }
 

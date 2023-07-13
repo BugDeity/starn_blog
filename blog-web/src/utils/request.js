@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
-import { getToken, removeToken } from '@/utils/auth'
+import { getToken, removeToken } from '@/utils/cookieUtil'
 // create an axios instance
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,

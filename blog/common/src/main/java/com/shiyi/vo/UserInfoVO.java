@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author blue
  * @date 2022/1/5
@@ -77,6 +79,12 @@ public class UserInfoVO {
      */
     private int fansCount;
 
+
+    /**
+     * 粉丝量
+     */
+    private int watchCount;
+
     /**
      * 七天关注量
      */
@@ -86,5 +94,6 @@ public class UserInfoVO {
      * token
      */
     private String token;
+
 
 }

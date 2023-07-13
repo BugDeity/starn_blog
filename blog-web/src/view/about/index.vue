@@ -4,11 +4,17 @@
             <h1 class="title">关于本站</h1>
             <v-md-preview class="content" :text="$store.state.webSiteInfo.aboutMe" ref="preview" />
         </el-card>
+        <div class="authorInfo">
+            <SiteInfo />
+        </div>
     </div>
 </template>
 <script>
+import SiteInfo from '@/components/site/index.vue'
 export default {
-
+    components: {
+        SiteInfo
+    },
     created() {
         document.title = "关于本站";
     },
@@ -52,6 +58,10 @@ export default {
                 color: var(--article-color);
             }
         }
+
+        .authorInfo {
+            display: none;
+        }
     }
 }
 
@@ -65,7 +75,7 @@ export default {
             background-color: var(--background-color);
             padding: 20px;
             height: 100%;
-            width: 70%;
+            width: 55%;
             margin-top: 80px;
 
             &:hover {
@@ -92,6 +102,12 @@ export default {
             .content {
                 color: var(--article-color);
             }
+        }
+
+        .authorInfo {
+            margin-top: 80px;
+            margin-left: 20px;
+            width: 18%;
         }
     }
 }

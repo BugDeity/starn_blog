@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import { setSkin, getSkin } from '@/utils/auth'
+import { setSkin, getSkin } from '@/utils/cookieUtil'
 export default {
     data() {
         return {

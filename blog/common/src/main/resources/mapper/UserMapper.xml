@@ -50,7 +50,8 @@
             count( DISTINCT n.id ) AS noteCount,
             count( DISTINCT c.id ) AS commentCount,
             count( DISTINCT cl.id ) AS collectCount,
-            count( DISTINCT f.id ) AS fansCount
+            count( DISTINCT fans.id ) AS fansCount,
+            count( DISTINCT watch.id ) AS watchCount
         FROM
             b_user u
                 LEFT JOIN b_user_info ui ON u.user_info_id = ui.id
@@ -58,7 +59,8 @@
                 LEFT JOIN b_note n ON u.id = n.user_id
                 LEFT JOIN b_comment c ON c.user_id = u.id
                 LEFT JOIN b_collect cl ON cl.user_id = u.id
-                LEFT JOIN b_followed f on f.followed_user_id = u.id
+                LEFT JOIN b_followed fans on fans.followed_user_id = u.id
+                LEFT JOIN b_followed watch on watch.user_id = u.id
         WHERE u.id = #{userId} group by u.id
     </select>
 

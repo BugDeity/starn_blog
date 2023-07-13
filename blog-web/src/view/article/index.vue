@@ -254,7 +254,7 @@
                         </span>
                         <span class="myComment">
                             <div>
-                                0
+                                {{ userInfo.watchCount }}
                             </div>
                             <div class="name">
                                 关注
@@ -318,6 +318,7 @@ export default {
     },
     data() {
         return {
+
             userInfo: {},
             article: {
                 category: {},
@@ -1438,8 +1439,14 @@ export default {
                 .directory-item {
                     background-color: var(--background-color);
 
+                    ul {
+                        margin-top: 8px;
+                        list-style: none;
+                    }
+
                     /deep/ .el-card__header {
-                        padding: 18px 20px;
+                        padding: 15px 20px;
+                        border-bottom: 2px solid var(--border-line);
                     }
 
                     .title {
@@ -1453,14 +1460,14 @@ export default {
                         cursor: pointer;
                         color: var(--article-color);
                         padding: 5px 0;
-                        margin-left: 30px;
+                        padding-left: 20px;
                         margin-bottom: 10px;
                     }
 
                     .active,
                     .structure:hover {
                         color: var(--theme-color);
-
+                        background-color: #ecf5ff;
                     }
                 }
             }

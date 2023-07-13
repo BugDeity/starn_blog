@@ -1229,4 +1229,18 @@ CREATE TABLE `b_web_config`  (
 -- ----------------------------
 INSERT INTO `b_web_config` VALUES (1, 'http://img.shiyit.com/logo-ico.png', '拾壹博客', '一个专注技术分享的平台', '拾壹,拾壹博客', '拾壹', '湘ICP备2022002110号-1', '2021-11-27 13:43:16', '2022-01-20 13:30:44', 'http://www.shiyit.com', 'http://img.shiyit.com/alipay.jpg', '\r\nhttp://img.shiyit.com/wxpay.jpg', 'https://github.com/quequnlong', 'https://gitee.com/quequnlong', '1248954763', '779881756', '1248954763@qq.com', '1248954763', '1,3,4,2,5,6', '1,2,5,6,4', '1', 1, 'http://img.shiyit.com/66bb121d47e94b89945d29bb6e3e6cab.jpg', '如果本项目对你有帮助，请前往码云给仓库点上你的小星星', '正在努力搬砖~~~~', '\r\nhttp://img.shiyit.com/1644807308537.jpg', '#### 关于我\n拾壹是一个并非科班的java博主，目前正在努力学习Java和前端技术\n\n#### 源码\n目前博客源码已经开源至[码云](https://gitee.com/quequnlong/shiyi-blog)，感兴趣的小伙伴可以star fork关注一下下~\nGitee地址：[https://gitee.com/quequnlong/shiyi-blog](https://gitee.com/quequnlong/shiyi-blog)\n#### 项目框架\n前端使用了vue+elmentui，可以使小伙伴们能够更加容易得进行扩展\n\n后端使用的springboot框架\n\n\n\n\n\n', 1);
 
+-- ----------------------------
+-- Table structure for b_sign
+-- ----------------------------
+CREATE TABLE `b_sign` (
+  `id` varchar(100) NOT NULL COMMENT '主键',
+  `user_id` varchar(100) NOT NULL COMMENT '用户id',
+  `create_time` date NOT NULL COMMENT '签到时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment "用户签到表";
+
+-- ----------------------------
+-- Records of b_sign
+-- ----------------------------
+
 SET FOREIGN_KEY_CHECKS = 1;

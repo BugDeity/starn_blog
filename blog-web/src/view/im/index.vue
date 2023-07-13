@@ -17,7 +17,10 @@
                                 <span class="nickname">
                                     {{ item.fromUserNickname }}
                                     <span v-if="item.fromUserId == 1" class="tag">官方</span>
-                                    <span class="time" style="">{{ item.createTimeStr }}</span>
+                                    <span v-if="item.ipSource" class="item"> <i class="el-icon-location-information"></i>
+                                        IP属地:{{ splitIpAddress(item.ipSource) }}
+                                    </span>
+                                    <span class="item"> <i class="el-icon-time"></i> {{ item.createTimeStr }}</span>
                                 </span>
 
                                 <span v-if="!item.isWithdraw" v-html="item.content" class="messageContent"
@@ -34,7 +37,10 @@
                                 :title="item.fromUserNickname">
                             <div class="info">
                                 <div class="nickname">
-                                    <span style="margin-left: 3px;font-size: 12px;">{{ item.createTimeStr }}</span>
+                                    <span class="item"><i class="el-icon-time"></i> {{ item.createTimeStr }}</span>
+                                    <span v-if="item.ipSource" class="item"><i class="el-icon-location-information"></i>
+                                        IP属地:{{ splitIpAddress(item.ipSource) }}
+                                    </span>
                                     <span v-if="item.fromUserId == 1" class="tag">官方</span>
                                     {{ item.fromUserNickname }}
                                 </div>
@@ -177,6 +183,9 @@ export default {
         this.emojiList = require('@/assets/emoji.json');
     },
     methods: {
+        splitIpAddress(address) {
+            return address.split("|")[1]
+        },
         //选择用户单聊
         selectUserIm(item, index) {
 
@@ -372,7 +381,9 @@ export default {
                     })
                     if (_this.userId != null) {
                         addRoom(_this.userId).then(res => {
-                            _this.roomList.unshift(res.data)
+                            if (res.data != null) {
+                                _this.roomList.unshift(res.data)
+                            }
                         }).catch(err => {
                             _this.$message.error(err.message)
                         })
@@ -583,8 +594,8 @@ export default {
                                 display: block;
                                 margin-bottom: 3px;
 
-                                .time {
-                                    margin-left: 3px;
+                                .item {
+                                    margin-left: 10px;
                                     font-size: 12px;
                                 }
                             }
@@ -644,6 +655,11 @@ export default {
                                 font-size: 0.8rem;
                                 margin-bottom: 3px;
                                 width: 100%;
+
+                                .item {
+                                    margin-right: 10px;
+                                    font-size: 12px;
+                                }
 
                             }
                         }

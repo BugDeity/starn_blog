@@ -33,9 +33,6 @@
                     }}</a>
                     </span>
                     <span>博客简介：{{ $store.state.webSiteInfo.summary }}</span>
-                    <span style="color: red;padding-bottom: 10px;">
-                        注:如果已经申请过友链 再次接入则会进行下架处理 需重新审核
-                    </span>
                 </div>
             </div>
         </el-card>

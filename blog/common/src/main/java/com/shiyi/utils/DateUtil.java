@@ -5,6 +5,7 @@ package com.shiyi.utils;
  *
  */
 
+import com.shiyi.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -188,11 +189,26 @@ public class DateUtil {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             date = format.parse(dateTime);
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new BusinessException("时间格式解析错误！");
         }
         return date;
     }
-
+    /**
+     * 将  String 转换成  date
+     *
+     * @param dateTime
+     * @return
+     */
+    public static Date strToDateTime(String dateTime,String formatStr) {
+        Date date = null;
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(formatStr);
+            date = format.parse(dateTime);
+        } catch (ParseException e) {
+            throw new BusinessException("时间格式解析错误！");
+        }
+        return date;
+    }
     /**
      * 将  date 转换成  时间戳
      *
