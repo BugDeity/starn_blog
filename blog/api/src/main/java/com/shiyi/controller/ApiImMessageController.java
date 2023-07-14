@@ -8,10 +8,7 @@ import com.shiyi.service.ApiImMessageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,6 +51,19 @@ public class ApiImMessageController {
     public ResponseResult chat(String message, HttpServletRequest request) {
         webSocketInfoService.chat(message,request);
         return ResponseResult.success();
+    }
+
+    @SaCheckLogin
+    @GetMapping(value = "/read")
+    @ApiOperation(value = "已读消息", httpMethod = "GET", response = ResponseResult.class, notes = "已读消息")
+    public ResponseResult read(String userId) {
+        return imMessageService.read(userId);
+    }
+    @SaCheckLogin
+    @DeleteMapping(value = "/deleteRoom")
+    @ApiOperation(value = "删除房间", httpMethod = "DELETE", response = ResponseResult.class, notes = "删除房间")
+    public ResponseResult deleteRoom(String roomId) {
+        return imMessageService.deleteRoom(roomId);
     }
 
     @SaCheckLogin

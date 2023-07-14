@@ -39,4 +39,13 @@ public interface ImMessageMapper extends BaseMapper<ImMessage> {
     Page<ImMessageVO> selectPublicUserImHistoryList(@Param("page")Page<ImMessageVO> imMessageVOPage,
                                               @Param("fromUserId") String fromUserId,@Param("toUserId")String toUserId);
 
+    int selectListReadByUserId(@Param("toUserId") String toUserId, @Param("fromUserId")String fromUserId);
+
+    /**
+     * 已读消息
+     * @param userId
+     * @param loginIdAsString
+     */
+    void updateRead(@Param("fromUserId") String userId, @Param("toUserId") String loginIdAsString);
+
 }

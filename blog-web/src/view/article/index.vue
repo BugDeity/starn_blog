@@ -148,16 +148,16 @@
                 </div>
                 <!-- 分享 -->
                 <div class="social-share">
-                    <a href="" class="social-share-icon icon-qzone">
+                    <a href="javascript:;" @click="qqShare" class="social-share-icon icon-qzone">
                         <i class="iconfont icon-qqkongjian"></i>
                     </a>
-                    <a href="" class="social-share-icon icon-qq">
+                    <a href="javascript:;" @click="qqHyShare" class="social-share-icon icon-qq">
                         <i class="iconfont icon-QQ"></i>
                     </a>
-                    <a href="" class="social-share-icon icon-wechat">
+                    <a href="javascript:;" @click="weixinShare" class="social-share-icon icon-wechat">
                         <i class="iconfont icon-weixin"></i>
                     </a>
-                    <a href="" class="social-share-icon icon-weibo">
+                    <a href="javascript:;" @click="weiboShare" class="social-share-icon icon-weibo">
                         <i class="iconfont icon-shejiaotubiao-06"></i>
                     </a>
                 </div>
@@ -219,8 +219,12 @@
                             <div class="userInfo">
                                 <p class="nickname">
                                     {{ userInfo.nickname }}
-                                    <el-tag v-if="article.userId != 1" size="mini" type="warning">作者</el-tag>
-                                    <el-tag v-else size="mini" type="danger">官方</el-tag>
+                                    <el-tooltip v-if="article.userId != 1" effect="dark" content="作者标签" placement="top">
+                                        <svg-icon class="tag" icon-class="bozhu">作者</svg-icon>
+                                    </el-tooltip>
+                                    <el-tooltip effect="dark" content="官方标签" placement="top" v-else>
+                                        <svg-icon class="tag" icon-class="guanfang"></svg-icon>
+                                    </el-tooltip>
                                 </p>
                                 <p class="intor">{{ userInfo.intro ? userInfo.intro : '这个博主很懒，什么都没有留下' }}
                                 </p>
@@ -270,7 +274,7 @@
                         <el-button type="primary" @click="handleGoIm"><i class="el-icon-chat-dot-round"></i> 私信</el-button>
                     </div>
                 </el-card>
-                <div class="directory">
+                <div class="directory" v-if="titles.length">
                     <el-card class="directory-item">
                         <div slot="header" class="title">
                             <span>目录</span>
@@ -432,6 +436,23 @@ export default {
 
     },
     methods: {
+        qqShare() {
+            const url = `https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://www.shiyit.com/articleInfo?articleId=149
+            "&sharesource=qzone&title=${this.article.title}&summary=${this.article.title}`
+            window.open(url)
+        },
+        qqHyShare() {
+            const url = `http://connect.qq.com/widget/shareqq/index.html?url=${window.location.href}&sharesource=qzone&title=${this.article.title}&summary=${this.article.title}`
+            window.open(url)
+        },
+        weiboShare() {
+            const url = `http://service.weibo.com/share/share.php?url=${window.location.href}&title=${this.article.title}`;
+            window.open(url, '_blank');
+        },
+        weixinShare() {
+            const url = `http://share.v.t.qq.com/index.php?c=share&a=index&title=${this.article.title}&url=${window.location.href}`;
+            window.open(url, '_blank');
+        },
         handleGoIm() {
             this.$router.push({ path: "/im", query: { userId: this.userInfo.id } })
         },
@@ -1394,6 +1415,12 @@ export default {
                     .nickname {
                         color: var(--article-color);
                         font-weight: 700;
+
+                        .tag {
+                            width: 20px;
+                            height: 20px;
+                            vertical-align: -4px;
+                        }
                     }
 
                     .intor {

@@ -69,7 +69,7 @@ public class Application {
 
             //定时任务:向所有客户端发送Ping消息
             executorService.scheduleAtFixedRate(webSocketInfoService::sendPing,
-                    3, 50, TimeUnit.SECONDS);
+                    3, 10, TimeUnit.SECONDS);
 
             ch.closeFuture().sync();
 

@@ -61,7 +61,7 @@ export default {
                 status: 1,
                 nickname: this.user ? this.user.nickname : "游客",
                 content: this.content,
-                time: Math.floor(Math.random() * (10 - 7)) + 7
+                time: Math.floor(Math.random() * (21 - 10) + 10)
             };
 
             this.content = "";

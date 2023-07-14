@@ -57,6 +57,12 @@ public class ImMessage implements Serializable {
     @ApiModelProperty(value = "消息类型 1私聊 2群聊")
     private Integer code;
 
+    @ApiModelProperty(value = "消息是否已读 0未读 2已读")
+    private Integer isRead;
+
+    @ApiModelProperty(value = "消息类型 1普通消息 2图片")
+    private Integer type;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")

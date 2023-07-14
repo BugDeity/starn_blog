@@ -44,13 +44,16 @@
                                     <div class="left">
                                         <h4 class="author">
                                             <a :href="item.webSite" target="_blank" class="disabled">
-                                                <span class="bozhu" v-if="item.userId == articleUserId && item.userId != 1">
-                                                    博主
-                                                </span>
-                                                <span class="bozhu" v-if="item.userId == 1">
-                                                    官方
-                                                </span>
                                                 {{ item.nickname }}
+                                                <el-tooltip effect="dark" content="作者标签" placement="top"
+                                                    v-if="item.userId == articleUserId && item.userId != 1">
+                                                    <svg-icon class="tag" icon-class="bozhu"></svg-icon>
+                                                </el-tooltip>
+
+                                                <el-tooltip effect="dark" content="官方标签" placement="top"
+                                                    v-if="item.userId == 1">
+                                                    <svg-icon class="tag" icon-class="guanfang"></svg-icon>
+                                                </el-tooltip>
                                             </a>
                                         </h4>
                                     </div>
@@ -106,14 +109,16 @@
                                                 <div class="left">
                                                     <h4 class="author">
                                                         <a :href="childrenItem.webSite" target="_blank" class="disabled">
-                                                            <span class="bozhu"
-                                                                v-if="childrenItem.userId == articleUserId && childrenItem.userId != 1">
-                                                                博主
-                                                            </span>
-                                                            <span class="bozhu" v-if="childrenItem.userId == 1">
-                                                                官方
-                                                            </span>
                                                             {{ childrenItem.nickname }}
+
+                                                            <el-tooltip effect="dark" content="作者标签" placement="top"
+                                                                v-if="childrenItem.userId == articleUserId && childrenItem.userId != 1">
+                                                                <svg-icon class="tag" icon-class="bozhu"></svg-icon>
+                                                            </el-tooltip>
+                                                            <el-tooltip effect="dark" content="官方标签" placement="top"
+                                                                v-if="childrenItem.userId == 1">
+                                                                <svg-icon class="tag" icon-class="guanfang"></svg-icon>
+                                                            </el-tooltip>
                                                         </a>
                                                     </h4>
                                                 </div>
@@ -581,19 +586,10 @@ export default {
                                             font-size: 14px;
                                             font-weight: 600;
 
-                                            .bozhu {
-                                                position: relative;
-                                                top: -1px;
-                                                display: inline-block;
-                                                min-width: 30px;
-                                                text-align: center;
-                                                font-size: 12px;
-                                                color: #fb7299;
-                                                font-weight: 400;
-                                                -webkit-transform: scale(0.9);
-                                                transform: scale(0.9);
-                                                border: 1px solid #fb7299;
-                                                border-radius: 4px;
+                                            .tag {
+                                                width: 18px;
+                                                height: 18px;
+                                                vertical-align: -4px;
                                             }
                                         }
                                     }
@@ -777,6 +773,12 @@ export default {
                                                             border: 1px solid #fb7299;
                                                             border-radius: 4px;
                                                         }
+                                                    }
+
+                                                    .tag {
+                                                        width: 18px;
+                                                        height: 18px;
+                                                        vertical-align: -5px;
                                                     }
                                                 }
 

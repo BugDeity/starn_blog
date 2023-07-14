@@ -16,7 +16,7 @@
             <div class="infoBox">
                 <div style="display: flex;position: relative;">
                     <h3 class="directory2">申请格式</h3>
-                    <div class="btn-box" @click="dialogFormVisible = true">
+                    <div class="btn-box" @click="handleAdd">
                         <i class="el-icon-circle-plus-outline"></i>
                         加入友链
                     </div>
@@ -89,9 +89,11 @@ export default {
                 email: [
                     { required: true, message: '请输入邮箱地址', trigger: 'blur' },
                 ],
+
             }
         }
     },
+
     created() {
         document.title = "友情链接";
         featchLinks().then(res => {
@@ -99,6 +101,10 @@ export default {
         })
     },
     methods: {
+        handleAdd() {
+            this.form = {}
+            this.dialogFormVisible = true
+        },
         randomColor() {
             var letters = '0123456789ABCDEF';
             var color = '#';
@@ -114,7 +120,7 @@ export default {
                 if (valid) {
                     addLink(this.form).then(res => {
                         this.dialogFormVisible = false
-                        this.$message({ type: "success", message: "友链申请成功" });
+                        this.$message({ type: "success", message: "提交成功，请等待审核" });
                     }).catch(err => {
                         this.$message.error(err.message);
                     })

@@ -15,8 +15,7 @@
                 </div>
 
                 <div class="tuijian">
-                    <!-- <SiteInfo />
-                    <Notcie /> -->
+                    <!-- <Notcie /> -->
                     <Calendar></Calendar>
                 </div>
             </div>
@@ -39,7 +38,7 @@
                     <el-card class="articleItem" v-for="(item, index) in articleList" :key="item.id">
                         <div class="articleInfo">
                             <div class="articleInfo-item">
-                                <el-tooltip class="item" effect="dark" content="原创文章" placement="top-start">
+                                <el-tooltip class="item" effect="dark" content="原创文章" placement="top">
                                     <span v-if="item.isOriginal" class="original">
                                         <i class="el-icon-tickets"></i>
                                     </span>
@@ -200,14 +199,14 @@
                     </el-card>
 
                     <!-- 今日歌曲推荐 -->
-                    <!-- <el-card class="music" v-if="audio.length">
+                    <el-card class="music" v-if="$store.state.webSiteInfo.isMusicPlayer && audio.length">
                         <div class="title">
                             今日歌曲推荐
                         </div>
                         <div>
-                            <a-player :music="audio[0]" :list="audio"  ref="music" />
+                            <a-player :music="audio[0]" :list="audio" ref="music" />
                         </div>
-                    </el-card> -->
+                    </el-card>
 
                     <!-- 关注我 -->
                     <el-card class="box-card guanzhu">
@@ -321,14 +320,11 @@
 
 <script>
 import { fetchArticleList, featchHomeData, featchCategory, getMusic } from '@/api'
-import SiteInfo from '@/components/site/index.vue'
 import Notcie from '@/components/notice/index.vue'
-import Calendar from '@/components/calendar/index.vue'
+import Calendar from '@/components/calendar'
 import APlayer from 'vue-aplayer'
-// import Calendar from 'vue-calendar-component';
 export default {
     components: {
-        SiteInfo,
         Notcie,
         APlayer,
         Calendar
@@ -376,7 +372,7 @@ export default {
     //         }
     //     }, 400)
     // },
-    // require引用：
+
     created() {
         this.fetchArticleList()
         this.getHomeData()
@@ -384,15 +380,6 @@ export default {
         //this.getMusic()
     },
     methods: {
-        clickDay(data) {
-            console.log(data); //选中某天
-        },
-        changeDate(data) {
-            console.log(data); //左右点击切换月份
-        },
-        clickToday(data) {
-            console.log(data); // 跳到了本月
-        },
         getMusic() {
             getMusic().then(res => {
                 let musicList = res.data.data.songs

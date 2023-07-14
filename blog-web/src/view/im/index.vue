@@ -6,7 +6,8 @@
                 <div class="title">{{ title }}</div>
                 <div class="messageBox" id="messageBox" ref="messageContainer">
                     <!-- 加载更多 -->
-                    <div class="more" v-show="pageData.pageNo < totalPage" @click="handleMore">加载更多</div>
+                    <div class="more" v-loading="true" v-show="pageData.pageNo < totalPage" @click="handleMore">加载更多
+                    </div>
                     <!-- 消息内容框 -->
                     <div class="messageItem" v-for="(item, index) in  messages " :key="index">
                         <!-- 左边消息框 别人发送的消息 -->
@@ -16,7 +17,9 @@
                             <div class="info">
                                 <span class="nickname">
                                     {{ item.fromUserNickname }}
-                                    <span v-if="item.fromUserId == 1" class="tag">官方</span>
+                                    <el-tooltip effect="dark" content="官方标签" placement="top" v-if="item.fromUserId == 1">
+                                        <svg-icon class="tag" icon-class="guanfang"></svg-icon>
+                                    </el-tooltip>
                                     <span v-if="item.ipSource" class="item"> <i class="el-icon-location-information"></i>
                                         IP属地:{{ splitIpAddress(item.ipSource) }}
                                     </span>
@@ -33,17 +36,19 @@
                         </div>
                         <!-- 右边消息框 自己发送的消息 -->
                         <div :class="item.isWithdraw ? 'withdraw' : 'right'" v-else>
-                            <img :src="item.fromUserAvatar" @error="item.fromUserAvatar = errImg"
-                                :title="item.fromUserNickname">
+
                             <div class="info">
                                 <div class="nickname">
                                     <span class="item"><i class="el-icon-time"></i> {{ item.createTimeStr }}</span>
                                     <span v-if="item.ipSource" class="item"><i class="el-icon-location-information"></i>
                                         IP属地:{{ splitIpAddress(item.ipSource) }}
                                     </span>
-                                    <span v-if="item.fromUserId == 1" class="tag">官方</span>
+                                    <el-tooltip effect="dark" content="官方标签" placement="top" v-if="item.fromUserId == 1">
+                                        <svg-icon class="tag" icon-class="guanfang"></svg-icon>
+                                    </el-tooltip>
                                     {{ item.fromUserNickname }}
                                 </div>
+                                <img :src="item.fromUserAvatar">
                                 <span v-if="!item.isWithdraw" v-html="item.content" class="nowMessageContent"
                                     @contextmenu.prevent="openMenu($event, item, index)">
                                 </span>
@@ -59,9 +64,13 @@
                 <div class="input-box">
                     <!-- 输入选择 如表情、图片等 -->
                     <div class="selelctBox">
-                        <span class="emoji" @click.stop="handleOpen">
-                            <i class="iconfont icon-biaoqing"></i>
-                            <i class="iconfont icon-tupian"></i>
+                        <span class="emoji">
+                            <i class="iconfont icon-biaoqing" @click.stop="handleOpen"></i>
+
+                            <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
+                                :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
+                                <i class="iconfont icon-tupian"></i>
+                            </el-upload>
                         </span>
                     </div>
                     <!-- 表情框 -->
@@ -73,7 +82,7 @@
                     </div>
                     <!-- 输入内容 -->
                     <textarea class="contentBox" placeholder="说点什么呢" v-model="text"></textarea>
-                    <el-button class="btn" @click="send">发送[Ctrl+Enter]</el-button>
+                    <el-button class="btn" @click="send(text, 1)">发送[Ctrl+Enter]</el-button>
                 </div>
 
                 <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
@@ -88,17 +97,24 @@
                     </li>
                 </ul>
             </el-card>
-            <!-- 在线用户 -->
+            <!-- 房间列表 -->
             <div class="online">
                 <ul class="online-item">
-                    <li ref="groud" class="onlineLi active" @click="selectUserIm()">
-                        <img :src="$store.state.webSiteInfo.logo" alt="">
-                        <span>拾壹博客交流群</span>
-                    </li>
-                    <li ref="room" class="onlineLi" v-for="(item, index) in roomList" :key="index"
-                        @click="selectUserIm(item, index)">
-                        <img :src="item.avatar" alt="">
-                        <span>{{ item.nickname }}</span>
+                    <li ref="room" :class="!index ? 'onlineLi active' : 'onlineLi'" v-for="(item, index) in roomList"
+                        :key="index">
+                        <div style="display: flex;align-items: center;" @click="selectUserIm(item, index)">
+                            <div>
+                                <img :src="item.avatar" alt="">
+                                <span>{{ item.nickname }}</span>
+                            </div>
+                            <div class="readNum" v-if="item.readNum">
+                                <span>{{ item.readNum }}</span>
+                            </div>
+                        </div>
+                        <div class="close" @click="closeRoom(item.id, index)">
+                            <span><i class="el-icon-close"></i></span>
+                        </div>
+
                     </li>
                 </ul>
             </div>
@@ -110,11 +126,13 @@
 
 <script>
 let socket;
-import { getImHistory, getUserImHistoryList, send, getRoomList, addRoom } from '@/api'
+import { upload } from '@/api'
+import { getImHistory, getUserImHistoryList, send, getRoomList, addRoom, read, deleteRoom } from '@/api/im'
 export default {
 
     data() {
         return {
+            uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
             websoketUrl: process.env.VUE_APP_WEBSOCKET_API,
             visible: false,
             top: 0,
@@ -137,7 +155,12 @@ export default {
                 pageSize: 10
             },
             onlineUserList: [],
-            roomList: [],
+            roomList: [
+                {
+                    avatar: this.$store.state.webSiteInfo.logo,
+                    nickname: "拾壹博客交流群"
+                }
+            ],
             selectUserOnline: null,
         }
     },
@@ -146,6 +169,7 @@ export default {
         document.addEventListener("click", this.handleClose)
         window.addEventListener('keydown', this.handkeyEnter, true)//开启监听键盘按下事件
         document.getElementById("im").oncontextmenu = new Function("event.returnValue=false");
+
     },
     watch: {
         //   监听属性对象，newValue为新的值，也就是改变后的值
@@ -183,6 +207,44 @@ export default {
         this.emojiList = require('@/assets/emoji.json');
     },
     methods: {
+        closeRoom(id, index) {
+            this.$confirm('此操作将把该聊天窗口删除, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                if (!id) {
+                    this.$message.warning("群聊不允许删除!")
+                    return;
+                }
+                deleteRoom(id).then(res => {
+                    this.$delete(this.roomList, index);
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        //发送图片
+        uploadSectionFile: function (param) {
+            this.files = param.file
+            // FormData 对象
+            var formData = new FormData()
+            // 文件对象
+            formData.append('multipartFile', this.files)
+            upload(formData).then(res => {
+                //上传之后发送消息
+                let content = `<img src="${res.data}" alt="" class="messageImg" style="width: 150px;height: 150px;">`
+                this.send(content, 2)
+            })
+        },
+        //截取地址
         splitIpAddress(address) {
             return address.split("|")[1]
         },
@@ -192,18 +254,15 @@ export default {
             if (this.lastIndex != null) {
                 this.$refs.room[this.lastIndex].className = "onlineLi"
             }
-            if (index != null) {
-                this.$refs.room[index].className += " active"
-                this.$refs.groud.className = "onlineLi"
-                this.lastIndex = index
-            } else {
-                this.$refs.groud.className += " active"
-            }
+            this.$refs.room[0].className = "onlineLi"
+            this.$refs.room[index].className += " active"
+            this.lastIndex = index
+
 
             this.pageData.pageNo = 1
 
             //为空则是群聊
-            if (!item) {
+            if (!item.receiveId) {
                 this.title = "拾壹博客交流群"
                 this.messages = []
                 this.selectUserOnline = null;
@@ -222,6 +281,9 @@ export default {
                 }
                 this.totalPage = res.data.pages
             })
+            //修改为已读
+            read(item.receiveId)
+            item.readNum = 0
         },
         //右击
         openMenu(e, item, index) {
@@ -250,7 +312,7 @@ export default {
             this.message.index = this.selectIndex
 
             let message = { code: this.selectUserOnline == null ? 2 : 1, messageData: this.message }
-            socket.send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
+            send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
         },
         //翻译
         translate() {
@@ -278,6 +340,15 @@ export default {
         handleMore() {
             this.pageData.pageNo++;
             this.isBackTop = true
+            if (this.selectUserOnline) {
+                getUserImHistoryList(this.pageData).then(res => {
+                    let arr = res.data.records
+                    for (let i = arr.length - 1; i >= 0; i--) {
+                        this.messages.unshift(arr[i])
+                    }
+                })
+                return;
+            }
             getImHistory(this.pageData).then(res => {
                 let arr = res.data.records
                 for (let i = 0; i < arr.length; i++) {
@@ -298,7 +369,7 @@ export default {
         //Ctrl+Enter事件
         handkeyEnter(event) {
             if (event.ctrlKey && event.keyCode == 13) {
-                this.send()
+                this.send(this.text)
             }
         },
         //打开表情框
@@ -306,7 +377,14 @@ export default {
             this.emojiShow = !this.emojiShow
         },
         //关闭表情框
-        handleClose() {
+        handleClose(e) {
+            if (e.target.className == "messageImg") {
+                const imgs = [e.target.currentSrc]
+                this.$imagePreview({
+                    images: imgs,
+                    index: imgs.indexOf(e.target.currentSrc)
+                });
+            }
             this.emojiShow = false
         },
         //添加表情
@@ -315,7 +393,7 @@ export default {
             this.emojiShow = false
         },
         //发送消息
-        send() {
+        send(content, type) {
             if (typeof (WebSocket) == "undefined") {
                 console.log("您的浏览器不支持WebSocket");
             } else {
@@ -325,11 +403,17 @@ export default {
                     this.$store.state.loginFlag = true
                     return;
                 }
-                if (!this.text) {
+                if (!content) {
                     this.$message.error('请输入内容');
                     return;
                 }
-                let message = { code: 2, messageData: { fromUserId: this.user.id, content: this.text, fromUserAvatar: this.user.avatar, fromUserNickname: this.user.nickname } }
+
+                let message = {
+                    code: 2, messageData: {
+                        fromUserId: this.user.id, content: content, fromUserAvatar: this.user.avatar,
+                        fromUserNickname: this.user.nickname, type: type, isRead: 0
+                    }
+                }
 
                 if (this.selectUserOnline != null) {
                     message = {
@@ -341,7 +425,9 @@ export default {
                             toUserId: this.selectUserOnline.receiveId,
                             toUserAvatar: this.selectUserOnline.avatar,
                             toUserNickname: this.selectUserOnline.nickname,
-                            content: this.text,
+                            content: content,
+                            type: type,
+                            isRead: 0,
                         }
                     }
                 }
@@ -377,12 +463,12 @@ export default {
                     console.log("websocket已打开");
                     //获取房间列表
                     getRoomList().then(res => {
-                        _this.roomList = res.data
+                        _this.roomList.push(...res.data)
                     })
                     if (_this.userId != null) {
                         addRoom(_this.userId).then(res => {
                             if (res.data != null) {
-                                _this.roomList.unshift(res.data)
+                                _this.roomList.push(res.data)
                             }
                         }).catch(err => {
                             _this.$message.error(err.message)
@@ -413,10 +499,18 @@ export default {
                     }
                     //单聊
                     if (data.code == 1) {
-                        if (!_this.selectUserOnline) {
-                            return;
+                        for (let index = 0; index < _this.roomList.length; index++) {
+                            if (!_this.selectUserOnline) {
+                                return;
+                            }
+                            const room = _this.roomList[index]
+                            if (room.receiveId == data.fromUserId) {
+                                _this.roomList[index].readNum++
+                            }
                         }
+
                         if (_this.selectUserOnline.receiveId == data.fromUserId || _this.selectUserOnline.receiveId == data.toUserId) {
+
                             //这是撤回的逻辑
                             if (data.index != null) {
                                 _this.messages[data.index].content = data.content
@@ -496,10 +590,50 @@ export default {
                     height: 30px;
                     line-height: 30px;
                     border-radius: 5px;
-                    margin-top: 5px;
+                    margin-top: 10px;
+                    position: relative;
 
                     &:hover {
                         background-color: #ccc;
+
+                        .close {
+                            display: block;
+                        }
+                    }
+
+                    .readNum {
+                        margin-left: 10px;
+                        display: inline-block;
+                        background-color: #e63131;
+                        border-radius: 50%;
+                        width: 25px;
+                        height: 25px;
+                        position: relative;
+
+
+                        span {
+                            position: absolute;
+                            left: -3px;
+                            top: -3px;
+                        }
+                    }
+
+                    .close {
+                        background-color: #fff;
+                        color: #000;
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        position: absolute;
+                        top: -15px;
+                        right: -5px;
+                        display: none;
+
+                        span {
+                            position: absolute;
+                            top: -5px;
+                            left: -8px;
+                        }
                     }
                 }
 
@@ -572,13 +706,9 @@ export default {
                     }
 
                     .tag {
-                        color: red;
-                        border: 1px solid red;
-                        border-radius: 5px;
-                        padding: 1px;
-                        font-size: 0.5rem;
-                        margin-right: 3px;
-                        margin-left: 3px;
+                        width: 19px;
+                        height: 19px;
+                        vertical-align: -5px;
                     }
 
                     .left {
@@ -682,6 +812,10 @@ export default {
                         font-size: 20px;
                         margin-left: 20px;
                         color: var(--text-color);
+                    }
+
+                    /deep/ .avatar-uploader {
+                        display: inline-block;
                     }
 
                 }

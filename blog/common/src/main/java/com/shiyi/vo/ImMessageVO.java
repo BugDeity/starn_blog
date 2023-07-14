@@ -41,6 +41,12 @@ public class ImMessageVO {
     @ApiModelProperty(value = "是否撤回")
     private int isWithdraw;
 
+    @ApiModelProperty(value = "消息类型 1普通消息 2图片")
+    private int type;
+
+    @ApiModelProperty(value = "是否已读 0:未读 1：已读")
+    private int isRead;
+
     @ApiModelProperty(value = "选中下标")
     private Integer index;
 

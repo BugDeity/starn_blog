@@ -15,9 +15,7 @@
             <div class="photoBox">
                 <a href="javascript:;" @click="previewImg(item.url)" v-for="item in photoList" :key="item.id">
                     <img class="" :src="item.url" alt="" />
-                    <span class="overlay">
-
-                    </span>
+                    <span class="overlay"></span>
                     <span class="desc">
                         {{ item.info }}
                     </span>

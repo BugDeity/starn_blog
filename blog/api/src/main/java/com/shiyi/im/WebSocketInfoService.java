@@ -58,11 +58,8 @@ public class WebSocketInfoService {
             return;
         }
         for (Channel channel : channelMap.values()) {
-            long lastHeartBeatTime = NettyAttrUtil.getLastHeartBeatTime(channel);
-            long intervalMillis = (System.currentTimeMillis() - lastHeartBeatTime);
             if (!channel.isOpen()
-                    || !channel.isActive()
-                    || intervalMillis > 90000L) {
+                    || !channel.isActive()) {
                 channelMap.remove(channel);
                 SessionHolder.channelGroup.remove(channel);
                 if (channel.isOpen() || channel.isActive()) {
@@ -86,8 +83,36 @@ public class WebSocketInfoService {
         }
 
         message = JSONObject.toJSONString(messageData);
-        TextWebSocketFrame tws = new TextWebSocketFrame(message);
-        SessionHolder.channelGroup.writeAndFlush(tws);
+        switch (messageData.getCode()) {
+            //群聊
+            case MessageCodeConstant.GROUP_CHAT_CODE:
+                //向连接上来的客户端广播消息
+                SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(message));
+                break;
+            //私聊
+            case MessageCodeConstant.PRIVATE_CHAT_CODE:
+                //接收人id
+                String toUserId = messageData.getToUserId();
+                String fromUserId = messageData.getFromUserId();
+                // 点对点挨个给接收人发送消息
+                for (Map.Entry<String, Channel> entry : SessionHolder.channelMap.entrySet()) {
+                    String userId = entry.getKey();
+                    Channel channel = entry.getValue();
+                    if (toUserId.equals(userId)) {
+                        channel.writeAndFlush(new TextWebSocketFrame(message));
+                    }
+                }
+                // 如果发给别人，给自己也发一条
+                if (!toUserId.equals(fromUserId)) {
+                    SessionHolder.channelMap.get(fromUserId).writeAndFlush(new TextWebSocketFrame(message));
+                }
+                break;
+            case MessageCodeConstant.SYSTEM_MESSAGE_CODE:
+                //向连接上来的客户端广播消息
+                SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(message));
+                break;
+            default:
+        }
     }
 
     @NotNull

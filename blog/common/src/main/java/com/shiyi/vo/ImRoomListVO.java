@@ -27,6 +27,9 @@ public class ImRoomListVO {
     @ApiModelProperty(value = "接收用户头像")
     private String avatar;
 
+    @ApiModelProperty(value = "未读消息条数")
+    private int readNum;
+
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date createTime;

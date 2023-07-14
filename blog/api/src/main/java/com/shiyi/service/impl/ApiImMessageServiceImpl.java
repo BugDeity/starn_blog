@@ -16,6 +16,7 @@ import com.shiyi.service.ApiImMessageService;
 import com.shiyi.utils.BeanCopyUtils;
 import com.shiyi.utils.IpUtil;
 import com.shiyi.utils.PageUtils;
+import com.shiyi.utils.SensitiveUtils;
 import com.shiyi.vo.ImMessageVO;
 import com.shiyi.vo.ImOnlineUserVO;
 import com.shiyi.vo.ImRoomListVO;
@@ -60,6 +61,8 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ImMessageVO updateOrInsert(ImMessageVO obj, HttpServletRequest request) {
+        String filterContent = SensitiveUtils.filter(obj.getContent());
+        obj.setContent(filterContent);
         ImMessage imMessage = BeanCopyUtils.copyObject(obj, ImMessage.class);
         imMessage.setIp(IpUtil.getIp(request));
         imMessage.setIpSource(IpUtil.getIp2region(imMessage.getIp()));
@@ -104,6 +107,8 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
                     UserInfoVO userInfoVO = userMapper.selectInfoByUserId(userId);
                     ImRoomListVO vo = ImRoomListVO.builder().id(imRoom.getId()).receiveId(userId).nickname(userInfoVO.getNickname())
                             .avatar(userInfoVO.getAvatar()).createTimeStr(RelativeDateFormat.format(imRoom.getCreateTime())).build();
+                    int readNum = imMessageMapper.selectListReadByUserId(userId,StpUtil.getLoginIdAsString());
+                    vo.setReadNum(readNum);
                     list.add(vo);
                 }
             }
@@ -136,6 +141,30 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
                     .avatar(userInfoVO.getAvatar()).createTimeStr(RelativeDateFormat.format(imRoom.getCreateTime())).build();
         }
         return ResponseResult.success(vo);
+    }
+
+    /**
+     * 已读消息
+     * @param userId
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult read(String userId) {
+        imMessageMapper.updateRead(userId,StpUtil.getLoginIdAsString());
+        return ResponseResult.success();
+    }
+
+    /**
+     * 删除房间
+     * @param roomId 房间id
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult deleteRoom(String roomId) {
+        imRoomMapper.deleteById(roomId);
+        return ResponseResult.success();
     }
 
     private static void formatCreateTime(Page<ImMessageVO> page) {

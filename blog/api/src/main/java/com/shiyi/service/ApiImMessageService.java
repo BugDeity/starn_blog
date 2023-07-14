@@ -54,4 +54,18 @@ public interface ApiImMessageService {
      * @return
      */
     ResponseResult addRoom(String userId);
+
+    /**
+     * 已读消息
+     * @param userId
+     * @return
+     */
+    ResponseResult read(String userId);
+
+    /**
+     * 删除房间
+     * @param roomId 房间id
+     * @return
+     */
+    ResponseResult deleteRoom(String roomId);
 }

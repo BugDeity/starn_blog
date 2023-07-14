@@ -3,6 +3,11 @@
 <mapper namespace="com.shiyi.mapper.ImMessageMapper">
 
 
+    <update id="updateRead">
+        update b_im_message set is_read = 1 where from_user_id = #{fromUserId} and to_user_id=#{toUserId} and is_read = 0
+    </update>
+
+
     <select id="selectPublicHistoryList" resultType="com.shiyi.vo.ImMessageVO">
         SELECT ui.avatar as fromUserAvatar, ui.nickname as fromUserNickname,im.*
         FROM b_im_message im
@@ -27,5 +32,8 @@
         where (im.to_user_id = #{fromUserId} OR im.from_user_id = #{fromUserId})
           and (im.to_user_id = #{toUserId} OR im.from_user_id = #{toUserId})
         order by im.create_time desc
+    </select>
+    <select id="selectListReadByUserId" resultType="java.lang.Integer">
+        select count(id) from b_im_message where to_user_id=#{fromUserId} and from_user_id=#{toUserId} and is_read = 0
     </select>
 </mapper>

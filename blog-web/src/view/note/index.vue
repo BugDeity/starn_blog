@@ -52,6 +52,9 @@
                                 <el-button size="small" type="primary" @click="addNote">发布笔记</el-button>
                             </div>
                         </div>
+                        <div>
+                            <span style="color: #67c23a;">tips:由于笔记是记录代码中的部分知识，所以请不要随意发布无用笔记，无用笔记随时会被删除掉</span>
+                        </div>
                     </div>
 
 
