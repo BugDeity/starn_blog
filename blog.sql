@@ -11,7 +11,7 @@
  Target Server Version : 50742
  File Encoding         : 65001
 
- Date: 13/07/2023 17:26:46
+ Date: 14/07/2023 14:11:00
 */
 
 SET NAMES utf8mb4;
@@ -329,6 +329,7 @@ CREATE TABLE `b_im_message`  (
   `ip` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_german2_ci NULL DEFAULT NULL COMMENT '发送用户ip',
   `is_withdraw` int(1) NULL DEFAULT NULL COMMENT '消息是否撤回 0：未撤回  1：撤回',
   `is_read` int(1) NULL DEFAULT NULL COMMENT '是否已读',
+  `type` int(1) NULL DEFAULT NULL COMMENT '消息类型 1普通消息 2图片',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_german2_ci ROW_FORMAT = Dynamic;
 
@@ -662,6 +663,24 @@ CREATE TABLE `b_photo_album`  (
 -- ----------------------------
 INSERT INTO `b_photo_album` VALUES (1, '背景图', '背景图', 'http://img.shiyit.com/ec708c8859474e3496ab64fc98b2d1c1jpg', 0, '2022-06-29 09:16:13', NULL);
 INSERT INTO `b_photo_album` VALUES (2, '壁纸', '壁纸', '', 0, '2023-06-15 11:10:51', NULL);
+
+-- ----------------------------
+-- Table structure for b_prop
+-- ----------------------------
+DROP TABLE IF EXISTS `b_prop`;
+CREATE TABLE `b_prop`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+  `max_num` int(11) NULL DEFAULT NULL COMMENT '拥有最大上限',
+  `type` int(11) NOT NULL COMMENT '类型 1:补签卡 2:积分',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '道具表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of b_prop
+-- ----------------------------
+INSERT INTO `b_prop` VALUES (1, '补签卡', 9999, 1, '2023-07-13 16:33:59');
 
 -- ----------------------------
 -- Table structure for b_role
@@ -1184,6 +1203,23 @@ CREATE TABLE `b_user_log`  (
 
 -- ----------------------------
 -- Records of b_user_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for b_user_prop
+-- ----------------------------
+DROP TABLE IF EXISTS `b_user_prop`;
+CREATE TABLE `b_user_prop`  (
+  `id` int(11) NOT NULL COMMENT 'id',
+  `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户id',
+  `prop_id` int(11) NULL DEFAULT NULL COMMENT '道具id',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '获取时间',
+  `num` int(11) NULL DEFAULT NULL COMMENT '持有数量',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of b_user_prop
 -- ----------------------------
 
 -- ----------------------------

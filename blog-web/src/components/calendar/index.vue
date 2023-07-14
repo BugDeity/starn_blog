@@ -81,7 +81,10 @@ export default {
     },
     methods: {
         handleClike(ite) {
-
+            if (ite.afterToday == "afterToday") {
+                this.$message.error("未到签到时间，请耐心等待！")
+                return;
+            }
             const time = ite ? ite.timeStr : this.today
             sign(time).then(res => {
                 this.signRecords.push(time)
@@ -147,7 +150,7 @@ export default {
                             ? 'isToday'
                             : 'notToday',
                     // 是否在今天之后
-                    afterToday: date.getTime() >= today.getTime() ? 'afterToday' : '',
+                    afterToday: date.getDate() > today.getDate() ? 'afterToday' : '',
                     // 得到日期字符串，格式 yyyy-MM-dd 00:00:00
                     timeStr: date.getFullYear() + '-' + (date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1) + '-'
                         + (date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()),
