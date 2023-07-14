@@ -17,7 +17,9 @@
             <div class="calendar-content">
                 <div class="calendar-item" :class="ite.thisMonth" v-for="(ite, indx) in dateList" :key="indx">
                     <!-- 号数 -->
-                    <div class="calendar-item-number" @click="handleClike(ite)" :class="ite.isToday">
+                    <div class="calendar-item-number" @click="handleClike(ite)"
+                        :id="signRecords.indexOf(ite.timeStr) != -1 && ite.isToday != 'isToday' ? 'sign' : ''"
+                        :class="ite.isToday">
                         {{ ite.day }}
                         <span class="item" v-if="ite.isToday == 'isToday'">今</span>
                         <i class="el-icon-check icon" v-if="signRecords.indexOf(ite.timeStr) != -1"></i>
@@ -81,7 +83,7 @@ export default {
     },
     methods: {
         handleClike(ite) {
-            if (ite.afterToday == "afterToday") {
+            if (ite != null && ite.afterToday == "afterToday") {
                 this.$message.error("未到签到时间，请耐心等待！")
                 return;
             }
@@ -254,7 +256,8 @@ export default {
                     height: calc(100% - 20px);
                 }
 
-                .isToday {
+                .isToday,
+                #sign {
                     border: 1px solid #fff;
                     border-radius: 50%;
                     width: 30px;
@@ -271,6 +274,11 @@ export default {
                         right: 0;
                         color: #fff;
                     }
+                }
+
+                #sign {
+                    background-color: rgba(0, 0, 0, .1);
+                    border: none;
                 }
 
             }

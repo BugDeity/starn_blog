@@ -6,10 +6,14 @@
                 <div class="title">{{ title }}</div>
                 <div class="messageBox" id="messageBox" ref="messageContainer">
                     <!-- 加载更多 -->
-                    <div class="more" v-loading="true" v-show="pageData.pageNo < totalPage" @click="handleMore">加载更多
+                    <div class="more" v-show="pageData.pageNo < totalPage">
+                        <div v-if="isLoding" class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                        <div @click="handleMore" v-else>加载更多</div>
                     </div>
                     <!-- 消息内容框 -->
-                    <div class="messageItem" v-for="(item, index) in  messages " :key="index">
+                    <div class="messageItem" v-for="(item, index) in  messageList " :key="index">
                         <!-- 左边消息框 别人发送的消息 -->
                         <div :class="item.isWithdraw ? 'withdraw' : 'left'" v-if="user && item.fromUserId != user.id">
                             <img :src="item.fromUserAvatar" @error="item.fromUserAvatar = errImg"
@@ -102,10 +106,12 @@
                 <ul class="online-item">
                     <li ref="room" :class="!index ? 'onlineLi active' : 'onlineLi'" v-for="(item, index) in roomList"
                         :key="index">
-                        <div style="display: flex;align-items: center;" @click="selectUserIm(item, index)">
-                            <div>
-                                <img :src="item.avatar" alt="">
-                                <span>{{ item.nickname }}</span>
+                        <div class="room-list-item" @click="selectUserIm(item, index)">
+                            <div class="room-list-item">
+                                <img class="img" :src="item.avatar" alt="">
+                                <div class="roomName">
+                                    {{ item.nickname }}
+                                </div>
                             </div>
                             <div class="readNum" v-if="item.readNum">
                                 <span>{{ item.readNum }}</span>
@@ -135,10 +141,11 @@ export default {
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
             websoketUrl: process.env.VUE_APP_WEBSOCKET_API,
             visible: false,
+            isLoding: false,
             top: 0,
             left: 0,
             text: "",
-            messages: [],
+            messageList: [],
             emojiList: [],
             emojiShow: false,
             errImg: "http://img.shiyit.com/1645512111007.png",
@@ -190,7 +197,7 @@ export default {
                 this.init()
             }
         },
-        messages() {
+        messageList() {
             if (this.isBackTop) {
                 this.$refs.messageContainer.scrollTop = 0
                 this.isBackTop = false
@@ -264,7 +271,7 @@ export default {
             //为空则是群聊
             if (!item.receiveId) {
                 this.title = "拾壹博客交流群"
-                this.messages = []
+                this.messageList = []
                 this.selectUserOnline = null;
                 this.getHistoryList()
                 return;
@@ -272,12 +279,12 @@ export default {
             this.title = item.nickname
             this.pageData.fromUserId = this.user.id
             this.pageData.toUserId = item.receiveId
-            this.messages = []
+            this.messageList = []
             this.selectUserOnline = item
             getUserImHistoryList(this.pageData).then(res => {
                 let arr = res.data.records
                 for (let i = arr.length - 1; i >= 0; i--) {
-                    this.messages.push(arr[i])
+                    this.messageList.push(arr[i])
                 }
                 this.totalPage = res.data.pages
             })
@@ -293,7 +300,7 @@ export default {
             this.left = x;
             this.visible = true; //显示菜单
             this.message = item
-            this.selectIndex = index
+            this.message.index = index
         },
         //撤回
         withdraw() {
@@ -309,7 +316,6 @@ export default {
 
             this.message.isWithdraw = 1
             this.message.content = "消息已撤回"
-            this.message.index = this.selectIndex
 
             let message = { code: this.selectUserOnline == null ? 2 : 1, messageData: this.message }
             send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
@@ -340,20 +346,23 @@ export default {
         handleMore() {
             this.pageData.pageNo++;
             this.isBackTop = true
+            this.isLoding = true
             if (this.selectUserOnline) {
                 getUserImHistoryList(this.pageData).then(res => {
                     let arr = res.data.records
                     for (let i = arr.length - 1; i >= 0; i--) {
-                        this.messages.unshift(arr[i])
+                        this.messageList.unshift(arr[i])
                     }
+                    this.isLoding = false
                 })
                 return;
             }
             getImHistory(this.pageData).then(res => {
                 let arr = res.data.records
                 for (let i = 0; i < arr.length; i++) {
-                    this.messages.unshift(arr[i])
+                    this.messageList.unshift(arr[i])
                 }
+                this.isLoding = false
             })
         },
         //获取群聊历史记录
@@ -361,7 +370,7 @@ export default {
             getImHistory(this.pageData).then(res => {
                 let arr = res.data.records
                 for (let i = arr.length - 1; i >= 0; i--) {
-                    this.messages.push(arr[i])
+                    this.messageList.push(arr[i])
                 }
                 this.totalPage = res.data.pages
             })
@@ -434,7 +443,7 @@ export default {
                 //发送消息
                 send(JSON.stringify(message))
                 //socket.send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
-                // this.messages.push(message)
+                // this.messageList.push(message)
                 // 构建消息内容，本人消息
                 this.text = "";
             }
@@ -490,34 +499,34 @@ export default {
                         }
                         // 这是撤回的逻辑
                         if (data.index != null) {
-                            _this.messages[data.index].content = data.content
-                            _this.messages[data.index].isWithdraw = 1
+                            _this.messageList[data.index].content = data.content
+                            _this.messageList[data.index].isWithdraw = 1
                             return;
                         }
-                        _this.messages.push(data)
+                        _this.messageList.push(data)
                         return;
                     }
                     //单聊
                     if (data.code == 1) {
                         for (let index = 0; index < _this.roomList.length; index++) {
-                            if (!_this.selectUserOnline) {
-                                return;
-                            }
+
                             const room = _this.roomList[index]
                             if (room.receiveId == data.fromUserId) {
                                 _this.roomList[index].readNum++
                             }
                         }
-
+                        if (!_this.selectUserOnline) {
+                            return;
+                        }
                         if (_this.selectUserOnline.receiveId == data.fromUserId || _this.selectUserOnline.receiveId == data.toUserId) {
 
                             //这是撤回的逻辑
                             if (data.index != null) {
-                                _this.messages[data.index].content = data.content
-                                _this.messages[data.index].isWithdraw = 1
+                                _this.messageList[data.index].content = data.content
+                                _this.messageList[data.index].isWithdraw = 1
                                 return;
                             }
-                            _this.messages.push(data)
+                            _this.messageList.push(data)
                             return;
                         }
                         return;
@@ -542,6 +551,37 @@ export default {
 
 
 <style lang="scss" scoped>
+.loading {
+    /* 加载中的样式 */
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.spinner {
+    /* 转圈圈的样式 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border: 4px solid #ccc;
+    border-top-color: var(--theme-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
 .im-main {
     min-height: calc(100vh - 167px);
     display: flex;
@@ -570,7 +610,7 @@ export default {
 
 
         .online {
-            width: 220px;
+            width: 250px;
             background-color: var(--im-backgroudColor);
             border-left: 1px solid var(--border-line);
             background-color: #2e3238;
@@ -587,7 +627,6 @@ export default {
                 .onlineLi {
                     cursor: pointer;
                     padding: 5px;
-                    height: 30px;
                     line-height: 30px;
                     border-radius: 5px;
                     margin-top: 10px;
@@ -598,6 +637,15 @@ export default {
 
                         .close {
                             display: block;
+                        }
+                    }
+
+                    .room-list-item {
+                        display: flex;
+                        align-items: center;
+
+                        .roomName {
+                            margin-left: 10px;
                         }
                     }
 
@@ -643,8 +691,8 @@ export default {
                 }
 
                 img {
-                    width: 25px;
-                    height: 25px;
+                    width: 30px;
+                    height: 30px;
                     border-radius: 50%;
                     vertical-align: middle;
                 }
@@ -666,6 +714,8 @@ export default {
                 text-align: center;
                 padding: 10px 0;
                 font-size: 18px;
+                color: var(--article-color);
+                border-bottom: 1px solid #909399;
             }
 
             .messageBox,
@@ -684,7 +734,6 @@ export default {
             .messageBox {
                 height: 500px;
                 overflow: auto;
-
 
                 .more {
                     text-align: center;
