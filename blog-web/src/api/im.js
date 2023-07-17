@@ -23,13 +23,18 @@ export function addRoom(userId) {
         }
     })
 }
-export function send(message) {
+export function send(data) {
     return request({
         url: '/v1/im/chat',
-        method: 'get',
-        params: {
-            message: message
-        }
+        method: 'post',
+        data
+    })
+}
+export function withdraw(data) {
+    return request({
+        url: '/v1/im/withdraw',
+        method: 'post',
+        data
     })
 }
 export function getUserImHistoryList(params) {

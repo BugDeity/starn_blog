@@ -26,11 +26,6 @@ public interface ApiImMessageService {
      */
     ResponseResult selectHistoryList();
 
-    /**
-     * 添加或修改消息（如发送消息和撤回消息）
-     * @param obj
-     */
-    ImMessageVO updateOrInsert(ImMessageVO obj, HttpServletRequest request);
 
     /**
      * 获取在线用户列表
@@ -69,4 +64,20 @@ public interface ApiImMessageService {
      * @return
      */
     ResponseResult deleteRoom(String roomId);
+
+    /**
+     * 发送消息
+     * @param message 消息
+     * @param request
+     * @return
+     */
+    ResponseResult chat(ImMessageVO message, HttpServletRequest request);
+
+    /**
+     * 撤回消息
+     * @param message 消息对象
+     * @param request
+     * @return
+     */
+    ResponseResult withdraw(ImMessageVO message, HttpServletRequest request);
 }

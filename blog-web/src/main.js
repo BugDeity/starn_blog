@@ -33,6 +33,17 @@ import Clipboard from 'clipboard'
 
 Vue.prototype.Clipboard = Clipboard
 
+import hljs from 'highlight.js';
+
+import 'highlight.js/styles/atom-one-dark.css' //样式
+//创建v-highlight全局指令
+Vue.directive('highlight', function (el) {
+  let blocks = el.querySelectorAll('pre code');
+  blocks.forEach((block) => {
+    hljs.highlightBlock(block)
+  })
+})
+
 Vue.use(mavonEditor)
 
 VueMarkdownEditor.use(vuepressTheme, {

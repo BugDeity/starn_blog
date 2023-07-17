@@ -2,6 +2,7 @@ package com.shiyi.service.impl;
 
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
@@ -9,6 +10,8 @@ import com.shiyi.entity.ImMessage;
 import com.shiyi.entity.ImRoom;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
+import com.shiyi.im.MessageCodeConstant;
+import com.shiyi.im.WebSocketInfoService;
 import com.shiyi.mapper.ImMessageMapper;
 import com.shiyi.mapper.ImRoomMapper;
 import com.shiyi.mapper.UserMapper;
@@ -55,6 +58,8 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
 
     private final UserMapper userMapper;
 
+    private final WebSocketInfoService webSocketInfoService;
+
     private Pattern pattern = Pattern.compile("(http|https)://[\\w\\d.-]+(/[\\w\\d./?=#&-]*)?");
 
     @Override
@@ -63,48 +68,6 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
                         PageUtils.getPageSize()));
         formatCreateTime(page);
         return ResponseResult.success(page);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public ImMessageVO updateOrInsert(ImMessageVO obj, HttpServletRequest request) {
-        Matcher matcher = pattern.matcher(obj.getContent());
-        //字符串找出http地址
-        String content = obj.getContent();
-        String url = null;
-        try {
-            while (matcher.find()) {
-                url = matcher.group();
-                Document doc = Jsoup.connect(url).get();
-                String hrefContent = String.format("<a href=\"%s\" target=\"_blank\" >%s</a>", url, doc.title());
-                content = content.replace(url, hrefContent);
-            }
-        } catch (IOException e) {
-            log.error("website {} analysis error", url);
-        }
-        //过滤敏感词
-        String filterContent = SensitiveUtils.filter(content);
-        obj.setContent(filterContent);
-
-        ImMessage imMessage = BeanCopyUtils.copyObject(obj, ImMessage.class);
-        imMessage.setIp(IpUtil.getIp(request));
-        imMessage.setIpSource(IpUtil.getIp2region(imMessage.getIp()));
-        //撤回消息
-        if (obj.getIsWithdraw() == 1) {
-            ImMessage entity = imMessageMapper.selectById(imMessage);
-            if (DateUtil.getDiffDateToMinutes(entity.getCreateTime(),DateUtil.getNowDate()) >= 2) {
-                throw new BusinessException("撤回失败，只能撤回俩分钟以内的消息！");
-            }
-
-            imMessageMapper.updateById(imMessage);
-        } else {
-            //保存消息到数据库
-            imMessageMapper.insert(imMessage);
-        }
-        obj.setId(imMessage.getId());
-        obj.setCreateTimeStr(RelativeDateFormat.format(imMessage.getCreateTime()));
-        obj.setIpSource(imMessage.getIpSource());
-        return obj;
     }
 
     @Override
@@ -195,9 +158,77 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
         return ResponseResult.success();
     }
 
+    /**
+     * 发送消息
+     * @param obj 消息
+     * @param request
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult chat(ImMessageVO obj, HttpServletRequest request) {
+        Matcher matcher = pattern.matcher(obj.getContent());
+        //字符串找出http地址
+        String content = obj.getContent();
+        String url = null;
+        try {
+            while (matcher.find()) {
+                url = matcher.group();
+                Document doc = Jsoup.connect(url).get();
+                String hrefContent = String.format("<a href=\"%s\" target=\"_blank\" >%s</a>", url, doc.title());
+                content = content.replace(url, hrefContent);
+            }
+        } catch (IOException e) {
+            log.error("website {} analysis error", url);
+        }
+        //过滤敏感词
+        String filterContent = SensitiveUtils.filter(content);
+        obj.setContent(filterContent);
+        obj.setIp(IpUtil.getIp(request));
+        obj.setIpSource(IpUtil.getIp2region(obj.getIp()));
+
+        ImMessage imMessage = BeanCopyUtils.copyObject(obj, ImMessage.class);
+        //保存消息到数据库
+        imMessageMapper.insert(imMessage);
+        obj.setId(imMessage.getId());
+        obj.setCreateTimeStr(RelativeDateFormat.format(imMessage.getCreateTime()));
+
+        webSocketInfoService.chat(obj);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 撤回消息
+     * @param message 消息对象
+     * @param request
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult withdraw(ImMessageVO message, HttpServletRequest request) {
+        ImMessage entity = imMessageMapper.selectById(message.getId());
+        if (DateUtil.getDiffDateToMinutes(entity.getCreateTime(),DateUtil.getNowDate()) >= 2) {
+            throw new BusinessException("撤回失败，只能撤回俩分钟以内的消息！");
+        }
+        if (!entity.getFromUserId().equals(StpUtil.getLoginIdAsString())) {
+            throw new BusinessException("只能撤回自己的消息哦！");
+        }
+        ImMessage imMessage = BeanCopyUtils.copyObject(message, ImMessage.class);
+        imMessage.setIp(IpUtil.getIp(request));
+        imMessage.setIpSource(IpUtil.getIp2region(imMessage.getIp()));
+
+        //修改消息
+        imMessageMapper.updateById(imMessage);
+        //发送消息
+        webSocketInfoService.chat(message);
+
+        return ResponseResult.success();
+    }
+
     private static void formatCreateTime(Page<ImMessageVO> page) {
         page.getRecords().forEach(item ->{
             item.setCreateTimeStr(RelativeDateFormat.format(item.getCreateTime()));
         });
     }
+
 }

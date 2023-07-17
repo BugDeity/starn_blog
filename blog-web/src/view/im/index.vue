@@ -73,7 +73,7 @@
 
                             <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
                                 :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
-                                <i class="iconfont icon-tupian"></i>
+                                <i class="el-icon-picture"></i>
                             </el-upload>
                         </span>
                     </div>
@@ -133,7 +133,7 @@
 <script>
 let socket;
 import { upload } from '@/api'
-import { getImHistory, getUserImHistoryList, send, getRoomList, addRoom, read, deleteRoom } from '@/api/im'
+import { getImHistory, getUserImHistoryList, send, withdraw, getRoomList, addRoom, read, deleteRoom } from '@/api/im'
 export default {
 
     data() {
@@ -304,31 +304,20 @@ export default {
         },
         //撤回
         withdraw() {
-            if (this.user.id != this.message.fromUserId) {
-                this.$message.error('只能撤回自己发送的消息哦');
-                return;
-            }
-
-            if (this.message.isWithdraw) {
-                this.$message.error('消息已被撤回');
-                return;
-            }
 
             let message = {
                 code: this.selectUserOnline == null ? 2 : 1,
-                messageData: {
-                    content: "消息已撤回",
-                    fromUserId: this.message.fromUserId,
-                    id: this.message.id,
-                    index: this.message.index,
-                    isRead: 0,
-                    isWithdraw: 1,
-                    toUserId: this.message.toUserId,
-                    type: 1
-                }
+                content: "消息已撤回",
+                fromUserId: this.message.fromUserId,
+                id: this.message.id,
+                index: this.message.index,
+                isRead: 0,
+                isWithdraw: 1,
+                toUserId: this.message.toUserId,
+                type: 1
             }
             // 将组装好的json发送给服务端，由服务端进行转发
-            send(JSON.stringify(message)).then(re => {
+            withdraw(message).then(re => {
 
             }).catch(error => {
                 this.$message.error(error.message)
@@ -419,48 +408,43 @@ export default {
         send(content, type) {
             if (typeof (WebSocket) == "undefined") {
                 console.log("您的浏览器不支持WebSocket");
-            } else {
-                console.log("您的浏览器支持WebSocket");
-                if (!this.user) {
-                    this.$message.error('请先登录');
-                    this.$store.state.loginFlag = true
-                    return;
-                }
-                if (!content) {
-                    this.$message.error('请输入内容');
-                    return;
-                }
-
-                let message = {
-                    code: 2, messageData: {
-                        fromUserId: this.user.id, content: content, fromUserAvatar: this.user.avatar,
-                        fromUserNickname: this.user.nickname, type: type, isRead: 0
-                    }
-                }
-
-                if (this.selectUserOnline != null) {
-                    message = {
-                        code: 1,
-                        messageData: {
-                            fromUserId: this.user.id,
-                            fromUserAvatar: this.user.avatar,
-                            fromUserNickname: this.user.nickname,
-                            toUserId: this.selectUserOnline.receiveId,
-                            toUserAvatar: this.selectUserOnline.avatar,
-                            toUserNickname: this.selectUserOnline.nickname,
-                            content: content,
-                            type: type,
-                            isRead: 0,
-                        }
-                    }
-                }
-                //发送消息
-                send(JSON.stringify(message))
-                //socket.send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
-                // this.messageList.push(message)
-                // 构建消息内容，本人消息
-                this.text = "";
+                return;
             }
+            if (!this.user) {
+                this.$message.error('请先登录');
+                this.$store.state.loginFlag = true
+                return;
+            }
+            if (!content) {
+                this.$message.error('请输入内容');
+                return;
+            }
+            content = "<p>" + content + "</p>"
+            let message = {
+                code: 2,
+                fromUserId: this.user.id, content: content, fromUserAvatar: this.user.avatar,
+                fromUserNickname: this.user.nickname, type: type, isRead: 0
+
+            }
+
+            if (this.selectUserOnline != null) {
+                message = {
+                    code: 1,
+                    fromUserId: this.user.id,
+                    fromUserAvatar: this.user.avatar,
+                    fromUserNickname: this.user.nickname,
+                    toUserId: this.selectUserOnline.receiveId,
+                    toUserAvatar: this.selectUserOnline.avatar,
+                    toUserNickname: this.selectUserOnline.nickname,
+                    content: content,
+                    type: type,
+                    isRead: 0,
+                }
+            }
+            //发送消息
+            send(message)
+            // 构建消息内容，本人消息
+            this.text = "";
         },
         //初始化socket
         init() {
@@ -472,7 +456,6 @@ export default {
             if (typeof (WebSocket) == "undefined") {
                 console.log("您的浏览器不支持WebSocket");
             } else {
-                console.log("您的浏览器支持WebSocket");
                 let socketUrl = _this.websoketUrl + "?userId=" + _this.user.id;
                 if (socket != null) {
                     socket.close();

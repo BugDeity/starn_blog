@@ -73,7 +73,7 @@
 
                                 </div>
                                 <div class="content">
-                                    <v-md-preview :text="item.content" ref="preview" />
+                                    <v-md-preview v-highlight :text="item.content" ref="preview" />
                                 </div>
                                 <div class="content-btn">
                                     <span v-if="$store.state.userInfo.id == item.userId"

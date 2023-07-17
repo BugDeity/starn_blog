@@ -3,8 +3,8 @@ package com.shiyi.controller;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.shiyi.annotation.BusinessLogger;
 import com.shiyi.common.ResponseResult;
-import com.shiyi.im.WebSocketInfoService;
 import com.shiyi.service.ApiImMessageService;
+import com.shiyi.vo.ImMessageVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ public class ApiImMessageController {
 
     private final ApiImMessageService imMessageService;
 
-    private final WebSocketInfoService webSocketInfoService;
 
     @SaCheckLogin
     @GetMapping(value = "/")
@@ -47,11 +46,17 @@ public class ApiImMessageController {
     }
 
     @SaCheckLogin
-    @GetMapping(value = "/chat")
-    @ApiOperation(value = "发送消息", httpMethod = "GET", response = ResponseResult.class, notes = "发送消息")
-    public ResponseResult chat(String message, HttpServletRequest request){
-        webSocketInfoService.chat(message,request);
-        return ResponseResult.success();
+    @PostMapping(value = "/chat")
+    @ApiOperation(value = "发送消息", httpMethod = "POST", response = ResponseResult.class, notes = "发送消息")
+    public ResponseResult chat(@RequestBody ImMessageVO message, HttpServletRequest request){
+        return imMessageService.chat(message,request);
+    }
+
+    @SaCheckLogin
+    @PostMapping(value = "/withdraw")
+    @ApiOperation(value = "撤回消息", httpMethod = "POST", response = ResponseResult.class, notes = "撤回消息")
+    public ResponseResult withdraw(@RequestBody ImMessageVO message, HttpServletRequest request){
+        return imMessageService.withdraw(message,request);
     }
 
     @SaCheckLogin
@@ -60,6 +65,7 @@ public class ApiImMessageController {
     public ResponseResult read(String userId) {
         return imMessageService.read(userId);
     }
+
     @SaCheckLogin
     @DeleteMapping(value = "/deleteRoom")
     @ApiOperation(value = "删除房间", httpMethod = "DELETE", response = ResponseResult.class, notes = "删除房间")

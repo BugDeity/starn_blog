@@ -1,24 +1,16 @@
 package com.shiyi.im;
 
 
-
 import com.alibaba.fastjson.JSONObject;
-import com.shiyi.common.ResponseResult;
-import com.shiyi.entity.ImMessage;
-import com.shiyi.service.ApiImMessageService;
-import com.shiyi.utils.SpringUtils;
+import com.shiyi.exception.BusinessException;
 import com.shiyi.vo.ImMessageVO;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Map;
 
 @Service
@@ -30,6 +22,7 @@ public class WebSocketInfoService {
 
     /**
      * 清除会话信息
+     *
      * @param channel
      */
     public void clearSession(Channel channel) {
@@ -70,20 +63,12 @@ public class WebSocketInfoService {
         }
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void chat(String message,HttpServletRequest request){
-
-        ImMessageVO messageData = parseMessage(message);
-        ApiImMessageService imMessageService = getImMessageService();
-        messageData = imMessageService.updateOrInsert(messageData,request);
-
-        if (messageData.getToUserId() != null) {
-            messageData.setCode(MessageCodeConstant.PRIVATE_CHAT_CODE);
-        }else {
-            messageData.setCode(MessageCodeConstant.GROUP_CHAT_CODE);
-        }
-
-        message = JSONObject.toJSONString(messageData);
+    /**
+     * 发送消息
+     * @param messageData 消息对象
+     */
+    public void chat(ImMessageVO messageData) {
+        String message = JSONObject.toJSONString(messageData);
         switch (messageData.getCode()) {
             //群聊
             case MessageCodeConstant.GROUP_CHAT_CODE:
@@ -115,16 +100,5 @@ public class WebSocketInfoService {
             default:
         }
     }
-
-    @NotNull
-    private static ApiImMessageService getImMessageService() {
-        return SpringUtils.getBean(ApiImMessageService.class);
-    }
-
-    private ImMessageVO parseMessage(String message){
-        JSONObject jsonObject = JSONObject.parseObject(message);
-        return jsonObject.getObject("messageData", ImMessageVO.class);
-    }
-
 }
 

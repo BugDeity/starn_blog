@@ -39,7 +39,7 @@
             </div>
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">
-                <v-md-preview :style="style" class="content" :text="this.article.contentMd" ref="preview" />
+                <v-md-preview v-highlight :style="style" class="content" :text="this.article.contentMd" ref="preview" />
                 <div v-if="article.readType != 0 && !serceShow" class="warpper">
                     <div class="item-title">
                         <i class="el-icon-lock"></i> 该文章部分内容已隐藏
@@ -319,7 +319,7 @@ import Comment from '@/components/comment/index.vue'
 export default {
     components: {
         SiteInfo,
-        Comment
+
     },
     data() {
         return {

@@ -30,7 +30,8 @@ export default {
         return {
             theme: true,
             showBtn: false, // 回到顶部，默认是false，就是隐藏起来
-            skin: getSkin()
+            skin: getSkin(),
+            show: false,
         }
     },
     mounted() {
