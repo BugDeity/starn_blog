@@ -755,8 +755,8 @@ export default {
                     }
 
                     .tag {
-                        width: 19px;
-                        height: 19px;
+                        width: 20px;
+                        height: 20px;
                         vertical-align: -5px;
                     }
 

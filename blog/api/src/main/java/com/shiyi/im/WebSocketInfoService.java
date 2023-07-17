@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Map;
 
 @Service
@@ -70,7 +71,7 @@ public class WebSocketInfoService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void chat(String message,HttpServletRequest request) {
+    public void chat(String message,HttpServletRequest request){
 
         ImMessageVO messageData = parseMessage(message);
         ApiImMessageService imMessageService = getImMessageService();

@@ -16,6 +16,9 @@ public class ApiNoteListVO {
     @ApiModelProperty(value = "id")
     private Integer id;
 
+    @ApiModelProperty(value = "用户id")
+    private String userId;
+
     @ApiModelProperty(value = "用户昵称")
     private String nickname;
 

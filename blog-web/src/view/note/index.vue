@@ -75,6 +75,10 @@
                                 <div class="content">
                                     <v-md-preview :text="item.content" ref="preview" />
                                 </div>
+                                <div class="content-btn">
+                                    <span v-if="$store.state.userInfo.id == item.userId"
+                                        @click="handleDelete(item.id, index)">删除</span>
+                                </div>
                             </li>
                             <div v-if="pageData.pageNo == pages" style="text-align: center;color: var(--text-color);">
                                 我也是有底线的~~~</div>
@@ -95,7 +99,8 @@
 </template>
    
 <script>
-import { getNote, insertNote, featchCategory } from '@/api'
+import { getNote, insertNote, deleteNote } from '@/api/note'
+import { featchCategory } from '@/api'
 export default {
     name: '',
     data() {
@@ -144,6 +149,26 @@ export default {
         this.getNoteList()
     },
     methods: {
+        handleDelete(id, index) {
+            this.$confirm('此操作将永久删除该笔记, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                deleteNote(id).then(respose => {
+                    this.$delete(this.noteList, index);
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
         handleChange(index) {
             this.chooseCategory = this.categoryList[index]
         },
@@ -540,6 +565,20 @@ export default {
                                         padding: 0 !important;
                                         background-color: var(--background-color) !important;
                                         color: var(--article-color);
+                                    }
+                                }
+
+                                .content-btn {
+                                    padding-left: 20px;
+                                    padding-top: 10px;
+
+                                    span {
+                                        color: var(--text-color);
+                                        cursor: pointer;
+
+                                        &:hover {
+                                            color: var(--theme-color);
+                                        }
                                     }
                                 }
 

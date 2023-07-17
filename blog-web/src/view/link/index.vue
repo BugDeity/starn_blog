@@ -64,7 +64,7 @@
     </div>
 </template>
 <script>
-import { featchLinks, addLink } from '@/api'
+import { featchLinks, addLink } from '@/api/link'
 export default {
 
     data() {

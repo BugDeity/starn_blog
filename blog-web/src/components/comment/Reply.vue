@@ -36,7 +36,7 @@
     </div>
 </template>
 <script>
-import { postComment } from '@/api'
+import { postComment } from '@/api/comment'
 import { browserMatch } from '@/utils'
 export default {
     data() {

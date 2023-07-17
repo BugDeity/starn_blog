@@ -312,7 +312,8 @@
     </div>
 </template>
 <script>
-import { articleInfo, featchComments, articleLike, checkCode, collect, cancelCollect, followedUser, deleteFollowedUser, selectUserInfoByArticleId } from '@/api'
+import { articleInfo, articleLike, checkCode, collect, cancelCollect, followedUser, deleteFollowedUser, selectUserInfoByArticleId } from '@/api'
+import { featchComments } from '@/api/comment'
 import SiteInfo from '@/components/site/index.vue'
 import Comment from '@/components/comment/index.vue'
 export default {

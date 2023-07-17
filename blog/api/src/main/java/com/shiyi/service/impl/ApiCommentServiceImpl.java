@@ -7,6 +7,7 @@ import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Comment;
 import com.shiyi.entity.UserInfo;
 import com.shiyi.exception.BusinessException;
+import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.mapper.CommentMapper;
 import com.shiyi.mapper.UserInfoMapper;
 import com.shiyi.service.ApiCommentService;
@@ -87,7 +88,7 @@ public class ApiCommentServiceImpl implements ApiCommentService {
                         .replyWebSite(replyUserInfo.getWebSite())
                         .content(e.getContent())
                         .avatar(userInfo1.getAvatar())
-                        .createTime(e.getCreateTime())
+                        .createTimeStr(RelativeDateFormat.format(e.getCreateTime()))
                         .browser(e.getBrowser())
                         .browserVersion(e.getBrowserVersion())
                         .system(e.getSystem())
@@ -96,6 +97,7 @@ public class ApiCommentServiceImpl implements ApiCommentService {
                         .build();
                 vo.getChildren().add(apiCommentListVO);
             }
+            vo.setCreateTimeStr(RelativeDateFormat.format(vo.getCreateTime()));
         }
         return ResponseResult.success(pageList);
     }

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/v1/im")
@@ -48,7 +49,7 @@ public class ApiImMessageController {
     @SaCheckLogin
     @GetMapping(value = "/chat")
     @ApiOperation(value = "发送消息", httpMethod = "GET", response = ResponseResult.class, notes = "发送消息")
-    public ResponseResult chat(String message, HttpServletRequest request) {
+    public ResponseResult chat(String message, HttpServletRequest request){
         webSocketInfoService.chat(message,request);
         return ResponseResult.success();
     }

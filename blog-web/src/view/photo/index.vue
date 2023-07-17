@@ -27,7 +27,7 @@
     </div>
 </template>
 <script>
-import { featchPhotoAlbum, featchPhoto } from '@/api'
+import { featchPhotoAlbum, featchPhoto } from '@/api/photo'
 export default {
     data() {
         return {

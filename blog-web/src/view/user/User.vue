@@ -212,8 +212,10 @@
 <script>
 import {
     updateUserInfo, getUserInfo, upload, updatePassword, getMyArticle,
-    deleteMyArticle, addFeedback, getCollect, cancelCollect, getMyComment, getMyNote, deleteNote
+    deleteMyArticle, addFeedback, getCollect, cancelCollect
 } from '@/api'
+import { getMyNote, deleteNote } from '@/api/note'
+import { getMyComment } from '@/api/comment'
 export default {
     data() {
         return {

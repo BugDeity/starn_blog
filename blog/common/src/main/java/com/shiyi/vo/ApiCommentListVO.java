@@ -41,6 +41,10 @@ public class ApiCommentListVO {
 
     @ApiModelProperty(value = "发表时间")
     private Date createTime;
+
+    @ApiModelProperty(value = "发表时间")
+    private String createTimeStr;
+
     @ApiModelProperty(value = "浏览器")
     private String browser;
 

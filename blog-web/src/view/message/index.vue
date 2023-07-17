@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { listMessage, addMessage } from "@/api";
+import { listMessage, addMessage } from "@/api/message";
 export default {
 
     mounted() {

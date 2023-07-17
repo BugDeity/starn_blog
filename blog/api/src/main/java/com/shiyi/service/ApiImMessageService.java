@@ -7,6 +7,7 @@ import com.shiyi.vo.ImMessageVO;
 import com.shiyi.vo.ImOnlineUserVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 

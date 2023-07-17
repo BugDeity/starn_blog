@@ -22,14 +22,21 @@ import com.shiyi.vo.ImOnlineUserVO;
 import com.shiyi.vo.ImRoomListVO;
 import com.shiyi.vo.UserInfoVO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -40,6 +47,7 @@ import java.util.Set;
  * @author blue
  * @since 2021-11-10
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ApiImMessageServiceImpl  implements ApiImMessageService {
@@ -49,6 +57,8 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
     private final ImRoomMapper imRoomMapper;
 
     private final UserMapper userMapper;
+
+    private Pattern pattern = Pattern.compile("(http|https)://[\\w\\d.-]+(/[\\w\\d./?=#&-]*)?");
 
     @Override
     public ResponseResult selectHistoryList() {
@@ -61,15 +71,31 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ImMessageVO updateOrInsert(ImMessageVO obj, HttpServletRequest request) {
-        String filterContent = SensitiveUtils.filter(obj.getContent());
+        Matcher matcher = pattern.matcher(obj.getContent());
+        //字符串找出http地址
+        String content = obj.getContent();
+        String url = null;
+        try {
+            while (matcher.find()) {
+                url = matcher.group();
+                Document doc = Jsoup.connect(url).get();
+                String hrefContent = String.format("<a href=\"%s\" target=\"_blank\" >%s</a>", url, doc.title());
+                content = content.replace(url, hrefContent);
+            }
+        } catch (IOException e) {
+            log.error("website {} analysis error", url);
+        }
+        //过滤敏感词
+        String filterContent = SensitiveUtils.filter(content);
         obj.setContent(filterContent);
+
         ImMessage imMessage = BeanCopyUtils.copyObject(obj, ImMessage.class);
         imMessage.setIp(IpUtil.getIp(request));
         imMessage.setIpSource(IpUtil.getIp2region(imMessage.getIp()));
         //撤回消息
         if (obj.getIsWithdraw() == 1) {
             imMessageMapper.updateById(imMessage);
-        }else {
+        } else {
             //保存消息到数据库
             imMessageMapper.insert(imMessage);
         }

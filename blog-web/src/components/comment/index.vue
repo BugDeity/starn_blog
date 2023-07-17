@@ -62,8 +62,7 @@
                                     <div class="right">
                                         <div class="info">
                                             <time itemprop="datePublished" datetime="1680523318635" class="comment-time">发布于
-                                                {{
-                                                    formatDate(item.createTime) }}
+                                                {{ item.createTimeStr }}
                                             </time>
                                             <span class="useragent-info">（
                                                 <svg-icon :icon-class="item.browser" />
@@ -129,7 +128,7 @@
                                                     <div class="info">
                                                         <time itemprop="datePublished" datetime="1680523318635"
                                                             class="comment-time">发布于
-                                                            {{ formatDate(childrenItem.createTime) }}
+                                                            {{ childrenItem.createTimeStr }}
                                                         </time>
                                                         <span class="useragent-info">（
                                                             <svg-icon :icon-class="childrenItem.browser" />
@@ -172,7 +171,7 @@
     </div>
 </template>
 <script>
-import { postComment, featchComments } from '@/api'
+import { postComment, featchComments } from '@/api/comment'
 import { browserMatch } from '@/utils/index'
 import Reply from './Reply.vue'
 export default {

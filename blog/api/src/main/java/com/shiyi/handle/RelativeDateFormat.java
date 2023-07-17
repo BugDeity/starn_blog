@@ -10,6 +10,8 @@ public class RelativeDateFormat {
     private static final long ONE_DAY = 86400000L;
     private static final long ONE_WEEK = 604800000L;
 
+    private static final String GANG_GANG = "刚刚";
+
     private static final String ONE_SECOND_AGO = "秒前";
     private static final String ONE_MINUTE_AGO = "分钟前";
     private static final String ONE_HOUR_AGO = "小时前";
@@ -30,7 +32,7 @@ public class RelativeDateFormat {
         long delta = new Date().getTime() - date.getTime();
         if (delta < 1L * ONE_MINUTE) {
             long seconds = toSeconds(delta);
-            return (seconds <= 0 ? 1 : seconds) + ONE_SECOND_AGO;
+            return seconds <= 0 ? GANG_GANG : seconds + ONE_SECOND_AGO;
         }
         if (delta < 45L * ONE_MINUTE) {
             long minutes = toMinutes(delta);

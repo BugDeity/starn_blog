@@ -98,46 +98,7 @@ export function fetchTagList() {
     })
 }
 
-export function featchComments(params) {
-    return request({
-        url: '/v1/comment/',
-        method: 'get',
-        params: params
-    })
-}
-export function getMyComment(params) {
-    return request({
-        url: '/v1/comment/getMyComment',
-        method: 'get',
-        params: params
-    })
-}
-export function newArticle() {
-    return request({
-        url: '/v1/upToDateArticle',
-        method: 'get',
-    })
-}
-export function featchLinks() {
-    return request({
-        url: '/v1/link/',
-        method: 'get',
-    })
-}
-export function addLink(data) {
-    return request({
-        url: '/v1/link/',
-        method: 'post',
-        data
-    })
-}
-export function postComment(data) {
-    return request({
-        url: '/v1/comment/',
-        method: 'post',
-        data
-    })
-}
+
 
 export function featchHomeData() {
     return request({
@@ -170,19 +131,6 @@ export function getWebSiteInfo() {
     return request({
         url: '/v1/webSiteInfo',
         method: 'get',
-    })
-}
-export function listMessage() {
-    return request({
-        url: '/v1/message/',
-        method: 'get',
-    })
-}
-export function addMessage(data) {
-    return request({
-        url: '/v1/message/',
-        method: 'post',
-        data
     })
 }
 
@@ -266,20 +214,6 @@ export function featchCategory() {
     })
 }
 
-export function featchPhotoAlbum() {
-    return request({
-        url: '/v1/photoAlbum/',
-        method: 'get'
-    })
-}
-
-export function featchPhoto(params) {
-    return request({
-        url: '/v1/photo/',
-        method: 'get',
-        params: params
-    })
-}
 export function getPayUrl(params) {
     return request({
         url: '/v1/sponsor/createOrder',
@@ -319,36 +253,7 @@ export function cancelCollect(id) {
         }
     })
 }
-export function getNote(params) {
-    return request({
-        url: '/v1/note/',
-        method: 'get',
-        params: params
-    })
-}
-export function insertNote(data) {
-    return request({
-        url: '/v1/note/',
-        method: 'post',
-        data
-    })
-}
-export function getMyNote(params) {
-    return request({
-        url: '/v1/note/getMyNote',
-        method: 'get',
-        params: params
-    })
-}
-export function deleteNote(id) {
-    return request({
-        url: '/v1/note/delete',
-        method: 'delete',
-        params: {
-            id: id
-        }
-    })
-}
+
 export function followedUser(userId) {
     return request({
         url: '/v1/followed/insertFollowed',
