@@ -481,26 +481,7 @@ export default {
                 // 开启一个websocket服务
                 socket = new WebSocket(socketUrl);
                 //打开事件
-                socket.onopen = function () {
-
-                    console.log("websocket已打开");
-                    //获取房间列表
-                    getRoomList().then(res => {
-                        _this.roomList.push(...res.data)
-                    })
-                    if (_this.userId != null) {
-                        addRoom(_this.userId).then(res => {
-                            if (res.data != null) {
-                                _this.roomList.push(res.data)
-                            }
-                        }).catch(err => {
-                            _this.$message.error(err.message)
-                        })
-                    }
-                    //连接成功后获取历史聊天记录
-                    _this.getHistoryList()
-
-                };
+                socket.onopen = _this.open();
                 //  浏览器端收消息，获得从服务端发送过来的文本消息
                 socket.onmessage = function (msg) {
                     console.log("收到数据====" + msg.data)
@@ -557,6 +538,25 @@ export default {
 
                 }
             }
+        },
+
+        open() {
+            console.log("websocket已打开");
+            //获取房间列表
+            getRoomList().then(res => {
+                this.roomList.push(...res.data)
+            })
+            if (this.userId != null) {
+                addRoom(this.userId).then(res => {
+                    if (res.data != null) {
+                        this.roomList.push(res.data)
+                    }
+                }).catch(err => {
+                    this.$message.error(err.message)
+                })
+            }
+            //连接成功后获取历史聊天记录
+            this.getHistoryList()
         },
     }
 }
@@ -719,7 +719,7 @@ export default {
         }
 
         .itemBox {
-            background-image: url("./imbg.png");
+            background-image: url("http://img.shiyit.com/imbg.png");
             width: 100%;
             box-shadow: none;
 

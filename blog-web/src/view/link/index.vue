@@ -223,7 +223,7 @@ export default {
 
                     .item-content {
                         display: flex;
-                        margin-top: 20px;
+                        margin-top: 10px;
                     }
 
                     .name {
@@ -242,9 +242,9 @@ export default {
                         color: #fff;
                         overflow: hidden;
                         text-overflow: ellipsis;
-                        flex: 1;
-                        margin-right: 10px;
-                        word-break: break-all;
+                        -webkit-line-clamp: 3;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
                     }
 
                     img {
@@ -398,7 +398,7 @@ export default {
 
                     .item-content {
                         display: flex;
-                        margin-top: 20px;
+                        margin-top: 10px;
                     }
 
                     .name {
@@ -417,9 +417,10 @@ export default {
                         color: #fff;
                         overflow: hidden;
                         text-overflow: ellipsis;
-                        flex: 1;
-                        margin-right: 10px;
-                        word-break: break-all;
+                        -webkit-line-clamp: 3;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+
                     }
 
                     img {
