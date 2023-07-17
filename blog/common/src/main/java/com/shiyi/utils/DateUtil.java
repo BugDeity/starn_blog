@@ -660,4 +660,25 @@ public class DateUtil {
         // long sec = diff % nd % nh % nm / ns;
         return day + "天" + hour + "小时" + min + "分钟";
     }
+
+    /**
+     * 计算俩个时间相差的分钟
+     * @param endDate
+     * @param nowDate
+     * @return
+     */
+    public static long getDiffDateToMinutes (Date endDate, Date nowDate) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(nowDate);
+        long startTimeMillis = calendar.getTimeInMillis();
+
+        calendar.setTime(endDate);
+        long endTimeMillis = calendar.getTimeInMillis();
+
+        long durationMillis = startTimeMillis - endTimeMillis;
+        long minutes = durationMillis / (60 * 1000);
+
+        return minutes;
+    }
 }

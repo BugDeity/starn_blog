@@ -13,10 +13,7 @@ import com.shiyi.mapper.ImMessageMapper;
 import com.shiyi.mapper.ImRoomMapper;
 import com.shiyi.mapper.UserMapper;
 import com.shiyi.service.ApiImMessageService;
-import com.shiyi.utils.BeanCopyUtils;
-import com.shiyi.utils.IpUtil;
-import com.shiyi.utils.PageUtils;
-import com.shiyi.utils.SensitiveUtils;
+import com.shiyi.utils.*;
 import com.shiyi.vo.ImMessageVO;
 import com.shiyi.vo.ImOnlineUserVO;
 import com.shiyi.vo.ImRoomListVO;
@@ -94,6 +91,11 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
         imMessage.setIpSource(IpUtil.getIp2region(imMessage.getIp()));
         //撤回消息
         if (obj.getIsWithdraw() == 1) {
+            ImMessage entity = imMessageMapper.selectById(imMessage);
+            if (DateUtil.getDiffDateToMinutes(entity.getCreateTime(),DateUtil.getNowDate()) >= 2) {
+                throw new BusinessException("撤回失败，只能撤回俩分钟以内的消息！");
+            }
+
             imMessageMapper.updateById(imMessage);
         } else {
             //保存消息到数据库

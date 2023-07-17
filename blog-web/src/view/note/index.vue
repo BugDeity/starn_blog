@@ -125,16 +125,16 @@ export default {
         }
     },
     mounted() {
-        window.setTimeout(() => {
-            if (this.$refs.preview) {
-                //添加代码复制按钮复制成功提示
-                document.addEventListener("click", e => {
-                    if (e.target.className === "v-md-copy-code-btn") {
-                        this.$message.success("复制成功")
-                    }
-                })
+
+        //添加代码复制按钮复制成功提示
+        document.addEventListener("click", e => {
+            if (e.target.className != "iconfont icon-biaoqing") {
+                this.chooseEmoji = false
             }
-        }, 500)
+            if (e.target.className === "v-md-copy-code-btn") {
+                this.$message.success("复制成功")
+            }
+        })
     },
     created() {
         this.emojiList = require('@/assets/emoji.json');

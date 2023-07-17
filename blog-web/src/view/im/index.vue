@@ -1,7 +1,7 @@
 <template>
     <div class="im-main">
         <div id="im" class="im-warpper">
-            <el-card class="item">
+            <el-card class="itemBox">
                 <!-- 标题 -->
                 <div class="title">{{ title }}</div>
                 <div class="messageBox" id="messageBox" ref="messageContainer">
@@ -314,11 +314,25 @@ export default {
                 return;
             }
 
-            this.message.isWithdraw = 1
-            this.message.content = "消息已撤回"
+            let message = {
+                code: this.selectUserOnline == null ? 2 : 1,
+                messageData: {
+                    content: "消息已撤回",
+                    fromUserId: this.message.fromUserId,
+                    id: this.message.id,
+                    index: this.message.index,
+                    isRead: 0,
+                    isWithdraw: 1,
+                    toUserId: this.message.toUserId,
+                    type: 1
+                }
+            }
+            // 将组装好的json发送给服务端，由服务端进行转发
+            send(JSON.stringify(message)).then(re => {
 
-            let message = { code: this.selectUserOnline == null ? 2 : 1, messageData: this.message }
-            send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
+            }).catch(error => {
+                this.$message.error(error.message)
+            });
         },
         //翻译
         translate() {
@@ -704,15 +718,16 @@ export default {
             }
         }
 
-        .item {
-            background-color: var(--im-backgroudColor);
+        .itemBox {
+            background-image: url("./imbg.png");
             width: 100%;
             box-shadow: none;
 
 
             .title {
                 text-align: center;
-                padding: 10px 0;
+                height: 50px;
+                line-height: 50px;
                 font-size: 18px;
                 color: var(--article-color);
                 border-bottom: 1px solid #909399;
@@ -902,6 +917,7 @@ export default {
                     background-color: var(--im-backgroudColor);
                     color: var(--text-color);
                     font-size: 14px;
+                    opacity: 0.5;
                 }
 
                 .btn {
