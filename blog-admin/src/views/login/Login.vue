@@ -1,14 +1,18 @@
 <template>
     <div class='Loginbody'>
+
         <div class="header">
-            <div class="login-left">
-                <!-- <img src="http://img.shiyit.com/cover.png" alt="" class="imgCover"> -->
-                <svg-icon icon-class="loginbj" class="login-left-waves"></svg-icon>
+            <div class="img">
+                <svg-icon icon-class="bgLogo"></svg-icon>
             </div>
             <div class="login-right">
                 <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on"
                     label-position="left">
                     <i class="top"></i><i class="bottom"></i>
+                    <div class="logo">
+                        <el-avatar src="http://img.shiyit.com/logo-ico.png"></el-avatar>
+                    </div>
+
                     <div class="title-container">
                         <h3 class="title">拾壹博客 欢迎您</h3>
                     </div>
@@ -185,25 +189,21 @@ $dark_gray: #889aa4;
 $light_gray: #eee;
 
 @media screen and (max-width: 1118px) {
-
     .Loginbody {
         height: 100%;
         width: 100%;
+        background-image: url("./bg.png");
+
+
 
         .header {
-            display: flex;
-            height: 100%;
-            width: 100%;
 
-            .login-left {
+            .img {
                 display: none;
-
             }
 
             .login-right {
                 width: 100%;
-                display: flex;
-                background-color: #ecf5ff;
                 padding: 20px;
 
                 .login-form {
@@ -211,11 +211,11 @@ $light_gray: #eee;
                     height: 450px;
                     max-width: 100%;
                     padding: 35px 35px 15px 35px;
-                    border: 1px solid #409eff;
                     border-radius: 5px;
                     margin: auto;
                     position: relative;
                     overflow: hidden;
+                    border: 1px solid #74efff;
 
                     &::before {
                         content: ' ';
@@ -252,6 +252,10 @@ $light_gray: #eee;
                         width: 100%;
                     }
 
+                    .logo {
+                        text-align: center;
+                    }
+
                     .bottom {
                         bottom: 0;
                         left: -100%;
@@ -270,51 +274,6 @@ $light_gray: #eee;
                                 #74ff97,
                                 transparent);
                         animation: three 4s linear 3s infinite;
-                    }
-                }
-
-                @keyframes one {
-                    0% {
-                        left: -100%;
-                    }
-
-                    50%,
-                    100% {
-                        left: 100%;
-                    }
-                }
-
-                @keyframes two {
-                    0% {
-                        top: -100%;
-                    }
-
-                    50%,
-                    100% {
-                        top: 100%;
-                    }
-                }
-
-                @keyframes three {
-                    0% {
-                        right: -100%;
-                    }
-
-                    50%,
-                    100% {
-                        right: 100%;
-                    }
-                }
-
-                @keyframes four {
-                    0% {
-                        bottom: -100%;
-                    }
-
-                    50%,
-                    100% {
-                        bottom: 100%;
-
                     }
                 }
 
@@ -359,38 +318,42 @@ $light_gray: #eee;
     .Loginbody {
         height: 100%;
         width: 100%;
+        background-image: url("./bg.png");
+
+
 
         .header {
             display: flex;
             height: 100%;
-            width: 100%;
 
-            .login-left {
-                background-image: url("http://img.shiyit.com/adminBj.jpg");
-                background-repeat: no-repeat;
-                background-position: center;
-                background-size: cover;
-                width: 70%;
+            .img {
+                height: 50px;
                 position: relative;
+                top: 40%;
+                left: 20%;
 
+                .svg-icon {
+                    width: 500px;
+                    height: 300px;
+                }
             }
 
             .login-right {
-                width: 30%;
+                width: 100%;
                 display: flex;
-                background-color: #ecf5ff;
                 padding: 20px;
+                margin-left: 300px;
 
                 .login-form {
                     width: 500px;
                     height: 450px;
                     max-width: 100%;
                     padding: 35px 35px 15px 35px;
-                    border: 1px solid #409eff;
                     border-radius: 5px;
                     margin: auto;
                     position: relative;
                     overflow: hidden;
+                    border: 1px solid #74efff;
 
                     &::before {
                         content: ' ';
@@ -427,6 +390,10 @@ $light_gray: #eee;
                         width: 100%;
                     }
 
+                    .logo {
+                        text-align: center;
+                    }
+
                     .bottom {
                         bottom: 0;
                         left: -100%;
@@ -445,51 +412,6 @@ $light_gray: #eee;
                                 #74ff97,
                                 transparent);
                         animation: three 4s linear 3s infinite;
-                    }
-                }
-
-                @keyframes one {
-                    0% {
-                        left: -100%;
-                    }
-
-                    50%,
-                    100% {
-                        left: 100%;
-                    }
-                }
-
-                @keyframes two {
-                    0% {
-                        top: -100%;
-                    }
-
-                    50%,
-                    100% {
-                        top: 100%;
-                    }
-                }
-
-                @keyframes three {
-                    0% {
-                        right: -100%;
-                    }
-
-                    50%,
-                    100% {
-                        right: 100%;
-                    }
-                }
-
-                @keyframes four {
-                    0% {
-                        bottom: -100%;
-                    }
-
-                    50%,
-                    100% {
-                        bottom: 100%;
-
                     }
                 }
 
@@ -526,6 +448,51 @@ $light_gray: #eee;
             right: 0;
             text-align: center;
         }
+    }
+}
+
+@keyframes one {
+    0% {
+        left: -100%;
+    }
+
+    50%,
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes two {
+    0% {
+        top: -100%;
+    }
+
+    50%,
+    100% {
+        top: 100%;
+    }
+}
+
+@keyframes three {
+    0% {
+        right: -100%;
+    }
+
+    50%,
+    100% {
+        right: 100%;
+    }
+}
+
+@keyframes four {
+    0% {
+        bottom: -100%;
+    }
+
+    50%,
+    100% {
+        bottom: 100%;
+
     }
 }
 </style>
