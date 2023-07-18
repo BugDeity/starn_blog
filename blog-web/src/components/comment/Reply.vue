@@ -52,11 +52,16 @@ export default {
             user: this.$store.state.userInfo,
         }
     },
-
+    mounted() {
+        document.addEventListener("click", e => {
+            if (e.target.className != "iconfont icon-biaoqing") {
+                this.chooseEmoji = false
+            }
+        })
+    },
     methods: {
         handleChooseEmoji(value) {
             this.commentContent += value
-            this.chooseEmoji = false
         },
         handleCancle() {
             this.showBox = false

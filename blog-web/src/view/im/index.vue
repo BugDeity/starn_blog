@@ -79,10 +79,7 @@
                     </div>
                     <!-- 表情框 -->
                     <div class="emoji-wrapper" v-show="emojiShow">
-                        <span :title="item.description" class="emojiItem" v-for="( item, index ) of  emojiList "
-                            :key="index" @click.stop="addEmoji(item, $event)">
-                            {{ item.emoji }}
-                        </span>
+                        <Emoji @chooseEmoji="handleChooseEmoji" />
                     </div>
                     <!-- 输入内容 -->
                     <textarea class="contentBox" placeholder="说点什么呢" v-model="text"></textarea>
@@ -135,8 +132,11 @@
 let socket;
 import { upload } from '@/api'
 import { getImHistory, getUserImHistoryList, send, withdraw, getRoomList, addRoom, read, deleteRoom } from '@/api/im'
+import Emoji from '@/components/emoji'
 export default {
-
+    components: {
+        Emoji
+    },
     data() {
         return {
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
@@ -147,7 +147,6 @@ export default {
             left: 0,
             text: "",
             messageList: [],
-            emojiList: [],
             emojiShow: false,
             errImg: "http://img.shiyit.com/1645512111007.png",
             user: this.$store.state.userInfo,
@@ -212,7 +211,6 @@ export default {
     },
     created() {
         this.init()
-        this.emojiList = require('@/assets/emoji.json');
     },
     methods: {
         closeRoom(id, index) {
@@ -401,9 +399,8 @@ export default {
             this.emojiShow = false
         },
         //添加表情
-        addEmoji(obj, e) {
-            this.text += obj.emoji;
-            this.emojiShow = false
+        handleChooseEmoji(value) {
+            this.text += value
         },
         //发送消息
         send(content, type) {
@@ -870,25 +867,10 @@ export default {
 
 
                 .emoji-wrapper {
-                    background-color: var(--background-color);
-                    width: 380px;
-                    height: 200px;
-                    overflow-y: auto;
-                    border-radius: 5px;
+
                     position: absolute;
-                    top: -220px;
-
-                    .emojiItem {
-                        cursor: pointer;
-                        margin-bottom: 5px;
-                        font-size: 1.5rem;
-                        text-align: center;
-                        display: inline-block;
-
-                        &:hover {
-                            background-color: #eeeeee;
-                        }
-                    }
+                    top: -150px;
+                    left: 10px;
                 }
 
                 .contentBox {

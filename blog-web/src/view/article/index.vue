@@ -396,6 +396,7 @@ export default {
         }, 500)
         // 监听滚动事件
         window.addEventListener('scroll', this.onScroll, false)
+
     },
     computed: {
         isCommentFlag() {

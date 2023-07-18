@@ -204,11 +204,16 @@ export default {
             loading: [],
         }
     },
-
+    mounted() {
+        document.addEventListener("click", e => {
+            if (e.target.className != "iconfont icon-biaoqing") {
+                this.chooseEmoji = false
+            }
+        })
+    },
     methods: {
         handleChooseEmoji(value) {
             this.commentContent += value
-            this.chooseEmoji = false
         },
         replyLeave(index, isChilderen) {
             if (isChilderen) {
