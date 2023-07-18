@@ -10,7 +10,7 @@
                     <div data-v-0089e256="" class="comment-input">
                         <textarea placeholder="留下点什么吧..." v-model="commentContent" class="comment-textarea"></textarea>
                     </div>
-                    <div class="emoji-container">
+                    <div class="comment-btn">
                         <span @click="chooseEmoji = !chooseEmoji" :class="chooseEmoji ? 'emoji-btn-active' : 'emoji-btn'">
                             <i class="iconfont icon-biaoqing"></i>
                         </span>
@@ -22,13 +22,9 @@
                                 提交
                             </el-button>
                         </div>
-
                     </div>
                     <div class="emoji-wrapper" v-show="chooseEmoji">
-                        <span class="emoji-item" v-for="(item, index) of emojiList" :key="index" @click="addEmoji(item)">
-                            <span class="emoji">{{ item.emoji }}
-                            </span>
-                        </span>
+                        <Emoji @chooseEmoji="handleChooseEmoji" />
                     </div>
                 </div>
             </div>
@@ -38,11 +34,14 @@
 <script>
 import { postComment } from '@/api/comment'
 import { browserMatch } from '@/utils'
+import Emoji from '@/components/emoji'
 export default {
+    components: {
+        Emoji
+    },
     data() {
         return {
             chooseEmoji: false,
-            emojiList: null,
             userId: null,
             nickname: null,
             parentId: null,
@@ -54,11 +53,11 @@ export default {
         }
     },
 
-    created() {
-        this.emojiList = require('@/assets/emoji.json');
-    },
     methods: {
-
+        handleChooseEmoji(value) {
+            this.commentContent += value
+            this.chooseEmoji = false
+        },
         handleCancle() {
             this.showBox = false
         },
@@ -93,9 +92,6 @@ export default {
             })
 
         },
-        addEmoji(obj) {
-            this.commentContent += obj.emoji;
-        },
     },
 }
 </script>
@@ -129,6 +125,7 @@ export default {
             .ml-3 {
                 margin-left: 12px !important;
                 width: 100%;
+                position: relative;
 
                 .comment-input {
                     position: relative;
@@ -148,7 +145,7 @@ export default {
                     }
                 }
 
-                .emoji-container {
+                .comment-btn {
                     display: flex;
                     align-items: center;
                     margin: 10px 0;
@@ -230,22 +227,8 @@ export default {
                 }
 
                 .emoji-wrapper {
-                    max-height: 150px;
-                    overflow-y: auto;
-
-                    .emoji-item {
-                        cursor: pointer;
-                        display: inline-block;
-
-                        .emoji {
-                            font-size: 20px;
-                            padding: 3px;
-
-                            &:hover {
-                                background-color: rgb(221, 221, 221)
-                            }
-                        }
-                    }
+                    position: absolute;
+                    top: 5px;
                 }
             }
         }

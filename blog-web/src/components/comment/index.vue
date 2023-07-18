@@ -10,7 +10,7 @@
                     <div data-v-0089e256="" class="comment-input">
                         <textarea placeholder="留下点什么吧..." v-model="commentContent" class="comment-textarea"></textarea>
                     </div>
-                    <div class="emoji-container">
+                    <div class="comment-btn">
                         <span @click="chooseEmoji = !chooseEmoji" :class="chooseEmoji ? 'emoji-btn-active' : 'emoji-btn'">
                             <i class="iconfont icon-biaoqing"></i>
                         </span>
@@ -19,10 +19,7 @@
                         </el-button>
                     </div>
                     <div class="emoji-wrapper" v-show="chooseEmoji">
-                        <span class="emoji-item" v-for="(item, index) of emojiList" :key="index" @click="addEmoji(item)">
-                            <span class="emoji">{{ item.emoji }}
-                            </span>
-                        </span>
+                        <Emoji @chooseEmoji="handleChooseEmoji" />
                     </div>
                 </div>
             </div>
@@ -174,9 +171,11 @@
 import { postComment, featchComments } from '@/api/comment'
 import { browserMatch } from '@/utils/index'
 import Reply from './Reply.vue'
+import Emoji from '@/components/emoji'
 export default {
     components: {
-        Reply
+        Reply,
+        Emoji
     },
     props: {
         commentList: {
@@ -195,7 +194,6 @@ export default {
     data() {
         return {
             chooseEmoji: false,
-            emojiList: null,
             commentContent: "",
             opacity: 0,
             pageNo: 1,
@@ -207,10 +205,11 @@ export default {
         }
     },
 
-    created() {
-        this.emojiList = require('@/assets/emoji.json');
-    },
     methods: {
+        handleChooseEmoji(value) {
+            this.commentContent += value
+            this.chooseEmoji = false
+        },
         replyLeave(index, isChilderen) {
             if (isChilderen) {
                 this.$refs[`childrenBtn${index}`][0].style.opacity = 0
@@ -308,9 +307,7 @@ export default {
                 this.loading.close()
             })
         },
-        addEmoji(obj) {
-            this.commentContent += obj.emoji;
-        },
+
         splitIpAddress(address) {
             return address.split("|")[1]
         },
@@ -364,6 +361,7 @@ export default {
             .ml-3 {
                 margin-left: 12px !important;
                 width: 100%;
+                position: relative;
 
                 .comment-input {
                     position: relative;
@@ -383,7 +381,7 @@ export default {
                     }
                 }
 
-                .emoji-container {
+                .comment-btn {
                     display: flex;
                     align-items: center;
                     margin: 10px 0;
@@ -460,23 +458,8 @@ export default {
                 }
 
                 .emoji-wrapper {
-                    max-height: 150px;
-                    overflow-y: auto;
-
-                    .emoji-item {
-                        cursor: pointer;
-                        display: inline-block;
-
-                        .emoji {
-                            font-size: 20px;
-                            padding: 3px;
-                            border-radius: 10px;
-
-                            &:hover {
-                                background-color: rgb(221, 221, 221)
-                            }
-                        }
-                    }
+                    position: absolute;
+                    top: 5px;
                 }
             }
         }

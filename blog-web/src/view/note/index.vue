@@ -42,11 +42,7 @@
                             </span>
                             <div class="btn">
                                 <div class="emoji-wrapper" v-show="chooseEmoji">
-                                    <span class="emoji-item" v-for="(item, index) of emojiList" :key="index"
-                                        @click="addEmoji(item)">
-                                        <span class="emoji">{{ item.emoji }}
-                                        </span>
-                                    </span>
+                                    <Emoji @chooseEmoji="handleChooseEmoji" />
                                 </div>
                                 <i class="iconfont icon-biaoqing" @click="chooseEmoji = !chooseEmoji"></i>
                                 <el-button size="small" type="primary" @click="addNote">发布笔记</el-button>
@@ -101,7 +97,11 @@
 <script>
 import { getNote, insertNote, deleteNote } from '@/api/note'
 import { featchCategory } from '@/api'
+import Emoji from '@/components/emoji'
 export default {
+    components: {
+        Emoji
+    },
     name: '',
     data() {
         return {
@@ -114,7 +114,6 @@ export default {
             chooseEmoji: false,
             noteList: [],
             loading: [],
-            emojiList: [],
             categoryList: [],
             chooseIndex: 0,
             chooseCategory: {
@@ -137,7 +136,6 @@ export default {
         })
     },
     created() {
-        this.emojiList = require('@/assets/emoji.json');
         featchCategory().then(respose => {
             this.categoryList.push(...respose.data)
             this.categoryList.unshift(
@@ -240,8 +238,8 @@ export default {
                 background: "rgba(0, 0, 0, 0.7)"
             });
         },
-        addEmoji(obj) {
-            this.content += obj.emoji
+        handleChooseEmoji(value) {
+            this.content += value
             this.chooseEmoji = false
         },
     },
@@ -303,7 +301,6 @@ export default {
                         .bottom {
                             height: 50px;
                             margin-top: 10px;
-                            line-height: 50px;
                             position: relative;
 
                             .category {
@@ -316,29 +313,9 @@ export default {
                                 align-items: center;
 
                                 .emoji-wrapper {
-                                    background-color: var(--background-color);
-                                    max-height: 200px;
-                                    overflow-y: auto;
-                                    width: 60%;
-                                    border: 2px solid var(--border-line);
                                     position: absolute;
                                     top: -140px;
                                     left: 0px;
-
-                                    .emoji-item {
-                                        cursor: pointer;
-                                        display: inline-block;
-
-                                        .emoji {
-                                            font-size: 20px;
-                                            padding: 3px;
-                                            border-radius: 10px;
-
-                                            &:hover {
-                                                background-color: rgb(221, 221, 221)
-                                            }
-                                        }
-                                    }
                                 }
 
                                 i {
@@ -487,7 +464,6 @@ export default {
                         .bottom {
                             height: 50px;
                             margin-top: 10px;
-                            line-height: 50px;
                             position: relative;
 
                             .category {
@@ -505,29 +481,9 @@ export default {
                                 align-items: center;
 
                                 .emoji-wrapper {
-                                    background-color: var(--background-color);
-                                    max-height: 200px;
-                                    overflow-y: auto;
-                                    width: 500px;
-                                    border: 2px solid var(--border-line);
                                     position: absolute;
                                     top: -140px;
                                     left: 0px;
-
-                                    .emoji-item {
-                                        cursor: pointer;
-                                        display: inline-block;
-
-                                        .emoji {
-                                            font-size: 20px;
-                                            padding: 3px;
-                                            border-radius: 10px;
-
-                                            &:hover {
-                                                background-color: rgb(221, 221, 221)
-                                            }
-                                        }
-                                    }
                                 }
 
                                 i {

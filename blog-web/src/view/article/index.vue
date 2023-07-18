@@ -329,7 +329,6 @@ export default {
                 category: {},
                 comments: [],
                 tagList: [],
-
             },
             rightShow: true,
             code: null,
@@ -615,6 +614,7 @@ export default {
                 this.loading.close()
             }).catch(err => {
                 this.$message.error(err.message);
+                this.loading.close()
             })
         },
 
@@ -967,11 +967,6 @@ export default {
             height: 100%;
             width: 50%;
             margin-top: 80px;
-
-            &:hover {
-                box-shadow: 5px 4px 8px 6px rgba(7, 17, 27, .06);
-                transition: all .3s;
-            }
 
             .category {
                 border-radius: 5px;

@@ -6,7 +6,6 @@ import './assets/font/iconfont.js'
 import store from './store'
 
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
-import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index';
 import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
 import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
 
@@ -50,7 +49,6 @@ Vue.use(VueMarkdownEditor);
 VMdPreview.use(vuepressTheme, {
   Prism
 });
-VMdPreview.use(createLineNumbertPlugin())
 VMdPreview.use(createCopyCodePlugin())
 Vue.use(VMdPreview);
 
