@@ -44,7 +44,9 @@
                                 <div class="emoji-wrapper" v-show="chooseEmoji">
                                     <Emoji @chooseEmoji="handleChooseEmoji" />
                                 </div>
-                                <i class="iconfont icon-biaoqing" @click="chooseEmoji = !chooseEmoji"></i>
+                                <span class="emojiBtn" @click.stop="chooseEmoji = !chooseEmoji">
+                                    <svg-icon icon-class="emoji1"></svg-icon>
+                                </span>
                                 <el-button size="small" type="primary" @click="addNote">发布笔记</el-button>
                             </div>
                         </div>
@@ -318,11 +320,15 @@ export default {
                                     left: 0px;
                                 }
 
-                                i {
-                                    font-size: 1.2rem;
-                                    margin-right: 20px;
+                                .emojiBtn {
                                     cursor: pointer;
-                                    color: var(--text-color);
+
+                                    svg {
+                                        width: 20px;
+                                        height: 20px;
+                                        margin-right: 10px;
+                                        vertical-align: -5px;
+                                    }
                                 }
                             }
                         }
@@ -486,12 +492,17 @@ export default {
                                     left: 0px;
                                 }
 
-                                i {
-                                    font-size: 1.2rem;
-                                    margin-right: 20px;
+                                .emojiBtn {
                                     cursor: pointer;
-                                    color: var(--text-color);
+
+                                    svg {
+                                        width: 20px;
+                                        height: 20px;
+                                        margin-right: 10px;
+                                        vertical-align: -5px;
+                                    }
                                 }
+
                             }
                         }
                     }

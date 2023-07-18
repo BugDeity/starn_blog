@@ -65,16 +65,20 @@
                     </div>
                 </div>
                 <!-- 输入框 -->
-                <div class="input-box">
+                <div class="bottom">
                     <!-- 输入选择 如表情、图片等 -->
-                    <div class="selelctBox">
-                        <span class="emoji">
-                            <i class="iconfont icon-biaoqing" @click.stop="handleOpen"></i>
-
-                            <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
-                                :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
-                                <i class="el-icon-picture"></i>
-                            </el-upload>
+                    <div class="toolbars">
+                        <span>
+                            <span class="item" @click.stop="handleOpen" @mouseenter="handleEmojiMouseEnter"
+                                @mouseleave="handleEmojiMouseLeave">
+                                <svg-icon :icon-class="emoji"></svg-icon>
+                            </span>
+                            <span class="item">
+                                <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
+                                    :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
+                                    <svg-icon icon-class="photo"></svg-icon>
+                                </el-upload>
+                            </span>
                         </span>
                     </div>
                     <!-- 表情框 -->
@@ -82,20 +86,29 @@
                         <Emoji @chooseEmoji="handleChooseEmoji" />
                     </div>
                     <!-- 输入内容 -->
-                    <textarea class="contentBox" placeholder="说点什么呢" v-model="text"></textarea>
+                    <textarea class="contentBox" placeholder="说点什么呢" v-model="text" @keydown="handkeyEnter"></textarea>
 
-                    <el-button class="btn" @click="send(text, 1)">发送[Ctrl+Enter]</el-button>
+                    <el-button class="btn" @click="send(text, 1)">发送[Enter]</el-button>
                 </div>
 
+                <!-- 自定义右键功能 -->
                 <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
                     <li @click="clipboard" class="copyBtn">
-                        <i class="el-icon-document-copy"></i> 复制
+                        <div class="menuitem">
+                            <i class="el-icon-document-copy"></i> 复制
+                        </div>
                     </li>
                     <li @click="translate">
-                        <i class="iconfont icon-fanyi"></i>翻译
+                        <div class="menuitem">
+                            <i class="iconfont icon-fanyi"></i>翻译
+
+                        </div>
                     </li>
-                    <li @click="withdraw">
-                        <i class="iconfont icon-chehui"></i>撤回
+                    <li @click="withdraw" v-if="message && message.fromUserId == user.id">
+                        <div class="menuitem">
+                            <i class="iconfont icon-chehui"></i>撤回
+                        </div>
+
                     </li>
                 </ul>
             </el-card>
@@ -169,12 +182,12 @@ export default {
                 }
             ],
             selectUserOnline: null,
+            emoji: "emoji1"
         }
     },
 
     mounted() {
         document.addEventListener("click", this.handleClose)
-        window.addEventListener('keydown', this.handkeyEnter, true)//开启监听键盘按下事件
         document.getElementById("im").oncontextmenu = new Function("event.returnValue=false");
 
     },
@@ -184,7 +197,6 @@ export default {
             if (newValue) {
                 document.body.addEventListener("click", this.closeMenu);
             } else {
-
                 document.body.removeEventListener("click", this.closeMenu);
             }
         },
@@ -213,6 +225,12 @@ export default {
         this.init()
     },
     methods: {
+        handleEmojiMouseEnter() {
+            this.emoji = "emoji2"
+        },
+        handleEmojiMouseLeave() {
+            this.emoji = "emoji1"
+        },
         closeRoom(id, index) {
             this.$confirm('此操作将把该聊天窗口删除, 是否继续?', '提示', {
                 confirmButtonText: '确定',
@@ -377,9 +395,23 @@ export default {
                 this.totalPage = res.data.pages
             })
         },
-        //Ctrl+Enter事件
+        //Enter事件
         handkeyEnter(event) {
-            if (event.ctrlKey && event.keyCode == 13) {
+            // 判断是否按下了Ctrl+Enter键
+            if (event.ctrlKey && event.keyCode === 13) {
+                // 在光标位置插入换行符
+                const textarea = event.target;
+                const startPos = textarea.selectionStart;
+                const endPos = textarea.selectionEnd;
+                const value = this.text;
+                this.text = value.substring(0, startPos) + '\n' + value.substring(endPos);
+
+                // 阻止默认的换行行为
+                return;
+            }
+            if (event.keyCode == 13) {
+                // 阻止默认的换行行为
+                event.preventDefault();
                 this.send(this.text)
             }
         },
@@ -413,10 +445,12 @@ export default {
                 this.$store.state.loginFlag = true
                 return;
             }
-            if (!content) {
-                this.$message.error('请输入内容');
+            const reg = /\S+/;
+            if (!reg.test(content)) {
+                console.log('输入值不能为空');
                 return;
             }
+
             content = "<p>" + content + "</p>"
             let message = {
                 code: 2,
@@ -601,14 +635,13 @@ export default {
         border: 2px solid var(--border-line);
         height: 100%;
         margin-top: 80px;
-
-
+        background-color: #272a37;
+        padding: 10px;
+        border-radius: 10px;
 
         .online {
             width: 250px;
-            background-color: var(--im-backgroudColor);
-            border-left: 1px solid var(--border-line);
-            background-color: #2e3238;
+            background-color: #323644;
             padding: 10px;
             color: #fff;
 
@@ -700,18 +733,19 @@ export default {
         }
 
         .itemBox {
-            background-image: url("http://img.shiyit.com/imbg.png");
+            //  background-image: url("http://img.shiyit.com/imbg.png");
+            background-color: #323644;
             width: 100%;
             box-shadow: none;
-
+            margin-right: 10px;
 
             .title {
                 text-align: center;
                 height: 50px;
                 line-height: 50px;
                 font-size: 18px;
-                color: var(--article-color);
-                border-bottom: 1px solid #909399;
+                color: var(--theme-color);
+                border-bottom: 1px solid #666;
             }
 
             .messageBox,
@@ -722,19 +756,25 @@ export default {
                 }
 
                 &::-webkit-scrollbar-thumb {
-                    background: linear-gradient(180deg, #F0BBC3, #10A44A);
+                    background-color: #666;
                     border-radius: 5px;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background-color: #323644;
                 }
             }
 
             .messageBox {
                 height: 500px;
                 overflow: auto;
+                color: var(--text-color);
 
                 .more {
                     text-align: center;
                     margin-top: 10px;
                     cursor: pointer;
+                    color: rgba(185, 183, 183, 0.898)
                 }
 
                 .messageItem {
@@ -762,7 +802,7 @@ export default {
 
                         .info {
                             margin-left: 5px;
-                            color: var(--text-color);
+
 
                             .nickname {
                                 font-size: 0.8rem;
@@ -791,6 +831,7 @@ export default {
                         margin-top: 5px;
                         max-width: 400px;
                         padding: 8px;
+                        white-space: pre-wrap;
                     }
 
                     .messageContent {
@@ -844,19 +885,30 @@ export default {
 
 
 
-            .input-box {
+            .bottom {
                 border-top: 1px solid #999;
                 margin-top: 20px;
                 position: relative;
 
-                .selelctBox {
-                    margin-top: 10px;
+                .toolbars {
+                    padding: 10px;
 
-                    i {
+                    .item {
                         cursor: pointer;
-                        font-size: 20px;
-                        margin-left: 20px;
-                        color: var(--text-color);
+                        margin-left: 10px;
+                        padding: 5px;
+                        border-radius: 5px;
+
+
+                        &:hover {
+                            background-color: rgb(92, 89, 89);
+                        }
+                    }
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                        vertical-align: -3px;
                     }
 
                     /deep/ .avatar-uploader {
@@ -880,10 +932,9 @@ export default {
                     border: none;
                     outline: none;
                     resize: none;
-                    background-color: var(--im-backgroudColor);
-                    color: var(--text-color);
-                    font-size: 14px;
-                    opacity: 0.5;
+                    background-color: #323644;
+                    color: #fff;
+                    font-size: 15px;
                 }
 
                 .btn {
@@ -896,42 +947,41 @@ export default {
                     text-align: center;
                     line-height: 40px;
                     padding: 0 5px;
-                    background-image: linear-gradient(to left, #80CBC4, #4DB6AC, #26A69A);
+                    background-image: linear-gradient(to left, #c3cb80, #4db66d, #26a6a0);
                 }
             }
 
             .contextmenu {
                 margin: 0;
-                background: #fff;
+                background: #424656;
                 z-index: 3000;
                 position: fixed; //关键样式设置固定定位
                 list-style-type: none;
-                padding: 5px 0;
-                font-size: 14px;
                 font-weight: 400;
                 color: #333;
                 box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
-                width: 150px;
-                border-bottom-left-radius: 0 !important;
-                border-bottom-right-radius: 0 !important;
+                border-radius: 5px;
 
                 li {
                     margin: 0;
-                    padding: 7px 16px;
+                    padding: 5px;
+                    width: 100px;
                     cursor: pointer;
-                    border-bottom: 1px solid #999;
+                    color: #fff;
 
+                    .menuitem {
+                        padding: 5px;
+                        font-size: 0.8rem;
+                        border-radius: 5px;
 
-                    &:hover {
-                        background: #ddaec8;
-                    }
+                        i {
+                            margin-right: 3px;
+                        }
 
-                    &:last-child {
-                        border: 0;
-                    }
+                        &:hover {
+                            background: #ddaec8;
+                        }
 
-                    i {
-                        margin-right: 3px;
                     }
                 }
 

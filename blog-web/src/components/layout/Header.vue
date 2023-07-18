@@ -129,8 +129,9 @@
 
             <div class="searchBox" v-show="!noneInput">
                 <div class="search_bar search_open">
-                    <el-input @focus="focus" @blur="blur" type="text" v-model="keywords" placeholder="想搜点什么呢..." />
-                    <p class="search_ico" @click="search()">
+                    <el-input @focus="focus" @blur="blur" type="text" v-model="keywords" placeholder="想搜点什么呢..."
+                        @keyup.enter.native="search" />
+                    <p class="search_ico" @click="search">
                         <i class="iconfont icon-search"></i>
                     </p>
                 </div>
@@ -232,7 +233,12 @@ export default {
     },
 
     methods: {
-
+        //Enter事件
+        handkeyEnter(event) {
+            if (event.keyCode == 13) {
+                this.search()
+            }
+        },
         addArticle() {
             if (!this.userInfo) {
                 this.handleLogin()
@@ -255,11 +261,10 @@ export default {
             this.style = "opacity:0;visibility:hidden"
         },
         search() {
-            if (this.keywords == null || this.keywords == "") {
-                this.$message.error('请输入搜索内容');
+            if (!this.keywords) {
                 return;
             }
-            this.$router.push({ path: '/search', query: { keyword: this.keywords } })
+            this.$router.push({ path: '/search', query: { keyword: this.keywords.trim() } })
         },
         scrollFn() {
             // if (this.$route.paht != '/message') {

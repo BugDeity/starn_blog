@@ -3,10 +3,12 @@
         <el-dialog :lock-scroll="false" class="dialog" title="账号密码登录" :visible.sync="dialogFormVisible">
             <el-form :model="form" :rules="rules" ref="ruleForm">
                 <el-form-item label="账号" :label-width="formLabelWidth" prop="email">
-                    <el-input placeholder="请输入账号" v-model="form.email" autocomplete="off"></el-input>
+                    <el-input placeholder="请输入账号" @keyup.enter.native="login" v-model="form.email"
+                        autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-                    <el-input placeholder="请输入密码" v-model="form.password" autocomplete="off" show-password></el-input>
+                    <el-input placeholder="请输入密码" @keyup.enter.native="login" v-model="form.password" autocomplete="off"
+                        show-password></el-input>
                 </el-form-item>
             </el-form>
             <el-button type="success" class="loginBtn" @click="login" round>登录</el-button>
@@ -141,6 +143,12 @@ export default {
         },
         isShow(type) {
             return this.$store.state.webSiteInfo.loginTypeList.indexOf(type) != -1
+        },
+        //Enter事件
+        handkeyEnter(event) {
+            if (event.keyCode == 13) {
+                this.login()
+            }
         },
         login() {
             this.$refs['ruleForm'].validate((valid) => {

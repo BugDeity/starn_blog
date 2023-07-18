@@ -3,7 +3,7 @@
         <div class="containner">
             <el-card class="titleBox">
                 <div class="title">
-                    <i class="el-icon-picture"></i> 我的图库
+                    <svg-icon icon-class="photo"></svg-icon> 我的图库
                 </div>
                 <div class="photo">
                     <div class="photoItem" v-for="(item, index) in photoAlbumList" :key="index">
@@ -125,6 +125,12 @@ export default {
                         transform: rotate(90deg);
                         content: "";
                     }
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                        vertical-align: -3px;
+                    }
                 }
 
                 .photo {
@@ -243,10 +249,6 @@ export default {
                 padding: 20px;
                 position: relative;
 
-                &:hover {
-                    box-shadow: 5px 4px 8px 6px rgba(2, 6, 10, 0.06);
-                    transition: all .3s;
-                }
 
                 .title {
                     position: absolute;
@@ -272,6 +274,12 @@ export default {
                         -webkit-transform: rotate(90deg);
                         transform: rotate(90deg);
                         content: "";
+                    }
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                        vertical-align: -3px;
                     }
                 }
 
