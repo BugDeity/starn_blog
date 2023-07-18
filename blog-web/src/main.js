@@ -4,9 +4,6 @@ import config from "./assets/js/config";
 import './assets/font/iconfont.css'
 import './assets/font/iconfont.js'
 import store from './store'
-import animated from 'animate.css'
-import 'wowjs/css/libs/animate.css'
-import wow from 'wowjs'
 
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
 import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index';
@@ -35,7 +32,7 @@ Vue.prototype.Clipboard = Clipboard
 
 import hljs from 'highlight.js';
 
-import 'highlight.js/styles/atom-one-dark.css' //样式
+import 'highlight.js/styles/atom-one-dark-reasonable.css' //样式
 //创建v-highlight全局指令
 Vue.directive('highlight', function (el) {
   let blocks = el.querySelectorAll('pre code');
@@ -62,7 +59,6 @@ Vue.use(ElementUI);
 Vue.prototype.$cookie = jsCookie;  // 在页面里可直接用 this.$cookie 调用
 Vue.prototype.$setSkin = setSkin;
 Vue.use(vueBaberrage)
-Vue.prototype.$wow = wow
 Vue.config.productionTip = false
 Vue.prototype.config = config;
 import router from './router'

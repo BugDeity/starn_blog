@@ -319,7 +319,7 @@ import Comment from '@/components/comment/index.vue'
 export default {
     components: {
         SiteInfo,
-
+        Comment
     },
     data() {
         return {
@@ -1084,7 +1084,6 @@ export default {
             }
 
             .box-article {
-
                 .warpper {
                     background-color: #c0c4cc;
                     position: relative;
@@ -1306,8 +1305,8 @@ export default {
 
             .left-sidbarnav {
                 position: fixed;
-                left: 8%;
-                top: 25%;
+                left: 150px;
+                top: 150px;
                 z-index: 999;
 
                 .left-item {

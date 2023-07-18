@@ -86,6 +86,7 @@
                     </div>
                     <!-- 输入内容 -->
                     <textarea class="contentBox" placeholder="说点什么呢" v-model="text"></textarea>
+
                     <el-button class="btn" @click="send(text, 1)">发送[Ctrl+Enter]</el-button>
                 </div>
 

@@ -24,8 +24,6 @@
                         <span class="item" v-if="ite.isToday == 'isToday'">今</span>
                         <i class="el-icon-check icon" v-if="signRecords.indexOf(ite.timeStr) != -1"></i>
                     </div>
-                    <!-- 号数对应的需要展示的内容 -->
-                    <!-- <div class="calendar-item-content">....</div> -->
                 </div>
             </div>
         </div>
@@ -45,6 +43,7 @@
    
 <script>
 import { getSignRecords, sign } from '@/api/sign'
+import { getToken } from '@/utils/cookieUtil'
 export default {
     name: '',
     data() {
@@ -76,9 +75,12 @@ export default {
                 startTime: this.dateList[0].timeStr,
                 endTime: this.dateList[this.dateList.length - 1].timeStr,
             }
-            getSignRecords(params).then(res => {
-                this.signRecords = res.data
-            })
+            if (getToken()) {
+                getSignRecords(params).then(res => {
+                    this.signRecords = res.data
+                })
+            }
+
         }
     },
     methods: {
@@ -152,7 +154,7 @@ export default {
                             ? 'isToday'
                             : 'notToday',
                     // 是否在今天之后
-                    afterToday: date.getDate() > today.getDate() ? 'afterToday' : '',
+                    afterToday: date.getFullYear() >= today.getFullYear() && date.getMonth() >= today.getMonth() && date.getDate() > today.getDate() ? 'afterToday' : '',
                     // 得到日期字符串，格式 yyyy-MM-dd 00:00:00
                     timeStr: date.getFullYear() + '-' + (date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1) + '-'
                         + (date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()),

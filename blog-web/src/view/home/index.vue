@@ -210,7 +210,8 @@
 
                     <!-- 关注我 -->
                     <el-card class="box-card guanzhu">
-                        <div slot="header" class="clearfix">
+                        <div class="clearfix">
+                            <svg-icon icon-class="guanzhume" class="title-svg"></svg-icon>
                             <span>关注我</span>
                         </div>
                         <ul class="guanzhuList">
@@ -283,7 +284,8 @@
                     </el-card>
                     <!-- 推荐文章 -->
                     <el-card class="box-card recomArticle">
-                        <div slot="header" class="clearfix">
+                        <div class="clearfix">
+                            <svg-icon icon-class="tuijian"></svg-icon>
                             <span>推荐文章</span>
                         </div>
                         <ul class="recomArticleUl">
@@ -300,8 +302,9 @@
                     </el-card>
                     <!-- 标签墙 -->
                     <el-card class="box-card tag_container">
-                        <div slot="header" class="clearfix">
-                            <span>标签墙</span>
+                        <div class="clearfix">
+                            <svg-icon icon-class="tag"></svg-icon>
+                            <span> 标签墙</span>
                             <a href="/tag" class="more">更多</a>
                         </div>
                         <div class="tag">
@@ -980,6 +983,14 @@ export default {
 
                         .clearfix {
                             position: relative;
+                            margin-bottom: 20px;
+
+                            svg {
+                                width: 22px;
+                                height: 22px;
+                                vertical-align: -5px;
+                                margin-right: 5px;
+                            }
 
                             &::before {
                                 content: '';
@@ -1118,6 +1129,20 @@ export default {
 
                     .guanzhu {
                         margin-top: 20px;
+
+                        .title-svg {
+                            animation: light1 1s ease-in-out infinite alternate;
+
+                            @keyframes light1 {
+                                from {
+                                    transform: scale(0.8);
+                                }
+
+                                to {
+                                    transform: 1;
+                                }
+                            }
+                        }
 
                         .guanzhuList {
                             padding: 15px;

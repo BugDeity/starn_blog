@@ -67,12 +67,14 @@ public class ApiUserServiceImpl implements ApiUserService {
      */
     @Override
     public ResponseResult emailLogin(EmailLoginDTO vo) {
-        if (vo.getEmail().contains("test")) {
-            throw new BusinessException("演示账号只能登录后台管理系统！");
-        }
+
         User user = userMapper.selectNameAndPassword(vo.getEmail(), AesEncryptUtils.aesEncrypt(vo.getPassword()));
         if (user == null) {
             throw new BusinessException(ERROR_PASSWORD.desc);
+        }
+
+        if (user.getUsername().contains("test")) {
+            throw new BusinessException("演示账号只能登录后台管理系统！");
         }
 
         if (user.getStatus() == UserStatusEnum.disable.code) {
