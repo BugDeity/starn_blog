@@ -1,12 +1,14 @@
 <template>
     <div class="im-main">
         <div id="im" class="im-warpper">
+
             <el-card class="itemBox">
+
                 <!-- 标题 -->
                 <div class="title">{{ title }}</div>
                 <div class="messageBox" id="messageBox" ref="messageContainer">
                     <!-- 加载更多 -->
-                    <div class="more" v-show="pageData.pageNo < totalPage">
+                    <div class="more noSelect" v-show="pageData.pageNo < totalPage">
                         <div v-if="isLoding" class="loading">
                             <div class="spinner"></div>
                         </div>
@@ -16,24 +18,24 @@
                     <div class="messageItem" v-for="(item, index) in  messageList " :key="index">
                         <!-- 左边消息框 别人发送的消息 -->
                         <div :class="item.isWithdraw ? 'withdraw' : 'left'" v-if="user && item.fromUserId != user.id">
-                            <img :src="item.fromUserAvatar" @error="item.fromUserAvatar = errImg"
-                                :title="item.fromUserNickname">
+                            <img class="noSelect" :src="item.fromUserAvatar" :title="item.fromUserNickname">
                             <div class="info">
-                                <span class="nickname">
+                                <div class="nickname noSelect">
                                     {{ item.fromUserNickname }}
                                     <el-tooltip effect="dark" content="官方标签" placement="top" v-if="item.fromUserId == 1">
                                         <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                     </el-tooltip>
-                                    <span v-if="item.ipSource" class="item"> <i class="el-icon-location-information"></i>
+                                    <span v-if="item.ipSource" class="item "> <i class="el-icon-location-information"></i>
                                         IP属地:{{ splitIpAddress(item.ipSource) }}
                                     </span>
-                                    <span class="item"> <i class="el-icon-time"></i> {{ item.createTimeStr }}</span>
-                                </span>
+                                    <span class="item "> <i class="el-icon-time"></i> {{ item.createTimeStr
+                                    }}</span>
+                                </div>
 
                                 <span v-if="!item.isWithdraw" v-html="item.content" class="messageContent"
                                     @contextmenu.prevent="openMenu($event, item, index)">
                                 </span>
-                                <span v-else style="color: var(--text-color);">
+                                <span class="noSelect" v-else style="color: var(--text-color);">
                                     " {{ item.fromUserNickname }} " 撤回了一条消息
                                 </span>
                             </div>
@@ -42,9 +44,9 @@
                         <div :class="item.isWithdraw ? 'withdraw' : 'right'" v-else>
 
                             <div class="info">
-                                <div class="nickname">
-                                    <span class="item"><i class="el-icon-time"></i> {{ item.createTimeStr }}</span>
-                                    <span v-if="item.ipSource" class="item"><i class="el-icon-location-information"></i>
+                                <div class="nickname noSelect">
+                                    <span class="item "><i class="el-icon-time"></i> {{ item.createTimeStr }}</span>
+                                    <span v-if="item.ipSource" class="item "><i class="el-icon-location-information"></i>
                                         IP属地:{{ splitIpAddress(item.ipSource) }}
                                     </span>
                                     <el-tooltip effect="dark" content="官方标签" placement="top" v-if="item.fromUserId == 1">
@@ -52,11 +54,11 @@
                                     </el-tooltip>
                                     {{ item.fromUserNickname }}
                                 </div>
-                                <img :src="item.fromUserAvatar">
+                                <img class="noSelect" :src="item.fromUserAvatar">
                                 <span v-if="!item.isWithdraw" v-html="item.content" class="nowMessageContent"
                                     @contextmenu.prevent="openMenu($event, item, index)">
                                 </span>
-                                <span style="color: var(--text-color);" v-else>
+                                <span style="color: var(--text-color);" v-else class="noSelect">
                                     " {{ item.fromUserNickname }} " 撤回了一条消息
                                 </span>
 
@@ -73,12 +75,13 @@
                                 @mouseleave="handleEmojiMouseLeave">
                                 <svg-icon :icon-class="emoji"></svg-icon>
                             </span>
-                            <span class="item">
-                                <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
-                                    :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
+                            <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
+                                :action="uploadPictureHost" :before-upload="uploadBefore" :http-request="uploadSectionFile"
+                                multiple>
+                                <span class="item">
                                     <svg-icon icon-class="photo"></svg-icon>
-                                </el-upload>
-                            </span>
+                                </span>
+                            </el-upload>
                         </span>
                     </div>
                     <!-- 表情框 -->
@@ -86,9 +89,10 @@
                         <Emoji @chooseEmoji="handleChooseEmoji" />
                     </div>
                     <!-- 输入内容 -->
-                    <textarea class="contentBox" placeholder="说点什么呢" v-model="text" @keydown="handkeyEnter"></textarea>
-
-                    <el-button class="btn" @click="send(text, 1)">发送[Enter]</el-button>
+                    <!-- <textarea class="contentBox" placeholder="说点什么呢" v-model="text" @keydown="handkeyEnter"></textarea> -->
+                    <div id="im-input-box" class="im-input-box" ref="inputRef" @input="updateContent" contenteditable="true"
+                        @keydown="handkeyEnter" data-placeholder="说点什么呢"></div>
+                    <el-button class="btn" @click="send($refs.inputRef.innerHTML, 1)">发送[Enter]</el-button>
                 </div>
 
                 <!-- 自定义右键功能 -->
@@ -101,12 +105,40 @@
                     <li @click="translate">
                         <div class="menuitem">
                             <i class="iconfont icon-fanyi"></i>翻译
-
                         </div>
                     </li>
                     <li @click="withdraw" v-if="message && message.fromUserId == user.id">
                         <div class="menuitem">
                             <i class="iconfont icon-chehui"></i>撤回
+                        </div>
+                    </li>
+                    <li class="sousuo">
+                        <div class="menuitem">
+                            <i class="el-icon-search"></i>搜一搜
+                            <i class="el-icon-caret-right" style=""></i>
+
+                            <ul class="sousuomenu">
+                                <li @click="handleSearch(null)">
+                                    <div class="menuitem">
+                                        站内搜索
+                                    </div>
+                                </li>
+                                <li @click="handleSearch(0)">
+                                    <div class="menuitem">
+                                        百度搜索
+                                    </div>
+                                </li>
+                                <li @click="handleSearch(1)">
+                                    <div class="menuitem">
+                                        Gitee搜索
+                                    </div>
+                                </li>
+                                <li @click="handleSearch(2)">
+                                    <div class="menuitem">
+                                        Github搜索
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
 
                     </li>
@@ -136,7 +168,17 @@
                 </ul>
             </div>
         </div>
+        <el-dialog title="粘贴图片" :visible.sync="imgDialogVisible" width="30%" center>
+            <div style="width: 100%;" id="dialogImg">
+                <div v-html="textImg">
 
+                </div>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button size="small" @click="imgDialogVisible = false">取 消</el-button>
+                <el-button size="small" type="primary" @click="uploadSectionFile(null)">发 送</el-button>
+            </span>
+        </el-dialog>
 
     </div>
 </template>
@@ -155,17 +197,18 @@ export default {
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
             websoketUrl: process.env.VUE_APP_WEBSOCKET_API,
             visible: false,
+            imgDialogVisible: false,
             isLoding: false,
             top: 0,
             left: 0,
             text: "",
             messageList: [],
             emojiShow: false,
-            errImg: "http://img.shiyit.com/1645512111007.png",
             user: this.$store.state.userInfo,
             totalPage: 0,
             isBackTop: false,
             message: null,
+            textImg: null,
             selectIndex: null,
             title: "拾壹博客交流群",
             lastIndex: null,
@@ -175,6 +218,7 @@ export default {
                 pageSize: 10
             },
             onlineUserList: [],
+            loading: [],
             roomList: [
                 {
                     avatar: this.$store.state.webSiteInfo.logo,
@@ -182,7 +226,8 @@ export default {
                 }
             ],
             selectUserOnline: null,
-            emoji: "emoji1"
+            emoji: "emoji1",
+            searchUrl: ['https://www.baidu.com/s?&wd=', 'https://search.gitee.com/?skin=rec&type=repository&q=', 'https://github.com/search?q=']
         }
     },
 
@@ -225,6 +270,25 @@ export default {
         this.init()
     },
     methods: {
+        updateContent(event) {
+            if (event.target.innerHTML.indexOf("img") != -1) {
+                this.textImg = event.target.innerHTML
+                event.target.innerHTML = null
+                this.imgDialogVisible = true
+                return;
+            }
+        },
+        handleSearch(type) {
+            console.log(type)
+
+            if (type == null) {
+                this.$router.push({ path: '/search', query: { keyword: this.message.content.trim() } })
+                return;
+            }
+
+            let url = this.searchUrl[type] + this.message.content.trim()
+            window.open(url, '_blank')
+        },
         handleEmojiMouseEnter() {
             this.emoji = "emoji2"
         },
@@ -255,17 +319,59 @@ export default {
                 });
             });
         },
+        uploadBefore: function () {
+            this.openLoading()
+        },
+        // 打开加载层
+        openLoading: function () {
+            this.loading = this.$loading({
+                lock: true,
+                text: "正在发送图片中~",
+                spinner: "el-icon-loading",
+                background: "rgba(0, 0, 0, 0.7)"
+            });
+        },
+
         //发送图片
         uploadSectionFile: function (param) {
-            this.files = param.file
-            // FormData 对象
+            this.openLoading()
             var formData = new FormData()
-            // 文件对象
-            formData.append('multipartFile', this.files)
+            if (!param) {
+                var dialogImg = document.getElementById('dialogImg');
+                var images = dialogImg.getElementsByTagName('img');
+                // 提取每个图片的Base64数据，并添加到FormData对象中
+                for (var i = 0; i < images.length; i++) {
+                    var imgSrc = images[i].getAttribute('src');
+
+                    var base64Data = imgSrc.split(',')[1];
+                    const byteCharacters = atob(base64Data);
+                    const byteArrays = [];
+                    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                        const slice = byteCharacters.slice(offset, offset + 512);
+                        const byteNumbers = new Array(slice.length);
+                        for (let i = 0; i < slice.length; i++) {
+                            byteNumbers[i] = slice.charCodeAt(i);
+                        }
+                        const byteArray = new Uint8Array(byteNumbers);
+                        byteArrays.push(byteArray);
+                    }
+                    const blob = new Blob(byteArrays, { type: 'image/jpeg' });
+                    formData.append('images[]', blob, 'image' + i + '.jpg'); // 根据实际的文件名进行调整
+                    formData.append('multipartFile', blob, Date.now() + '.jpg');
+                }
+            } else {
+                this.files = param.file
+                formData.append('multipartFile', this.files)
+            }
+
             upload(formData).then(res => {
                 //上传之后发送消息
                 let content = `<img src="${res.data}" alt="" class="messageImg" style="width: 150px;height: 150px;">`
                 this.send(content, 2)
+                this.imgDialogVisible = false
+                this.loading.close()
+            }).catch(err => {
+                this.loading.close()
             })
         },
         //截取地址
@@ -321,7 +427,6 @@ export default {
         },
         //撤回
         withdraw() {
-
             let message = {
                 code: this.selectUserOnline == null ? 2 : 1,
                 content: "消息已撤回",
@@ -400,11 +505,16 @@ export default {
             // 判断是否按下了Ctrl+Enter键
             if (event.ctrlKey && event.keyCode === 13) {
                 // 在光标位置插入换行符
-                const textarea = event.target;
-                const startPos = textarea.selectionStart;
-                const endPos = textarea.selectionEnd;
-                const value = this.text;
-                this.text = value.substring(0, startPos) + '\n' + value.substring(endPos);
+                event.preventDefault();
+                const selection = window.getSelection();
+                const range = selection.getRangeAt(0);
+                const br = document.createElement('br');
+                range.insertNode(br);
+                range.setStartAfter(br);
+                range.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                //this.$refs.inputRef.innerHTML += '\n';
 
                 // 阻止默认的换行行为
                 return;
@@ -412,7 +522,7 @@ export default {
             if (event.keyCode == 13) {
                 // 阻止默认的换行行为
                 event.preventDefault();
-                this.send(this.text)
+                this.send(this.$refs.inputRef.innerHTML)
             }
         },
         //打开表情框
@@ -432,7 +542,7 @@ export default {
         },
         //添加表情
         handleChooseEmoji(value) {
-            this.text += value
+            this.$refs.inputRef.innerHTML += value
         },
         //发送消息
         send(content, type) {
@@ -445,13 +555,12 @@ export default {
                 this.$store.state.loginFlag = true
                 return;
             }
-            const reg = /\S+/;
-            if (!reg.test(content)) {
+            const reg = /^\s*$/;
+            if (reg.test(content)) {
                 console.log('输入值不能为空');
                 return;
             }
 
-            content = "<p>" + content + "</p>"
             let message = {
                 code: 2,
                 fromUserId: this.user.id, content: content, fromUserAvatar: this.user.avatar,
@@ -476,7 +585,7 @@ export default {
             //发送消息
             send(message)
             // 构建消息内容，本人消息
-            this.text = "";
+            this.$refs.inputRef.innerHTML = null;
         },
         //初始化socket
         init() {
@@ -587,6 +696,13 @@ export default {
     margin-top: 20px;
 }
 
+/deep/ #dialogImg {
+    img {
+        width: 100%;
+        height: 200px;
+    }
+}
+
 .spinner {
     /* 转圈圈的样式 */
     position: absolute;
@@ -634,10 +750,14 @@ export default {
         display: flex;
         border: 2px solid var(--border-line);
         height: 100%;
-        margin-top: 80px;
+        margin-top: 70px;
         background-color: #272a37;
         padding: 10px;
         border-radius: 10px;
+
+        .noSelect {
+            user-select: none;
+        }
 
         .online {
             width: 250px;
@@ -832,6 +952,10 @@ export default {
                         max-width: 400px;
                         padding: 8px;
                         white-space: pre-wrap;
+
+                        /deep/ a {
+                            text-decoration: none;
+                        }
                     }
 
                     .messageContent {
@@ -937,6 +1061,25 @@ export default {
                     font-size: 15px;
                 }
 
+                .im-input-box {
+                    border: none;
+                    outline: none;
+                    color: #fff;
+                    padding-left: 10px;
+                    height: 166px;
+                    padding-top: 10px;
+
+                    /deep/ img {
+                        height: 100px;
+                        vertical-align: middle;
+                    }
+
+                    &:empty:before {
+                        content: attr(data-placeholder);
+                        color: #666;
+                    }
+                }
+
                 .btn {
                     position: absolute;
                     right: 10px;
@@ -968,6 +1111,7 @@ export default {
                     width: 100px;
                     cursor: pointer;
                     color: #fff;
+                    position: relative;
 
                     .menuitem {
                         padding: 5px;
@@ -983,9 +1127,23 @@ export default {
                         }
 
                     }
+
+                    .sousuomenu {
+                        list-style: none;
+                        position: absolute;
+                        top: -50px;
+                        right: -110px;
+                        background: #424656;
+                        display: none;
+                        border-radius: 5px;
+                    }
                 }
 
-
+                .sousuo:hover {
+                    .sousuomenu {
+                        display: block;
+                    }
+                }
             }
         }
     }

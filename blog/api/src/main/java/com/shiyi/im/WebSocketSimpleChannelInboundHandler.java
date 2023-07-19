@@ -69,12 +69,12 @@ public class WebSocketSimpleChannelInboundHandler extends SimpleChannelInboundHa
             ImMessageVO imMessageVO = JSONObject.parseObject(message, ImMessageVO.class);
             switch (imMessageVO.getCode()) {
                 //群聊
-                case MessageCodeConstant.GROUP_CHAT_CODE:
+                case MessageConstant.GROUP_CHAT_CODE:
                     //向连接上来的客户端广播消息
                     SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(message));
                     break;
                 //私聊
-                case MessageCodeConstant.PRIVATE_CHAT_CODE:
+                case MessageConstant.PRIVATE_CHAT_CODE:
                     //接收人id
                     String toUserId = imMessageVO.getToUserId();
                     String fromUserId = imMessageVO.getFromUserId();
@@ -91,12 +91,12 @@ public class WebSocketSimpleChannelInboundHandler extends SimpleChannelInboundHa
                         SessionHolder.channelMap.get(fromUserId).writeAndFlush(new TextWebSocketFrame(message));
                     }
                     break;
-                case MessageCodeConstant.SYSTEM_MESSAGE_CODE:
+                case MessageConstant.SYSTEM_MESSAGE_CODE:
                     //向连接上来的客户端广播消息
                     SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(message));
                     break;
                 //pong
-                case MessageCodeConstant.PONG_CHAT_CODE:
+                case MessageConstant.PONG_CHAT_CODE:
                     Channel channel = ctx.channel();
                     // 更新心跳时间
                     NettyAttrUtil.refreshLastHeartBeatTime(channel);
@@ -200,7 +200,7 @@ public class WebSocketSimpleChannelInboundHandler extends SimpleChannelInboundHa
 //            ApiImMessageService imMessageService = getImMessageService();
 //            List<ImOnlineUserVO> onlineUserList = imMessageService.selectOnlineUserList(userList);
             ImMessageVO msg = new ImMessageVO();
-            msg.setCode(MessageCodeConstant.SYSTEM_MESSAGE_CODE);
+            msg.setCode(MessageConstant.SYSTEM_MESSAGE_CODE);
             SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(msg)));
 
         }

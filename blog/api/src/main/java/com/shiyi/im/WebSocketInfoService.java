@@ -2,7 +2,6 @@ package com.shiyi.im;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.shiyi.exception.BusinessException;
 import com.shiyi.vo.ImMessageVO;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -37,7 +36,7 @@ public class WebSocketInfoService {
      */
     public void sendPing() {
         ImMessageVO webSocketMessage = new ImMessageVO();
-        webSocketMessage.setCode(MessageCodeConstant.PING_MESSAGE_CODE);
+        webSocketMessage.setCode(MessageConstant.PING_MESSAGE_CODE);
         String message = JSONObject.toJSONString(webSocketMessage);
         TextWebSocketFrame tws = new TextWebSocketFrame(message);
         SessionHolder.channelGroup.writeAndFlush(tws);
@@ -71,12 +70,12 @@ public class WebSocketInfoService {
         String message = JSONObject.toJSONString(messageData);
         switch (messageData.getCode()) {
             //群聊
-            case MessageCodeConstant.GROUP_CHAT_CODE:
+            case MessageConstant.GROUP_CHAT_CODE:
                 //向连接上来的客户端广播消息
                 SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(message));
                 break;
             //私聊
-            case MessageCodeConstant.PRIVATE_CHAT_CODE:
+            case MessageConstant.PRIVATE_CHAT_CODE:
                 //接收人id
                 String toUserId = messageData.getToUserId();
                 String fromUserId = messageData.getFromUserId();
@@ -93,7 +92,7 @@ public class WebSocketInfoService {
                     SessionHolder.channelMap.get(fromUserId).writeAndFlush(new TextWebSocketFrame(message));
                 }
                 break;
-            case MessageCodeConstant.SYSTEM_MESSAGE_CODE:
+            case MessageConstant.SYSTEM_MESSAGE_CODE:
                 //向连接上来的客户端广播消息
                 SessionHolder.channelGroup.writeAndFlush(new TextWebSocketFrame(message));
                 break;

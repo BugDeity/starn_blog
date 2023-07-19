@@ -2,7 +2,6 @@ package com.shiyi.service.impl;
 
 
 import cn.dev33.satoken.stp.StpUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
@@ -10,7 +9,7 @@ import com.shiyi.entity.ImMessage;
 import com.shiyi.entity.ImRoom;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
-import com.shiyi.im.MessageCodeConstant;
+import com.shiyi.im.MessageConstant;
 import com.shiyi.im.WebSocketInfoService;
 import com.shiyi.mapper.ImMessageMapper;
 import com.shiyi.mapper.ImRoomMapper;
@@ -24,7 +23,6 @@ import com.shiyi.vo.UserInfoVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
@@ -179,11 +177,15 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
                 content = content.replace(url, hrefContent);
             }
         } catch (IOException e) {
-            log.error("website {} analysis error", url);
+            log.error("网址={} 解析失败", url);
         }
-        //过滤敏感词
-        String filterContent = SensitiveUtils.filter(content);
-        obj.setContent(filterContent);
+        //图片不进行敏感词过滤，会把图片地址部分过滤掉
+        if (obj.getType() != MessageConstant.MESSAGE_TYPE_IMG) {
+            //过滤敏感词
+            String filterContent = SensitiveUtils.filter(content);
+            obj.setContent(filterContent);
+        }
+
         obj.setIp(IpUtil.getIp(request));
         obj.setIpSource(IpUtil.getIp2region(obj.getIp()));
 

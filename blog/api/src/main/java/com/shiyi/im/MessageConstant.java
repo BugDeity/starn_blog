@@ -1,6 +1,6 @@
 package com.shiyi.im;
 
-public class MessageCodeConstant {
+public class MessageConstant {
     /**
      * 私聊
      */
@@ -22,5 +22,15 @@ public class MessageCodeConstant {
      * 系统消息
      */
     public static final int SYSTEM_MESSAGE_CODE = 5;
+
+    /**
+     * 消息类型 图片
+     */
+    public static final int MESSAGE_TYPE_IMG = 2;
+
+    /**
+     * 消息类型 文本
+     */
+    public static final int MESSAGE_TYPE_TEXT = 1;
 
 }
