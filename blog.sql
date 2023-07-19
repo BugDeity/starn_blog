@@ -330,6 +330,7 @@ CREATE TABLE `b_im_message`  (
   `is_withdraw` int(1) NULL DEFAULT NULL COMMENT '消息是否撤回 0：未撤回  1：撤回',
   `is_read` int(1) NULL DEFAULT NULL COMMENT '是否已读',
   `type` int(1) NULL DEFAULT NULL COMMENT '消息类型 1普通消息 2图片',
+  `code` int(1) NULL DEFAULT NULL COMMENT '消息类型 ',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_german2_ci ROW_FORMAT = Dynamic;
 
