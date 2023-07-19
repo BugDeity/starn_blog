@@ -2,7 +2,7 @@
     <div class="article-info">
         <el-card class="main">
 
-            <el-tag @click="handleClike(article.category, '/category')" effect="dark" class="category">
+            <el-tag @click="handleClike(article.category.id, '/categorys')" effect="dark" class="category">
                 {{ article.category.name }}
             </el-tag>
             <h1 class="article-title">{{ article.title }}</h1>
@@ -127,8 +127,8 @@
                 <div class="dianzan-item">
                     <div>
                         <span @click="like(article.id)">
-                            <svg-icon v-if="article.isLike" icon-class="axsxdianzan"></svg-icon>
-                            <svg-icon v-else icon-class="axdianzan"></svg-icon>
+                            <svg-icon v-if="article.isLike" icon-class="sxdianzan"></svg-icon>
+                            <svg-icon v-else icon-class="dianzan"></svg-icon>
                         </span>
                     </div>
 
@@ -139,7 +139,7 @@
             <!-- 文章标签和分享 -->
             <div class="tag-share">
                 <div>
-                    <a class="tagBtn" v-for="item in article.tagList" :key="item.id" @click="handleClike(item, '/tags')">
+                    <a class="tagBtn" v-for="item in article.tagList" :key="item.id" @click="handleClike(item.id, '/tag')">
                         <el-tag type="success">
                             {{ item.name }}
                         </el-tag>
@@ -320,6 +320,15 @@ export default {
     components: {
         SiteInfo,
         Comment
+    },
+    metaInfo: {
+        meta: [{
+            name: 'keyWords',
+            content: "拾壹博客,开源博客,www.shiyit.com"  //变量或字符串
+        }, {
+            name: 'description',
+            content: "一个专注于技术分享的博客平台,大家以共同学习,乐于分享,拥抱开源的价值观进行学习交流"
+        }]
     },
     data() {
         return {
@@ -564,8 +573,8 @@ export default {
         handleGoPinglun() {
             document.getElementById("comment").scrollIntoView({ behavior: 'smooth' })
         },
-        handleClike(item, path) {
-            this.$router.push({ name: path, query: { id: item.id, name: item.name } })
+        handleClike(id, path) {
+            this.$router.push({ path: path, query: { id: id } })
         },
         getCommens() {
             featchComments(this.commentQuery).then(res => {

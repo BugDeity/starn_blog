@@ -6,7 +6,8 @@
             </div>
             <div id="time-line">
                 <div class="item" v-for="(item, index) in tagList" :key="index" @click="handleClick(item.id, index)">
-                    <div :class="index == 0 ? 'item-index active' : 'item-index'" ref="tag">{{ item.name }}</div>
+                    <div :class="handleChoose(item, index) ? 'item-index active' : 'item-index'" ref="tag">{{ item.name }}
+                    </div>
                 </div>
             </div>
             <div class="article" v-infinite-scroll="load" infinite-scroll-immediate="false"
@@ -46,13 +47,22 @@
 <script>
 import { fetchArticleList, fetchTagList } from '@/api'
 export default {
+    metaInfo: {
+        meta: [{
+            name: 'keyWords',
+            content: "拾壹博客,开源博客,www.shiyit.com"  //变量或字符串
+        }, {
+            name: 'description',
+            content: "一个专注于技术分享的博客平台,大家以共同学习,乐于分享,拥抱开源的价值观进行学习交流"
+        }]
+    },
     data() {
         return {
             tagList: [],
             pageData: {
                 pageNo: 1,
                 pageSize: 5,
-                categoryId: null
+                tagId: this.$route.query.id,
             },
             // 加载层信息
             loading: [],
@@ -68,7 +78,12 @@ export default {
     },
 
     methods: {
-
+        handleChoose(item, index) {
+            if (this.pageData.tagId) {
+                return item.id == this.pageData.tagId
+            }
+            return index == 0;
+        },
         handleArticleClike(id) {
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })
         },
@@ -93,7 +108,9 @@ export default {
             this.openLoading()
             fetchTagList().then(res => {
                 this.tagList = res.data
-                this.pageData.tagId = this.tagList[0].id
+                if (!this.pageData.tagId) {
+                    this.pageData.tagId = this.tagList[0].id
+                }
                 this.fetchArticleList()
                 this.loading.close()
             })

@@ -39,7 +39,9 @@ Vue.directive('highlight', function (el) {
     hljs.highlightBlock(block)
   })
 })
+import MetaInfo from 'vue-meta-info';
 
+Vue.use(MetaInfo)
 Vue.use(mavonEditor)
 
 VueMarkdownEditor.use(vuepressTheme, {

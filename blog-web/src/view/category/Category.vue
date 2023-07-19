@@ -6,7 +6,8 @@
             </div>
             <div id="time-line">
                 <div class="item" v-for="(item, index) in categoryList" :key="index" @click="handleClick(item.id, index)">
-                    <div :class="index == 0 ? 'item-index active' : 'item-index'" ref="category">{{ item.name }}</div>
+                    <div :class="handleChoose(item, index) ? 'item-index active' : 'item-index'" ref="category">{{ item.name
+                    }}</div>
                 </div>
             </div>
             <div class="article" v-infinite-scroll="load" infinite-scroll-immediate="false"
@@ -24,7 +25,7 @@
                                 </div>
 
                                 <div class="tag">
-                                    <el-tag style="margin-right: 8px; cursor: pointer;" @click="handleTagClike(tag)"
+                                    <el-tag style="margin-right: 8px; cursor: pointer;" @click="handleTagClike(tag.id)"
                                         :type="tagStyle[Math.round(Math.random() * 4)]" size="small"
                                         v-for="tag in item.tagList" :key="tag.id">{{ tag.name
                                         }}</el-tag>
@@ -46,13 +47,22 @@
 <script>
 import { fetchArticleList, featchCategory } from '@/api'
 export default {
+    metaInfo: {
+        meta: [{
+            name: 'keyWords',
+            content: "拾壹博客,开源博客,www.shiyit.com"  //变量或字符串
+        }, {
+            name: 'description',
+            content: "一个专注于技术分享的博客平台,大家以共同学习,乐于分享,拥抱开源的价值观进行学习交流"
+        }]
+    },
     data() {
         return {
             categoryList: [],
             pageData: {
                 pageNo: 1,
                 pageSize: 5,
-                categoryId: null
+                categoryId: this.$route.query.id,
             },
             // 加载层信息
             loading: [],
@@ -68,8 +78,14 @@ export default {
     },
 
     methods: {
-        handleTagClike(item) {
-            this.$router.push({ name: "/tags", query: { id: item.id, name: item.name } })
+        handleChoose(item, index) {
+            if (this.pageData.categoryId) {
+                return item.id == this.pageData.categoryId
+            }
+            return index == 0;
+        },
+        handleTagClike(id) {
+            this.$router.push({ path: "/tag", query: { id: id } })
         },
         handleArticleClike(id) {
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })
@@ -96,12 +112,15 @@ export default {
             this.openLoading()
             featchCategory().then(res => {
                 this.categoryList = res.data
-                this.pageData.categoryId = this.categoryList[0].id
+                if (!this.pageData.categoryId) {
+                    this.pageData.categoryId = this.categoryList[0].id
+                }
                 this.fetchArticleList()
                 this.loading.close()
             })
         },
         fetchArticleList() {
+            console.log(this.pageData)
             fetchArticleList(this.pageData).then(res => {
                 this.articleList.push(...res.data.records)
                 this.pageTotal = res.data.pages

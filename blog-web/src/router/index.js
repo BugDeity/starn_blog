@@ -77,14 +77,6 @@ const routes = [
                 }
             },
             {
-                path: "/tags",
-                name: "/tags",
-                component: resolve => require(["@/view/tag/index"], resolve),
-                meta: {
-                    title: "标签搜索"
-                }
-            },
-            {
                 path: "/photo",
                 component: resolve => require(["@/view/photo/index"], resolve),
                 meta: {

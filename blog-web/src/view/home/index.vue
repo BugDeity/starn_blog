@@ -61,7 +61,7 @@
                             <div class="tag">
                                 <el-tag style="margin-right: 8px; cursor: pointer;"
                                     :type="tagStyle[Math.round(Math.random() * 4)]" size="small" v-for="tag in item.tagList"
-                                    :key="tag.id" @click="handleTagClike(tag)">{{ tag.name
+                                    :key="tag.id" @click="handleTagClike(tag.id)">{{ tag.name
                                     }}</el-tag>
 
                             </div>
@@ -308,8 +308,8 @@
                             <a href="/tag" class="more">更多</a>
                         </div>
                         <div class="tag">
-                            <span @click="handleTagClike(item)" :style="{ backgroundColor: `${randomColor()}` }"
-                                class="item" v-for="(   item, index   ) in    tagList   " :key="index">
+                            <span @click="handleTagClike(item.id)" :style="{ backgroundColor: `${randomColor()}` }"
+                                class="item" v-for="(item, index) in tagList" :key="index">
                                 {{ item.name }}
                             </span>
                         </div>
@@ -333,6 +333,16 @@ export default {
         Calendar
     },
     name: 'Home',
+    metaInfo: {
+        meta: [{
+            name: 'keyWords',
+            content: "拾壹博客,开源博客,www.shiyit.com"  //变量或字符串
+        }, {
+            name: 'description',
+            content: "一个专注于技术分享的博客平台,大家以共同学习,乐于分享,拥抱开源的价值观进行学习交流"
+        }]
+    },
+
     data() {
         return {
             audio: [],
@@ -401,8 +411,8 @@ export default {
             this.$store.state.userInfoDrawer.flag = true;
             this.$store.state.userInfoDrawer.name = value;
         },
-        handleTagClike(item) {
-            this.$router.push({ name: "/tags", query: { id: item.id, name: item.name } })
+        handleTagClike(id) {
+            this.$router.push({ path: "/tag", query: { id: id } })
         },
         randomColor() {
             var letters = '0123456789ABCDEF';

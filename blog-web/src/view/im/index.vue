@@ -271,7 +271,6 @@ export default {
     },
     methods: {
         updateContent(event) {
-            console.log(event)
             if (event.target.innerText.indexOf("img") != -1) {
                 this.textImg = event.target.innerText
                 event.target.innerText = null

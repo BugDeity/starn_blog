@@ -1,26 +1,23 @@
 <template>
-    <div class="theme_main">
-
-        <a href="javascript:void(0)" @click="handleGoIm" class="joe_action_item chat active">
+    <div class="toolbar">
+        <a href="javascript:void(0)" @click="handleGoIm" class="toolbar_item chat active">
             <el-tooltip class="item" effect="dark" content="聊天室" placement="left">
-                <svg-icon icon-class="charRoom"></svg-icon>
+                <svg-icon icon-class="chat"></svg-icon>
             </el-tooltip>
         </a>
 
-        <a href="javascript:void(0)" class="joe_action_item theme active" @click="setSkin()">
+        <a href="javascript:void(0)" class="toolbar_item theme active" @click="setSkin()">
             <el-tooltip class="item" effect="dark" content="切换主题" placement="left">
                 <svg-icon v-if="skin == 'deep'" icon-class="shallow"></svg-icon>
                 <svg-icon v-else icon-class="deep"></svg-icon>
             </el-tooltip>
         </a>
 
-        <a href="javascript:void(0)" title="回到顶部" class="joe_action_item back2top active" @click="backTop()" v-if="showBtn">
+        <a href="javascript:void(0)" title="回到顶部" class="toolbar_item back2top active" @click="backTop()" v-if="showBtn">
             <el-tooltip class="item" effect="dark" content="回到顶部" placement="left">
                 <svg-icon icon-class="topBar"></svg-icon>
             </el-tooltip>
         </a>
-
-
     </div>
 </template>
 <script>
@@ -89,7 +86,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.theme_main {
+.toolbar {
     position: fixed;
 
     a {
@@ -115,7 +112,7 @@ export default {
         margin-bottom: 10px;
     }
 
-    .joe_action_item {
+    .toolbar_item {
 
         svg {
             position: absolute;

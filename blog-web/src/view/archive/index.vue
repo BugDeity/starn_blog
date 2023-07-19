@@ -37,7 +37,6 @@
 <script>
 import { archive } from '@/api'
 export default {
-
     created() {
         document.title = "文章归档";
         this.fetchArticleList();

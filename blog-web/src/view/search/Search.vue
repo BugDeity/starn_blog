@@ -37,7 +37,7 @@
                         <div class="tag">
                             <el-tag style="margin-right: 8px; cursor: pointer;"
                                 :type="tagStyle[Math.round(Math.random() * 4)]" size="small" v-for="tag in item.tagList"
-                                :key="tag.id" @click="handleTagClike(tag)">{{ tag.name
+                                :key="tag.id" @click="handleTagClike(tag.id)">{{ tag.name
                                 }}</el-tag>
 
                         </div>
@@ -110,8 +110,8 @@ export default {
         this.fetchArticleList()
     },
     methods: {
-        handleTagClike(item) {
-            this.$router.push({ name: "/tags", query: { id: item.id, name: item.name } })
+        handleTagClike(id) {
+            this.$router.push({ path: "/tag", query: { id: id } })
         },
         // 分页
         onPage() {

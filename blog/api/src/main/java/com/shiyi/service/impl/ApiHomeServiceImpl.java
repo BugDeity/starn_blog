@@ -15,6 +15,7 @@ import com.shiyi.mapper.WebConfigMapper;
 import com.shiyi.service.ApiHomeService;
 import com.shiyi.service.RedisService;
 import com.shiyi.utils.IpUtil;
+import com.shiyi.utils.MyHttpUtil;
 import com.shiyi.vo.ApiArticleListVO;
 import com.shiyi.vo.SystemArticleListVO;
 import eu.bitwalker.useragentutils.Browser;
@@ -45,9 +46,6 @@ public class ApiHomeServiceImpl implements ApiHomeService {
 
     private final CategoryMapper categoryMapper;
 
-    private final static String ak = "f94be500c45148bc185be24a38c04ad3";
-
-    private final static String sk = "27563ca627d5db0d57e831ca4de0f75f";
 
     /**
      * 添加访问量
@@ -124,9 +122,10 @@ public class ApiHomeServiceImpl implements ApiHomeService {
     @Override
     public ResponseResult hot(String type) {
         String url = "https://www.coderutil.com/api/resou/v1/" + type;
-        JSONObject jsonObject = sendHttpUrl(url);
+        JSONObject jsonObject = MyHttpUtil.sendCuApiHttpUrl(url);
         return ResponseResult.success(jsonObject);
     }
+
 
 
     /**
@@ -136,20 +135,8 @@ public class ApiHomeServiceImpl implements ApiHomeService {
     @Override
     public ResponseResult getMusic() {
         String url = "https://www.coderutil.com/api/music/v1/recommend";
-        JSONObject jsonObject = sendHttpUrl(url);
+        JSONObject jsonObject = MyHttpUtil.sendCuApiHttpUrl(url);
         return ResponseResult.success(jsonObject);
     }
 
-    /**
-     * 发送api接口请求
-     * @param url 接口地址
-     * @return
-     */
-    private static JSONObject sendHttpUrl(String url) {
-        HashMap<String, Object> paramMap = new HashMap<>();
-        paramMap.put("access-key", ak);
-        paramMap.put("secret-key", sk);
-        String result= HttpUtil.get(url, paramMap);
-        return JSONObject.parseObject(result);
-    }
 }
