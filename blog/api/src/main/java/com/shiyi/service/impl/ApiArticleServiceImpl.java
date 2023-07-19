@@ -96,7 +96,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
     public ResponseResult selectArticleInfo(Integer id) {
         ApiArticleInfoVO apiArticleInfoVO = articleMapper.selectArticleByIdToVO(id);
         //获取收藏量
-        Integer collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, id));
+        int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, id));
         apiArticleInfoVO.setCollectCount(collectCount);
         //获取标签
         List<Tags> list = tagsMapper.selectTagByArticleId(apiArticleInfoVO.getId());

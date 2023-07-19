@@ -92,7 +92,7 @@
                     <!-- <textarea class="contentBox" placeholder="说点什么呢" v-model="text" @keydown="handkeyEnter"></textarea> -->
                     <div id="im-input-box" class="im-input-box" ref="inputRef" @input="updateContent" contenteditable="true"
                         @keydown="handkeyEnter" data-placeholder="说点什么呢"></div>
-                    <el-button class="btn" @click="send($refs.inputRef.innerHTML, 1)">发送[Enter]</el-button>
+                    <el-button class="btn" @click="send($refs.inputRef.innerText, 1)">发送[Enter]</el-button>
                 </div>
 
                 <!-- 自定义右键功能 -->
@@ -271,9 +271,10 @@ export default {
     },
     methods: {
         updateContent(event) {
-            if (event.target.innerHTML.indexOf("img") != -1) {
-                this.textImg = event.target.innerHTML
-                event.target.innerHTML = null
+            console.log(event)
+            if (event.target.innerText.indexOf("img") != -1) {
+                this.textImg = event.target.innerText
+                event.target.innerText = null
                 this.imgDialogVisible = true
                 return;
             }
@@ -514,7 +515,7 @@ export default {
                 range.collapse(true);
                 selection.removeAllRanges();
                 selection.addRange(range);
-                //this.$refs.inputRef.innerHTML += '\n';
+                //this.$refs.inputRef.innerText += '\n';
 
                 // 阻止默认的换行行为
                 return;
@@ -522,7 +523,7 @@ export default {
             if (event.keyCode == 13) {
                 // 阻止默认的换行行为
                 event.preventDefault();
-                this.send(this.$refs.inputRef.innerHTML)
+                this.send(this.$refs.inputRef.innerText)
             }
         },
         //打开表情框
@@ -542,7 +543,7 @@ export default {
         },
         //添加表情
         handleChooseEmoji(value) {
-            this.$refs.inputRef.innerHTML += value
+            this.$refs.inputRef.innerText += value
         },
         //发送消息
         send(content, type) {
@@ -585,7 +586,7 @@ export default {
             //发送消息
             send(message)
             // 构建消息内容，本人消息
-            this.$refs.inputRef.innerHTML = null;
+            this.$refs.inputRef.innerText = null;
         },
         //初始化socket
         init() {
