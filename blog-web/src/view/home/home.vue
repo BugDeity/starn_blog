@@ -41,6 +41,7 @@ import Notice from '@/components/notice/Notice.vue'
 import User from '@/view/user/User.vue'
 import ArticleModel from '@/view/article/Article.vue'
 import { selectUserInfoByToken, getWebSiteInfo } from '@/api'
+import { getNewSystemNotice } from '@/api/im'
 import { setToken, getToken } from '@/utils/cookieUtil'
 export default {
     components: {
@@ -85,6 +86,10 @@ export default {
 
             this.$store.state.siteAccess = res.extra.siteAccess
             this.$store.state.visitorAccess = res.extra.visitorAccess
+        })
+
+        getNewSystemNotice().then(res => {
+            this.$store.commit("setSystemNotice", res.data)
         })
 
         // //跳回到原地址

@@ -68,7 +68,6 @@
     </div>
 </template>
 <script>
-import { getPayUrl } from '@/api'
 export default {
     data() {
         return {
@@ -85,11 +84,6 @@ export default {
         document.title = "打赏名单"
     },
     methods: {
-        getPayUrl() {
-            getPayUrl(this.payData).then(res => {
-                this.img = res.data.payUrl
-            })
-        },
         handleClike(val, index) {
             let el = document.getElementsByClassName("price-item")
             Array.prototype.forEach.call(el, function (element) {
@@ -105,12 +99,7 @@ export default {
                 this.$store.state.loginFlag = true
                 return;
             }
-            this.isShow = true;
-            getPayUrl(this.payData).then(res => {
-                this.img = res.data.payUrl
-            }).catch(err => {
-                this.$message.error(err.message);
-            })
+            this.isShow = false;
         }
     }
 }
@@ -293,7 +282,7 @@ export default {
 
             .wapper {
                 position: relative;
-                background-color: #1ccae5;
+                background-color: var(--theme-color);
                 height: 410px;
 
                 &:hover {
@@ -421,7 +410,7 @@ export default {
 
                     .index,
                     .item-warpper {
-                        background-color: #1ccae5;
+                        background-color: var(--theme-color);
                         color: #fff;
 
                     }

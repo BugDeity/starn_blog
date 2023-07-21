@@ -70,20 +70,22 @@ export default {
     },
     created() {
         this.getDateList(new Date())
-        if (this.userInfo) {
-            let params = {
-                startTime: this.dateList[0].timeStr,
-                endTime: this.dateList[this.dateList.length - 1].timeStr,
-            }
-            if (getToken()) {
-                getSignRecords(params).then(res => {
-                    this.signRecords = res.data
-                })
-            }
-
-        }
+        this.getSignRecords()
     },
     methods: {
+        getSignRecords() {
+            if (this.userInfo) {
+                let params = {
+                    startTime: this.dateList[0].timeStr,
+                    endTime: this.dateList[this.dateList.length - 1].timeStr,
+                }
+                if (getToken()) {
+                    getSignRecords(params).then(res => {
+                        this.signRecords = res.data
+                    })
+                }
+            }
+        },
         handleClike(ite) {
             if (ite != null && ite.afterToday == "afterToday") {
                 this.$message.error("未到签到时间，请耐心等待！")
@@ -105,6 +107,7 @@ export default {
             this.time.year = lastMonth.getFullYear()
             this.time.month = lastMonth.getMonth()
             this.getDateList(lastMonth)
+            this.getSignRecords()
         },
         nextMonth() {
             if (this.time.year == new Date().getFullYear() && this.time.month == new Date().getMonth()) {
@@ -116,6 +119,7 @@ export default {
             this.time.year = nextMonth.getFullYear()
             this.time.month = nextMonth.getMonth()
             this.getDateList(nextMonth)
+            this.getSignRecords()
         },
         getDateList() {
             const today = new Date();

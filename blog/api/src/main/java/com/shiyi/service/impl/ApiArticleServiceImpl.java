@@ -14,6 +14,7 @@ import com.shiyi.enums.ReadTypeEnum;
 import com.shiyi.enums.YesOrNoEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
+import com.shiyi.im.MessageConstant;
 import com.shiyi.mapper.*;
 import com.shiyi.service.ApiArticleService;
 import com.shiyi.service.RedisService;
@@ -58,7 +59,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
 
     private final ElasticsearchUtil elasticsearchUtil;
 
-    private final UserInfoMapper userInfoMapper;
+    private final ImMessageMapper imMessageMapper;
 
     private final CollectMapper collectMapper;
     private final FollowedMapper followedMapper;
@@ -219,8 +220,9 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      */
     @Override
     public ResponseResult articleLike(Integer articleId) {
+        String userId = StpUtil.getLoginIdAsString();
         // 判断是否点赞
-        String articleLikeKey = ARTICLE_USER_LIKE + StpUtil.getLoginIdAsString();
+        String articleLikeKey = ARTICLE_USER_LIKE + userId;
         if (redisService.sIsMember(articleLikeKey, articleId)) {
             // 点过赞则删除文章id
             redisService.sRemove(articleLikeKey, articleId);
@@ -231,7 +233,22 @@ public class ApiArticleServiceImpl implements ApiArticleService {
             redisService.sAdd(articleLikeKey, articleId);
             // 文章点赞量+1
             redisService.hIncr(ARTICLE_LIKE_COUNT, articleId.toString(), 1L);
+
+            //构建通知消息
+            String ip = IpUtil.getIp(request);
+            String ip2region = IpUtil.getIp2region(ip);
+            Article article = articleMapper.selectById(articleId);
+            try {
+                ImMessage message = ImMessage.builder().fromUserId(userId).toUserId(article.getUserId())
+                        .noticeType(MessageConstant.MESSAGE_LIKE_NOTICE).code(MessageConstant.SYSTEM_MESSAGE_CODE)
+                        .ip(ip).ipSource(ip2region).articleId(articleId).build();
+                imMessageMapper.insert(message);
+            } catch (Exception e) {
+                //添加失败的话不抛异常，还是要点赞执行成功
+                log.error("生成点赞消息通知失败，错误原因：{}",e.getMessage());
+            }
         }
+
         return ResponseResult.success();
     }
 

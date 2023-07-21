@@ -4,11 +4,16 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
+import com.shiyi.entity.Article;
 import com.shiyi.entity.Comment;
+import com.shiyi.entity.ImMessage;
 import com.shiyi.entity.UserInfo;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
+import com.shiyi.im.MessageConstant;
+import com.shiyi.mapper.ArticleMapper;
 import com.shiyi.mapper.CommentMapper;
+import com.shiyi.mapper.ImMessageMapper;
 import com.shiyi.mapper.UserInfoMapper;
 import com.shiyi.service.ApiCommentService;
 import com.shiyi.utils.HTMLUtils;
@@ -18,6 +23,7 @@ import com.shiyi.vo.ApiArticleListVO;
 import com.shiyi.vo.ApiCommentListVO;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ApiCommentServiceImpl implements ApiCommentService {
@@ -34,6 +41,10 @@ public class ApiCommentServiceImpl implements ApiCommentService {
     private final UserInfoMapper userInfoMapper;
 
     private final HttpServletRequest request;
+
+    private final ImMessageMapper imMessageMapper;
+
+    private final ArticleMapper articleMapper;
 
     /**
      * 发表评论
@@ -45,7 +56,8 @@ public class ApiCommentServiceImpl implements ApiCommentService {
     public ResponseResult insertComment(Comment comment) {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("user-agent"));
         //获取ip地址
-        String ipAddress = IpUtil.getIp2region(IpUtil.getIp(request));
+        String ip = IpUtil.getIp(request);
+        String ipAddress = IpUtil.getIp2region(ip);
         String os = userAgent.getOperatingSystem().getName();
         if (os.contains("mac") || os.contains("Mac")) {
             comment.setSystem("mac");
@@ -63,6 +75,21 @@ public class ApiCommentServiceImpl implements ApiCommentService {
         int insert = commentMapper.insert(comment);
         if (insert == 0){
             throw new BusinessException("评论失败");
+        }
+        try {
+            String toUserId =  comment.getReplyUserId();
+            int mark = comment.getReplyUserId() == null ? 2 : 1;
+            if (comment.getReplyUserId() == null) {
+                Article article = articleMapper.selectById(comment.getArticleId());
+                toUserId =  article.getUserId();
+            }
+            ImMessage message = ImMessage.builder().fromUserId(StpUtil.getLoginIdAsString()).toUserId(toUserId).commentMark(mark)
+                    .noticeType(MessageConstant.MESSAGE_COMMENT_NOTICE).code(MessageConstant.SYSTEM_MESSAGE_CODE)
+                    .ip(ip).ipSource(ipAddress).content(comment.getContent()).articleId(comment.getArticleId()).build();
+            imMessageMapper.insert(message);
+        } catch (Exception e) {
+            //添加失败的话不抛异常，还是要点赞执行成功
+            log.error("生成评论消息通知失败，错误原因：{}",e.getMessage());
         }
         return ResponseResult.success(comment);
     }

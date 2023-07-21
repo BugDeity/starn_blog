@@ -9,6 +9,7 @@ export default new Vuex.Store({
     searchDrawer: false,
     siteAccess: 0,
     visitorAccess: 0,
+    systemNotcie: {},
     userInfoDrawer: { flag: false, name: null },
     userInfo: sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : null,
     isCommentFlag: false,
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     setUserInfo(state, newValue) {
       state.userInfo = newValue
       sessionStorage.setItem("user", JSON.stringify(newValue))
+    },
+    setSystemNotice(state, newValue) {
+      state.systemNotcie = newValue
     },
   },
 

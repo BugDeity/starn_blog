@@ -162,6 +162,7 @@ export default {
             this.$confirm('此操作将永久删除该笔记, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
+                lockScroll: false,
                 type: 'warning'
             }).then(() => {
                 deleteNote(id).then(respose => {
@@ -246,7 +247,8 @@ export default {
                 lock: true,
                 text: "正在加载中~",
                 spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)"
+                background: "rgba(0, 0, 0, 0.7)",
+                fullscreen: false
             });
         },
         handleChooseEmoji(value) {

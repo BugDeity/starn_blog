@@ -3,16 +3,19 @@ package com.shiyi.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.ImMessage;
 import com.shiyi.entity.ImRoom;
+import com.shiyi.entity.Medal;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.im.MessageConstant;
 import com.shiyi.im.WebSocketInfoService;
 import com.shiyi.mapper.ImMessageMapper;
 import com.shiyi.mapper.ImRoomMapper;
+import com.shiyi.mapper.MedalMapper;
 import com.shiyi.mapper.UserMapper;
 import com.shiyi.service.ApiImMessageService;
 import com.shiyi.utils.*;
@@ -30,16 +33,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author blue
@@ -48,13 +49,15 @@ import java.util.regex.Pattern;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ApiImMessageServiceImpl  implements ApiImMessageService {
+public class ApiImMessageServiceImpl implements ApiImMessageService {
 
     private final ImMessageMapper imMessageMapper;
 
     private final ImRoomMapper imRoomMapper;
 
     private final UserMapper userMapper;
+
+    private final MedalMapper medalMapper;
 
     private final WebSocketInfoService webSocketInfoService;
 
@@ -63,7 +66,7 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
     @Override
     public ResponseResult selectHistoryList() {
         Page<ImMessageVO> page = imMessageMapper.selectPublicHistoryList(new Page<>(PageUtils.getPageNo(),
-                        PageUtils.getPageSize()));
+                PageUtils.getPageSize()));
         formatCreateTime(page);
         return ResponseResult.success(page);
     }
@@ -76,76 +79,78 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
     @Override
     public ResponseResult selectUserImHistoryList(String fromUserId, String toUserId) {
         Page<ImMessageVO> page = imMessageMapper.selectPublicUserImHistoryList(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
-                fromUserId,toUserId);
+                fromUserId, toUserId);
         formatCreateTime(page);
         return ResponseResult.success(page);
     }
 
     /**
      * 获取房间列表
+     *
      * @return
      */
     @Override
     public ResponseResult selectRoomList() {
         List<ImRoomListVO> list = new ArrayList<>();
-        List<ImRoom> imRooms = imRoomMapper.selectList(new LambdaQueryWrapper<ImRoom>().like(ImRoom::getMember, StpUtil.getLoginIdAsString()).orderByDesc(ImRoom::getCreateTime));
+        List<ImRoom> imRooms = imRoomMapper.selectList(new LambdaQueryWrapper<ImRoom>().eq(ImRoom::getFromUserId, StpUtil.getLoginIdAsString())
+                .orderByDesc(ImRoom::getCreateTime));
         for (ImRoom imRoom : imRooms) {
-            String[] userIds = imRoom.getMember().split(",");
-            for (String userId : userIds) {
-                if (!userId.equals(StpUtil.getLoginIdAsString())) {
-                    UserInfoVO userInfoVO = userMapper.selectInfoByUserId(userId);
-                    ImRoomListVO vo = ImRoomListVO.builder().id(imRoom.getId()).receiveId(userId).nickname(userInfoVO.getNickname())
-                            .avatar(userInfoVO.getAvatar()).createTimeStr(RelativeDateFormat.format(imRoom.getCreateTime())).build();
-                    int readNum = imMessageMapper.selectListReadByUserId(userId,StpUtil.getLoginIdAsString());
-                    vo.setReadNum(readNum);
-                    list.add(vo);
-                }
-            }
+            String toUserId = imRoom.getToUserId();
+            UserInfoVO userInfoVO = userMapper.selectInfoByUserId(toUserId);
+            ImRoomListVO vo = ImRoomListVO.builder().id(imRoom.getId()).receiveId(toUserId).nickname(userInfoVO.getNickname())
+                    .avatar(userInfoVO.getAvatar()).createTimeStr(RelativeDateFormat.format(imRoom.getCreateTime())).build();
+            int readNum = imMessageMapper.selectListReadByUserId(toUserId, StpUtil.getLoginIdAsString());
+            vo.setReadNum(readNum);
+            list.add(vo);
         }
         return ResponseResult.success(list);
     }
 
     /**
      * 创建房间
-     * @param userId
+     *
+     * @param toUserId
      * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult addRoom(String userId) {
-        if (StringUtils.isBlank(userId)) {
+    public ResponseResult addRoom(String toUserId) {
+        String fromUserId = StpUtil.getLoginIdAsString();
+        if (StringUtils.isBlank(toUserId)) {
             throw new BusinessException("请选择用户！");
         }
-        if (userId.equals(StpUtil.getLoginIdAsString())) {
+        if (toUserId.equals(fromUserId)) {
             throw new BusinessException("不能跟自己聊天！");
         }
-        ImRoomListVO vo = null;
-        String member = StpUtil.getLoginIdAsString() + "," + userId;
-        ImRoom imRoom = imRoomMapper.selectOne(new LambdaQueryWrapper<ImRoom>().eq(ImRoom::getMember, member));
-        if (imRoom == null) {
-            imRoom = ImRoom.builder().type(1).member(member).build();
-            imRoomMapper.insert(imRoom);
-            UserInfoVO userInfoVO = userMapper.selectInfoByUserId(userId);
-            vo = ImRoomListVO.builder().id(imRoom.getId()).receiveId(userId).nickname(userInfoVO.getNickname())
-                    .avatar(userInfoVO.getAvatar()).createTimeStr(RelativeDateFormat.format(imRoom.getCreateTime())).build();
+        ImRoom imRoom = imRoomMapper.selectOne(new LambdaQueryWrapper<ImRoom>().eq(ImRoom::getFromUserId, fromUserId)
+                .eq(ImRoom::getToUserId, toUserId));
+        if (imRoom != null) {
+            return ResponseResult.success();
         }
+        imRoom = ImRoom.builder().type(1).fromUserId(fromUserId).toUserId(toUserId).build();
+        imRoomMapper.insert(imRoom);
+        UserInfoVO userInfoVO = userMapper.selectInfoByUserId(toUserId);
+        ImRoomListVO vo = ImRoomListVO.builder().id(imRoom.getId()).receiveId(toUserId).nickname(userInfoVO.getNickname())
+                .avatar(userInfoVO.getAvatar()).createTimeStr(RelativeDateFormat.format(imRoom.getCreateTime())).build();
         return ResponseResult.success(vo);
     }
 
     /**
      * 已读消息
+     *
      * @param userId
      * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult read(String userId) {
-        imMessageMapper.updateRead(userId,StpUtil.getLoginIdAsString());
+        imMessageMapper.updateRead(userId, StpUtil.getLoginIdAsString());
         return ResponseResult.success();
     }
 
     /**
      * 删除房间
+     *
      * @param roomId 房间id
      * @return
      */
@@ -158,7 +163,8 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
 
     /**
      * 发送消息
-     * @param obj 消息
+     *
+     * @param obj     消息
      * @param request
      * @return
      */
@@ -192,15 +198,30 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
         ImMessage imMessage = BeanCopyUtils.copyObject(obj, ImMessage.class);
         //保存消息到数据库
         imMessageMapper.insert(imMessage);
+        //创建房间
+        if (obj.getCode() == MessageConstant.PRIVATE_CHAT_CODE) {
+            ImRoom imRoom = imRoomMapper.selectOne(new LambdaQueryWrapper<ImRoom>().eq(ImRoom::getFromUserId, obj.getToUserId())
+                    .eq(ImRoom::getToUserId, obj.getFromUserId()));
+            if (imRoom == null) {
+                ImRoom room = ImRoom.builder().fromUserId(obj.getToUserId()).toUserId(obj.getFromUserId()).type(obj.getCode()).build();
+                imRoomMapper.insert(room);
+            }
+        }
+
+        //组装发送消息数据
         obj.setId(imMessage.getId());
         obj.setCreateTimeStr(RelativeDateFormat.format(imMessage.getCreateTime()));
-
+        List<Medal> medals = medalMapper.selectMedalByUserId(obj.getFromUserId());
+        medals.removeAll(Collections.singleton(null));
+        obj.setMedalList(medals);
+        //发送消息
         webSocketInfoService.chat(obj);
         return ResponseResult.success();
     }
 
     /**
      * 撤回消息
+     *
      * @param message 消息对象
      * @param request
      * @return
@@ -209,7 +230,7 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult withdraw(ImMessageVO message, HttpServletRequest request) {
         ImMessage entity = imMessageMapper.selectById(message.getId());
-        if (DateUtil.getDiffDateToMinutes(entity.getCreateTime(),DateUtil.getNowDate()) >= 2) {
+        if (DateUtil.getDiffDateToMinutes(entity.getCreateTime(), DateUtil.getNowDate()) >= 2) {
             throw new BusinessException("撤回失败，只能撤回俩分钟以内的消息！");
         }
         if (!entity.getFromUserId().equals(StpUtil.getLoginIdAsString())) {
@@ -221,14 +242,97 @@ public class ApiImMessageServiceImpl  implements ApiImMessageService {
 
         //修改消息
         imMessageMapper.updateById(imMessage);
+
         //发送消息
         webSocketInfoService.chat(message);
 
         return ResponseResult.success();
     }
 
-    private static void formatCreateTime(Page<ImMessageVO> page) {
-        page.getRecords().forEach(item ->{
+    /**
+     * 获取跟当前用户有关的系统通知
+     *
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult getMessageNotice(Integer type) {
+        Page<ImMessageVO> page = imMessageMapper.getMessageNotice(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
+                StpUtil.getLoginIdAsString(), type);
+        page.getRecords().forEach(item -> {
+            item.setCreateTimeStr(RelativeDateFormat.format(item.getCreateTime()));
+        });
+        //修改该类型的所有消息为已读
+        ImMessage message = ImMessage.builder().isRead(1).build();
+        imMessageMapper.update(message, new LambdaQueryWrapper<ImMessage>().eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
+                .eq(ImMessage::getNoticeType, type));
+        return ResponseResult.success(page);
+    }
+
+    /**
+     * 获取未读的最新系统通知
+     *
+     * @return
+     */
+    @Override
+    public ResponseResult getNewSystemNotice() {
+        int systemCount = imMessageMapper.selectCount(new LambdaQueryWrapper<ImMessage>()
+                .eq(ImMessage::getCode, MessageConstant.SYSTEM_MESSAGE_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
+                .eq(ImMessage::getIsRead, 0).eq(ImMessage::getNoticeType, MessageConstant.MESSAGE_SYSTEM_NOTICE));
+
+        int commentCount = imMessageMapper.selectCount(new LambdaQueryWrapper<ImMessage>()
+                .eq(ImMessage::getCode, MessageConstant.SYSTEM_MESSAGE_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
+                .eq(ImMessage::getIsRead, 0).eq(ImMessage::getNoticeType, MessageConstant.MESSAGE_COMMENT_NOTICE));
+
+        int watchCount = imMessageMapper.selectCount(new LambdaQueryWrapper<ImMessage>()
+                .eq(ImMessage::getCode, MessageConstant.SYSTEM_MESSAGE_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
+                .eq(ImMessage::getIsRead, 0).eq(ImMessage::getNoticeType, MessageConstant.MESSAGE_WATCH_NOTICE));
+
+        int likeCount = imMessageMapper.selectCount(new LambdaQueryWrapper<ImMessage>()
+                .eq(ImMessage::getCode, MessageConstant.SYSTEM_MESSAGE_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
+                .eq(ImMessage::getIsRead, 0).eq(ImMessage::getNoticeType, MessageConstant.MESSAGE_LIKE_NOTICE));
+
+        int collectCount = imMessageMapper.selectCount(new LambdaQueryWrapper<ImMessage>()
+                .eq(ImMessage::getCode, MessageConstant.SYSTEM_MESSAGE_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
+                .eq(ImMessage::getIsRead, 0).eq(ImMessage::getNoticeType, MessageConstant.MESSAGE_COLLECT_NOTICE));
+
+        int privateCount = imMessageMapper.selectCount(new LambdaQueryWrapper<ImMessage>()
+                .eq(ImMessage::getCode, MessageConstant.PRIVATE_CHAT_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
+                .eq(ImMessage::getIsRead, 0));
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("system", systemCount);
+        map.put("comment", commentCount);
+        map.put("watch", watchCount);
+        map.put("like", likeCount);
+        map.put("collect", collectCount);
+        map.put("private", privateCount);
+        return ResponseResult.success(map);
+    }
+
+    /**
+     * 根绝类型删除消息
+     *
+     * @param type 通知类型
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult deleteByNoticeType(String id, Integer type) {
+        if (StringUtils.isNotBlank(id)) {
+            imMessageMapper.deleteById(id);
+            return ResponseResult.success();
+        }
+        imMessageMapper.delete(new LambdaQueryWrapper<ImMessage>().eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
+                .eq(ImMessage::getNoticeType, type));
+        return ResponseResult.success();
+    }
+
+    private void formatCreateTime(Page<ImMessageVO> page) {
+        page.getRecords().forEach(item -> {
+            List<Medal> medals = medalMapper.selectMedalByUserId(item.getFromUserId());
+            medals.removeAll(Collections.singleton(null));
+            item.setMedalList(medals);
             item.setCreateTimeStr(RelativeDateFormat.format(item.getCreateTime()));
         });
     }

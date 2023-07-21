@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.shiyi.utils.DateUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 import lombok.*;
 
 import java.io.Serializable;
@@ -54,14 +55,23 @@ public class ImMessage implements Serializable {
     @ApiModelProperty(value = "是否撤回")
     private int isWithdraw;
 
+    @ApiModelProperty(value = "评论标记 1回复评论 2发表评论")
+    private Integer commentMark;
+
     @ApiModelProperty(value = "消息类型 1私聊 2群聊")
     private Integer code;
 
     @ApiModelProperty(value = "消息是否已读 0未读 2已读")
     private Integer isRead;
 
-    @ApiModelProperty(value = "消息类型 1普通消息 2图片")
+    @ApiModelProperty(value = "消息内容类型 1普通消息 2图片")
     private Integer type;
+
+    @ApiModelProperty(value = "通知类型 0系统通知 1：评论 2：关注 3点赞 4收藏 5私信")
+    private Integer noticeType;
+
+    @ApiModelProperty(value = "文章id")
+    private Integer articleId;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)

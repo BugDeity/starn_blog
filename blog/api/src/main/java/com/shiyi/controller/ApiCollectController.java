@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author blue
  * @date 2022/1/13
@@ -31,8 +33,8 @@ public class ApiCollectController {
     @SaCheckLogin
     @GetMapping(value = "collect")
     @ApiOperation(value = "收藏文章", httpMethod = "GET", response = ResponseResult.class, notes = "收藏文章")
-    public ResponseResult collect(Integer articleId) {
-        return apiCollectService.collect(articleId);
+    public ResponseResult collect(Integer articleId, HttpServletRequest request) {
+        return apiCollectService.collect(articleId,request);
     }
 
     @SaCheckLogin

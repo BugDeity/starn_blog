@@ -120,7 +120,6 @@ export default {
             })
         },
         fetchArticleList() {
-            console.log(this.pageData)
             fetchArticleList(this.pageData).then(res => {
                 this.articleList.push(...res.data.records)
                 this.pageTotal = res.data.pages

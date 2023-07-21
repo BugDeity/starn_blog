@@ -1,9 +1,12 @@
 <template>
     <div class="page_404">
         <div class="error">
-            <img src="./404.jpg" alt="404">
-            <h3 class="title">“未找到您要的资源,<span style="color: red;">{{ countDown }}</span>秒后自动跳转到首页”</h3>
-            <a href="/" class="error_link">回到主页</a>
+            <div class="left">
+                <svg-icon icon-class="404_2"></svg-icon>
+                <h3 class="title">“未找到您要的资源,<span style="color: red;">{{ countDown }}</span>秒后自动跳转到首页”</h3>
+                <a href="/" class="error_link">回到主页</a>
+                <svg-icon class="right" icon-class="404_1"></svg-icon>
+            </div>
         </div>
     </div>
 </template>
@@ -33,37 +36,22 @@ export default {
 
 <style lang="scss" scoped>
 .page_404 {
-    position: absolute;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #fff;
     color: #666;
     text-align: center;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    font-family: sans-serif;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
+    height: 100vh;
 
     .error {
-        margin-top: -10vh;
 
-        img {
-            width: 60%;
-            max-width: 700px;
+        .left {
+            position: relative;
+            top: 200px;
+
+            .right {
+                position: absolute;
+                top: 80px;
+                right: 250px;
+
+            }
         }
 
         .title {
@@ -88,6 +76,8 @@ export default {
             -webkit-transition: color .3s;
             transition: color .3s;
         }
+
+
     }
 
 

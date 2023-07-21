@@ -214,14 +214,6 @@ export function featchCategory() {
     })
 }
 
-export function getPayUrl(params) {
-    return request({
-        url: '/v1/sponsor/createOrder',
-        method: 'get',
-        params: params
-    })
-}
-
 export function addFeedback(data) {
     return request({
         url: '/v1/feedback/',

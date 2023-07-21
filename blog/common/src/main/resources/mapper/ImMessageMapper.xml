@@ -36,4 +36,24 @@
     <select id="selectListReadByUserId" resultType="java.lang.Integer">
         select count(id) from b_im_message where to_user_id=#{fromUserId} and from_user_id=#{toUserId} and is_read = 0
     </select>
+
+    <select id="getMessageNotice" resultType="com.shiyi.vo.ImMessageVO">
+        SELECT ui.avatar as fromUserAvatar, ui.nickname as fromUserNickname,a.id as articleId,a.title as articleTitle, im.*
+        FROM b_im_message im
+                 left join b_user u on im.from_user_id = u.id
+                 left join b_user_info ui on u.user_info_id = ui.id
+                 left join b_article a on a.id = im.article_id
+        where im.to_user_id = #{userId}
+
+        <choose>
+            <when test="noticeType != null">
+                and notice_type=#{noticeType}
+            </when>
+
+            <otherwise>
+                and notice_type = 5
+            </otherwise>
+        </choose>
+        order by im.create_time desc
+    </select>
 </mapper>

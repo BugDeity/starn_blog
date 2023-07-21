@@ -20,11 +20,14 @@
                         <div :class="item.isWithdraw ? 'withdraw' : 'left'" v-if="user && item.fromUserId != user.id">
                             <img class="noSelect" :src="item.fromUserAvatar" :title="item.fromUserNickname">
                             <div class="info">
-                                <div class="nickname noSelect">
+                                <div class="nickname noSelect userInfo">
                                     {{ item.fromUserNickname }}
-                                    <el-tooltip effect="dark" content="官方标签" placement="top" v-if="item.fromUserId == 1">
-                                        <svg-icon class="tag" icon-class="guanfang"></svg-icon>
-                                    </el-tooltip>
+                                    <span v-if="item.medalList.length">
+                                        <el-tooltip effect="dark" :content="medal.info" placement="top"
+                                            v-for="medal in item.medalList">
+                                            <svg-icon class="tag" :icon-class="medal.url"></svg-icon>
+                                        </el-tooltip>
+                                    </span>
                                     <span v-if="item.ipSource" class="item "> <i class="el-icon-location-information"></i>
                                         IP属地:{{ splitIpAddress(item.ipSource) }}
                                     </span>
@@ -42,25 +45,34 @@
                         </div>
                         <!-- 右边消息框 自己发送的消息 -->
                         <div :class="item.isWithdraw ? 'withdraw' : 'right'" v-else>
-
                             <div class="info">
-                                <div class="nickname noSelect">
-                                    <span class="item "><i class="el-icon-time"></i> {{ item.createTimeStr }}</span>
-                                    <span v-if="item.ipSource" class="item "><i class="el-icon-location-information"></i>
-                                        IP属地:{{ splitIpAddress(item.ipSource) }}
-                                    </span>
-                                    <el-tooltip effect="dark" content="官方标签" placement="top" v-if="item.fromUserId == 1">
-                                        <svg-icon class="tag" icon-class="guanfang"></svg-icon>
-                                    </el-tooltip>
-                                    {{ item.fromUserNickname }}
+                                <div>
+                                    <img class="noSelect" :src="item.fromUserAvatar">
                                 </div>
-                                <img class="noSelect" :src="item.fromUserAvatar">
-                                <span v-if="!item.isWithdraw" v-html="item.content" class="nowMessageContent"
-                                    @contextmenu.prevent="openMenu($event, item, index)">
-                                </span>
-                                <span style="color: var(--text-color);" v-else class="noSelect">
-                                    " {{ item.fromUserNickname }} " 撤回了一条消息
-                                </span>
+                                <div class="nickname">
+                                    <div class="userInfo">
+                                        <span class="item noSelect"><i class="el-icon-time"></i> {{ item.createTimeStr
+                                        }}</span>
+                                        <span v-if="item.ipSource" class="item noSelect"><i
+                                                class="el-icon-location-information"></i>
+                                            IP属地:{{ splitIpAddress(item.ipSource) }}
+                                        </span>
+                                        <span v-if="item.medalList">
+                                            <el-tooltip effect="dark" :content="medal.info" placement="top"
+                                                v-for="medal in item.medalList">
+                                                <svg-icon class="tag" :icon-class="medal.url"></svg-icon>
+                                            </el-tooltip>
+                                        </span>
+                                        <span class="noSelect">{{ item.fromUserNickname }}</span>
+                                    </div>
+
+                                    <div v-if="!item.isWithdraw" v-html="item.content" class="nowMessageContent"
+                                        @contextmenu.prevent="openMenu($event, item, index)">
+                                    </div>
+                                    <div style="color: var(--text-color);" v-else class="noSelect">
+                                        " {{ item.fromUserNickname }} " 撤回了一条消息
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -168,7 +180,7 @@
                 </ul>
             </div>
         </div>
-        <el-dialog title="粘贴图片" :visible.sync="imgDialogVisible" width="30%" center>
+        <el-dialog :lock-scroll="false" title="粘贴图片" :visible.sync="imgDialogVisible" width="30%" center>
             <div style="width: 100%;" id="dialogImg">
                 <div v-html="textImg">
 
@@ -299,6 +311,7 @@ export default {
             this.$confirm('此操作将把该聊天窗口删除, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
+                lockScroll: false,
                 type: 'warning'
             }).then(() => {
                 if (!id) {
@@ -901,20 +914,23 @@ export default {
                     margin-top: 20px;
                     margin-bottom: 20px;
 
-                    .withdraw {
-                        text-align: center;
-
-                        img,
-                        .nickname {
-                            display: none
-                        }
-                    }
-
                     .tag {
                         width: 20px;
                         height: 20px;
                         vertical-align: -5px;
                     }
+
+                    .withdraw {
+                        text-align: center;
+
+                        .tag,
+                        img,
+                        .userInfo {
+                            display: none
+                        }
+                    }
+
+
 
                     .left {
                         padding: 5px 10px;
@@ -952,6 +968,7 @@ export default {
                         max-width: 400px;
                         padding: 8px;
                         white-space: pre-wrap;
+                        user-select: auto;
 
                         /deep/ a {
                             text-decoration: none;
@@ -972,29 +989,22 @@ export default {
                         display: flex;
                         flex-direction: row-reverse;
 
-                        .nowMessageContent {
-                            background-color: var(--im-user-box-backgroudColor);
-                            border-radius: 18px 2px 18px 18px;
-                        }
-
-                        img {
-                            float: right;
-                            margin-left: 10px;
-                        }
-
                         .info {
                             float: right;
                             display: flex;
                             flex-direction: row-reverse;
-                            flex-wrap: wrap;
                             color: var(--text-color);
 
                             .nickname {
                                 display: inline-block;
                                 text-align: right;
-                                font-size: 0.8rem;
                                 margin-bottom: 3px;
                                 width: 100%;
+
+                                .userInfo {
+                                    font-size: 0.8rem;
+
+                                }
 
                                 .item {
                                     margin-right: 10px;
@@ -1003,6 +1013,18 @@ export default {
 
                             }
                         }
+
+                        .nowMessageContent {
+                            background-color: var(--im-user-box-backgroudColor);
+                            border-radius: 18px 2px 18px 18px;
+                        }
+
+                        img {
+                            float: right;
+                            margin-left: 5px;
+                        }
+
+
                     }
                 }
             }

@@ -44,6 +44,7 @@ export default {
     data: function () {
         return {
             archiveList: [],
+            loading: [],
             count: 0,
             liColHeight: 0, // 折叠面板内容初始高度
         };
@@ -66,9 +67,13 @@ export default {
             }
         },
         fetchArticleList() {
+            this.openLoading()
             archive().then(res => {
                 this.archiveList = res.data
                 this.count = res.extra.total
+                this.loading.close()
+            }).catch(err => {
+                this.loading.close()
             });
         },
 
@@ -79,7 +84,16 @@ export default {
         formatTime(time) {
             const arr = time.split("-")
             return arr[0] + "  年  " + arr[1] + "  月"
-        }
+        },
+        // 打开加载层
+        openLoading: function () {
+            this.loading = this.$loading({
+                lock: true,
+                text: "正在加载中~",
+                spinner: "el-icon-loading",
+                background: "rgba(0, 0, 0, 0.7)"
+            });
+        },
     },
 };
 </script>
@@ -195,7 +209,7 @@ export default {
                         display: block;
                         height: 35px;
                         line-height: 35px;
-                        border-radius: 2px;
+                        border-radius: 5px;
                         cursor: pointer;
 
                         &::before {
@@ -339,7 +353,7 @@ export default {
                         display: block;
                         height: 35px;
                         line-height: 35px;
-                        border-radius: 2px;
+                        border-radius: 5px;
                         cursor: pointer;
 
                         &::before {

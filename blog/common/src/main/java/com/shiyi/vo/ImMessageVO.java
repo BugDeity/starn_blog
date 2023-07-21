@@ -1,11 +1,14 @@
 package com.shiyi.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.shiyi.entity.Medal;
 import com.shiyi.utils.DateUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -29,6 +32,10 @@ public class ImMessageVO {
     @ApiModelProperty(value = "发送用户昵称")
     private String fromUserNickname;
 
+    @ApiModelProperty(value = "勋章")
+    private List<Medal> medalList = new ArrayList<>();
+
+
     @ApiModelProperty(value = "内容")
     private String content;
 
@@ -41,6 +48,12 @@ public class ImMessageVO {
     @ApiModelProperty(value = "是否撤回")
     private int isWithdraw;
 
+    @ApiModelProperty(value = "文章id")
+    private Integer articleId;
+
+    @ApiModelProperty(value = "文章标题")
+    private String articleTitle;
+
     @ApiModelProperty(value = "消息类型 1普通消息 2图片")
     private int type;
 
@@ -49,6 +62,12 @@ public class ImMessageVO {
 
     @ApiModelProperty(value = "选中下标")
     private Integer index;
+
+    @ApiModelProperty(value = "评论标记 1回复评论 2发表评论")
+    private Integer commentMark;
+
+    @ApiModelProperty(value = "通知类型 0系统通知 1：评论 2：关注 3点赞 4收藏 5私信")
+    private Integer noticeType;
 
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = DateUtil.YYYY_MM_DD_HH_MM,timezone="GMT+8")

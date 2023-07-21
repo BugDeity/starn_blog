@@ -3,7 +3,6 @@ package com.shiyi.controller;
 
 import com.shiyi.common.ResponseResult;
 import com.shiyi.service.impl.ApiHomeServiceImpl;
-import com.shiyi.service.impl.HomeServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +59,6 @@ public class ApiHomeController {
     public ResponseResult getMusic(){
         return homeService.getMusic();
     }
+
 }
 

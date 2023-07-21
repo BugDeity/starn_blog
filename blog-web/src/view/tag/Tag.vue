@@ -116,11 +116,9 @@ export default {
             })
         },
         fetchArticleList() {
-            this.openLoading()
             fetchArticleList(this.pageData).then(res => {
                 this.articleList.push(...res.data.records)
                 this.pageTotal = res.data.pages
-                this.loading.close()
             })
         },
         // 打开加载层

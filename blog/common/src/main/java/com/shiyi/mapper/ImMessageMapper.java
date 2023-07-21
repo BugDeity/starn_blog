@@ -48,4 +48,7 @@ public interface ImMessageMapper extends BaseMapper<ImMessage> {
      */
     void updateRead(@Param("fromUserId") String userId, @Param("toUserId") String loginIdAsString);
 
+    Page<ImMessageVO> getMessageNotice(@Param("page")Page<Object> objectPage, @Param("userId")String userId
+            , @Param("noticeType")Integer noticeType);
+
 }

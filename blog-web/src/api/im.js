@@ -62,3 +62,23 @@ export function deleteRoom(roomId) {
         }
     })
 }
+export function getMessageNotice(params) {
+    return request({
+        url: '/v1/im/getMessageNotice',
+        method: 'get',
+        params: params
+    })
+}
+export function getNewSystemNotice() {
+    return request({
+        url: '/v1/im/getNewSystemNotice',
+        method: 'get',
+    })
+}
+export function deleteMessage(params) {
+    return request({
+        url: '/v1/im/deleteMessage',
+        method: 'delete',
+        params: params
+    })
+}

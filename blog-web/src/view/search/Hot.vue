@@ -75,7 +75,7 @@
                 </div>
             </div>
         </div>
-        <el-dialog title="切换搜索引擎" :visible.sync="dialogVisible" width="30%">
+        <el-dialog :lock-scroll="false" title="切换搜索引擎" :visible.sync="dialogVisible" width="30%">
             <el-radio-group v-model="tabPosition" style="margin-bottom: 30px;">
                 <el-radio-button v-for="(item, index) in siteList" :key="index" :label="index">{{ item }}</el-radio-button>
 
@@ -168,7 +168,8 @@ export default {
                 lock: true,
                 text: "正在加载中~",
                 spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)"
+                background: "rgba(0, 0, 0, 0.7)",
+                fullscreen: false
             });
         },
     }

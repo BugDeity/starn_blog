@@ -75,8 +75,28 @@ public class ApiImMessageController {
 
     @SaCheckLogin
     @PostMapping(value = "/addRoom")
-    @ApiOperation(value = "创建房间（即点击私信按钮）", httpMethod = "GET", response = ResponseResult.class, notes = "创建房间（即点击私信按钮）")
+    @ApiOperation(value = "创建房间（即点击私信按钮）", httpMethod = "POST", response = ResponseResult.class, notes = "创建房间（即点击私信按钮）")
     public ResponseResult addRoom(String userId) {
         return imMessageService.addRoom(userId);
+    }
+
+    @SaCheckLogin
+    @GetMapping(value = "/getMessageNotice")
+    @ApiOperation(value = "获取系统通知", httpMethod = "GET", response = ResponseResult.class, notes = "获取系统通知")
+    public ResponseResult getMessageNotice(Integer type) {
+        return imMessageService.getMessageNotice(type);
+    }
+
+    @SaCheckLogin
+    @GetMapping("/getNewSystemNotice")
+    @ApiOperation(value = "获取未读的最新通知", httpMethod = "GET", response = ResponseResult.class, notes = "获取未读的最新通知")
+    public ResponseResult getNewSystemNotice(){
+        return imMessageService.getNewSystemNotice();
+    }
+    @SaCheckLogin
+    @DeleteMapping("/deleteMessage")
+    @ApiOperation(value = "根据类型删除所有消息", httpMethod = "DELETE", response = ResponseResult.class, notes = "根据类型删除所有消息")
+    public ResponseResult deleteMessage(String id,Integer type){
+        return imMessageService.deleteByNoticeType(id,type);
     }
 }

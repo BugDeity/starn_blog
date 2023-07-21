@@ -37,8 +37,17 @@
             </div>
         </el-card>
 
+        <el-dialog class="dialog" title="友情提示" :visible.sync="tipsDialogFormVisible" :lock-scroll="false">
+            <div>
+                申请友链之前请确保贵站点已经添加了本站点的友链，否则申请之后会被删除！
+            </div>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="tipsDialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="handleOpenLink">确 定</el-button>
+            </div>
+        </el-dialog>
 
-        <el-dialog class="dialog" :visible.sync="dialogFormVisible">
+        <el-dialog class="dialog" :visible.sync="dialogFormVisible" :lock-scroll="false">
             <el-form :model="form" :rules="rules" ref="ruleForm">
                 <el-form-item label="网站名称" :label-width="formLabelWidth" prop="name">
                     <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -79,6 +88,7 @@ export default {
         return {
             linkList: [],
             dialogFormVisible: false,
+            tipsDialogFormVisible: false,
             form: {},
             formLabelWidth: '80px',
             rules: {
@@ -109,9 +119,13 @@ export default {
         })
     },
     methods: {
+        handleOpenLink() {
+            this.tipsDialogFormVisible = false
+            this.dialogFormVisible = true
+        },
         handleAdd() {
             this.form = {}
-            this.dialogFormVisible = true
+            this.tipsDialogFormVisible = true
         },
         randomColor() {
             var letters = '0123456789ABCDEF';
@@ -147,6 +161,7 @@ export default {
 @media screen and (max-width: 1118px) {
     .link-main {
         display: flex;
+        padding: 5px;
 
         /deep/ .el-dialog {
             width: 100%;

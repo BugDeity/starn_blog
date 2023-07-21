@@ -5,10 +5,9 @@
             <!-- 弹幕输入框 -->
             <div class="message-container">
                 <h1 class="message-title">留言板</h1>
-                <div class="animated fadeInUp message-input-wrapper">
+                <div class="message-input-wrapper">
                     <el-input class="input" v-model="content" placeholder="说点什么吧" @focus="show = true"></el-input>
-                    <el-button style="opacity: .6;" class="ml-3 animated bounceInLeft" round @click="addToList"
-                        v-show="show">发送</el-button>
+                    <el-button style="opacity: .6;" class="ml-3" round @click="addToList" v-show="show">发送</el-button>
                 </div>
             </div>
             <!-- 弹幕列表 -->
@@ -147,6 +146,20 @@ export default {
             justify-content: center;
             height: 2.5rem;
             margin-top: 2rem;
+
+            .ml-3 {
+                animation: left-in 1s ease;
+
+                @keyframes left-in {
+                    0% {
+                        transform: translateY(-500%);
+                    }
+
+                    100% {
+                        transform: translateX(0);
+                    }
+                }
+            }
         }
     }
 

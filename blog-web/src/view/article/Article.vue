@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :fullscreen="true" title="发表文章" :visible.sync="drawer" :before-close="handleClose">
+    <el-dialog :lock-scroll="false" :fullscreen="true" title="发表文章" :visible.sync="drawer" :before-close="handleClose">
         <el-form :model="article" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-row :gutter="20">
                 <el-col :span="8">
@@ -212,7 +212,8 @@ export default {
                 lock: true,
                 text: "正在加载中~",
                 spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)"
+                background: "rgba(0, 0, 0, 0.7)",
+                fullscreen: false
             });
         },
     }

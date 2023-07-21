@@ -80,4 +80,24 @@ public interface ApiImMessageService {
      * @return
      */
     ResponseResult withdraw(ImMessageVO message, HttpServletRequest request);
+
+    /**
+     * 获取跟当前用户有关的系统通知
+     * @return
+     */
+    ResponseResult getMessageNotice(Integer type);
+
+    /**
+     * 获取未读的最新系统通知
+     * @return
+     */
+    ResponseResult getNewSystemNotice();
+
+    /**
+     * 根绝类型删除所有消息
+     * @param type
+     * @return
+     */
+    ResponseResult deleteByNoticeType(String id,Integer type);
+
 }

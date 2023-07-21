@@ -148,6 +148,23 @@
                 <el-button size="small" @click="addArticle" type="primary">发表文章</el-button>
             </div>
 
+            <div class="noticeBtn">
+                <el-dropdown trigger="hover">
+                    <div class="el-dropdown-link">
+                        <i class="el-icon-bell"></i>
+                        <span v-if="topBageShow()" class="notice-bage topBage"></span>
+                    </div>
+                    <el-dropdown-menu slot="dropdown">
+                        <span v-for="(item, index) in noticeList  " :key="index" @click="handleClickNotice(index)">
+                            <el-dropdown-item>
+                                {{ item }}
+                                <span v-if="validata(index)" class="notice-bage"></span>
+                            </el-dropdown-item>
+                        </span>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+
             <div class="userInfo">
                 <el-dropdown trigger="hover">
                     <div class="el-dropdown-link">
@@ -210,6 +227,7 @@ export default {
             headerClass: "header",
             adminUrl: process.env.VUE_APP_ADMIN_API,
             colors: ["#FE2D46", "#FF6600", "#FAA90E", "#7f7f8c", "#7f7f8c"],
+            noticeList: ["系统通知", "评论", "关注", "点赞", "收藏", "私信"]
         };
     },
 
@@ -233,6 +251,40 @@ export default {
     },
 
     methods: {
+        handleClickNotice(index) {
+            if (!this.user) {
+                this.$store.commit("setLoginFlag", true)
+                return;
+            }
+            if (index == this.noticeList.length - 1) {
+                this.$router.push({ path: "/im" })
+                return
+            }
+            this.$router.push({ path: "notice", query: { type: index } })
+        },
+        topBageShow() {
+            return this.$store.state.systemNotcie.system > 0 || this.$store.state.systemNotcie.comment > 0
+                || this.$store.state.systemNotcie.watch > 0 || this.$store.state.systemNotcie.like > 0
+                || this.$store.state.systemNotcie.collect > 0 || this.$store.state.systemNotcie.message > 0 || this.$store.state.systemNotcie.private > 0;
+        },
+        validata(index) {
+            switch (index) {
+                case 0:
+                    return this.$store.state.systemNotcie.system > 0;
+                case 1:
+                    return this.$store.state.systemNotcie.comment > 0;
+                case 2:
+                    return this.$store.state.systemNotcie.watch > 0;
+                case 3:
+                    return this.$store.state.systemNotcie.like > 0;
+                case 4:
+                    return this.$store.state.systemNotcie.collect > 0;
+                case 5:
+                    return this.$store.state.systemNotcie.private > 0;
+                default:
+                    return false;
+            }
+        },
         //Enter事件
         handkeyEnter(event) {
             if (event.keyCode == 13) {
@@ -311,8 +363,19 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-@media screen and (max-width: 1118px) {
+.notice-bage {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: red;
+    display: inline-block;
+}
 
+.topBage {
+    vertical-align: 15px;
+}
+
+@media screen and (max-width: 1118px) {
     .header {
         position: fixed;
         top: 0;
@@ -369,6 +432,7 @@ export default {
             .searchBox,
             .articleBtn,
             .starlist,
+            .noticeBtn,
             .userInfo {
                 display: none;
             }
@@ -560,23 +624,42 @@ export default {
 
             .articleBtn {
                 position: absolute;
-                right: 220px;
+                right: 230px;
+                top: 0;
+            }
+
+            .noticeBtn {
+                position: absolute;
+                right: 180px;
                 top: 0;
 
+
+
+                i {
+                    font-size: 1.5rem;
+                    color: var(--article-color);
+                }
+
+                /deep/ .el-dropdown {
+                    width: 35px;
+                    height: 35px;
+                    right: -10px;
+                    top: 5px;
+                }
             }
 
 
 
             .userInfo {
                 position: absolute;
-                right: 150px;
+                right: 120px;
                 top: 0;
 
                 /deep/ .el-dropdown {
                     width: 35px;
                     height: 35px;
                     right: 0;
-                    top: 12px;
+                    top: 10px;
                 }
 
                 img {

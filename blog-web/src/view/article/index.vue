@@ -1,7 +1,68 @@
 <template>
-    <div class="article-info">
-        <el-card class="main">
+    <div class="article-container">
+        <!-- 左侧点赞和打赏 -->
+        <div class="left-sidbarnav">
+            <el-tooltip class="item" effect="dark" content="点赞" placement="left">
+                <div class="left-item" title="点赞" @click="like(article.id)">
+                    <el-badge :value="article.likeCount" class="item">
+                        <span>
+                            <i v-if="article.isLike" class="iconfont icon-dianzan4"></i>
+                            <i v-else class="iconfont icon-dianzan1"></i>
+                        </span>
+                    </el-badge>
+                </div>
+            </el-tooltip>
 
+            <el-tooltip class="item" effect="dark" content="收藏" placement="left">
+                <div class="left-item" title="收藏" @click="handleCollect">
+                    <el-badge :value="article.collectCount" class="item">
+                        <span style="font-size: 20px;">
+                            <i v-if="article.isCollect" class="el-icon-star-on"></i>
+                            <i v-else class="el-icon-star-off"></i>
+                        </span>
+                    </el-badge>
+                </div>
+            </el-tooltip>
+
+            <el-tooltip class="item" effect="dark" content="评论" placement="left">
+                <div class="left-item" title="评论" @click="handleGoPinglun">
+                    <el-badge :value="article.commentCount" class="item">
+                        <span>
+                            <i class="iconfont icon-pinglun"></i>
+                        </span>
+                    </el-badge>
+                </div>
+            </el-tooltip>
+
+            <el-tooltip class="item" effect="dark" content="开启沉浸式阅读" placement="left">
+                <div class="left-item" title="开启沉浸式阅读" @click="rightShow = !rightShow">
+                    <span>
+                        <i class="iconfont icon-full-screen"></i>
+                    </span>
+                </div>
+            </el-tooltip>
+
+            <el-tooltip class="item" effect="dark" content="打赏" placement="left">
+                <div class="left-item rewardMain" title="打赏">
+                    <span class="reward-btn">
+                        <i class="iconfont icon-dashang1"></i>
+                    </span>
+                    <!-- 二维码 -->
+                    <div class="rewardItem">
+                        <span>
+                            <img class="reward-img" :src="$store.state.webSiteInfo.aliPay" />
+                        </span>
+                        <span>
+                            <img class="reward-img" :src="$store.state.webSiteInfo.weixinPay" />
+                        </span>
+                    </div>
+                </div>
+            </el-tooltip>
+
+        </div>
+
+        <!-- 中间文章信息 -->
+        <el-card class="article">
             <el-tag @click="handleClike(article.category.id, '/categorys')" effect="dark" class="category">
                 {{ article.category.name }}
             </el-tag>
@@ -62,66 +123,6 @@
                 </div>
             </div>
 
-            <!-- 点赞和打赏 -->
-            <div class="left-sidbarnav">
-                <el-tooltip class="item" effect="dark" content="点赞" placement="left">
-                    <div class="left-item" title="点赞" @click="like(article.id)">
-                        <el-badge :value="article.likeCount" class="item">
-                            <span>
-                                <i v-if="article.isLike" class="iconfont icon-dianzan4"></i>
-                                <i v-else class="iconfont icon-dianzan1"></i>
-                            </span>
-                        </el-badge>
-                    </div>
-                </el-tooltip>
-
-                <el-tooltip class="item" effect="dark" content="收藏" placement="left">
-                    <div class="left-item" title="收藏" @click="handleCollect">
-                        <el-badge :value="article.collectCount" class="item">
-                            <span style="font-size: 20px;">
-                                <i v-if="article.isCollect" class="el-icon-star-on"></i>
-                                <i v-else class="el-icon-star-off"></i>
-                            </span>
-                        </el-badge>
-                    </div>
-                </el-tooltip>
-
-                <el-tooltip class="item" effect="dark" content="评论" placement="left">
-                    <div class="left-item" title="评论" @click="handleGoPinglun">
-                        <el-badge :value="article.commentCount" class="item">
-                            <span>
-                                <i class="iconfont icon-pinglun"></i>
-                            </span>
-                        </el-badge>
-                    </div>
-                </el-tooltip>
-
-                <el-tooltip class="item" effect="dark" content="开启沉浸式阅读" placement="left">
-                    <div class="left-item" title="开启沉浸式阅读" @click="rightShow = !rightShow">
-                        <span>
-                            <i class="iconfont icon-full-screen"></i>
-                        </span>
-                    </div>
-                </el-tooltip>
-
-                <el-tooltip class="item" effect="dark" content="打赏" placement="left">
-                    <div class="left-item rewardMain" title="打赏">
-                        <span class="reward-btn">
-                            <i class="iconfont icon-dashang1"></i>
-                        </span>
-                        <!-- 二维码 -->
-                        <div class="rewardItem">
-                            <span>
-                                <img class="reward-img" :src="$store.state.webSiteInfo.aliPay" />
-                            </span>
-                            <span>
-                                <img class="reward-img" :src="$store.state.webSiteInfo.weixinPay" />
-                            </span>
-                        </div>
-                    </div>
-                </el-tooltip>
-
-            </div>
             <!-- 移动端点赞 -->
             <div class="dianzanBox">
                 <div class="dianzan-item">
@@ -183,7 +184,7 @@
                 <div class="copyrightItem">
                     <svg-icon icon-class="link"></svg-icon>
                     <span class="text name">本文链接:</span>
-                    <a href="" class="text"> {{ appUrl }}articleInfo?articleId={{ articleId }} </a>
+                    <a href="" class="text"> {{ locationUrl }}</a>
                 </div>
                 <div class="copyrightItem">
                     <svg-icon icon-class="xkxy"></svg-icon>
@@ -292,7 +293,7 @@
         </div>
 
         <!-- 公众号扫码验证框 -->
-        <el-dialog title="关注公众号验证" :visible.sync="dialogVisible">
+        <el-dialog :lock-scroll="false" title="关注公众号验证" :visible.sync="dialogVisible">
             <div style="text-align: center;">
                 <div>扫码关注公众号<span style="color: red;">【 拾壹学编程 】</span></div>
                 <div>回复<span style="color: red;">【 验证码 】</span>获取验证码</div>
@@ -350,7 +351,7 @@ export default {
             active: 0,
             fontNumber: 0,
             img: "https://foruda.gitee.com/avatar/1677050610632357168/5407895_quequnlong_1646130774.png",
-            appUrl: process.env.VUE_APP_URL,
+            locationUrl: window.location.href,
             commentList: [],
             tempList: null,
             articleId: this.$route.query.articleId,
@@ -447,8 +448,7 @@ export default {
     },
     methods: {
         qqShare() {
-            const url = `https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://www.shiyit.com/articleInfo?articleId=149
-            "&sharesource=qzone&title=${this.article.title}&summary=${this.article.title}`
+            const url = `https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${window.location.href}&sharesource=qzone&title=${this.article.title}&summary=${this.article.title}`
             window.open(url)
         },
         qqHyShare() {
@@ -544,7 +544,8 @@ export default {
                 lock: true,
                 text: "正在加载中~",
                 spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)"
+                background: "rgba(0, 0, 0, 0.7)",
+                fullscreen: false
             });
         },
         handleCollect() {
@@ -643,12 +644,16 @@ export default {
         width: 90%;
     }
 
-    .article-info {
+    .article-container {
         display: flex;
         justify-content: center;
         position: relative;
 
-        .main {
+        .left-sidbarnav {
+            display: none;
+        }
+
+        .article {
             height: 100%;
             width: 100%;
             margin-top: 60px;
@@ -873,10 +878,6 @@ export default {
 
             }
 
-            .left-sidbarnav {
-                display: none;
-            }
-
             .dianzanBox {
                 text-align: center;
 
@@ -966,12 +967,91 @@ export default {
         border-radius: 10px;
     }
 
-    .article-info {
+    .article-container {
         display: flex;
         justify-content: center;
         position: relative;
 
-        .main {
+        .left-sidbarnav {
+            position: fixed;
+            left: 150px;
+            top: 150px;
+            z-index: 999;
+
+            .left-item {
+                margin-bottom: 20px;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 50px;
+                background-color: var(--background-color);
+                cursor: pointer;
+                position: relative;
+                color: var(--text-color);
+
+                &:hover {
+                    span {
+                        color: var(--theme-color);
+                    }
+
+                    background-color: rgba(25, 153, 153, 0.2);
+                }
+
+                i {
+                    font-size: 20px;
+                }
+
+                .el-icon-star-on {
+                    font-size: 25px;
+                }
+
+                .like-count {
+                    color: #fff;
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    position: absolute;
+                    line-height: 20px;
+                    background-color: var(--theme-color);
+                    top: -8px;
+
+                }
+
+                .rewardItem {
+                    position: absolute;
+                    bottom: -150px;
+                    left: 52px;
+                    margin: 0;
+                    padding: 0 0 15px;
+                    width: 480px;
+                    background-color: #5956563e;
+                    height: 310px;
+                    border-radius: 5px;
+                    display: none;
+
+                    .reward-img {
+                        margin-left: 5px;
+                        margin-right: 5px;
+                        width: 220px;
+                        height: 300px;
+                        margin-top: 12px;
+                    }
+                }
+
+            }
+
+            .rewardMain {
+                &:hover {
+                    .rewardItem {
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        .article {
             background-color: var(--background-color);
             padding: 20px;
             height: 100%;
@@ -1308,84 +1388,7 @@ export default {
                 display: none;
             }
 
-            .left-sidbarnav {
-                position: fixed;
-                left: 150px;
-                top: 150px;
-                z-index: 999;
 
-                .left-item {
-                    margin-bottom: 20px;
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 50%;
-                    text-align: center;
-                    line-height: 50px;
-                    background-color: var(--background-color);
-                    cursor: pointer;
-                    position: relative;
-                    color: var(--text-color);
-
-                    &:hover {
-                        span {
-                            color: var(--theme-color);
-                        }
-
-                        background-color: rgba(25, 153, 153, 0.2);
-                    }
-
-                    i {
-                        font-size: 20px;
-                    }
-
-                    .el-icon-star-on {
-                        font-size: 25px;
-                    }
-
-                    .like-count {
-                        color: #fff;
-                        display: inline-block;
-                        width: 20px;
-                        height: 20px;
-                        border-radius: 50%;
-                        position: absolute;
-                        line-height: 20px;
-                        background-color: var(--theme-color);
-                        top: -8px;
-
-                    }
-
-                    .rewardItem {
-                        position: absolute;
-                        bottom: -150px;
-                        left: 52px;
-                        margin: 0;
-                        padding: 0 0 15px;
-                        width: 480px;
-                        background-color: #5956563e;
-                        height: 310px;
-                        border-radius: 5px;
-                        display: none;
-
-                        .reward-img {
-                            margin-left: 5px;
-                            margin-right: 5px;
-                            width: 220px;
-                            height: 300px;
-                            margin-top: 12px;
-                        }
-                    }
-
-                }
-
-                .rewardMain {
-                    &:hover {
-                        .rewardItem {
-                            display: block;
-                        }
-                    }
-                }
-            }
 
             .comment-mian {
                 .title {
@@ -1393,6 +1396,10 @@ export default {
                     font-size: 20px;
                     margin-top: 20px;
                     color: var(--theme-color);
+
+                    i {
+                        font-size: 20px;
+                    }
                 }
             }
         }
