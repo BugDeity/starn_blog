@@ -100,8 +100,6 @@ export default {
                 this.$store.commit("isCommentFlag", true)
                 this.commentContent = ""
                 this.showBox = false
-            }).catch(err => {
-                this.$message.error(err.message);
             })
 
         },

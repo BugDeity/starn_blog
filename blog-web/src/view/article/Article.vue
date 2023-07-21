@@ -157,7 +157,6 @@ export default {
                         this.$store.state.articleDrawer.flag = false
                         this.$message.success("发表成功")
                     }).catch(err => {
-                        this.$message.error(err.message)
                     })
                 } else {
                     console.log('error submit!!');

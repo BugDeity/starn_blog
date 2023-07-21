@@ -160,9 +160,7 @@ export default {
                         this.close()
                         this.$message.success("登录成功");
                         location.reload()
-                    }).catch(err => {
-                        this.$message.error(err.message);
-                    });
+                    })
                 } else {
                     console.log('error submit!!');
                     return false;

@@ -87,10 +87,18 @@ export default {
             this.$store.state.siteAccess = res.extra.siteAccess
             this.$store.state.visitorAccess = res.extra.visitorAccess
         })
+        if (this.userInfo) {
+            let params = {
+                startTime: this.dateList[0].timeStr,
+                endTime: this.dateList[this.dateList.length - 1].timeStr,
+            }
+            if (getToken()) {
+                getNewSystemNotice().then(res => {
+                    this.$store.commit("setSystemNotice", res.data)
+                })
+            }
+        }
 
-        getNewSystemNotice().then(res => {
-            this.$store.commit("setSystemNotice", res.data)
-        })
 
         // //跳回到原地址
         // if (flag) {

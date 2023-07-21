@@ -47,25 +47,25 @@ public class AccessLimitIntercept implements HandlerInterceptor {
             // handler是否为 HandleMethod 实例
             if (handler instanceof HandlerMethod) {
 
-//                // 拼接redis key = IP + Api限流
-//                String key = IpUtil.getIp(request) + request.getRequestURI();
-//                // 获取redis的value
-//                Integer maxTimes = null;
-//                Object value = redisTemplate.opsForValue().get(key);
-//                if (value != null) {
-//                    maxTimes = (Integer) value;
-//                }
-//                if (maxTimes == null) {
-//                    // 如果redis中没有该ip对应的时间则表示第一次调用，保存key到redis
-//                    redisTemplate.opsForValue().set(key, 1, time, TimeUnit.SECONDS);
-//                } else if (maxTimes < count) {
-//                    // 如果redis中的时间比注解上的时间小则表示可以允许访问,这是修改redis的value时间
-//                    redisTemplate.opsForValue().set(key, maxTimes + 1, time, TimeUnit.SECONDS);
-//                } else {
-//                    // 请求过于频繁
-//                    logger.info("API请求限流拦截启动,{} 请求过于频繁", key);
-//                    output(response, "{\"code\":\"8002\",\"message\":\"请求过于频繁，请稍后再试\"}");
-//                }
+                // 拼接redis key = IP + Api限流
+                String key = IpUtil.getIp(request) + request.getRequestURI();
+                // 获取redis的value
+                Integer maxTimes = null;
+                Object value = redisTemplate.opsForValue().get(key);
+                if (value != null) {
+                    maxTimes = (Integer) value;
+                }
+                if (maxTimes == null) {
+                    // 如果redis中没有该ip对应的时间则表示第一次调用，保存key到redis
+                    redisTemplate.opsForValue().set(key, 1, time, TimeUnit.SECONDS);
+                } else if (maxTimes < count) {
+                    // 如果redis中的时间比注解上的时间小则表示可以允许访问,这是修改redis的value时间
+                    redisTemplate.opsForValue().set(key, maxTimes + 1, time, TimeUnit.SECONDS);
+                } else {
+                    // 请求过于频繁
+                    logger.info("API请求限流拦截启动,{} 请求过于频繁", key);
+                    output(response, "{\"code\":\"8002\",\"message\":\"请求过于频繁，请稍后再试\"}");
+                }
             }
         } catch (Exception e) {
             logger.error("API请求限流拦截异常，异常原因：", e);

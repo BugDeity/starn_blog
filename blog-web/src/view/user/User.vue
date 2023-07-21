@@ -350,7 +350,6 @@ export default {
                         this.noteList.splice(index, 1)
                         this.$message.success("删除成功")
                     }).catch(err => {
-                        this.$message.error(err.message)
                     })
                 })
                 .catch(_ => {
@@ -364,7 +363,6 @@ export default {
                         this.articleList.splice(index, 1)
                         this.$message.success("删除成功")
                     }).catch(err => {
-                        this.$message.error(err.message)
                     })
                 })
                 .catch(_ => {
@@ -384,7 +382,6 @@ export default {
                             type: 'success'
                         });
                     }).catch(err => {
-                        this.$message.error(err.message)
                     })
                 } else {
                     console.log('error submit!!');
@@ -424,7 +421,6 @@ export default {
                     type: 'success'
                 });
             }).catch(err => {
-                this.$message.error(err.message);
             })
         },
         handlePage(type) {
@@ -495,7 +491,6 @@ export default {
                         this.collectList.splice(index, 1)
                         this.loading.close()
                     }).catch(err => {
-                        this.$message.error(err.message)
                     })
                 })
                 .catch(_ => {

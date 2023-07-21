@@ -427,7 +427,6 @@ export default {
         selectUserInfoByArticleId(this.articleId).then(res => {
             this.userInfo = res.data
         }).catch(err => {
-            this.$message.error(err.message);
         });
 
         this.openLoading()
@@ -442,7 +441,6 @@ export default {
             this.getCommens();
             this.loading.close()
         }).catch(err => {
-            this.$message.error(err.message);
         });
 
     },
@@ -474,7 +472,6 @@ export default {
                 this.userInfo.fansCount++
                 this.loading.close()
             }).catch(err => {
-                this.$message.error(err.message);
                 this.loading.close()
             });
         },
@@ -486,7 +483,6 @@ export default {
                 this.userInfo.fansCount--
                 this.loading.close()
             }).catch(err => {
-                this.$message.error(err.message);
                 this.loading.close()
             });
         },
@@ -502,7 +498,6 @@ export default {
                 this.$message.success("验证成功")
                 this.checkAfter()
             }).catch(err => {
-                this.$message.error(err.message)
             })
 
         },
@@ -558,7 +553,6 @@ export default {
                     this.$message.success("取消收藏成功")
                     this.loading.close()
                 }).catch(err => {
-                    this.$message.error("取消收藏失败")
                 })
             } else {
                 collect(id).then(res => {
@@ -567,7 +561,6 @@ export default {
                     this.$message.success("收藏成功")
                     this.loading.close()
                 }).catch(err => {
-                    this.$message.error("收藏失败")
                 })
             }
         },
@@ -624,7 +617,6 @@ export default {
                 }
                 this.loading.close()
             }).catch(err => {
-                this.$message.error(err.message);
                 this.loading.close()
             })
         },

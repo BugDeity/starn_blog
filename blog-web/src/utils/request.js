@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import { getToken, removeToken } from '@/utils/cookieUtil'
+import { Message } from 'element-ui';
 // create an axios instance
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
@@ -45,11 +46,20 @@ service.interceptors.response.use(
         // store.commit('SET_LOADING',false);
         // if the custom code is not 20000, it is judged as an error.
         if (res.code == 401) {
+            Message({
+                message: res.message,
+                type: 'error'
+            })
             removeToken()
             sessionStorage.removeItem("user")
             store.state.userInfo = null
         }
         if (res.code !== 200) {
+            Message({
+                message: res.message,
+                type: 'error'
+            })
+
             return Promise.reject(new Error(res.message || 'Error'))
         } else {
             return res

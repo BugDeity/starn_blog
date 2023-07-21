@@ -144,7 +144,6 @@ export default {
                         this.dialogFormVisible = false
                         this.$message({ type: "success", message: "提交成功，请等待审核" });
                     }).catch(err => {
-                        this.$message.error(err.message);
                     })
                 } else {
                     console.log('error submit!!');

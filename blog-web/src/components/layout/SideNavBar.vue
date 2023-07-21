@@ -134,7 +134,7 @@ export default {
                 this.$message({ type: "success", message: "注销成功" });
             }).catch(err => {
                 console.log(err)
-            });;
+            });
         }
     }
 };

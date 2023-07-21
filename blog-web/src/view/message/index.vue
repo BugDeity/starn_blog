@@ -79,7 +79,6 @@ export default {
                     type: 'success'
                 });
             }).catch(err => {
-                this.$message.error(err.message)
             });
             const TIME_COUNT = 30;
             if (!this.timer) {

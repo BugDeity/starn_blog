@@ -455,7 +455,6 @@ export default {
             withdraw(message).then(re => {
 
             }).catch(error => {
-                this.$message.error(error.message)
             });
         },
         //翻译
@@ -689,7 +688,6 @@ export default {
                         this.roomList.push(res.data)
                     }
                 }).catch(err => {
-                    this.$message.error(err.message)
                 })
             }
             //连接成功后获取历史聊天记录

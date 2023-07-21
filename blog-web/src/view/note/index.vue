@@ -205,7 +205,6 @@ export default {
                 this.pages = res.data.pages
                 this.loading.close()
             }).catch(err => {
-                this.$message.error(err.message);
                 this.loading.close()
             })
         },
@@ -226,7 +225,6 @@ export default {
                 this.loading.close()
                 this.getNoteList()
             }).catch(err => {
-                this.$message.error(err.message);
                 this.loading.close()
             })
         },
@@ -237,7 +235,6 @@ export default {
                 this.pages = res.data.pages
                 this.loading.close()
             }).catch(err => {
-                this.$message.error(err.message);
                 this.loading.close()
             })
         },

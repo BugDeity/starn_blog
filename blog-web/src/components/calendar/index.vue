@@ -95,8 +95,6 @@ export default {
             sign(time).then(res => {
                 this.signRecords.push(time)
                 this.$message.success("签到成功")
-            }).catch(err => {
-                this.$message.error(err.message)
             })
         },
         lastMonth() {
