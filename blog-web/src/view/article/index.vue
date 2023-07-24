@@ -553,6 +553,7 @@ export default {
                     this.$message.success("取消收藏成功")
                     this.loading.close()
                 }).catch(err => {
+                    this.loading.close()
                 })
             } else {
                 collect(id).then(res => {
@@ -561,6 +562,7 @@ export default {
                     this.$message.success("收藏成功")
                     this.loading.close()
                 }).catch(err => {
+                    this.loading.close()
                 })
             }
         },

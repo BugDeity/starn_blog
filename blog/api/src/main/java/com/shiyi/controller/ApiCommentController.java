@@ -2,6 +2,7 @@ package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.shiyi.annotation.BusinessLogger;
+import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Comment;
 import com.shiyi.service.ApiCommentService;
@@ -21,9 +22,10 @@ public class ApiCommentController {
 
     private final ApiCommentService commentService;
 
+    @SaCheckLogin
     @BusinessLogger(value = "评论模块-用户评论",type = "添加",desc = "用户评论")
     @RequestMapping(value = "/",method = RequestMethod.POST)
-    @SaCheckLogin
+    @OperationLogger(save = false,value = "添加评论")
     @ApiOperation(value = "添加评论", httpMethod = "POST", response = ResponseResult.class, notes = "添加评论")
     public ResponseResult insertComment(@RequestBody Comment comment){
         return commentService.insertComment(comment);

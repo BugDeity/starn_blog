@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Message;
+import com.shiyi.exception.BusinessException;
 import com.shiyi.mapper.MessageMapper;
 import com.shiyi.service.MessageService;
 import com.shiyi.utils.PageUtils;
@@ -14,7 +15,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -56,7 +56,9 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult passBatch(List<Integer> ids) {
-        Assert.notEmpty(ids,PARAMS_ILLEGAL.getDesc());
+        if (ids == null || ids.size() == 0) {
+            throw new BusinessException(PARAMS_ILLEGAL.desc);
+        }
         baseMapper.passBatch(ids);
         return ResponseResult.success();
     }

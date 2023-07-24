@@ -6,12 +6,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.shiyi.common.RedisConstants;
 import com.shiyi.common.ResponseResult;
+import com.shiyi.entity.Medal;
 import com.shiyi.entity.Tags;
 import com.shiyi.entity.WebConfig;
-import com.shiyi.mapper.ArticleMapper;
-import com.shiyi.mapper.CategoryMapper;
-import com.shiyi.mapper.TagsMapper;
-import com.shiyi.mapper.WebConfigMapper;
+import com.shiyi.mapper.*;
 import com.shiyi.service.ApiHomeService;
 import com.shiyi.service.RedisService;
 import com.shiyi.utils.IpUtil;
@@ -45,6 +43,8 @@ public class ApiHomeServiceImpl implements ApiHomeService {
     private final TagsMapper tagsMapper;
 
     private final CategoryMapper categoryMapper;
+
+    private final MedalMapper medalMapper;
 
 
     /**
@@ -139,4 +139,8 @@ public class ApiHomeServiceImpl implements ApiHomeService {
         return ResponseResult.success(jsonObject);
     }
 
+    public ResponseResult getMedal(String medalId) {
+        Medal medal = medalMapper.selectById(medalId);
+        return ResponseResult.success(medal);
+    }
 }

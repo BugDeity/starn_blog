@@ -2,6 +2,7 @@ package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.shiyi.annotation.BusinessLogger;
+import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.dto.ArticleInsertDTO;
 import com.shiyi.service.ApiArticleService;
@@ -58,6 +59,8 @@ public class ApiArticleController {
         return  articleService.archive();
     }
 
+
+    @OperationLogger(save = false,value = "文章点赞")
     @BusinessLogger(value = "门户-文章点赞",type = "查询",desc = "文章点赞")
     @GetMapping(value = "/like")
     @ApiOperation(value = "文章点赞", httpMethod = "GET", response = ResponseResult.class, notes = "文章点赞")
@@ -73,6 +76,7 @@ public class ApiArticleController {
     }
 
     @SaCheckLogin
+    @OperationLogger(save = false,value = "添加文章")
     @PostMapping(value = "/")
     @BusinessLogger(value = "添加文章",type = "添加",desc = "添加文章")
     @ApiOperation(value = "添加文章", httpMethod = "POST", response = ResponseResult.class, notes = "添加文章")

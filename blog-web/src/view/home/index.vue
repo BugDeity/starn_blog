@@ -318,11 +318,28 @@
                 </div>
             </div>
         </div>
+
+        <!-- 勋章显示弹框 -->
+        <el-dialog class="medalDialog" title="恭喜获得一枚勋章" :visible.sync="centerDialogVisible" center>
+            <div class="conent">
+                <svg-icon v-if="medal.type == 1" :icon-class="medal.url"></svg-icon>
+                <img v-else :src="medal.url" />
+
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <div class="footer-item">
+                    {{ medal.name }}
+                </div>
+                <div class="footer-item">
+                    {{ medal.info }}
+                </div>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
 <script>
-import { fetchArticleList, featchHomeData, featchCategory, getMusic } from '@/api'
+import { fetchArticleList, featchHomeData, featchCategory, getMusic, getMedal } from '@/api'
 import Notcie from '@/components/notice/index.vue'
 import Calendar from '@/components/calendar'
 import APlayer from 'vue-aplayer'
@@ -345,12 +362,14 @@ export default {
 
     data() {
         return {
+            centerDialogVisible: false,
             audio: [],
             emojis: [],
             pageData: {
                 pageNo: 1,
                 pageSize: 8,
             },
+            medalId: this.$route.query.medalId,
             // 加载层信息
             loading: [],
             activeName: "0",
@@ -370,6 +389,9 @@ export default {
                 }
             ],
             articleList: [],
+            medal: {
+                type: 1
+            },
             pageTotal: 0,
             tagList: [],
             newArticleList: [],
@@ -390,6 +412,12 @@ export default {
         this.fetchArticleList()
         this.getHomeData()
         this.fetchCategoryList()
+        if (this.medalId) {
+            getMedal(this.medalId).then(res => {
+                this.medal = res.data
+                this.centerDialogVisible = true
+            })
+        }
         //this.getMusic()
     },
     methods: {
@@ -535,6 +563,32 @@ export default {
     background-color: var(--theme-color);
 }
 
+/deep/ .el-dialog {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+
+    .el-dialog__header {
+        .el-dialog__title {
+            color: #fff;
+        }
+    }
+
+    .el-dialog__body {
+        background-color: rgb(140, 140, 140);
+
+    }
+
+    .conent {
+        text-align: center;
+    }
+
+    .el-dialog__footer {}
+
+    .footer-item {
+        color: #fff;
+    }
+}
+
 .banner {
     position: relative;
     height: 420px;
@@ -562,6 +616,10 @@ export default {
 }
 
 @media screen and (max-width: 1118px) {
+    /deep/ .el-dialog {
+        width: 90%;
+    }
+
     .main-container {
         display: flex;
         justify-content: center;
@@ -743,6 +801,9 @@ export default {
 }
 
 @media screen and (min-width: 1119px) {
+    /deep/ .el-dialog {
+        width: 20%;
+    }
 
     .main-container {
         display: flex;

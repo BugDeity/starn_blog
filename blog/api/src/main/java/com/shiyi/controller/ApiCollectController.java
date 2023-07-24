@@ -1,6 +1,7 @@
 package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.service.ApiCollectService;
 import io.swagger.annotations.Api;
@@ -31,6 +32,7 @@ public class ApiCollectController {
     }
 
     @SaCheckLogin
+    @OperationLogger(save = false,value = "收藏文章")
     @GetMapping(value = "collect")
     @ApiOperation(value = "收藏文章", httpMethod = "GET", response = ResponseResult.class, notes = "收藏文章")
     public ResponseResult collect(Integer articleId, HttpServletRequest request) {

@@ -98,7 +98,12 @@ export function fetchTagList() {
     })
 }
 
-
+export function getMedal(medalId) {
+    return request({
+        url: '/v1/getMedal/' + medalId,
+        method: 'get',
+    })
+}
 
 export function featchHomeData() {
     return request({

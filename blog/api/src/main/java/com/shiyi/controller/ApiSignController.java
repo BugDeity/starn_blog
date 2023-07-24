@@ -2,6 +2,7 @@ package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.shiyi.annotation.BusinessLogger;
+import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.service.ApiSignService;
 import io.swagger.annotations.Api;
@@ -27,6 +28,7 @@ public class ApiSignController {
     }
 
     @SaCheckLogin
+    @OperationLogger(save = false,value = "用户签到")
     @RequestMapping(value = "/",method = RequestMethod.GET)
     @BusinessLogger(value = "签到-用户签到",type = "添加",desc = "用户签到")
     @ApiOperation(value = "用户签到", httpMethod = "GET", response = ResponseResult.class, notes = "用户签到")

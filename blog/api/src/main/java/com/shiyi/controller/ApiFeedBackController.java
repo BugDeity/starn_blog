@@ -2,6 +2,7 @@ package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.shiyi.annotation.BusinessLogger;
+import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.FeedBack;
 import com.shiyi.service.ApiFeedBackService;
@@ -28,6 +29,7 @@ public class ApiFeedBackController {
     private final ApiFeedBackService feedBackService;
 
     @SaCheckLogin
+    @OperationLogger(save = false,value = "添加反馈")
     @PostMapping(value = "/")
     @ApiOperation(value = "添加反馈", httpMethod = "POST", response = ResponseResult.class, notes = "添加反馈")
     public ResponseResult insertFeedback(@RequestBody FeedBack feedBack) {

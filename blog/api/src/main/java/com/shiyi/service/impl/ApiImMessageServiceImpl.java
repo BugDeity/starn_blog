@@ -9,6 +9,7 @@ import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.ImMessage;
 import com.shiyi.entity.ImRoom;
 import com.shiyi.entity.Medal;
+import com.shiyi.entity.User;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.im.MessageConstant;
@@ -186,11 +187,11 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
             log.error("网址={} 解析失败", url);
         }
         //图片不进行敏感词过滤，会把图片地址部分过滤掉
-        if (obj.getType() != MessageConstant.MESSAGE_TYPE_IMG) {
-            //过滤敏感词
-            String filterContent = SensitiveUtils.filter(content);
-            obj.setContent(filterContent);
-        }
+//        if (obj.getType() != MessageConstant.MESSAGE_TYPE_IMG) {
+//            //过滤敏感词
+//            String filterContent = SensitiveUtils.filter(content);
+//            obj.setContent(filterContent);
+//        }
 
         obj.setIp(IpUtil.getIp(request));
         obj.setIpSource(IpUtil.getIp2region(obj.getIp()));

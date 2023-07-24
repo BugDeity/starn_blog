@@ -2,6 +2,7 @@ package com.shiyi.controller;
 
 
 import com.shiyi.annotation.BusinessLogger;
+import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Message;
 import com.shiyi.service.ApiMessageService;
@@ -39,6 +40,7 @@ public class ApiMessageController {
 
     @BusinessLogger(value = "留言模块-用户留言",type = "添加",desc = "用户留言")
     @RequestMapping(value = "/",method = RequestMethod.POST)
+    @OperationLogger(save = false,value = "添加留言")
     @ApiOperation(value = "添加留言", httpMethod = "POST", response = ResponseResult.class, notes = "添加留言")
     public ResponseResult insertMessage(@RequestBody Message message){
         return messageService.insertMessage(message);

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shiyi.mapper.MedalMapper">
+    <insert id="insertMedalByUserId">
+        INSERT INTO b_user_medal( `user_id`, `medal_id`,`create_time`) VALUES (#{userId}, #{medalId}, #{time});
+
+    </insert>
 
     <select id="selectMedalByUserId" resultType="com.shiyi.entity.Medal">
         select m.url,m.info from b_user u left join b_user_medal um on u.id =um.user_id left join b_medal m on um.medal_id = m.id where u.id=#{userId}

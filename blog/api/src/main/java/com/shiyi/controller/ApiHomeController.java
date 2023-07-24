@@ -6,10 +6,7 @@ import com.shiyi.service.impl.ApiHomeServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -60,5 +57,10 @@ public class ApiHomeController {
         return homeService.getMusic();
     }
 
+    @GetMapping("/getMedal/{medalId}")
+    @ApiOperation(value = "获取勋章信息", httpMethod = "GET", response = ResponseResult.class, notes = "获取勋章信息")
+    public ResponseResult getMedal(@PathVariable String medalId){
+        return homeService.getMedal(medalId);
+    }
 }
 

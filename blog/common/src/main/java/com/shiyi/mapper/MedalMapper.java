@@ -2,8 +2,10 @@ package com.shiyi.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.shiyi.entity.Medal;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,4 +19,6 @@ import java.util.List;
 public interface MedalMapper extends BaseMapper<Medal> {
 
     List<Medal> selectMedalByUserId(String userId);
+
+    void insertMedalByUserId(@Param("medalId") int medalId, @Param("userId") String userId, @Param("time") Date date);
 }

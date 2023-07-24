@@ -43,8 +43,7 @@
                             </span>
                         </div>
                         <div class="content-box">
-                            <div v-if="item.noticeType <= 1">
-                                {{ item.content }}
+                            <div class="imContentItem" v-if="item.noticeType <= 1" v-html="item.content">
                             </div>
 
                             <div v-if="item.noticeType == 2">
@@ -122,6 +121,7 @@ export default {
             noticeList: []
         }
     },
+
     created() {
         // console.log('------created--------');
         this.title = this.leftIems[this.pageData.type].name
@@ -202,7 +202,7 @@ export default {
     },
 }
 </script>
-   
+
 <style lang='scss' scoped>
 @media screen and (max-width: 1118px) {
     .sysnotice {
@@ -353,6 +353,11 @@ export default {
                     border-bottom: 2px solid var(--border-line);
                     padding-bottom: 20px;
                     color: var(--text-color);
+
+                    /deep/ .imContentItem a {
+                        text-decoration: none;
+                        color: var(--text-color);
+                    }
 
                 }
             }

@@ -78,7 +78,7 @@ public class ApiUserServiceImpl implements ApiUserService {
         }
 
         if (user.getStatus() == UserStatusEnum.disable.code) {
-            throw new BusinessException(EMAIL_DISABLE_LOGIN.desc);
+            throw new BusinessException(DISABLE_ACCOUNT.desc);
         }
 
         UserInfo userInfo = userInfoMapper.selectById(user.getUserInfoId());
@@ -195,7 +195,7 @@ public class ApiUserServiceImpl implements ApiUserService {
     public ResponseResult updateUser(UserInfoDTO vo) {
         UserInfo userInfo = BeanCopyUtils.copyObject(vo, UserInfo.class);
         int update = userInfoMapper.updateById(userInfo);
-        return update > 0 ? ResponseResult.success("修改信息成功") : ResponseResult.error(ERROR_DEFAULT.getDesc());
+        return ResponseResult.success("修改信息成功");
     }
 
     /**

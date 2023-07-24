@@ -301,7 +301,6 @@ export default {
                 this.commentContent = ""
                 this.pageNo = 1
             }).catch(err => {
-                this.$message.error(err.message);
             })
 
         },
