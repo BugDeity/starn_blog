@@ -69,6 +69,9 @@ public class ImMessageVO {
     @ApiModelProperty(value = "通知类型 0系统通知 1：评论 2：关注 3点赞 4收藏 5私信")
     private Integer noticeType;
 
+    @ApiModelProperty(value = "@用户id 多个逗号分隔")
+    private String atUserId;
+
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = DateUtil.YYYY_MM_DD_HH_MM,timezone="GMT+8")
     private Date createTime;

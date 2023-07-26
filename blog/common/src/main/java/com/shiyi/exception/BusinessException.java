@@ -4,6 +4,7 @@ import com.shiyi.common.ResultCode;
 import lombok.Data;
 
 import static com.shiyi.common.ResultCode.ERROR;
+import static com.shiyi.common.ResultCode.ERROR_DEFAULT;
 
 /**
  * @author blue
@@ -33,7 +34,7 @@ public class BusinessException extends RuntimeException{
 
     public BusinessException(String msg) {
         super(msg);
-        this.code = ERROR.getCode();
+        this.code = ERROR_DEFAULT.getCode();
         this.message = msg;
     }
 

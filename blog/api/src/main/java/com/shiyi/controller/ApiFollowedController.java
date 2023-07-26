@@ -1,7 +1,7 @@
 package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
-import com.shiyi.annotation.OperationLogger;
+import com.shiyi.annotation.AccessLimit;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.service.ApiFollowedService;
 import io.swagger.annotations.Api;
@@ -22,14 +22,15 @@ public class ApiFollowedController {
 
     private final ApiFollowedService followedService;
 
+    @AccessLimit
     @SaCheckLogin
-    @OperationLogger(save = false,value = "关注用户")
     @PostMapping(value = "/insertFollowed")
     @ApiOperation(value = "关注用户", httpMethod = "POST", response = ResponseResult.class, notes = "关注用户")
     public ResponseResult insertFeedback(String userId, HttpServletRequest request) {
         return  followedService.insertFollowed(userId,request);
     }
 
+    @AccessLimit
     @SaCheckLogin
     @DeleteMapping(value = "/deleteFollowed")
     @ApiOperation(value = "取消关注用户", httpMethod = "DELETE", response = ResponseResult.class, notes = "取消关注用户")

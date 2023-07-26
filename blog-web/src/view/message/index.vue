@@ -6,7 +6,8 @@
             <div class="message-container">
                 <h1 class="message-title">留言板</h1>
                 <div class="message-input-wrapper">
-                    <el-input class="input" v-model="content" placeholder="说点什么吧" @focus="show = true"></el-input>
+                    <el-input class="input" v-model="content" placeholder="说点什么吧" @keyup.enter.native="addToList"
+                        @focus="show = true"></el-input>
                     <el-button style="opacity: .6;" class="ml-3" round @click="addToList" v-show="show">发送</el-button>
                 </div>
             </div>

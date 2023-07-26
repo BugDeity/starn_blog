@@ -195,11 +195,11 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
 
         obj.setIp(IpUtil.getIp(request));
         obj.setIpSource(IpUtil.getIp2region(obj.getIp()));
-
+        obj.setContent(content);
         ImMessage imMessage = BeanCopyUtils.copyObject(obj, ImMessage.class);
         //保存消息到数据库
         imMessageMapper.insert(imMessage);
-        //创建房间
+        //如果是私聊，则发送聊天的同时给发送人创建房间
         if (obj.getCode() == MessageConstant.PRIVATE_CHAT_CODE) {
             ImRoom imRoom = imRoomMapper.selectOne(new LambdaQueryWrapper<ImRoom>().eq(ImRoom::getFromUserId, obj.getToUserId())
                     .eq(ImRoom::getToUserId, obj.getFromUserId()));

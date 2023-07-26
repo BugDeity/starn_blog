@@ -109,6 +109,11 @@
 
                 <!-- 自定义右键功能 -->
                 <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
+                    <li @click="atUser" class="atUser">
+                        <div class="menuitem">
+                            <i class="iconfont icon-at"></i>艾特Ta
+                        </div>
+                    </li>
                     <li @click="clipboard" class="copyBtn">
                         <div class="menuitem">
                             <i class="el-icon-document-copy"></i> 复制
@@ -239,6 +244,7 @@ export default {
             ],
             selectUserOnline: null,
             emoji: "emoji1",
+            atMember: "",
             searchUrl: ['https://www.baidu.com/s?&wd=', 'https://search.gitee.com/?skin=rec&type=repository&q=', 'https://github.com/search?q=']
         }
     },
@@ -438,6 +444,22 @@ export default {
             this.message = item
             this.message.index = index
         },
+        atUser() {
+            this.$message.info("待开发")
+            return;
+            if (this.atMember.indexOf(this.message.fromUserId) != -1) {
+                return;
+            }
+            if (this.atMember) {
+                this.atMember += "," + this.message.fromUserId
+            } else {
+                this.atMember += this.message.fromUserId
+            }
+
+            let at = "<button class='at_member' contenteditable='false'>@" + this.message.fromUserNickname + "</button>&nbsp;&nbsp;"
+            this.$refs.inputRef.innerText += at
+
+        },
         //撤回
         withdraw() {
             let message = {
@@ -594,10 +616,14 @@ export default {
                     isRead: 0,
                 }
             }
+            if (this.atMember) {
+                message.atUserId = this.atMember
+            }
             //发送消息
             send(message)
             // 构建消息内容，本人消息
             this.$refs.inputRef.innerText = null;
+            this.atMember = ""
         },
         //初始化socket
         init() {
@@ -967,6 +993,7 @@ export default {
                         padding: 8px;
                         white-space: pre-wrap;
                         user-select: auto;
+                        text-align: left;
 
                         /deep/ a {
                             text-decoration: none;
@@ -1092,6 +1119,15 @@ export default {
                     /deep/ img {
                         height: 100px;
                         vertical-align: middle;
+                    }
+
+                    /deep/ .at_member {
+                        padding: 0;
+                        font-size: inherit;
+                        line-height: 1;
+                        color: var(--theme-color);
+                        background: transparent;
+                        border: none;
                     }
 
                     &:empty:before {

@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1689122861241') format('truetype');
+  src: url('iconfont.ttf?t=1690256500010') format('truetype');
 }
 
 .iconfont {
@@ -9,10 +9,6 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.icon-tupian:before {
-  content: "\e8ba";
 }
 
 .icon-menu_normal:before {
@@ -55,10 +51,6 @@
   content: "\e613";
 }
 
-.icon-biaoqing:before {
-  content: "\e681";
-}
-
 .icon-dianzan4:before {
   content: "\e61f";
 }
@@ -81,5 +73,9 @@
 
 .icon-code:before {
   content: "\e615";
+}
+
+.icon-at:before {
+  content: "\e648";
 }
 

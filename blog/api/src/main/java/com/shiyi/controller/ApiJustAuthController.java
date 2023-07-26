@@ -1,5 +1,6 @@
 package com.shiyi.controller;
 
+import com.shiyi.annotation.AccessLimit;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.config.properties.GiteeConfigProperties;
 import com.shiyi.config.properties.GithubConfigProperties;
@@ -73,6 +74,7 @@ public class ApiJustAuthController {
         userService.authLogin(response,source,request,httpServletResponse);
     }
 
+    @AccessLimit
     @RequestMapping(value = "/emailLogin",method = RequestMethod.POST)
     @ApiOperation(value = "账号密码登录", httpMethod = "POST", response = ResponseResult.class, notes = "账号密码登录")
     public ResponseResult emailLogin(@Valid @RequestBody EmailLoginDTO emailLoginDTO){

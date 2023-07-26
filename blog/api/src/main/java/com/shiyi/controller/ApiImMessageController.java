@@ -2,7 +2,6 @@ package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.shiyi.annotation.BusinessLogger;
-import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.service.ApiImMessageService;
 import com.shiyi.vo.ImMessageVO;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/v1/im")
@@ -47,7 +45,6 @@ public class ApiImMessageController {
     }
 
     @SaCheckLogin
-    @OperationLogger(save = false,value = "发送消息")
     @PostMapping(value = "/chat")
     @ApiOperation(value = "发送消息", httpMethod = "POST", response = ResponseResult.class, notes = "发送消息")
     public ResponseResult chat(@RequestBody ImMessageVO message, HttpServletRequest request){
@@ -55,7 +52,6 @@ public class ApiImMessageController {
     }
 
     @SaCheckLogin
-    @OperationLogger(save = false,value = "撤回消息")
     @PostMapping(value = "/withdraw")
     @ApiOperation(value = "撤回消息", httpMethod = "POST", response = ResponseResult.class, notes = "撤回消息")
     public ResponseResult withdraw(@RequestBody ImMessageVO message, HttpServletRequest request){

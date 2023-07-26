@@ -582,8 +582,6 @@ export default {
         text-align: center;
     }
 
-    .el-dialog__footer {}
-
     .footer-item {
         color: #fff;
     }

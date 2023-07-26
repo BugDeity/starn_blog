@@ -73,6 +73,9 @@ public class ImMessage implements Serializable {
     @ApiModelProperty(value = "文章id")
     private Integer articleId;
 
+    @ApiModelProperty(value = "@用户id 多个逗号分隔")
+    private String atUserId;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")

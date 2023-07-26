@@ -6,13 +6,6 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "116923386",
-      "name": "图片",
-      "font_class": "tupian",
-      "unicode": "e8ba",
-      "unicode_decimal": 59578
-    },
-    {
       "icon_id": "116923388",
       "name": "menu_normal",
       "font_class": "menu_normal",
@@ -83,13 +76,6 @@
       "unicode_decimal": 58899
     },
     {
-      "icon_id": "118136974",
-      "name": "表情",
-      "font_class": "biaoqing",
-      "unicode": "e681",
-      "unicode_decimal": 59009
-    },
-    {
       "icon_id": "119290567",
       "name": "点赞",
       "font_class": "dianzan4",
@@ -130,6 +116,13 @@
       "font_class": "code",
       "unicode": "e615",
       "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "121382302",
+      "name": "at",
+      "font_class": "at",
+      "unicode": "e648",
+      "unicode_decimal": 58952
     }
   ]
 }

@@ -6,7 +6,7 @@
                     <svg-icon :icon-class="svgList[selectSite]"></svg-icon>
                     <i @click="dialogVisible = true" class="el-icon-caret-bottom"></i>
                 </div>
-                <el-input class="input" v-model="text" placeholder="请输入内容"></el-input>
+                <el-input class="input" v-model="text" placeholder="请输入内容" @keyup.enter.native="handleCommit"></el-input>
                 <div class="searchCommit" @click="handleCommit">
                     <i class="iconfont icon-search"></i>
                 </div>

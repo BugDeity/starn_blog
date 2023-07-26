@@ -1,7 +1,7 @@
 package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
-import com.shiyi.annotation.OperationLogger;
+import com.shiyi.annotation.AccessLimit;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Note;
 import com.shiyi.service.ApiNoteService;
@@ -29,9 +29,9 @@ public class ApiNoteController {
         return apiNoteService.selectNoteList(categoryId);
     }
 
+    @AccessLimit
     @SaCheckLogin
     @PostMapping(value = "/")
-    @OperationLogger(save = false,value = "添加笔记")
     @ApiOperation(value = "添加笔记", httpMethod = "POST", response = ResponseResult.class, notes = "添加笔记")
     public ResponseResult insertNote(@RequestBody  Note note) {
         return apiNoteService.insertNote(note);

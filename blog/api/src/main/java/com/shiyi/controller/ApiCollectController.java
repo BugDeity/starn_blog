@@ -1,7 +1,7 @@
 package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
-import com.shiyi.annotation.OperationLogger;
+import com.shiyi.annotation.AccessLimit;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.service.ApiCollectService;
 import io.swagger.annotations.Api;
@@ -32,7 +32,7 @@ public class ApiCollectController {
     }
 
     @SaCheckLogin
-    @OperationLogger(save = false,value = "收藏文章")
+    @AccessLimit
     @GetMapping(value = "collect")
     @ApiOperation(value = "收藏文章", httpMethod = "GET", response = ResponseResult.class, notes = "收藏文章")
     public ResponseResult collect(Integer articleId, HttpServletRequest request) {
@@ -40,6 +40,7 @@ public class ApiCollectController {
     }
 
     @SaCheckLogin
+    @AccessLimit
     @DeleteMapping(value = "/")
     @ApiOperation(value = "取消收藏", httpMethod = "DELETE", response = ResponseResult.class, notes = "取消收藏")
     public ResponseResult cancel(Integer articleId) {
