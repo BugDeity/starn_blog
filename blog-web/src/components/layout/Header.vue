@@ -1,5 +1,6 @@
 <template>
     <header class="header">
+        <div id="pre" :style="{ width: widthPre + '%' }"></div>
         <nav>
             <div class="logo" style="cursor: pointer;">
                 <div class="logoBox">
@@ -217,6 +218,7 @@ export default {
     },
     data() {
         return {
+            widthPre: '',
             keywords: null,
             user: this.$store.state.userInfo,
             style: null,
@@ -335,6 +337,12 @@ export default {
             //         this.headerClass = "header slideUp"
             //     }
             // }
+            let page = document.body.scrollHeight
+            let client = document.documentElement.clientHeight
+            let comend = page - client
+            let scrTop = document.documentElement.scrollTop
+            // console.log()
+            this.widthPre = Math.round(scrTop / comend * 10000) / 100
         },
         handleLogin() {
             this.$store.commit("setLoginFlag", true);// 存储到vuex
@@ -373,6 +381,13 @@ export default {
 
 .topBage {
     vertical-align: 15px;
+}
+
+#pre {
+    position: fixed;
+    top: 0;
+    height: 2px;
+    background-image: -webkit-linear-gradient(0deg, #3ca5f6 0, #a86af9 100%);
 }
 
 @media screen and (max-width: 1118px) {
