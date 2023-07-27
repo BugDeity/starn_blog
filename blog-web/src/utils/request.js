@@ -53,18 +53,21 @@ service.interceptors.response.use(
                 store.state.userInfo = null
                 store.state.loginFlag = true
             }
-            Message({
-                message: res.message,
-                type: 'error',
-                showClose: true
-            })
+            //如果是校验微信登录是否授权的接口 则不进行错误输出
+            if (response.config.url !== "/oauth/wechat/is_login") {
+                Message({
+                    message: res.message,
+                    type: 'error',
+                    showClose: true
+                })
+            }
+
             return Promise.reject(new Error(res.message || 'Error'))
         } else {
             return res
         }
     },
     error => {
-        console.log('err' + error) // for debug
         return Promise.reject(error)
     }
 )
