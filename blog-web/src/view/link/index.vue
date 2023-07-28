@@ -24,7 +24,6 @@
                 </div>
 
                 <div class="site">
-                    <span class="site-title">&lt; 博客名称 + 博客地址 + 博客Logo + 博客简介 &gt;</span>
                     <span>博客名称：{{ $store.state.webSiteInfo.name }}</span>
                     <span>博客地址: <a :href="$store.state.webSiteInfo.webUrl" target="_blank">{{
                         $store.state.webSiteInfo.webUrl
@@ -311,11 +310,6 @@ export default {
                     word-wrap: break-word;
                 }
 
-                .site-title {
-                    font-weight: 700;
-                    font-size: 15px
-                }
-
                 span {
                     padding: 5px 10px;
                     display: block;
@@ -485,10 +479,6 @@ export default {
                 a {
                     text-decoration: none;
                     color: var(--theme-color);
-                }
-
-                .site-title {
-                    font-weight: 700;
                 }
 
                 span {

@@ -32,27 +32,33 @@
                 <li>
                     <span>
                         <router-link :class="path == '/' ? 'active' : ''" :to="'/'">
-                            首页
+                            <i class="el-icon-star-off"></i> 首页
                         </router-link>
                     </span>
                 </li>
 
                 <li>
-                    <el-dropdown trigger="click">
+                    <el-dropdown trigger="hover">
                         <span class="el-dropdown-link" :class="path == '/archive' || path == '/categorys' || path == '/tag'
                             ? 'active' : ''">
-                            文章归档<i class="el-icon-arrow-down el-icon--right"></i>
+                            <i class="el-icon-receiving"></i> 文章归档<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <router-link style="text-decoration: none;color: #71777c;" :to="'/archive'">
-                                <el-dropdown-item>归档</el-dropdown-item>
+                                <el-dropdown-item>
+                                    <i class="el-icon-date"></i>归档
+                                </el-dropdown-item>
                             </router-link>
                             <router-link style="text-decoration: none;color: #71777c;" :to="'/categorys'">
-                                <el-dropdown-item>分类 </el-dropdown-item>
+                                <el-dropdown-item>
+                                    <i class="el-icon-menu"></i>分类
+                                </el-dropdown-item>
                             </router-link>
 
                             <router-link style="text-decoration: none;color: #71777c;" :to="'/tag'">
-                                <el-dropdown-item>标签</el-dropdown-item>
+                                <el-dropdown-item>
+                                    <i class="el-icon-position"></i>标签
+                                </el-dropdown-item>
                             </router-link>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -61,7 +67,7 @@
                 <li>
                     <span>
                         <router-link style="color: red;" :class="path == '/sponsor' ? 'active' : ''" :to="'/sponsor'">
-                            打赏名单
+                            <i class="el-icon-coin"></i> 打赏名单
                         </router-link>
                     </span>
                 </li>
@@ -69,7 +75,7 @@
                 <li>
                     <span>
                         <router-link :class="path == '/photo' ? 'active' : ''" :to="'/photo'">
-                            画廊
+                            <i class="el-icon-picture"></i> 画廊
                         </router-link>
                     </span>
                 </li>
@@ -77,7 +83,7 @@
                 <li>
                     <span>
                         <router-link :class="path == '/note' ? 'active' : ''" :to="'/note'">
-                            笔记
+                            <i class="el-icon-edit"></i> 笔记
                         </router-link>
                     </span>
                 </li>
@@ -85,28 +91,28 @@
                 <li>
                     <span>
                         <router-link :class="path == '/hot' ? 'active' : ''" :to="'/hot'">
-                            热搜
+                            <i class="el-icon-sunny"></i> 热搜
                         </router-link>
                     </span>
                 </li>
                 <li>
                     <span>
                         <router-link :class="path == '/message' ? 'active' : ''" :to="'/message'">
-                            留言板
+                            <i class="el-icon-chat-dot-square"></i> 留言板
                         </router-link>
                     </span>
                 </li>
                 <li>
                     <span>
                         <router-link :class="path == '/links' ? 'active' : ''" :to="'/links'">
-                            友情链接
+                            <i class="el-icon-link"></i> 友情链接
                         </router-link>
                     </span>
                 </li>
                 <li>
-                    <el-dropdown trigger="click">
+                    <el-dropdown trigger="hover">
                         <span class="el-dropdown-link">
-                            关于本站<i class="el-icon-arrow-down el-icon--right"></i>
+                            <i class="el-icon-warning-outline"></i> 关于本站<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
 
@@ -145,9 +151,9 @@
                     </a>
                 </div>
             </div>
-            <div class="articleBtn">
+            <!-- <div class="articleBtn">
                 <el-button size="small" @click="addArticle" type="primary">发表文章</el-button>
-            </div>
+            </div> -->
 
             <div class="noticeBtn">
                 <el-dropdown trigger="hover">
@@ -523,6 +529,11 @@ export default {
                     display: block;
                     font-size: 14px;
                     padding: 0 15px;
+                    position: relative;
+
+                    i {
+                        font-weight: 700;
+                    }
 
                     .active {
                         color: var(--theme-color);
@@ -541,7 +552,7 @@ export default {
 
             .searchBox {
                 position: absolute;
-                right: 340px;
+                right: 240px;
                 top: 0;
                 display: flex;
                 -ms-flex-direction: column;
@@ -584,11 +595,11 @@ export default {
 
                 .hot_search_main {
                     background-color: var(--background-color);
-                    border-radius: 4px;
+                    border-radius: 2px;
                     box-shadow: 0 0 10px rgba(0, 0, 0, .5);
                     position: absolute;
                     z-index: 99;
-                    top: 50px;
+                    top: 60px;
                     left: 10px;
                     right: -10px;
                     opacity: 0;

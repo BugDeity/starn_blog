@@ -4,9 +4,9 @@
             <h1 class="title">关于本站</h1>
             <v-md-preview class="content" :text="$store.state.webSiteInfo.aboutMe" ref="preview" />
         </el-card>
-        <div class="authorInfo">
+        <!-- <div class="authorInfo">
             <SiteInfo />
-        </div>
+        </div> -->
     </div>
 </template>
 <script>

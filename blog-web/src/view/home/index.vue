@@ -15,8 +15,9 @@
                 </div>
 
                 <div class="tuijian">
-                    <!-- <Notcie /> -->
-                    <Calendar></Calendar>
+                    <SiteInfo />
+                    <Notcie />
+                    <!-- <Calendar></Calendar> -->
                 </div>
             </div>
 
@@ -32,8 +33,9 @@
                 </el-tabs>
             </div>
 
-            <!-- 文章列表 -->
+
             <div class="content">
+                <!-- 左侧内容 -->
                 <div class="articleBox" v-if="articleList.length > 0">
                     <el-card class="articleItem" v-for="(item, index) in articleList" :key="item.id">
                         <div class="articleInfo">
@@ -104,9 +106,11 @@
                     </div>
                 </div>
                 <el-empty style=" width: 100%;" v-else description="很抱歉，暂无文章"></el-empty>
+
+                <!-- 右侧内容 -->
                 <div class="rightBox">
                     <!-- 登录提示框 -->
-                    <el-card v-if="!$store.state.userInfo" class="box-card">
+                    <!-- <el-card v-if="!$store.state.userInfo" class="box-card">
                         <div style="margin-bottom: 15px;margin-top: 10px;">
                             登录网站，开启你的创作之旅：
                         </div>
@@ -121,9 +125,9 @@
                             <el-button style="margin-top: 20px;width: 100%;" size="small" type="success"
                                 @click="handleLogin">立即登录</el-button>
                         </div>
-                    </el-card>
+                    </el-card> -->
                     <!-- 个人信息 -->
-                    <el-card v-else class="box-card myUserInfo">
+                    <!-- <el-card v-else class="box-card myUserInfo">
                         <div style="margin-bottom: 15px;margin-top: 10px;">
                             <a href="javascript:;" @click="openUserInfoDrawer(null)" style="display: flex;">
                                 <el-avatar style="border: 1px solid var(--border-line);"
@@ -196,6 +200,25 @@
                                 </div>
                             </span>
                         </div>
+                    </el-card> -->
+
+                    <!-- 推荐文章 -->
+                    <el-card class="box-card recomArticle">
+                        <div class="clearfix">
+                            <svg-icon icon-class="tuijian"></svg-icon>
+                            <span>推荐文章</span>
+                        </div>
+                        <ul class="recomArticleUl">
+                            <li v-for="(   item, index   ) in    newArticleList   ">
+                                <div class="item">
+                                    <el-image style="float: left;" :src="item.avatar" fit="fit" />
+                                    <p class="info">
+                                        <a href="javascript:;" @click="handleClick(item.id)">{{ item.title }}</a>
+                                    </p>
+                                    <p class="time">{{ item.createTime }}</p>
+                                </div>
+                            </li>
+                        </ul>
                     </el-card>
 
                     <!-- 今日歌曲推荐 -->
@@ -282,24 +305,7 @@
                             </li>
                         </ul>
                     </el-card>
-                    <!-- 推荐文章 -->
-                    <el-card class="box-card recomArticle">
-                        <div class="clearfix">
-                            <svg-icon icon-class="tuijian"></svg-icon>
-                            <span>推荐文章</span>
-                        </div>
-                        <ul class="recomArticleUl">
-                            <li v-for="(   item, index   ) in    newArticleList   ">
-                                <div class="item">
-                                    <el-image style="float: left;" :src="item.avatar" fit="fit" />
-                                    <p class="info">
-                                        <a href="javascript:;" @click="handleClick(item.id)">{{ item.title }}</a>
-                                    </p>
-                                    <p class="time">{{ item.createTime }}</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </el-card>
+
                     <!-- 标签墙 -->
                     <el-card class="box-card tag_container">
                         <div class="clearfix">
@@ -314,7 +320,9 @@
                             </span>
                         </div>
                     </el-card>
-
+                    <el-card class="box-card">
+                        <div id="he-plugin-standard"></div>
+                    </el-card>
                 </div>
             </div>
         </div>
@@ -341,13 +349,15 @@
 <script>
 import { fetchArticleList, featchHomeData, featchCategory, getMusic, getMedal } from '@/api'
 import Notcie from '@/components/notice/index.vue'
+import SiteInfo from '@/components/site/index.vue'
 import Calendar from '@/components/calendar'
 import APlayer from 'vue-aplayer'
 export default {
     components: {
         Notcie,
         APlayer,
-        Calendar
+        Calendar,
+        SiteInfo
     },
     name: 'Home',
     metaInfo: {
@@ -399,14 +409,29 @@ export default {
 
         };
     },
-    // mounted() {
-    //     //设置音乐列表为隐藏
-    //     window.setTimeout(() => {
-    //         if (this.$refs.music != undefined) {
-    //             this.$refs.music.showList = false
-    //         }
-    //     }, 400)
-    // },
+    mounted() {
+        //设置音乐列表为隐藏
+        // window.setTimeout(() => {
+        //     if (this.$refs.music != undefined) {
+        //         this.$refs.music.showList = false
+        //     }
+        // }, 400)
+        window.WIDGET = {
+            "CONFIG": {
+                "layout": "2",
+                "width": 300,
+                "height": 300,
+                "background": "2",
+                "dataColor": "000000",
+                "borderRadius": "5",
+                "key": "4034255d0cc94897b5f745367ccb81f2"
+            }
+        };
+        let script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "https://widget.qweather.net/standard/static/js/he-standard-common.js?v=2.0";
+        document.getElementsByTagName("head")[0].appendChild(script);
+    },
 
     created() {
         this.fetchArticleList()
@@ -1041,6 +1066,7 @@ export default {
                         padding: 12px;
                         background-color: var(--background-color);
                         color: var(--article-color);
+                        margin-bottom: 15px;
 
                         &:hover {
                             .clearfix {
@@ -1130,7 +1156,6 @@ export default {
                     }
 
                     .recomArticle {
-                        margin-top: 20px;
                         color: var(--article-color);
 
                         .recomArticleUl {
@@ -1198,22 +1223,6 @@ export default {
                     }
 
                     .guanzhu {
-                        margin-top: 20px;
-
-                        .title-svg {
-                            animation: light1 1s ease-in-out infinite alternate;
-
-                            @keyframes light1 {
-                                from {
-                                    transform: scale(0.8);
-                                }
-
-                                to {
-                                    transform: 1;
-                                }
-                            }
-                        }
-
                         .guanzhuList {
                             padding: 15px;
                             list-style: none;
@@ -1317,7 +1326,7 @@ export default {
                     }
 
                     .tag_container {
-                        margin-top: 20px;
+
                         font-size: 0.9rem;
                         background-color: var(--background-color);
                         color: var(--text-color);

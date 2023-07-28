@@ -18,6 +18,10 @@
                         <div class="timeline-date" @click="open(index)">
                             <span style="padding-left: 10px;">
                                 {{ formatTime(item.time) }}
+
+                            </span>
+                            <span style="float: right;padding-right: 10px;">
+                                <i ref="icon" :class="icon"></i>
                             </span>
                         </div>
                         <div ref="liCol" style="overflow: hidden;transition: height 0.3s;">
@@ -46,12 +50,15 @@ export default {
             archiveList: [],
             loading: [],
             count: 0,
+            icon: "el-icon-arrow-down",
+            showIcon: true,
             liColHeight: 0, // 折叠面板内容初始高度
         };
     },
     methods: {
         open(i) {
             const liCol = this.$refs.liCol[i];
+            const icon = this.$refs.icon[i];
             let height = liCol.offsetHeight; //获取要展开元素的高度
             if (height === this.liColHeight) {
                 // 展开
@@ -61,8 +68,10 @@ export default {
 
                 let f = document.body.offsetHeight; // 必加
                 liCol.style.height = height + "px";
+                icon.className = "el-icon-arrow-down"
             } else {
                 // 收缩
+                icon.className = "el-icon-arrow-up"
                 liCol.style.height = this.liColHeight + "px";
             }
         },
