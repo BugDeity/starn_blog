@@ -38,7 +38,7 @@ export default {
             color: red;
             font-size: 16px;
             line-height: 45px;
-            padding-left: 20px;
+            padding-left: 15px;
             font-weight: 700;
             animation: light1 1s ease-in-out infinite alternate;
         }

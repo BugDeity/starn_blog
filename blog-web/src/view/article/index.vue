@@ -95,8 +95,8 @@
             </div>
             <div class="tips">
                 <i class="el-icon-message-solid"></i>
-                <span>温馨提示：本文最后更新于 {{ formatDate(article.updateTime == null ? article.createTime : article.updateTime)
-                }}，若内容或图片失效，请留言反馈。部分素材来自网络，若不小心影响到您的利益，请联系我们删除</span>
+                <span>温馨提示：</span>
+                <div style="margin-left: 20px;margin-top: 5px;"> 本着开源共享、共同学习的精神，若内容或图片失效，请留言反馈。若有内容不小心影响到您的利益，请联系博主删除</div>
             </div>
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">

@@ -320,9 +320,7 @@
                             </span>
                         </div>
                     </el-card>
-                    <el-card class="box-card">
-                        <div id="he-plugin-standard"></div>
-                    </el-card>
+
                 </div>
             </div>
         </div>
@@ -416,21 +414,7 @@ export default {
         //         this.$refs.music.showList = false
         //     }
         // }, 400)
-        window.WIDGET = {
-            "CONFIG": {
-                "layout": "2",
-                "width": 300,
-                "height": 300,
-                "background": "2",
-                "dataColor": "000000",
-                "borderRadius": "5",
-                "key": "4034255d0cc94897b5f745367ccb81f2"
-            }
-        };
-        let script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = "https://widget.qweather.net/standard/static/js/he-standard-common.js?v=2.0";
-        document.getElementsByTagName("head")[0].appendChild(script);
+
     },
 
     created() {
@@ -1067,6 +1051,7 @@ export default {
                         background-color: var(--background-color);
                         color: var(--article-color);
                         margin-bottom: 15px;
+
 
                         &:hover {
                             .clearfix {
