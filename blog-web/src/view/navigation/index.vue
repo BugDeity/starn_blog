@@ -50,18 +50,42 @@ export default {
 </script>
    
 <style lang='scss' scoped>
+/deep/ .el-avatar {
+    background: none
+}
+
 .navigation-main {
     display: flex;
     justify-content: center;
     position: relative;
 
+    @media screen and (max-width: 1118px) {
+        .navigation-container {
+            width: 100%;
+
+            ul {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    }
+
+    @media screen and (min-width: 1119px) {
+        .navigation-container {
+            width: 70%;
+
+            ul {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    }
+
     .navigation-container {
-        margin-top: 100px;
-        width: 70%;
-        height: 100%;
+        margin-top: 80px;
+
 
         .site-container {
-            width: 100%;
+            margin: 0 auto;
+            width: 90%;
             color: var(--text-color);
             background-color: var(--background-color);
             border-radius: 5px;
@@ -84,7 +108,6 @@ export default {
             }
 
             ul {
-                grid-template-columns: repeat(5, 1fr);
                 display: grid;
                 padding: 10px;
                 list-style: none;
@@ -122,6 +145,12 @@ export default {
                 .info {
                     color: #c3c3c3;
                     width: 90%;
+                    word-break: break-all;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
                 }
             }
         }
