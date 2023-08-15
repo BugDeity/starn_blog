@@ -69,7 +69,7 @@ public class ApiHomeServiceImpl implements ApiHomeService {
      * 获取首页数据
      * @return
      */
-    public ResponseResult selectPubicData() {
+    public ResponseResult getHomeData() {
 
         //获取首页轮播
         List<SystemArticleListVO> articles = articleMapper.selectListByBanner();

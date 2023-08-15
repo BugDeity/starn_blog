@@ -96,7 +96,10 @@
             <div class="tips">
                 <i class="el-icon-message-solid"></i>
                 <span>温馨提示：</span>
-                <div style="margin-left: 20px;margin-top: 5px;"> 本着开源共享、共同学习的精神，若内容或图片失效，请留言反馈。若有内容不小心影响到您的利益，请联系博主删除</div>
+                <div style="margin-left: 30px;margin-top: 5px;">
+                    <span v-if="article.isOriginal == 0">该文章为转载文章。</span>
+                    本着开源共享、共同学习的精神，若内容或图片失效，请留言反馈。若有内容不小心影响到您的利益，请联系博主删除
+                </div>
             </div>
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">
@@ -177,7 +180,7 @@
                     <span class="text"> {{ userInfo.nickname }}</span>
                 </div>
                 <div class="copyrightItem" v-else>
-                    <svg-icon icon-class="link"></svg-icon>
+                    <svg-icon icon-class="zzlink"></svg-icon>
                     <span class="text name">转载链接:</span>
                     <a href="" class="text"> {{ article.originalUrl }}</a>
                 </div>

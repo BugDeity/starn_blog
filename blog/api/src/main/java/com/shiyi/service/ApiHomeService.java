@@ -17,7 +17,7 @@ public interface ApiHomeService {
      * 获取首页数据
      * @return
      */
-    public ResponseResult selectPubicData();
+    public ResponseResult getHomeData();
 
     /**
      * 获取网站相关信息

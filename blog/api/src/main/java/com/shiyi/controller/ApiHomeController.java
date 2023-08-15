@@ -41,8 +41,8 @@ public class ApiHomeController {
 
     @GetMapping("/")
     @ApiOperation(value = "首页共享数据", httpMethod = "GET", response = ResponseResult.class, notes = "首页共享数据")
-    public ResponseResult selectHomeData(){
-        return homeService.selectPubicData();
+    public ResponseResult getHomeData(){
+        return homeService.getHomeData();
     }
 
     @GetMapping("/hot")
