@@ -22,10 +22,9 @@
                             <div class="info">
                                 <div class="nickname noSelect userInfo">
                                     {{ item.fromUserNickname }}
-                                    <span v-if="item.medalList.length">
-                                        <el-tooltip effect="dark" :content="medal.info" placement="top"
-                                            v-for="medal in item.medalList">
-                                            <svg-icon class="tag" :icon-class="medal.url"></svg-icon>
+                                    <span v-if="item.fromUserId == 1">
+                                        <el-tooltip effect="dark" content="拾壹博客官方" placement="top">
+                                            <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                         </el-tooltip>
                                     </span>
                                     <span v-if="item.ipSource" class="item "> <i class="el-icon-location-information"></i>
@@ -57,10 +56,9 @@
                                                 class="el-icon-location-information"></i>
                                             IP属地:{{ splitIpAddress(item.ipSource) }}
                                         </span>
-                                        <span v-if="item.medalList">
-                                            <el-tooltip effect="dark" :content="medal.info" placement="top"
-                                                v-for="medal in item.medalList">
-                                                <svg-icon class="tag" :icon-class="medal.url"></svg-icon>
+                                        <span v-if="item.fromUserId == 1">
+                                            <el-tooltip effect="dark" content="拾壹博客官方" placement="top">
+                                                <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                             </el-tooltip>
                                         </span>
                                         <span class="noSelect">{{ item.fromUserNickname }}</span>

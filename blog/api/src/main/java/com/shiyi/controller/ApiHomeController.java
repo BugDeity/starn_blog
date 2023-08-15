@@ -57,10 +57,5 @@ public class ApiHomeController {
         return homeService.getMusic();
     }
 
-    @GetMapping("/getMedal/{medalId}")
-    @ApiOperation(value = "获取勋章信息", httpMethod = "GET", response = ResponseResult.class, notes = "获取勋章信息")
-    public ResponseResult getMedal(@PathVariable String medalId){
-        return homeService.getMedal(medalId);
-    }
 }
 

@@ -17,7 +17,6 @@
                 <div class="tuijian">
                     <SiteInfo />
                     <Notcie />
-                    <!-- <Calendar></Calendar> -->
                 </div>
             </div>
 
@@ -324,37 +323,18 @@
                 </div>
             </div>
         </div>
-
-        <!-- 勋章显示弹框 -->
-        <el-dialog class="medalDialog" title="恭喜获得一枚勋章" :visible.sync="centerDialogVisible" center>
-            <div class="conent">
-                <svg-icon v-if="medal.type == 1" :icon-class="medal.url"></svg-icon>
-                <img v-else :src="medal.url" />
-
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <div class="footer-item">
-                    {{ medal.name }}
-                </div>
-                <div class="footer-item">
-                    {{ medal.info }}
-                </div>
-            </span>
-        </el-dialog>
     </div>
 </template>
 
 <script>
-import { fetchArticleList, featchHomeData, featchCategory, getMusic, getMedal } from '@/api'
+import { fetchArticleList, featchHomeData, featchCategory, getMusic } from '@/api'
 import Notcie from '@/components/notice/index.vue'
 import SiteInfo from '@/components/site/index.vue'
-import Calendar from '@/components/calendar'
 import APlayer from 'vue-aplayer'
 export default {
     components: {
         Notcie,
         APlayer,
-        Calendar,
         SiteInfo
     },
     name: 'Home',
@@ -377,7 +357,6 @@ export default {
                 pageNo: 1,
                 pageSize: 8,
             },
-            medalId: this.$route.query.medalId,
             // 加载层信息
             loading: [],
             activeName: "0",
@@ -421,12 +400,6 @@ export default {
         this.fetchArticleList()
         this.getHomeData()
         this.fetchCategoryList()
-        if (this.medalId) {
-            getMedal(this.medalId).then(res => {
-                this.medal = res.data
-                this.centerDialogVisible = true
-            })
-        }
         //this.getMusic()
     },
     methods: {

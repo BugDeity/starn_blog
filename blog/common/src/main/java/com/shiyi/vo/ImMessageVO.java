@@ -1,7 +1,6 @@
 package com.shiyi.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.shiyi.entity.Medal;
 import com.shiyi.utils.DateUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,9 +30,6 @@ public class ImMessageVO {
 
     @ApiModelProperty(value = "发送用户昵称")
     private String fromUserNickname;
-
-    @ApiModelProperty(value = "勋章")
-    private List<Medal> medalList = new ArrayList<>();
 
 
     @ApiModelProperty(value = "内容")

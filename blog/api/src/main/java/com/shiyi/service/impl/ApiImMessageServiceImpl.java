@@ -3,20 +3,16 @@ package com.shiyi.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.ImMessage;
 import com.shiyi.entity.ImRoom;
-import com.shiyi.entity.Medal;
-import com.shiyi.entity.User;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.im.MessageConstant;
 import com.shiyi.im.WebSocketInfoService;
 import com.shiyi.mapper.ImMessageMapper;
 import com.shiyi.mapper.ImRoomMapper;
-import com.shiyi.mapper.MedalMapper;
 import com.shiyi.mapper.UserMapper;
 import com.shiyi.service.ApiImMessageService;
 import com.shiyi.utils.*;
@@ -58,7 +54,6 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
 
     private final UserMapper userMapper;
 
-    private final MedalMapper medalMapper;
 
     private final WebSocketInfoService webSocketInfoService;
 
@@ -212,9 +207,6 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
         //组装发送消息数据
         obj.setId(imMessage.getId());
         obj.setCreateTimeStr(RelativeDateFormat.format(imMessage.getCreateTime()));
-        List<Medal> medals = medalMapper.selectMedalByUserId(obj.getFromUserId());
-        medals.removeAll(Collections.singleton(null));
-        obj.setMedalList(medals);
         //发送消息
         webSocketInfoService.chat(obj);
         return ResponseResult.success();
@@ -330,12 +322,7 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
     }
 
     private void formatCreateTime(Page<ImMessageVO> page) {
-        page.getRecords().forEach(item -> {
-            List<Medal> medals = medalMapper.selectMedalByUserId(item.getFromUserId());
-            medals.removeAll(Collections.singleton(null));
-            item.setMedalList(medals);
-            item.setCreateTimeStr(RelativeDateFormat.format(item.getCreateTime()));
-        });
+        page.getRecords().forEach(item -> item.setCreateTimeStr(RelativeDateFormat.format(item.getCreateTime())));
     }
 
 }
