@@ -68,6 +68,11 @@ public class RedisConstants {
     public static final String BLOG_VIEWS_COUNT = "blog_views_count";
 
     /**
+     * 访客量
+     */
+    public static final String UNIQUE_VISITOR_COUNT = "unique_visitor_count";
+
+    /**
      * 用户点赞文章
      */
     public static final String ARTICLE_USER_LIKE = "article_user_like:";
