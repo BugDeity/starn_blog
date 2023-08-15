@@ -66,11 +66,9 @@ export default {
 
         border-top: 1px solid var(--border-line);
         background: var(--notice-background);
-        // overflow: hidden;
-        // text-overflow: ellipsis;
-        // white-space: nowrap;
         animation: light 2s ease-in-out infinite alternate;
         min-height: 80px;
+        padding: 5px;
 
         span {
             padding: 5px;

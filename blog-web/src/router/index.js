@@ -79,9 +79,6 @@ const routes = [
             {
                 path: "/photo",
                 component: resolve => require(["@/view/photo/index"], resolve),
-                meta: {
-                    title: "画廊"
-                }
             },
             {
                 path: "/sponsor",
@@ -97,9 +94,6 @@ const routes = [
             {
                 path: "/hot",
                 component: resolve => require(["@/view/search/Hot.vue"], resolve),
-                meta: {
-                    title: "热搜"
-                }
             },
             {
                 path: "/note",
@@ -114,6 +108,10 @@ const routes = [
                 meta: {
                     title: "通知"
                 }
+            },
+            {
+                path: "/navigation",
+                component: resolve => require(["@/view/navigation/index.vue"], resolve),
             },
 
         ],

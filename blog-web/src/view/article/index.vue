@@ -441,6 +441,7 @@ export default {
             this.getCommens();
             this.loading.close()
         }).catch(err => {
+
         });
 
     },
@@ -603,6 +604,7 @@ export default {
             }
         },
         like(articleId) {
+            //  this.openLoading()
             this.openLoading()
             articleLike(articleId).then(res => {
                 if (this.article.isLike) {

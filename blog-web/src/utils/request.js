@@ -57,8 +57,7 @@ service.interceptors.response.use(
             if (response.config.url !== "/oauth/wechat/is_login") {
                 Message({
                     message: res.message,
-                    type: 'error',
-                    showClose: true
+                    type: 'error'
                 })
             }
 

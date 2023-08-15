@@ -26,7 +26,13 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import Prism from 'prismjs';
 import Clipboard from 'clipboard'
+import Loading from '@/components/loading/loading';
 
+// 注册全局组件
+Vue.component('loading', Loading);
+
+// 创建一个 Vue 实例作为事件总线
+Vue.prototype.$bus = new Vue();
 Vue.prototype.Clipboard = Clipboard
 
 import hljs from 'highlight.js';

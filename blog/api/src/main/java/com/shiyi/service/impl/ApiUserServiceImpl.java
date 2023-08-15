@@ -73,10 +73,6 @@ public class ApiUserServiceImpl implements ApiUserService {
             throw new BusinessException(ERROR_PASSWORD.desc);
         }
 
-        if (user.getUsername().contains("test")) {
-            throw new BusinessException("演示账号只能登录后台管理系统！");
-        }
-
         if (user.getStatus() == UserStatusEnum.disable.code) {
             throw new BusinessException(DISABLE_ACCOUNT.desc);
         }

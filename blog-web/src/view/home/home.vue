@@ -4,7 +4,7 @@
         <Header :userInfo="userInfo"></Header>
         <!-- 侧边导航栏 -->
         <SideNavBar></SideNavBar>
-        <Notice></Notice>
+        <Loading></Loading>
         <!-- 内容 -->
         <transition name="moveCartoon" appear>
             <div v-if="validate" style="min-height: calc(100vh - 167px);">
@@ -36,8 +36,8 @@ import SideNavBar from "@/components/layout/SideNavBar.vue";
 import SearchModle from "@/components/layout/Search.vue";
 import Footer from '@/components/layout/Footer.vue'
 import Sidebar from '@/components/layout/Sidebar.vue'
+import Loading from '@/components/loading/loading.vue'
 import Login from '@/components/model/Login.vue'
-import Notice from '@/components/notice/Notice.vue'
 import User from '@/view/user/User.vue'
 import ArticleModel from '@/view/article/Article.vue'
 import { selectUserInfoByToken, getWebSiteInfo } from '@/api'
@@ -53,7 +53,7 @@ export default {
         SearchModle,
         User,
         ArticleModel,
-        Notice
+        Loading
     },
     data() {
         return {

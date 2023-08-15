@@ -66,8 +66,8 @@
 
                 <li>
                     <span>
-                        <router-link style="color: red;" :class="path == '/sponsor' ? 'active' : ''" :to="'/sponsor'">
-                            <i class="el-icon-coin"></i> 打赏名单
+                        <router-link :class="path == '/navigation' ? 'active' : ''" :to="'/navigation'">
+                            <i class="el-icon-s-promotion"></i> 网址导航
                         </router-link>
                     </span>
                 </li>
@@ -117,16 +117,22 @@
                         <el-dropdown-menu slot="dropdown">
 
                             <router-link style="text-decoration: none;color: #71777c;" :to="'/about'">
-                                <el-dropdown-item>关于本站</el-dropdown-item>
+                                <el-dropdown-item>
+                                    <i class="el-icon-monitor"></i>关于本站
+                                </el-dropdown-item>
                             </router-link>
 
                             <a style="text-decoration: none;color: #71777c;" href="https://gitee.com/quequnlong/shiyi-blog"
                                 target="_blank">
-                                <el-dropdown-item>网站源码</el-dropdown-item>
+                                <el-dropdown-item>
+                                    <i class="el-icon-tableware"></i>网站源码
+                                </el-dropdown-item>
                             </a>
 
                             <a style="text-decoration: none;color: #71777c;" :href="adminUrl" target="_blank">
-                                <el-dropdown-item>后台管理</el-dropdown-item>
+                                <el-dropdown-item>
+                                    <i class="el-icon-setting"></i>后台管理
+                                </el-dropdown-item>
                             </a>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -146,7 +152,7 @@
                 <div class="hot_search_main" :style="style">
                     <a @click="handleArticle(item.id)" href="javascript:;" v-for="(item, index) in $store.state.hotArticles"
                         :key="index">
-                        <span :style="{ backgroundColor: `${colors[index]}` }">{{ index + 1 }}</span>
+                        <span class="number">{{ index + 1 }}</span>
                         {{ item.title }}
                     </a>
                 </div>
@@ -206,16 +212,22 @@
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
-
+            <div class="notice" v-if="noticeShow">
+                <Notice @handleNotcieClose="handleNotcieClose" />
+            </div>
         </nav>
 
     </header>
 </template>
 <script>
 import { logout } from '@/api'
-import { removeToken } from '@/utils/cookieUtil'
+import { removeToken, getNotice } from '@/utils/cookieUtil'
+import Notice from '@/components/notice/Notice.vue'
 export default {
     name: 'Header',
+    components: {
+        Notice
+    },
     props: {
         userInfo: {
             type: Object,
@@ -224,6 +236,7 @@ export default {
     },
     data() {
         return {
+            noticeShow: getNotice() ? false : true,
             widthPre: '',
             keywords: null,
             user: this.$store.state.userInfo,
@@ -234,7 +247,6 @@ export default {
             windowWidth: 0,
             headerClass: "header",
             adminUrl: process.env.VUE_APP_ADMIN_API,
-            colors: ["#FE2D46", "#FF6600", "#FAA90E", "#7f7f8c", "#7f7f8c"],
             noticeList: ["系统通知", "评论", "关注", "点赞", "收藏", "私信"]
         };
     },
@@ -259,6 +271,10 @@ export default {
     },
 
     methods: {
+        handleNotcieClose(val) {
+            console.log(val)
+            this.noticeShow = val
+        },
         handleClickNotice(index) {
             if (!this.user) {
                 this.$store.commit("setLoginFlag", true)
@@ -620,6 +636,18 @@ export default {
                         color: #606266;
                         font-size: 12px;
 
+                        &:first-child span {
+                            background-color: #FE2D46;
+                        }
+
+                        &:nth-child(2) span {
+                            background-color: #FF6600;
+                        }
+
+                        &:nth-child(3) span {
+                            background-color: #FAA90E;
+                        }
+
                         span {
                             width: 20px;
                             height: 20px;
@@ -628,6 +656,7 @@ export default {
                             text-align: center;
                             border-radius: 3px;
                             color: var(--background-color);
+                            background-color: #71777c;
 
                         }
 

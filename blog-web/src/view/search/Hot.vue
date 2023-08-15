@@ -20,7 +20,6 @@
                     <ul>
                         <li v-for="(item, index) in weiboList" :key="index" @click="go(item.url)">
                             <span class="index">
-                                <svg-icon :style="color(index)" icon-class="xuhao"></svg-icon>
                                 {{ index + 1 }}
                             </span>
                             <span>{{ item.keyword }}</span>
@@ -35,7 +34,6 @@
                     <ul>
                         <li v-for="(item, index) in baiduList" :key="index" @click="go(item.url)">
                             <span class="index">
-                                <svg-icon :style="color(index)" icon-class="xuhao"></svg-icon>
                                 {{ index + 1 }}
                             </span>
                             <span>{{ item.keyword }}</span>
@@ -51,7 +49,6 @@
                     <ul>
                         <li v-for="(item, index) in zhihuList" :key="index" @click="go(item.url)">
                             <span class="index">
-                                <svg-icon :style="color(index)" icon-class="xuhao"></svg-icon>
                                 {{ index + 1 }}
                             </span>
                             <span>{{ item.keyword }}</span>
@@ -66,7 +63,6 @@
                     <ul>
                         <li v-for="(item, index) in csdnList" :key="index" @click="go(item.url)">
                             <span class="index">
-                                <svg-icon :style="color(index)" icon-class="xuhao"></svg-icon>
                                 {{ index + 1 }}
                             </span>
                             <span>{{ item.keyword }}</span>
@@ -242,6 +238,7 @@ export default {
             .hot {
                 margin-top: 50px;
 
+
                 .weibo .title {
                     background-color: #d52c2b;
                     background-image: radial-gradient(circle at 50% 3%, #d63736, #d52c2b);
@@ -277,11 +274,6 @@ export default {
                         position: relative;
                         overflow: hidden;
 
-                        svg {
-                            margin-top: 20px;
-                            width: 100%;
-                        }
-
                         span {
                             color: #fff;
                             font-size: 16px;
@@ -305,6 +297,18 @@ export default {
                             height: 100%;
                             padding: 5px;
 
+                            &:first-child .index {
+                                background-color: #FE2D46;
+                            }
+
+                            &:nth-child(2) .index {
+                                background-color: #FF6600;
+                            }
+
+                            &:nth-child(3) .index {
+                                background-color: #FAA90E;
+                            }
+
                             &:hover {
                                 background-color: #DCDFE6;
                             }
@@ -317,20 +321,12 @@ export default {
                             .index {
                                 display: inline-block;
                                 text-align: center;
-                                width: 25px;
-                                height: 25px;
-                                position: relative;
-
-                                svg {
-                                    width: 30px;
-                                    height: 30px;
-                                    position: absolute;
-                                    top: -4px;
-                                    left: -3px;
-                                    fill: currentColor;
-                                    color: #bfbfbf;
-                                }
-
+                                width: 20px;
+                                height: 20px;
+                                margin-right: 10px;
+                                line-height: 20px;
+                                background-color: #7f7f8c;
+                                color: #fff;
                             }
                         }
                     }
@@ -408,7 +404,8 @@ export default {
 
             .hot {
                 margin-top: 50px;
-                display: flex;
+                grid-template-columns: repeat(4, 1fr);
+                display: grid;
 
                 .weibo .title {
                     background-color: #d52c2b;
@@ -444,9 +441,12 @@ export default {
                         text-align: center;
                         position: relative;
                         overflow: hidden;
+                        border-top-left-radius: 5px;
+                        border-top-right-radius: 5px;
 
                         svg {
                             margin-top: 20px;
+                            width: 100%;
                         }
 
                         span {
@@ -473,6 +473,19 @@ export default {
                             height: 100%;
                             padding: 5px;
 
+
+                            &:first-child .index {
+                                background-color: #FE2D46;
+                            }
+
+                            &:nth-child(2) .index {
+                                background-color: #FF6600;
+                            }
+
+                            &:nth-child(3) .index {
+                                background-color: #FAA90E;
+                            }
+
                             &:hover {
                                 background-color: var(--ul-hover-color);
                             }
@@ -484,21 +497,12 @@ export default {
                             .index {
                                 display: inline-block;
                                 text-align: center;
-                                width: 25px;
-                                height: 25px;
-                                position: relative;
+                                width: 20px;
+                                height: 20px;
                                 margin-right: 10px;
-
-                                svg {
-                                    width: 30px;
-                                    height: 30px;
-                                    position: absolute;
-                                    top: -4px;
-                                    left: -3px;
-                                    fill: currentColor;
-                                    color: #bfbfbf;
-                                }
-
+                                line-height: 20px;
+                                background-color: #7f7f8c;
+                                color: #fff;
                             }
                         }
                     }
