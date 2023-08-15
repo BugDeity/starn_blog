@@ -24,14 +24,14 @@ public interface ArticleService extends IService<Article> {
      * @param map 参数map
      * @return
      */
-    ResponseResult listArticle(Map<String,Object> map);
+    ResponseResult selectArticleList(Map<String,Object> map);
 
     /**
      * 后台根据主键获取文章详情
      * @param id 主键id
      * @return
      */
-    ResponseResult getArticleById(Long id);
+    ResponseResult selectArticleById(Long id);
 
     /**
      * 添加文章
@@ -60,21 +60,21 @@ public interface ArticleService extends IService<Article> {
      * @param article 文章对象
      * @return
      */
-    ResponseResult putTopArticle(ArticleDTO article);
+    ResponseResult topArticle(ArticleDTO article);
 
     /**
      * 发布或下架文章
      * @param article 文章对象
      * @return
      */
-    ResponseResult publishAndShelf(ArticleDTO article);
+    ResponseResult psArticle(ArticleDTO article);
 
     /**
      * 百度seo
      * @param ids 文章id集合
      * @return
      */
-    ResponseResult articleSeo(List<Long> ids);
+    ResponseResult seoBatch(List<Long> ids);
 
     /**
      * 爬取文章

@@ -332,7 +332,7 @@ export default {
         .link-content {
             padding: 20px;
             height: 100%;
-            width: 70%;
+            width: 60%;
             margin-top: 80px;
             background-color: var(--background-color);
 

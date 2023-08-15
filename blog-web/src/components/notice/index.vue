@@ -67,7 +67,7 @@ export default {
         border-top: 1px solid var(--border-line);
         background: var(--notice-background);
         animation: light 2s ease-in-out infinite alternate;
-        min-height: 80px;
+        min-height: 70px;
         padding: 5px;
 
         span {

@@ -492,10 +492,6 @@ export default {
             })
         },
         handleClick(id) {
-            if (id == null) {
-                this.$message.info("待开发！")
-                return;
-            }
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })
         },
         handleCategoryClike(item) {
@@ -572,6 +568,7 @@ export default {
 .banner {
     position: relative;
     height: 420px;
+
 
     /deep/ .el-carousel__container {
         height: 100%;
@@ -799,6 +796,10 @@ export default {
 
                 .bannerBox {
                     width: 70%;
+
+                    /deep/ .banner {
+                        border-radius: 5px;
+                    }
                 }
 
                 .tuijian {

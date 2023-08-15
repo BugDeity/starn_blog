@@ -76,7 +76,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @return
      */
     @Override
-    public ResponseResult listArticle(Map<String,Object> map) {
+    public ResponseResult selectArticleList(Map<String,Object> map) {
         String loginId = StpUtil.getLoginIdAsString();
         //如果没有admin权限 即不是网站拥有者就只能获取到当前用户所拥有的文章
         if (!StpUtil.hasRole("admin")) {
@@ -95,7 +95,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @return
      */
     @Override
-    public ResponseResult getArticleById(Long id) {
+    public ResponseResult selectArticleById(Long id) {
         ArticleDTO articleDTO = baseMapper.selectPrimaryKey(id);
         articleDTO.setTags(tagsMapper.selectByArticleId(id));
         return ResponseResult.success(articleDTO);
@@ -178,7 +178,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult putTopArticle(ArticleDTO article) {
+    public ResponseResult topArticle(ArticleDTO article) {
         baseMapper.putTopArticle(article);
         return ResponseResult.success();
     }
@@ -189,7 +189,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @return
      */
     @Override
-    public ResponseResult articleSeo(List<Long> ids) {
+    public ResponseResult seoBatch(List<Long> ids) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Host", "data.zz.baidu.com");
@@ -263,7 +263,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult publishAndShelf(ArticleDTO article) {
+    public ResponseResult psArticle(ArticleDTO article) {
         baseMapper.publishAndShelf(article);
         return ResponseResult.success();
     }
