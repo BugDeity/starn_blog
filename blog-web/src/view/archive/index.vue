@@ -108,290 +108,157 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (max-width: 1118px) {
-    .archive {
-        display: flex;
+.archive {
+    display: flex;
+    justify-content: center;
+    position: relative;
 
+
+    @media screen and (max-width: 1118px) {
         .archive-container {
-            background-color: var(--background-color);
-            margin-top: 60px;
-            padding: 20px;
-            height: 100%;
+            margin-top: 70px;
             width: 100%;
-
-            &:hover {
-                box-shadow: 5px 4px 8px 6px rgba(2, 6, 10, 0.06);
-                transition: all .3s;
-            }
-
-            .num {
-                margin-bottom: 15px;
-                font-weight: 700;
-                color: var(--theme-color);
-            }
-
-            ul.timeline-wrapper {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-            }
-
-            /* 时间线 */
-            .timeline-item {
-                position: relative;
-                height: auto;
-
-                &:last-child {
-                    .timeline-content .fgx {
-                        border: 0;
-                    }
-
-                    .timeline-box .long-line {
-                        height: 100%;
-                    }
-                }
-
-                .timeline-box {
-                    text-align: center;
-                    position: absolute;
-                    height: 100%;
-
-                    .out-circle {
-                        width: 16px;
-                        height: 16px;
-                        background: rgba(14, 116, 218, 0.1);
-                        box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        position: relative;
-                        top: 7px;
-
-                        .in-circle {
-                            width: 10px;
-                            height: 10px;
-                            margin: 0 auto;
-                            background: var(--theme-color);
-                            border-radius: 50%;
-                            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
-                        }
-                    }
-
-                    .long-line {
-                        width: 5px;
-                        height: 100%;
-                        background: var(--theme-color);
-                        box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
-                        opacity: 0.1;
-                        margin-left: 5px;
-                    }
-                }
-
-                .timeline-content {
-                    box-sizing: border-box;
-                    margin-left: 20px;
-                    height: auto;
-                    padding: 0 0 0 20px;
-                    text-align: left;
-
-                    .timeline-title {
-                        font-size: 14px;
-                        word-break: break-all;
-                        margin-bottom: 16px;
-                        color: var(--article-color);
-                        font-weight: 500;
-                        cursor: pointer;
-                        margin-left: 20px;
-
-
-                        &:hover {
-                            color: var(--theme-color);
-                        }
-                    }
-
-                    .timeline-date {
-                        font-size: 14px;
-                        color: var(--theme-color);
-                        font-weight: 500;
-                        margin-bottom: 16px;
-                        background-color: var(--archives-backgroud-color);
-                        display: block;
-                        height: 35px;
-                        line-height: 35px;
-                        border-radius: 5px;
-                        cursor: pointer;
-
-                        &::before {
-                            content: "";
-                            width: 0;
-                            height: 0;
-                            border-width: 10px 10px 10px 0;
-                            border-style: solid;
-                            border-color: transparent var(--archives-backgroud-color) transparent transparent;
-                            /*透明 灰 透明 透明 */
-                            position: relative;
-                            display: inline-block;
-                            left: -8px;
-                            top: 5px;
-                        }
-                    }
-
-                    .fgx {
-                        width: 100%;
-                        border-bottom: 2px dashed var(--border-line);
-                        margin-bottom: 20px;
-                    }
-                }
-
-            }
-
-            .timeline-item:last-of-type .timeline-content {
-                margin-bottom: 0;
-            }
         }
     }
-}
 
-@media screen and (min-width: 1119px) {
-    .archive {
-        display: flex;
-        justify-content: center;
-        position: relative;
-
+    @media screen and (min-width: 1119px) {
         .archive-container {
             margin-top: 80px;
-            padding: 20px;
-            height: 100%;
             width: 70%;
-            text-align: center;
-            background-color: var(--background-color);
+        }
+    }
 
-            .num {
-                margin-bottom: 15px;
-                font-weight: 700;
-                color: var(--theme-color);
-            }
+    .archive-container {
+        height: 100%;
+        text-align: center;
+        background-color: var(--background-color);
+        padding: 5px;
 
-            ul.timeline-wrapper {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-            }
+        .num {
+            line-height: 50px;
+            font-weight: 700;
+            color: var(--theme-color);
+        }
 
-            /* 时间线 */
-            .timeline-item {
-                position: relative;
-                height: auto;
+        ul.timeline-wrapper {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
 
-                &:last-child {
-                    .timeline-content .fgx {
-                        border: 0;
-                    }
+        /* 时间线 */
+        .timeline-item {
+            position: relative;
+            height: auto;
 
-                    .timeline-box .long-line {
-                        height: 100%;
-                    }
+            &:last-child {
+                .timeline-content .fgx {
+                    border: 0;
                 }
 
-                .timeline-box {
-                    text-align: center;
-                    position: absolute;
+                .timeline-box .long-line {
                     height: 100%;
+                }
+            }
 
-                    .out-circle {
-                        width: 16px;
-                        height: 16px;
-                        background: rgba(14, 116, 218, 0.1);
-                        box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        position: relative;
-                        top: 7px;
+            .timeline-box {
+                text-align: center;
+                position: absolute;
+                height: 100%;
 
-                        .in-circle {
-                            width: 10px;
-                            height: 10px;
-                            margin: 0 auto;
-                            background: var(--theme-color);
-                            border-radius: 50%;
-                            box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
-                        }
-                    }
+                .out-circle {
+                    width: 16px;
+                    height: 16px;
+                    background: rgba(14, 116, 218, 0.1);
+                    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    top: 7px;
 
-                    .long-line {
-                        width: 5px;
-                        height: 100%;
+                    .in-circle {
+                        width: 10px;
+                        height: 10px;
+                        margin: 0 auto;
                         background: var(--theme-color);
+                        border-radius: 50%;
                         box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
-                        opacity: 0.1;
-                        margin-left: 5px;
                     }
                 }
 
-                .timeline-content {
-                    box-sizing: border-box;
+                .long-line {
+                    width: 5px;
+                    height: 100%;
+                    background: var(--theme-color);
+                    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1);
+                    opacity: 0.1;
+                    margin-left: 5px;
+                }
+            }
+
+            .timeline-content {
+                box-sizing: border-box;
+                margin-left: 20px;
+                height: auto;
+                padding: 0 0 0 20px;
+                text-align: left;
+
+
+
+                .timeline-title {
+                    font-size: 14px;
+                    word-break: break-all;
+                    margin-bottom: 16px;
+                    color: var(--article-color);
+                    font-weight: 500;
+                    cursor: pointer;
                     margin-left: 20px;
-                    height: auto;
-                    padding: 0 0 0 20px;
-                    text-align: left;
 
 
-
-                    .timeline-title {
-                        font-size: 14px;
-                        word-break: break-all;
-                        margin-bottom: 16px;
-                        color: var(--article-color);
-                        font-weight: 500;
-                        cursor: pointer;
-                        margin-left: 20px;
-
-
-                        &:hover {
-                            color: var(--theme-color);
-                        }
-                    }
-
-                    .timeline-date {
-                        font-size: 14px;
+                    &:hover {
                         color: var(--theme-color);
-                        font-weight: 500;
-                        margin-bottom: 16px;
-                        background-color: var(--archives-backgroud-color);
-                        display: block;
-                        height: 35px;
-                        line-height: 35px;
-                        border-radius: 5px;
-                        cursor: pointer;
-
-                        &::before {
-                            content: "";
-                            width: 0;
-                            height: 0;
-                            border-width: 10px 10px 10px 0;
-                            border-style: solid;
-                            border-color: transparent var(--archives-backgroud-color) transparent transparent;
-                            /*透明 灰 透明 透明 */
-                            position: relative;
-                            display: inline-block;
-                            left: -8px;
-                            top: 5px;
-                        }
-                    }
-
-                    .fgx {
-                        width: 100%;
-                        border-bottom: 2px dashed var(--border-line);
-                        margin-bottom: 20px;
                     }
                 }
 
+                .timeline-date {
+                    font-size: 14px;
+                    color: var(--theme-color);
+                    font-weight: 500;
+                    margin-bottom: 16px;
+                    background-color: var(--archives-backgroud-color);
+                    display: block;
+                    height: 35px;
+                    line-height: 35px;
+                    border-radius: 5px;
+                    cursor: pointer;
+
+                    &::before {
+                        content: "";
+                        width: 0;
+                        height: 0;
+                        border-width: 10px 10px 10px 0;
+                        border-style: solid;
+                        border-color: transparent var(--archives-backgroud-color) transparent transparent;
+                        /*透明 灰 透明 透明 */
+                        position: relative;
+                        display: inline-block;
+                        left: -8px;
+                        top: 5px;
+                    }
+                }
+
+                .fgx {
+                    width: 100%;
+                    border-bottom: 2px dashed var(--border-line);
+                    margin-bottom: 20px;
+                }
             }
 
-            .timeline-item:last-of-type .timeline-content {
-                margin-bottom: 0;
-            }
+        }
+
+        .timeline-item:last-of-type .timeline-content {
+            margin-bottom: 0;
         }
     }
 }

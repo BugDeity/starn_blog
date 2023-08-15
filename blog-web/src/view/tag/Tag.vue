@@ -134,260 +134,33 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@media screen and (max-width: 1118px) {
-    .tag-warpper {
-        display: flex;
-        justify-content: center;
-        position: relative;
+.tag-warpper {
+    display: flex;
+    justify-content: center;
+    position: relative;
 
+    @media screen and (max-width: 1118px) {
         .main {
-            margin-top: 60px;
+            margin-top: 70px;
             width: 100%;
-            background-color: var(--background-color);
-
-            .header {
-                text-align: center;
-                margin-bottom: 20px;
-                padding: 10px;
-                color: var(--theme-color);
-                font-size: 1rem;
-                font-weight: bold;
-                border-bottom: 2px dashed #569ffb;
-
-                span {
-                    margin-right: 20px;
-                }
-            }
-
-            .article {
-                width: 72%;
-                float: left;
-                height: 700px;
-                overflow-y: scroll;
-
-                .title {
-                    color: var(--text-color);
-                    cursor: pointer;
-
-                    &:hover {
-                        color: var(--theme-color);
-                    }
-                }
-
-                /deep/ .el-timeline-item__timestamp {
-                    color: var(--text-color);
-                    font-weight: bold;
-                    font-size: 0.8rem;
-                }
-
-                .bottumItem {
-                    align-items: center;
-                    display: flex;
-                    margin-top: 20px;
-                    flex-wrap: wrap;
-
-
-                    .articleUser {
-                        font-size: 0.8rem;
-                        width: 50%;
-
-                        span {
-                            color: var(--theme-color);
-                            margin-left: 3px;
-                            line-height: 40px;
-                        }
-
-                        .userAvatar {
-                            vertical-align: top;
-                            border: 1px solid var(--border-line);
-
-                        }
-                    }
-
-                    .tag {
-                        display: inline-block;
-                        width: 50%
-                    }
-                }
-
-
-                .tag-item {
-                    margin-top: 20px;
-                    margin-right: 5px;
-                }
-            }
 
             #time-line {
                 float: left;
-                width: 28%;
+                width: 30%;
 
-            }
-
-            .item {
-                margin-left: 20px;
-                /*用左边margin显示时间线*/
-                width: calc(100% - 20px);
-                /*因为左边部分用于显示时间线，所以右边部分减去30px*/
-                height: auto;
-                /*高度由内容决定*/
-                position: relative;
-                margin-bottom: 30px;
-                cursor: pointer;
-
-                &::before {
-                    content: "";
-                    width: 11px;
-                    height: 11px;
-                    border-radius: 100%;
-                    background-color: var(--theme-color);
-                    position: absolute;
-                    left: -15px;
-                }
-
-                &:last-child::after {
-                    display: none;
-                }
-
-                &::after {
-                    content: "";
-                    width: 3px;
-                    height: calc(100% + 30px);
-                    /*加上10px是item底部的margin*/
-                    background-color: var(--theme-color);
-                    position: absolute;
-                    top: 0;
-                    left: -11px;
-                }
-
-                &:hover {
-                    &::before {
-                        transform: scale3d(1.2, 1.2, 1);
-                        background-color: var(--theme-color);
-                    }
-
-                    &::after {
-                        transform: scale3d(1.1, 1, 1);
-                        background-color: var(--theme-color);
-                    }
-
-                    .item-index {
-                        transform: scale3d(1.01, 1.01, 1);
-                        color: var(--text-color);
-                    }
-                }
-
-
-                .item-index {
-                    line-height: 12px;
-                    font-size: 14px;
-                    position: relative;
-                    color: var(--text-color);
-                    margin-left: 10px;
-                }
-
-                .active {
-                    color: var(--theme-color) !important;
-                }
-
-                .item-content {
-                    width: 100%;
-                    height: auto;
-                    /*由内容决定*/
-                    font-size: 16px;
-                    position: relative;
-                    white-space: pre-wrap;
-                    /*保留空白符序列，但是正常地进行换行*/
-                    word-wrap: break-word;
-                    /*在长单词或 URL 地址内部进行换行*/
-                }
-            }
-        }
-
-    }
-}
-
-@media screen and (min-width: 1119px) {
-    .tag-warpper {
-        display: flex;
-        justify-content: center;
-        position: relative;
-
-        .main {
-            margin-top: 80px;
-            width: 70%;
-
-            .header {
-                text-align: center;
-                margin-bottom: 20px;
-                padding: 10px;
-                color: var(--theme-color);
-                font-size: 1rem;
-                font-weight: bold;
-                border-bottom: 2px solid #e4e7ed;
-
-                span {
-                    margin-right: 20px;
-                }
             }
 
             .article {
-                width: 80%;
-                float: left;
-                height: 800px;
+                width: 70%;
                 overflow-y: scroll;
-
-                .title {
-                    color: var(--text-color);
-                    cursor: pointer;
-
-                    &:hover {
-                        color: var(--theme-color);
-                    }
-                }
-
-                /deep/ .el-timeline-item__timestamp {
-                    color: var(--text-color);
-                    font-weight: bold;
-                    font-size: 0.8rem;
-                }
-
-                .bottumItem {
-                    align-items: center;
-                    height: 50px;
-                    display: flex;
-                    margin-top: 20px;
-
-                    .articleUser {
-                        line-height: 50px;
-                        font-size: 0.8rem;
-
-                        span {
-                            color: var(--theme-color);
-                            margin-left: 3px;
-                        }
-
-                        .userAvatar {
-                            vertical-align: top;
-                            border: 1px solid var(--border-line);
-                            transition: transform .5s;
-
-                            &:hover {
-                                transform: rotate(360deg);
-                            }
-                        }
-                    }
-
-                    .tag {
-                        display: inline-block;
-                        margin-left: 20px;
-                    }
-                }
-
-                .tag-item {
-                    margin-top: 20px;
-                    margin-right: 5px;
-                }
             }
+        }
+    }
+
+    @media screen and (min-width: 1119px) {
+        .main {
+            margin-top: 80px;
+            width: 70%;
 
             #time-line {
                 float: left;
@@ -395,88 +168,170 @@ export default {
 
             }
 
-            .item {
-                margin-left: 30px;
-                /*用左边margin显示时间线*/
-                width: calc(100% - 30px);
-                /*因为左边部分用于显示时间线，所以右边部分减去30px*/
-                height: auto;
-                /*高度由内容决定*/
-                position: relative;
-                margin-bottom: 30px;
-                cursor: pointer;
+            .article {
+                width: 80%;
+            }
+        }
+    }
 
-                &::before {
-                    content: "";
-                    width: 11px;
-                    height: 11px;
-                    border-radius: 100%;
-                    background-color: var(--theme-color);
-                    position: absolute;
-                    left: -15px;
-                }
+    .main {
 
-                &:last-child::after {
-                    display: none;
-                }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            color: var(--theme-color);
+            font-size: 1rem;
+            font-weight: bold;
+            border-bottom: 2px solid #e4e7ed;
 
-                &::after {
-                    content: "";
-                    width: 3px;
-                    height: calc(100% + 30px);
-                    /*加上10px是item底部的margin*/
-                    background-color: var(--theme-color);
-                    position: absolute;
-                    top: 0;
-                    left: -11px;
-                }
-
-                &:hover {
-
-
-                    &::before {
-                        transform: scale3d(1.2, 1.2, 1);
-                        background-color: var(--theme-color);
-                    }
-
-                    &::after {
-                        transform: scale3d(1.1, 1, 1);
-                        background-color: var(--theme-color);
-                    }
-
-                    .item-index {
-                        transform: scale3d(1.01, 1.01, 1);
-                        color: var(--theme-color);
-                    }
-                }
-
-
-                .item-index {
-                    line-height: 12px;
-                    font-size: 14px;
-                    position: relative;
-                    color: var(--text-color);
-                    margin-left: 10px;
-                }
-
-                .active {
-                    color: var(--theme-color);
-                }
-
-                .item-content {
-                    width: 100%;
-                    height: auto;
-                    /*由内容决定*/
-                    font-size: 16px;
-                    position: relative;
-                    white-space: pre-wrap;
-                    /*保留空白符序列，但是正常地进行换行*/
-                    word-wrap: break-word;
-                    /*在长单词或 URL 地址内部进行换行*/
-                }
+            span {
+                margin-right: 20px;
             }
         }
 
+        .article {
+            float: left;
+            height: 800px;
+            overflow-y: scroll;
+
+            .title {
+                color: var(--text-color);
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--theme-color);
+                }
+            }
+
+            /deep/ .el-timeline-item__timestamp {
+                color: var(--text-color);
+                font-weight: bold;
+                font-size: 0.8rem;
+            }
+
+            .bottumItem {
+                align-items: center;
+                height: 50px;
+                display: flex;
+                margin-top: 20px;
+
+                .articleUser {
+                    line-height: 50px;
+                    font-size: 0.8rem;
+
+                    span {
+                        color: var(--theme-color);
+                        margin-left: 3px;
+                    }
+
+                    .userAvatar {
+                        vertical-align: top;
+                        border: 1px solid var(--border-line);
+                        transition: transform .5s;
+
+                        &:hover {
+                            transform: rotate(360deg);
+                        }
+                    }
+                }
+
+                .tag {
+                    display: inline-block;
+                    margin-left: 20px;
+                }
+            }
+
+            .tag-item {
+                margin-top: 20px;
+                margin-right: 5px;
+            }
+        }
+
+        #time-line {
+            float: left;
+        }
+
+        .item {
+            margin-left: 30px;
+            /*用左边margin显示时间线*/
+            width: calc(100% - 30px);
+            /*因为左边部分用于显示时间线，所以右边部分减去30px*/
+            height: auto;
+            /*高度由内容决定*/
+            position: relative;
+            margin-bottom: 30px;
+            cursor: pointer;
+
+            &::before {
+                content: "";
+                width: 11px;
+                height: 11px;
+                border-radius: 100%;
+                background-color: var(--theme-color);
+                position: absolute;
+                left: -15px;
+            }
+
+            &:last-child::after {
+                display: none;
+            }
+
+            &::after {
+                content: "";
+                width: 3px;
+                height: calc(100% + 30px);
+                /*加上10px是item底部的margin*/
+                background-color: var(--theme-color);
+                position: absolute;
+                top: 0;
+                left: -11px;
+            }
+
+            &:hover {
+
+
+                &::before {
+                    transform: scale3d(1.2, 1.2, 1);
+                    background-color: var(--theme-color);
+                }
+
+                &::after {
+                    transform: scale3d(1.1, 1, 1);
+                    background-color: var(--theme-color);
+                }
+
+                .item-index {
+                    transform: scale3d(1.01, 1.01, 1);
+                    color: var(--theme-color);
+                }
+            }
+
+
+            .item-index {
+                line-height: 12px;
+                font-size: 14px;
+                position: relative;
+                color: var(--text-color);
+                margin-left: 10px;
+            }
+
+            .active {
+                color: var(--theme-color);
+            }
+
+            .item-content {
+                width: 100%;
+                height: auto;
+                /*由内容决定*/
+                font-size: 16px;
+                position: relative;
+                white-space: pre-wrap;
+                /*保留空白符序列，但是正常地进行换行*/
+                word-wrap: break-word;
+                /*在长单词或 URL 地址内部进行换行*/
+            }
+        }
     }
 
 }

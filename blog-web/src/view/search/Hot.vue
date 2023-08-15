@@ -172,260 +172,42 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@media screen and (max-width: 1118px) {
-    .hotSearchMain {
-        display: flex;
-        justify-content: center;
-        position: relative;
+.hotSearchMain {
+    display: flex;
+    justify-content: center;
+    position: relative;
 
+    @media screen and (max-width: 1118px) {
         .box {
             width: 100%;
-            height: 100%;
-            padding: 10px;
-            margin-top: 80px;
 
             .nav {
-                margin: 0 auto;
-                display: block;
                 width: 100%;
-                height: 40px;
-
-                /deep/ .el-input__inner {
-                    border-radius: 0 !important;
-                }
-
-                .siteBox {
-                    display: inline-block;
-                    height: calc(100% - 2px);
-                    line-height: 36px;
-                    border: 1px solid #DCDFE6;
-                    border-right: none;
-                    padding-left: 20px;
-                    padding-right: 20px;
-
-                    svg {
-                        width: 25px;
-                        height: 25px;
-                        vertical-align: -8px;
-                    }
-
-                    i {
-                        margin-left: 10px;
-                        cursor: pointer;
-                        font-size: 14px;
-                    }
-
-                }
-
-                .input {
-                    display: inline-block;
-                    width: 60%;
-                    border-radius: 0 !important;
-                }
-
-                .searchCommit {
-                    display: inline-block;
-                    height: calc(100% - 2px);
-                    line-height: 36px;
-                    border: 1px solid #DCDFE6;
-                    border-left: none;
-                    padding-left: 20px;
-                    padding-right: 20px;
-                    cursor: pointer;
-                }
             }
 
-            .hot {
-                margin-top: 50px;
-
-
-                .weibo .title {
-                    background-color: #d52c2b;
-                    background-image: radial-gradient(circle at 50% 3%, #d63736, #d52c2b);
-                }
-
-                .baidu .title {
-                    background-color: #4e6ef2;
-                    background-image: radial-gradient(circle at 50% -45%, #53a7f5, #4e6ef2);
-                }
-
-                .zhihu .title {
-                    background-color: #53a7f5;
-                    background-image: radial-gradient(circle at 50% -45%, #53a7f5, #4e6ef2);
-                }
-
-                .csdn .title {
-                    background-color: #fc5632;
-                    background-image: radial-gradient(circle at 50% 3%, #f07a56, #fc5632);
-                }
-
-                .weibo,
-                .baidu,
-                .zhihu,
-                .csdn {
-                    width: 47%;
-                    display: inline-block;
-                    margin-right: 10px;
-
-                    .title {
-                        width: 100%;
-                        height: 78px;
-                        text-align: center;
-                        position: relative;
-                        overflow: hidden;
-
-                        span {
-                            color: #fff;
-                            font-size: 16px;
-                            font-weight: bold;
-                            position: absolute;
-                            top: 40%;
-                            left: 0;
-                            right: 0;
-                            bottom: 0;
-                        }
-                    }
-
-                    ul {
-                        list-style: none;
-                        margin-top: 10px;
-
-                        li {
-                            margin-bottom: 20px;
-                            cursor: pointer;
-                            font-size: 13px;
-                            height: 100%;
-                            padding: 5px;
-
-                            &:first-child .index {
-                                background-color: #FE2D46;
-                            }
-
-                            &:nth-child(2) .index {
-                                background-color: #FF6600;
-                            }
-
-                            &:nth-child(3) .index {
-                                background-color: #FAA90E;
-                            }
-
-                            &:hover {
-                                background-color: #DCDFE6;
-                            }
-
-
-                            span {
-                                color: var(--text-color);
-                            }
-
-                            .index {
-                                display: inline-block;
-                                text-align: center;
-                                width: 20px;
-                                height: 20px;
-                                margin-right: 10px;
-                                line-height: 20px;
-                                background-color: #7f7f8c;
-                                color: #fff;
-                            }
-                        }
-                    }
-                }
+            .weibo,
+            .baidu,
+            .zhihu,
+            .csdn {
+                width: 47%;
+                display: inline-block;
+                margin-right: 10px;
             }
-
         }
+
     }
-}
 
-@media screen and (min-width: 1119px) {
-    .hotSearchMain {
-        display: flex;
-        justify-content: center;
-        position: relative;
-
+    @media screen and (min-width: 1119px) {
         .box {
             width: 70%;
-            height: 100%;
-            padding: 10px;
-            margin-top: 80px;
 
             .nav {
-                margin: 0 auto;
-                display: block;
                 width: 70%;
-                height: 40px;
-
-                /deep/ .el-input__inner {
-                    border-radius: 0 !important;
-                    background-color: var(--background-color);
-
-                }
-
-                .siteBox {
-                    display: inline-block;
-                    height: calc(100% - 2px);
-                    border: 1px solid #DCDFE6;
-                    line-height: 36px;
-                    border-right: none;
-                    padding-left: 20px;
-                    padding-right: 20px;
-
-                    svg {
-                        width: 25px;
-                        height: 25px;
-                        vertical-align: -8px;
-                    }
-
-                    i {
-                        margin-left: 10px;
-                        cursor: pointer;
-                        font-size: 14px;
-                    }
-
-                }
-
-                .input {
-                    display: inline-block;
-                    width: 60%;
-                    border-radius: 0 !important;
-                }
-
-                .searchCommit {
-                    display: inline-block;
-                    height: calc(100% - 2px);
-                    line-height: 36px;
-                    border: 1px solid #DCDFE6;
-                    border-left: none;
-                    padding-left: 20px;
-                    padding-right: 20px;
-                    cursor: pointer;
-                }
             }
 
             .hot {
-                margin-top: 50px;
                 grid-template-columns: repeat(4, 1fr);
                 display: grid;
-
-                .weibo .title {
-                    background-color: #d52c2b;
-                    background-image: radial-gradient(circle at 50% 3%, #d63736, #d52c2b);
-                }
-
-                .baidu .title {
-                    background-color: #4e6ef2;
-                    background-image: radial-gradient(circle at 50% -45%, #53a7f5, #4e6ef2);
-                }
-
-                .zhihu .title {
-                    background-color: #53a7f5;
-                    background-image: radial-gradient(circle at 50% -45%, #53a7f5, #4e6ef2);
-                }
-
-                .csdn .title {
-                    background-color: #fc5632;
-                    background-image: radial-gradient(circle at 50% 3%, #f07a56, #fc5632);
-                }
 
                 .weibo,
                 .baidu,
@@ -434,82 +216,170 @@ export default {
                     width: 250px;
                     display: inline-block;
                     margin-right: 30px;
+                }
+            }
+        }
+    }
 
-                    .title {
+    .box {
+        height: 100%;
+        padding: 10px;
+        margin-top: 80px;
+
+        .nav {
+            margin: 0 auto;
+            display: block;
+
+            height: 40px;
+
+            /deep/ .el-input__inner {
+                border-radius: 0 !important;
+                background-color: var(--background-color);
+                border: 1px solid var(--border-line);
+            }
+
+            .siteBox {
+                display: inline-block;
+                height: calc(100% - 2px);
+                border: 1px solid var(--border-line);
+                line-height: 36px;
+                border-right: none;
+                padding-left: 20px;
+                padding-right: 20px;
+
+                svg {
+                    width: 25px;
+                    height: 25px;
+                    vertical-align: -8px;
+                }
+
+                i {
+                    margin-left: 10px;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
+
+            }
+
+            .input {
+                display: inline-block;
+                width: 60%;
+                border-radius: 0 !important;
+            }
+
+            .searchCommit {
+                display: inline-block;
+                height: calc(100% - 2px);
+                line-height: 36px;
+                border: 1px solid var(--border-line);
+                border-left: none;
+                padding-left: 20px;
+                padding-right: 20px;
+                cursor: pointer;
+            }
+        }
+
+        .hot {
+            margin-top: 50px;
+
+            .weibo .title {
+                background-color: #d52c2b;
+                background-image: radial-gradient(circle at 50% 3%, #d63736, #d52c2b);
+            }
+
+            .baidu .title {
+                background-color: #4e6ef2;
+                background-image: radial-gradient(circle at 50% -45%, #53a7f5, #4e6ef2);
+            }
+
+            .zhihu .title {
+                background-color: #53a7f5;
+                background-image: radial-gradient(circle at 50% -45%, #53a7f5, #4e6ef2);
+            }
+
+            .csdn .title {
+                background-color: #fc5632;
+                background-image: radial-gradient(circle at 50% 3%, #f07a56, #fc5632);
+            }
+
+            .weibo,
+            .baidu,
+            .zhihu,
+            .csdn {
+
+                .title {
+                    width: 100%;
+                    height: 78px;
+                    text-align: center;
+                    position: relative;
+                    overflow: hidden;
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+
+                    svg {
+                        margin-top: 20px;
                         width: 100%;
-                        height: 78px;
-                        text-align: center;
-                        position: relative;
-                        overflow: hidden;
-                        border-top-left-radius: 5px;
-                        border-top-right-radius: 5px;
+                    }
 
-                        svg {
-                            margin-top: 20px;
-                            width: 100%;
+                    span {
+                        color: #fff;
+                        font-size: 16px;
+                        font-weight: bold;
+                        position: absolute;
+                        top: 40%;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                    }
+                }
+
+                ul {
+                    list-style: none;
+                    margin-top: 10px;
+
+                    li {
+                        margin-bottom: 20px;
+                        cursor: pointer;
+                        font-size: 13px;
+                        height: 100%;
+                        padding: 5px;
+
+
+                        &:first-child .index {
+                            background-color: #FE2D46;
+                        }
+
+                        &:nth-child(2) .index {
+                            background-color: #FF6600;
+                        }
+
+                        &:nth-child(3) .index {
+                            background-color: #FAA90E;
+                        }
+
+                        &:hover {
+                            background-color: var(--ul-hover-color);
                         }
 
                         span {
-                            color: #fff;
-                            font-size: 16px;
-                            font-weight: bold;
-                            position: absolute;
-                            top: 40%;
-                            left: 0;
-                            right: 0;
-                            bottom: 0;
+                            color: var(--text-color);
                         }
-                    }
 
-                    ul {
-                        list-style: none;
-                        margin-top: 10px;
-                        border-right: 1px solid var(--border-line);
-
-                        li {
-                            margin-bottom: 20px;
-                            cursor: pointer;
-                            font-size: 13px;
-                            height: 100%;
-                            padding: 5px;
-
-
-                            &:first-child .index {
-                                background-color: #FE2D46;
-                            }
-
-                            &:nth-child(2) .index {
-                                background-color: #FF6600;
-                            }
-
-                            &:nth-child(3) .index {
-                                background-color: #FAA90E;
-                            }
-
-                            &:hover {
-                                background-color: var(--ul-hover-color);
-                            }
-
-                            span {
-                                color: var(--text-color);
-                            }
-
-                            .index {
-                                display: inline-block;
-                                text-align: center;
-                                width: 20px;
-                                height: 20px;
-                                margin-right: 10px;
-                                line-height: 20px;
-                                background-color: #7f7f8c;
-                                color: #fff;
-                            }
+                        .index {
+                            display: inline-block;
+                            text-align: center;
+                            width: 20px;
+                            height: 20px;
+                            margin-right: 10px;
+                            line-height: 20px;
+                            background-color: #7f7f8c;
+                            color: #fff;
                         }
                     }
                 }
             }
-
         }
+
     }
 }
 </style>

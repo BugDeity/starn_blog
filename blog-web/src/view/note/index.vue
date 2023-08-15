@@ -41,12 +41,6 @@
                                     chooseCategory.name }}</el-tag>
                             </span>
                             <div class="btn">
-                                <div class="emoji-wrapper" v-show="chooseEmoji">
-                                    <Emoji @chooseEmoji="handleChooseEmoji" />
-                                </div>
-                                <span class="emojiBtn" @click.stop="chooseEmoji = !chooseEmoji">
-                                    <svg-icon icon-class="emoji1"></svg-icon>
-                                </span>
                                 <el-button size="small" type="primary" @click="addNote">发布笔记</el-button>
                             </div>
                         </div>
@@ -99,11 +93,8 @@
 <script>
 import { getNote, insertNote, deleteNote } from '@/api/note'
 import { featchCategory } from '@/api'
-import Emoji from '@/components/emoji'
 export default {
-    components: {
-        Emoji
-    },
+
     metaInfo: {
         meta: [{
             name: 'keyWords',
@@ -122,7 +113,6 @@ export default {
                 categoryId: null
             },
             pages: 0,
-            chooseEmoji: false,
             noteList: [],
             loading: [],
             categoryList: [],
@@ -248,10 +238,6 @@ export default {
                 fullscreen: false
             });
         },
-        handleChooseEmoji(value) {
-            this.content += value
-            this.chooseEmoji = false
-        },
     },
 }
 </script>
@@ -265,335 +251,351 @@ export default {
     background-color: var(--background-color);
 }
 
-@media screen and (max-width: 1118px) {
-    /deep/ .vuepress-markdown-body div[class*=v-md-pre-wrapper-] {
-        margin: 0;
-    }
+// @media screen and (max-width: 1118px) {
+//     /deep/ .vuepress-markdown-body div[class*=v-md-pre-wrapper-] {
+//         margin: 0;
+//     }
 
-    .note-wapper {
-        display: flex;
-        justify-content: center;
-        position: relative;
+//     .note-wapper {
+//         display: flex;
+//         justify-content: center;
+//         position: relative;
+
+//         .main {
+//             margin-top: 60px;
+//             width: 100%;
+//             height: 100%;
+
+//             .note {
+//                 display: flex;
+//                 padding: 10px;
+
+//                 ul {
+//                     list-style: none;
+//                 }
+
+//                 .categoryBox {
+//                     display: none;
+//                 }
+
+//                 .rigthBox {
+//                     width: 100%;
+
+//                     .sendBox {
+//                         background-color: var(--background-color);
+//                         height: auto;
+//                         padding: 20px;
+//                         overflow: auto;
+//                         zoom: 1;
+//                         border-radius: 5px;
+
+//                         /deep/ .el-textarea__inner {
+//                             background-color: var(--background-color) !important;
+//                             color: var(--article-color);
+//                         }
+
+//                         .bottom {
+//                             height: 50px;
+//                             margin-top: 10px;
+//                             position: relative;
+
+//                             .category {
+//                                 font-size: 0.9rem;
+//                                 color: #8a8888;
+//                             }
+
+//                             .btn {
+//                                 float: right;
+//                                 align-items: center;
+
+//                                 .emoji-wrapper {
+//                                     position: absolute;
+//                                     top: -140px;
+//                                     left: 0px;
+//                                 }
+
+//                                 .emojiBtn {
+//                                     cursor: pointer;
+
+//                                     svg {
+//                                         width: 20px;
+//                                         height: 20px;
+//                                         margin-right: 10px;
+//                                         vertical-align: -5px;
+//                                     }
+//                                 }
+//                             }
+//                         }
+//                     }
+
+//                     .noteItem {
+//                         margin-top: 20px;
+
+//                         ul {
+
+//                             .item {
+//                                 background-color: var(--background-color);
+//                                 padding: 10px;
+//                                 margin-bottom: 15px;
+//                                 transition: box-shadow .35s, transform .35s;
+//                                 border-radius: 5px;
+
+//                                 &:hover {
+//                                     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+//                                     transform: translateY(-2px)
+//                                 }
+
+//                                 .content {
+//                                     color: var(--article-color);
+
+//                                     /deep/ .vuepress-markdown-body {
+//                                         padding: 0 !important;
+//                                         background-color: var(--background-color) !important;
+//                                         color: var(--article-color);
+//                                     }
+//                                 }
+
+//                                 .userInfo {
+//                                     align-items: center;
+//                                     height: 50px;
+//                                     margin-bottom: 15px;
+
+//                                     .avatar {
+//                                         vertical-align: middle;
+//                                         border: 1px solid var(--border-line);
+//                                         margin-right: 10px;
+//                                     }
+
+//                                     .username {
+//                                         color: var(--theme-color);
+
+//                                     }
+
+//                                     .time {
+//                                         font-size: 0.8rem;
+//                                         color: var(--text-color);
+//                                         margin-left: 15px;
+//                                     }
+//                                 }
+//                             }
+//                         }
+
+//                         .page {
+//                             text-align: center;
+//                             background-color: rgba(0, 0, 0, .8);
+//                             width: 120px;
+//                             height: 30px;
+//                             line-height: 30px;
+//                             border-radius: 50px;
+//                             margin: 0 auto;
+//                             margin-top: 20px;
+//                             cursor: pointer;
+//                             color: #fff;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+.note-wapper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    @media screen and (max-width: 1118px) {
+        /deep/ .vuepress-markdown-body div[class*=v-md-pre-wrapper-] {
+            margin: 0;
+        }
 
         .main {
-            margin-top: 60px;
+            margin-top: 70px;
             width: 100%;
             height: 100%;
 
-            .note {
-                display: flex;
-                padding: 10px;
+            .categoryBox {
+                display: none;
+            }
 
-                ul {
-                    list-style: none;
-                }
-
-                .categoryBox {
-                    display: none;
-                }
-
-                .rigthBox {
-                    width: 100%;
-
-                    .sendBox {
-                        background-color: var(--background-color);
-                        height: auto;
-                        padding: 20px;
-                        overflow: auto;
-                        zoom: 1;
-                        border-radius: 5px;
-
-                        /deep/ .el-textarea__inner {
-                            background-color: var(--background-color) !important;
-                            color: var(--article-color);
-                        }
-
-                        .bottom {
-                            height: 50px;
-                            margin-top: 10px;
-                            position: relative;
-
-                            .category {
-                                font-size: 0.9rem;
-                                color: #8a8888;
-                            }
-
-                            .btn {
-                                float: right;
-                                align-items: center;
-
-                                .emoji-wrapper {
-                                    position: absolute;
-                                    top: -140px;
-                                    left: 0px;
-                                }
-
-                                .emojiBtn {
-                                    cursor: pointer;
-
-                                    svg {
-                                        width: 20px;
-                                        height: 20px;
-                                        margin-right: 10px;
-                                        vertical-align: -5px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    .noteItem {
-                        margin-top: 20px;
-
-                        ul {
-
-                            .item {
-                                background-color: var(--background-color);
-                                padding: 10px;
-                                margin-bottom: 15px;
-                                transition: box-shadow .35s, transform .35s;
-                                border-radius: 5px;
-
-                                &:hover {
-                                    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
-                                    transform: translateY(-2px)
-                                }
-
-                                .content {
-                                    color: var(--article-color);
-
-                                    /deep/ .vuepress-markdown-body {
-                                        padding: 0 !important;
-                                        background-color: var(--background-color) !important;
-                                        color: var(--article-color);
-                                    }
-                                }
-
-                                .userInfo {
-                                    align-items: center;
-                                    height: 50px;
-                                    margin-bottom: 15px;
-
-                                    .avatar {
-                                        vertical-align: middle;
-                                        border: 1px solid var(--border-line);
-                                        margin-right: 10px;
-                                    }
-
-                                    .username {
-                                        color: var(--theme-color);
-
-                                    }
-
-                                    .time {
-                                        font-size: 0.8rem;
-                                        color: var(--text-color);
-                                        margin-left: 15px;
-                                    }
-                                }
-                            }
-                        }
-
-                        .page {
-                            text-align: center;
-                            background-color: rgba(0, 0, 0, .8);
-                            width: 120px;
-                            height: 30px;
-                            line-height: 30px;
-                            border-radius: 50px;
-                            margin: 0 auto;
-                            margin-top: 20px;
-                            cursor: pointer;
-                            color: #fff;
-                        }
-                    }
-                }
+            .rigthBox {
+                width: 100%;
             }
         }
     }
-}
 
-@media screen and (min-width: 1119px) {
-    .note-wapper {
-        display: flex;
-        justify-content: center;
-        position: relative;
-
+    @media screen and (min-width: 1119px) {
         .main {
             margin-top: 80px;
             width: 70%;
             height: 100%;
 
-            .note {
-                display: flex;
+            .categoryBox {
+                width: 8%;
+                margin-right: 30px;
+                position: fixed;
+            }
 
-                ul {
-                    list-style: none;
+            .rigthBox {
+                width: 75%;
+            }
+
+            .noteItem,
+            .sendBox {
+                margin-left: 20px;
+            }
+        }
+    }
+
+    .main {
+        height: 100%;
+
+
+        .note {
+            display: flex;
+
+            ul {
+                list-style: none;
+            }
+
+            .categoryBox {
+
+                .category_item,
+                .active {
+                    margin-bottom: 5px;
+                    cursor: pointer;
+                    padding: 8px;
+                    text-align: center;
+                    color: var(--article-color);
                 }
 
-                .categoryBox {
-                    width: 8%;
-                    margin-right: 30px;
-                    position: fixed;
+                .category_item:hover {
+                    background-color: #c3c3c3;
+                    color: var(--theme-color);
+                }
 
-                    .category_item,
-                    .active {
-                        margin-bottom: 5px;
-                        cursor: pointer;
-                        padding: 8px;
-                        text-align: center;
+                .active {
+                    background-color: var(--theme-color);
+                    color: var(--baise);
+                }
+            }
+
+            .rigthBox {
+                margin: 0 auto;
+
+                .sendBox {
+                    background-color: var(--background-color);
+                    height: auto;
+                    padding: 20px;
+                    overflow: auto;
+                    zoom: 1;
+                    border-radius: 5px;
+
+                    /deep/ .el-textarea__inner {
+                        background-color: var(--background-color) !important;
                         color: var(--article-color);
                     }
 
-                    .category_item:hover {
-                        background-color: #c3c3c3;
-                        color: var(--theme-color);
-                    }
+                    .bottom {
+                        height: 50px;
+                        margin-top: 10px;
+                        position: relative;
 
-                    .active {
-                        background-color: var(--theme-color);
-                        color: var(--baise);
-                    }
-
-                }
-
-                .rigthBox {
-                    width: 75%;
-                    margin: 0 auto;
-
-                    .sendBox {
-                        background-color: var(--background-color);
-                        height: auto;
-                        padding: 20px;
-                        overflow: auto;
-                        zoom: 1;
-                        border-radius: 5px;
-                        margin-left: 20px;
-
-                        /deep/ .el-textarea__inner {
-                            background-color: var(--background-color) !important;
-                            color: var(--article-color);
-                        }
-
-                        .bottom {
-                            height: 50px;
-                            margin-top: 10px;
-                            position: relative;
-
-                            .category {
-                                font-size: 0.9rem;
-
-                                .item {
-                                    cursor: pointer;
-                                    margin-right: 20px;
-                                    color: var(--text-color);
-                                }
-                            }
-
-                            .btn {
-                                float: right;
-                                align-items: center;
-
-                                .emoji-wrapper {
-                                    position: absolute;
-                                    top: -140px;
-                                    left: 0px;
-                                }
-
-                                .emojiBtn {
-                                    cursor: pointer;
-
-                                    svg {
-                                        width: 20px;
-                                        height: 20px;
-                                        margin-right: 10px;
-                                        vertical-align: -5px;
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-
-                    .noteItem {
-                        margin-top: 20px;
-                        margin-left: 20px;
-
-                        ul {
+                        .category {
+                            font-size: 0.9rem;
 
                             .item {
-                                background-color: var(--background-color);
-                                padding: 10px;
-                                margin-bottom: 15px;
-                                transition: box-shadow .35s, transform .35s;
-                                border-radius: 5px;
-
-                                &:hover {
-                                    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
-                                    transform: translateY(-2px)
-                                }
-
-                                .content {
-                                    color: var(--article-color);
-
-                                    /deep/ .vuepress-markdown-body {
-                                        padding: 0 !important;
-                                        background-color: var(--background-color) !important;
-                                        color: var(--article-color);
-                                    }
-                                }
-
-                                .content-btn {
-                                    padding-left: 20px;
-                                    padding-top: 10px;
-
-                                    span {
-                                        color: var(--text-color);
-                                        cursor: pointer;
-
-                                        &:hover {
-                                            color: var(--theme-color);
-                                        }
-                                    }
-                                }
-
-                                .userInfo {
-                                    align-items: center;
-                                    height: 50px;
-                                    margin-bottom: 15px;
-
-                                    .avatar {
-                                        vertical-align: middle;
-                                        border: 1px solid var(--border-line);
-                                        margin-right: 10px;
-                                    }
-
-                                    .username {
-                                        color: var(--theme-color);
-
-                                    }
-
-                                    .time {
-                                        font-size: 0.8rem;
-                                        color: var(--text-color);
-                                        margin-left: 15px;
-                                    }
-                                }
+                                cursor: pointer;
+                                margin-right: 20px;
+                                color: var(--text-color);
                             }
                         }
 
-                        .page {
-                            text-align: center;
-                            background-color: rgba(0, 0, 0, .8);
-                            width: 120px;
-                            height: 30px;
-                            line-height: 30px;
-                            border-radius: 50px;
-                            margin: 0 auto;
-                            margin-top: 20px;
-                            cursor: pointer;
-                            color: #fff;
+                        .btn {
+                            float: right;
+                            align-items: center;
+
                         }
+                    }
+                }
+
+                .noteItem {
+                    margin-top: 20px;
+
+                    ul {
+
+                        .item {
+                            background-color: var(--background-color);
+                            padding: 10px;
+                            margin-bottom: 15px;
+                            transition: box-shadow .35s, transform .35s;
+                            border-radius: 5px;
+
+                            &:hover {
+                                box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+                                transform: translateY(-2px)
+                            }
+
+                            .content {
+                                color: var(--article-color);
+
+                                /deep/ .vuepress-markdown-body {
+                                    padding: 0 !important;
+                                    background-color: var(--background-color) !important;
+                                    color: var(--article-color);
+                                }
+                            }
+
+                            .content-btn {
+                                padding-left: 20px;
+                                padding-top: 10px;
+
+                                span {
+                                    color: var(--text-color);
+                                    cursor: pointer;
+
+                                    &:hover {
+                                        color: var(--theme-color);
+                                    }
+                                }
+                            }
+
+                            .userInfo {
+                                align-items: center;
+                                height: 50px;
+                                margin-bottom: 15px;
+
+                                .avatar {
+                                    vertical-align: middle;
+                                    border: 1px solid var(--border-line);
+                                    margin-right: 10px;
+                                }
+
+                                .username {
+                                    color: var(--theme-color);
+
+                                }
+
+                                .time {
+                                    font-size: 0.8rem;
+                                    color: var(--text-color);
+                                    margin-left: 15px;
+                                }
+                            }
+                        }
+                    }
+
+                    .page {
+                        text-align: center;
+                        background-color: rgba(0, 0, 0, .8);
+                        width: 120px;
+                        height: 30px;
+                        line-height: 30px;
+                        border-radius: 50px;
+                        margin: 0 auto;
+                        margin-top: 20px;
+                        cursor: pointer;
+                        color: #fff;
                     }
                 }
             }
