@@ -45,10 +45,11 @@ public class ApiHomeServiceImpl implements ApiHomeService {
      * @param request
      * @return
      */
+
     public ResponseResult report(HttpServletRequest request) {
         // 获取ip
         String ipAddress = IpUtil.getIp(request);
-        // 获取访问设备
+        // 通过浏览器解析工具类UserAgent获取访问设备信息
         UserAgent userAgent = IpUtil.getUserAgent(request);
         Browser browser = userAgent.getBrowser();
         OperatingSystem operatingSystem = userAgent.getOperatingSystem();
@@ -57,11 +58,14 @@ public class ApiHomeServiceImpl implements ApiHomeService {
         String md5 = DigestUtils.md5DigestAsHex(uuid.getBytes());
         // 判断是否访问
         if (!redisService.sIsMember(RedisConstants.UNIQUE_VISITOR, md5)) {
-            // 访问量+1
-            redisService.incr(RedisConstants.BLOG_VIEWS_COUNT, 1);
+            // 访客量+1
+            redisService.incr(RedisConstants.UNIQUE_VISITOR_COUNT, 1);
             // 保存唯一标识
             redisService.sAdd(RedisConstants.UNIQUE_VISITOR, md5);
         }
+        // 访问量+1
+        redisService.incr(RedisConstants.BLOG_VIEWS_COUNT, 1);
+
         return ResponseResult.success();
     }
 
