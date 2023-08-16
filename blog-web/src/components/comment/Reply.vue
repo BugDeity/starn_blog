@@ -238,7 +238,7 @@ export default {
 
                 .emoji-wrapper {
                     position: absolute;
-                    top: 5px;
+                    top: 0;
                 }
             }
         }
