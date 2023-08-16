@@ -2,7 +2,7 @@ package com.shiyi.controller;
 
 
 import com.shiyi.common.ResponseResult;
-import com.shiyi.service.impl.ApiHomeServiceImpl;
+import com.shiyi.service.ApiHomeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = "门户首页管理")
 public class ApiHomeController {
 
-    private final ApiHomeServiceImpl homeService;
+    private final ApiHomeService homeService;
 
 
     @RequestMapping(value = "/report",method = RequestMethod.GET)
