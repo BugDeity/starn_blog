@@ -115,6 +115,9 @@ export default {
 
 
     @media screen and (max-width: 1118px) {
+        padding-left: 10px;
+        padding-right: 10px;
+
         .archive-container {
             margin-top: 70px;
             width: 100%;
@@ -124,7 +127,7 @@ export default {
     @media screen and (min-width: 1119px) {
         .archive-container {
             margin-top: 80px;
-            width: 70%;
+            width: 60%;
         }
     }
 

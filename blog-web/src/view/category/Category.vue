@@ -164,7 +164,7 @@ export default {
     @media screen and (min-width: 1119px) {
         .main {
             margin-top: 80px;
-            width: 70%;
+            width: 65%;
 
             #time-line {
                 float: left;

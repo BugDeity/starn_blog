@@ -47,8 +47,8 @@
                 </div>
 
                 <div class="menus-item">
-                    <a @click="handleClike('/sponsor')">
-                        <i class="iconfont icon-dashang1" /> 打赏
+                    <a @click="handleClike('/navigation')">
+                        <i class="el-icon-s-promotion" /> 网址导航
                     </a>
                 </div>
                 <div class="menus-item">

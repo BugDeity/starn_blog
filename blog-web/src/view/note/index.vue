@@ -72,11 +72,9 @@
                                         @click="handleDelete(item.id, index)">删除</span>
                                 </div>
                             </li>
-                            <div v-if="pageData.pageNo == pages" style="text-align: center;color: var(--text-color);">
-                                我也是有底线的~~~</div>
                             <!-- 分页按钮 -->
-                            <div class="page" v-else @click="handlePage">
-                                加载更多
+                            <div @click="handlePage">
+                                <Pagination :pageNo="pageData.pageNo" :pages="pages" />
                             </div>
                         </ul>
                         <el-empty v-else description="暂未发布笔记"></el-empty>
@@ -93,8 +91,11 @@
 <script>
 import { getNote, insertNote, deleteNote } from '@/api/note'
 import { featchCategory } from '@/api'
+import Pagination from '@/components/pagination/index.vue'
 export default {
-
+    components: {
+        Pagination
+    },
     metaInfo: {
         meta: [{
             name: 'keyWords',
@@ -109,7 +110,7 @@ export default {
         return {
             pageData: {
                 pageNo: 1,
-                pageSize: 8,
+                pageSize: 10,
                 categoryId: null
             },
             pages: 0,
@@ -251,153 +252,6 @@ export default {
     background-color: var(--background-color);
 }
 
-// @media screen and (max-width: 1118px) {
-//     /deep/ .vuepress-markdown-body div[class*=v-md-pre-wrapper-] {
-//         margin: 0;
-//     }
-
-//     .note-wapper {
-//         display: flex;
-//         justify-content: center;
-//         position: relative;
-
-//         .main {
-//             margin-top: 60px;
-//             width: 100%;
-//             height: 100%;
-
-//             .note {
-//                 display: flex;
-//                 padding: 10px;
-
-//                 ul {
-//                     list-style: none;
-//                 }
-
-//                 .categoryBox {
-//                     display: none;
-//                 }
-
-//                 .rigthBox {
-//                     width: 100%;
-
-//                     .sendBox {
-//                         background-color: var(--background-color);
-//                         height: auto;
-//                         padding: 20px;
-//                         overflow: auto;
-//                         zoom: 1;
-//                         border-radius: 5px;
-
-//                         /deep/ .el-textarea__inner {
-//                             background-color: var(--background-color) !important;
-//                             color: var(--article-color);
-//                         }
-
-//                         .bottom {
-//                             height: 50px;
-//                             margin-top: 10px;
-//                             position: relative;
-
-//                             .category {
-//                                 font-size: 0.9rem;
-//                                 color: #8a8888;
-//                             }
-
-//                             .btn {
-//                                 float: right;
-//                                 align-items: center;
-
-//                                 .emoji-wrapper {
-//                                     position: absolute;
-//                                     top: -140px;
-//                                     left: 0px;
-//                                 }
-
-//                                 .emojiBtn {
-//                                     cursor: pointer;
-
-//                                     svg {
-//                                         width: 20px;
-//                                         height: 20px;
-//                                         margin-right: 10px;
-//                                         vertical-align: -5px;
-//                                     }
-//                                 }
-//                             }
-//                         }
-//                     }
-
-//                     .noteItem {
-//                         margin-top: 20px;
-
-//                         ul {
-
-//                             .item {
-//                                 background-color: var(--background-color);
-//                                 padding: 10px;
-//                                 margin-bottom: 15px;
-//                                 transition: box-shadow .35s, transform .35s;
-//                                 border-radius: 5px;
-
-//                                 &:hover {
-//                                     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
-//                                     transform: translateY(-2px)
-//                                 }
-
-//                                 .content {
-//                                     color: var(--article-color);
-
-//                                     /deep/ .vuepress-markdown-body {
-//                                         padding: 0 !important;
-//                                         background-color: var(--background-color) !important;
-//                                         color: var(--article-color);
-//                                     }
-//                                 }
-
-//                                 .userInfo {
-//                                     align-items: center;
-//                                     height: 50px;
-//                                     margin-bottom: 15px;
-
-//                                     .avatar {
-//                                         vertical-align: middle;
-//                                         border: 1px solid var(--border-line);
-//                                         margin-right: 10px;
-//                                     }
-
-//                                     .username {
-//                                         color: var(--theme-color);
-
-//                                     }
-
-//                                     .time {
-//                                         font-size: 0.8rem;
-//                                         color: var(--text-color);
-//                                         margin-left: 15px;
-//                                     }
-//                                 }
-//                             }
-//                         }
-
-//                         .page {
-//                             text-align: center;
-//                             background-color: rgba(0, 0, 0, .8);
-//                             width: 120px;
-//                             height: 30px;
-//                             line-height: 30px;
-//                             border-radius: 50px;
-//                             margin: 0 auto;
-//                             margin-top: 20px;
-//                             cursor: pointer;
-//                             color: #fff;
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
 
 .note-wapper {
     display: flex;
@@ -405,6 +259,9 @@ export default {
     position: relative;
 
     @media screen and (max-width: 1118px) {
+        padding-left: 10px;
+        padding-right: 10px;
+
         /deep/ .vuepress-markdown-body div[class*=v-md-pre-wrapper-] {
             margin: 0;
         }
@@ -427,7 +284,7 @@ export default {
     @media screen and (min-width: 1119px) {
         .main {
             margin-top: 80px;
-            width: 70%;
+            width: 65%;
             height: 100%;
 
             .categoryBox {
@@ -583,19 +440,6 @@ export default {
                                 }
                             }
                         }
-                    }
-
-                    .page {
-                        text-align: center;
-                        background-color: rgba(0, 0, 0, .8);
-                        width: 120px;
-                        height: 30px;
-                        line-height: 30px;
-                        border-radius: 50px;
-                        margin: 0 auto;
-                        margin-top: 20px;
-                        cursor: pointer;
-                        color: #fff;
                     }
                 }
             }

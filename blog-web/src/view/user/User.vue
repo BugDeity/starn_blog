@@ -60,10 +60,9 @@
                                 </div>
                             </el-card>
                         </el-timeline-item>
-                        <div v-if="pageData.pageNo == pageTotal" style="text-align: center;color: var(--text-color);">
-                            我也是有底线的~~~</div>
-                        <div v-else style="text-align: center;">
-                            <span @click="handlePage('article')" class="pageBtn">加载更多</span>
+                        <!-- 分页按钮 -->
+                        <div @click="handlePage('article')">
+                            <Pagination :pageNo="pageData.pageNo" :pages="pages" />
                         </div>
                     </el-timeline>
 
@@ -95,10 +94,10 @@
                                 </div>
                             </el-card>
                         </el-timeline-item>
-                        <div v-if="pageData.pageNo == pageTotal" style="text-align: center;color: var(--text-color);">
-                            我也是有底线的~~~</div>
-                        <div v-else style="text-align: center;">
-                            <span @click="handlePage('collect')" class="pageBtn">加载更多</span>
+
+                        <!-- 分页按钮 -->
+                        <div @click="handlePage('collect')">
+                            <Pagination :pageNo="pageData.pageNo" :pages="pages" />
                         </div>
                     </el-timeline>
                     <el-empty v-else description="暂未收藏文章"></el-empty>
@@ -119,10 +118,9 @@
                                 </div>
                             </el-card>
                         </el-timeline-item>
-                        <div v-if="pageData.pageNo == pageTotal" style="text-align: center;color: var(--text-color);">
-                            我也是有底线的~~~</div>
-                        <div v-else style="text-align: center;">
-                            <span @click="handlePage('comment')" class="pageBtn">加载更多</span>
+                        <!-- 分页按钮 -->
+                        <div @click="handlePage('comment')">
+                            <Pagination :pageNo="pageData.pageNo" :pages="pages" />
                         </div>
                     </el-timeline>
                     <el-empty v-else description="暂未评论过文章"></el-empty>
@@ -144,10 +142,10 @@
                                 <v-md-preview :text="item.content" ref="preview" />
                             </el-card>
                         </el-timeline-item>
-                        <div v-if="pageData.pageNo == pageTotal" style="text-align: center;color: var(--text-color);">
-                            我也是有底线的~~~</div>
-                        <div v-else style="text-align: center;">
-                            <span @click="handlePage('note')" class="pageBtn">加载更多</span>
+
+                        <!-- 分页按钮 -->
+                        <div @click="handlePage('note')">
+                            <Pagination :pageNo="pageData.pageNo" :pages="pages" />
                         </div>
                     </el-timeline>
                     <el-empty v-else description="暂未发布过笔记"></el-empty>
@@ -216,7 +214,11 @@ import {
 } from '@/api'
 import { getMyNote, deleteNote } from '@/api/note'
 import { getMyComment } from '@/api/comment'
+import Pagination from '@/components/pagination/index.vue'
 export default {
+    components: {
+        Pagination
+    },
     data() {
         return {
             form: {},
@@ -235,7 +237,7 @@ export default {
                 pageNo: 1,
                 pageSize: 5
             },
-            pageTotal: 0,
+            pages: 0,
             rules: {
                 oldPassword: [
                     { required: true, message: '请输入旧密码', trigger: 'blur' },
@@ -443,7 +445,7 @@ export default {
             this.openLoading()
             getMyArticle(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
-                this.pageTotal = res.data.pages
+                this.pages = res.data.pages
                 this.loading.close()
             }).catch(err => {
                 console.log(err)
@@ -453,7 +455,7 @@ export default {
             this.openLoading()
             getCollect(this.pageData).then(res => {
                 this.collectList.push(...res.data.records);
-                this.pageTotal = res.data.pages
+                this.pages = res.data.pages
                 this.loading.close()
             }).catch(err => {
                 console.log(err)
@@ -463,7 +465,7 @@ export default {
             this.openLoading()
             getMyComment(this.pageData).then(res => {
                 this.commentList.push(...res.data.records);
-                this.pageTotal = res.data.pages
+                this.pages = res.data.pages
                 this.loading.close()
             }).catch(err => {
                 console.log(err)
@@ -473,7 +475,7 @@ export default {
             this.openLoading()
             getMyNote(this.pageData).then(res => {
                 this.noteList.push(...res.data.records);
-                this.pageTotal = res.data.pages
+                this.pages = res.data.pages
                 this.loading.close()
             }).catch(err => {
                 console.log(err)
@@ -561,20 +563,6 @@ export default {
 
 /deep/ .el-tabs__content {
     padding: 10px;
-}
-
-.pageBtn {
-    text-align: center;
-    background-color: rgba(0, 0, 0, .8);
-    width: 120px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50px;
-    margin: 0 auto;
-    margin-top: 20px;
-    cursor: pointer;
-    color: #fff;
-    display: inline-block;
 }
 
 .myArticle,

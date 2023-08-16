@@ -71,7 +71,7 @@ export default {
 
     @media screen and (min-width: 1119px) {
         .navigation-container {
-            width: 70%;
+            width: 65%;
 
             ul {
                 grid-template-columns: repeat(5, 1fr);

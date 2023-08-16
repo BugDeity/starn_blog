@@ -199,7 +199,7 @@ export default {
 
     @media screen and (min-width: 1119px) {
         .box {
-            width: 70%;
+            width: 65%;
 
             .nav {
                 width: 70%;

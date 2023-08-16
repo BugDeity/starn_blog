@@ -97,12 +97,10 @@
                         </div>
                     </el-card>
                     <!-- 分页按钮 -->
-                    <div class="page" v-if="pageData.pageNo < pageTotal" @click="onPage">
-                        加载更多
+                    <div @click="onPage">
+                        <Pagination :pageNo="pageData.pageNo" :pages="pages" />
                     </div>
-                    <div style="text-align: center;color: var(--text-color);" v-else>
-                        我也是有底线的--
-                    </div>
+
                 </div>
                 <el-empty style=" width: 100%;" v-else description="很抱歉，暂无文章"></el-empty>
 
@@ -208,11 +206,12 @@
                             <span>推荐文章</span>
                         </div>
                         <ul class="recomArticleUl">
-                            <li v-for="(   item, index   ) in    newArticleList   ">
-                                <div class="item">
+                            <li v-for="(item, index) in    newArticleList   ">
+                                <div class="article-item">
                                     <el-image style="float: left;" :src="item.avatar" fit="fit" />
                                     <p class="info">
-                                        <a href="javascript:;" @click="handleClick(item.id)">{{ item.title }}</a>
+                                        <a class="tuijian-title" href="javascript:;" @click="handleClick(item.id)">{{
+                                            item.title }}</a>
                                     </p>
                                     <p class="time">{{ item.createTime }}</p>
                                 </div>
@@ -238,7 +237,7 @@
                         </div>
                         <ul class="guanzhuList">
                             <li v-show="isShow(2)">
-                                <div class="item qq">
+                                <div class="guanzhu-item qq">
                                     <svg-icon icon-class="qq" />
                                     <a :href="'//wpa.qq.com/msgrd?v=3&amp;uin=' + $store.state.webSiteInfo.qqNumber + '&amp;site=qq&amp;menu=yes'"
                                         target="_blank">
@@ -251,7 +250,7 @@
                                 </div>
                             </li>
                             <li v-show="isShow(6)">
-                                <div class="item qqgroup">
+                                <div class="guanzhu-item qqgroup">
                                     <svg-icon icon-class="qqgroup" />
                                     <a href="javascript:;">
                                         {{ $store.state.webSiteInfo.qqGroup }}
@@ -262,7 +261,7 @@
                                 </div>
                             </li>
                             <li v-show="isShow(3)">
-                                <div class="item github">
+                                <div class="guanzhu-item github">
                                     <svg-icon icon-class="github" />
                                     <a :href="$store.state.webSiteInfo.github" target="_blank">
                                         {{ $store.state.webSiteInfo.github }}
@@ -273,7 +272,7 @@
                                 </div>
                             </li>
                             <li v-show="isShow(4)">
-                                <div class="item gitee">
+                                <div class="guanzhu-item gitee">
                                     <svg-icon icon-class="gitee" />
                                     <a :href="$store.state.webSiteInfo.gitee" target="_blank">
                                         {{ $store.state.webSiteInfo.gitee }}
@@ -284,7 +283,7 @@
                                 </div>
                             </li>
                             <li v-show="isShow(1)">
-                                <div class="item email">
+                                <div class="guanzhu-item email">
                                     <svg-icon icon-class="email" />
                                     <a :href="'mailto:' + $store.state.webSiteInfo.email" target="_blank" title="邮箱">
                                         {{ $store.state.webSiteInfo.email }}
@@ -295,7 +294,7 @@
                                 </div>
                             </li>
                             <li v-show="isShow(5)">
-                                <div class="item wechat">
+                                <div class="guanzhu-item wechat">
                                     <svg-icon icon-class="wechat" /> {{ $store.state.webSiteInfo.wechat }}
                                     <span title="点击复制" @click="copy($store.state.webSiteInfo.wechat)" class="copyBtn name">
                                         微信
@@ -331,11 +330,13 @@ import { fetchArticleList, featchHomeData, featchCategory, getMusic } from '@/ap
 import Notcie from '@/components/notice/index.vue'
 import SiteInfo from '@/components/site/index.vue'
 import APlayer from 'vue-aplayer'
+import Pagination from '@/components/pagination/index.vue'
 export default {
     components: {
         Notcie,
         APlayer,
-        SiteInfo
+        SiteInfo,
+        Pagination
     },
     name: 'Home',
     metaInfo: {
@@ -379,7 +380,7 @@ export default {
             medal: {
                 type: 1
             },
-            pageTotal: 0,
+            pages: 0,
             tagList: [],
             newArticleList: [],
             tagStyle: ['', 'success', 'info', 'warning', 'danger']
@@ -458,7 +459,7 @@ export default {
             this.pageData.orderByDescColumn = item.desc
             fetchArticleList(this.pageData).then(res => {
                 this.articleList = res.data.records;
-                this.pageTotal = res.data.pages
+                this.pages = res.data.pages
                 this.loading.close()
             })
         },
@@ -475,7 +476,7 @@ export default {
             this.openLoading()
             fetchArticleList(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
-                this.pageTotal = res.data.pages
+                this.pages = res.data.pages
                 this.loading.close()
             })
         },
@@ -512,19 +513,6 @@ export default {
 </script>
 
 <style lang="scss" scoped >
-.page {
-    text-align: center;
-    background-color: rgba(0, 0, 0, .8);
-    width: 120px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50px;
-    margin: 0 auto;
-    margin-top: 20px;
-    cursor: pointer;
-    color: #fff;
-}
-
 /deep/ .el-tabs__item {
     color: var(--article-color);
 }
@@ -787,7 +775,7 @@ export default {
         justify-content: center;
 
         .main {
-            width: 70%;
+            width: 65%;
             margin-top: 80px;
 
             .main-box {
@@ -1137,47 +1125,42 @@ export default {
                                     }
                                 }
 
+                                .article-item {
+                                    height: 100%;
 
-                            }
+                                    /deep/ .el-image {
+                                        width: 100px;
+                                        height: 75px;
+                                        margin-right: 10px;
+                                    }
 
-                            .item {
-                                height: 100%;
+                                    /deep/ .el-image__inner {
+                                        transition: all 0.5s;
+                                        margin-right: 10px;
+                                    }
 
-                                /deep/ .el-image {
-                                    width: 100px;
-                                    height: 75px;
-                                    margin-right: 10px;
-                                }
+                                    .tuijian-title {
+                                        text-decoration: none;
+                                        color: var(--article-color);
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        display: -webkit-box;
+                                        -webkit-box-orient: vertical;
+                                        -webkit-line-clamp: 2;
 
-                                /deep/ .el-image__inner {
-                                    transition: all 0.5s;
-                                    margin-right: 10px;
-                                }
+                                        &:hover {
+                                            color: var(--theme-color);
+                                        }
+                                    }
 
-                                .info a {
-                                    text-decoration: none;
-                                    color: var(--article-color);
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    display: -webkit-box;
-                                    -webkit-box-orient: vertical;
-                                    -webkit-line-clamp: 2;
 
-                                    &:hover {
-                                        color: var(--theme-color);
+                                    .time {
+                                        font-size: 0.8rem;
+                                        color: var(--text-color);
+                                        margin-top: 10px;
                                     }
                                 }
-
-
-                                .time {
-                                    font-size: 0.8rem;
-                                    color: var(--text-color);
-                                    margin-top: 10px;
-                                }
                             }
-
-
-
                         }
                     }
 
@@ -1186,7 +1169,7 @@ export default {
                             padding: 15px;
                             list-style: none;
 
-                            .item {
+                            .guanzhu-item {
                                 margin-bottom: 20px;
                                 height: 40px;
                                 line-height: 40px;

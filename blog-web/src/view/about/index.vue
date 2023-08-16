@@ -45,7 +45,7 @@ export default {
 
     @media screen and (min-width: 1119px) {
         .box1 {
-            width: 55%;
+            width: 65%;
             margin-top: 80px;
         }
     }

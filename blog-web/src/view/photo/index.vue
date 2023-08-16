@@ -107,7 +107,7 @@ export default {
 
     @media screen and (min-width: 1119px) {
         .containner {
-            width: 60%;
+            width: 65%;
             margin-top: 80px;
         }
     }

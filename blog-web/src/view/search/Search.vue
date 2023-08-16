@@ -72,12 +72,10 @@
                     </div>
                 </el-card>
                 <!-- 分页按钮 -->
-                <div class="page" v-if="pageData.pageNo < pages" @click="onPage">
-                    加载更多
+                <div @click="onPage">
+                    <Pagination :pageNo="pageData.pageNo" :pages="pages" />
                 </div>
-                <div style="text-align: center;color: var(--text-color);" v-else>
-                    我也是有底线的--
-                </div>
+
             </div>
             <div class="empty-box" v-else>
                 <el-empty description="哎呀，文章丢失啦..."></el-empty>
@@ -88,9 +86,11 @@
 </template>
 <script>
 import { searchArticle } from '@/api'
-
+import Pagination from '@/components/pagination/index.vue'
 export default {
-
+    components: {
+        Pagination
+    },
     data() {
         return {
             pageData: {
@@ -144,19 +144,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.page {
-    text-align: center;
-    background-color: rgba(0, 0, 0, .8);
-    width: 120px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50px;
-    margin: 0 auto;
-    margin-top: 20px;
-    cursor: pointer;
-    color: #fff;
-}
-
 .artcile_main {
     min-height: calc(100vh - 167px);
     display: flex;
