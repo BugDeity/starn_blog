@@ -62,13 +62,9 @@
                         </div>
                     </div>
 
-                    <div class="page" v-if="pageData.pageNo < pages" @click="onPage">
-                        <div>
-                            加载更多
-                        </div>
-                    </div>
-                    <div style="text-align: center;color: var(--text-color);margin-top: 20px;" v-else>
-                        我也是有底线的--
+                    <!-- 分页按钮 -->
+                    <div @click="onPage">
+                        <Pagination :pageNo="pageData.pageNo" :pages="pages" />
                     </div>
                 </div>
                 <div class="empty-box" v-else>
@@ -83,7 +79,11 @@
    
 <script>
 import { getMessageNotice, deleteMessage } from '@/api/im'
+import Pagination from '@/components/pagination/index.vue'
 export default {
+    components: {
+        Pagination
+    },
     name: '',
     data() {
         return {
@@ -360,19 +360,6 @@ export default {
                     }
 
                 }
-            }
-
-            .page {
-                text-align: center;
-                background-color: rgba(0, 0, 0, .8);
-                width: 120px;
-                height: 30px;
-                line-height: 30px;
-                border-radius: 50px;
-                margin: 0 auto;
-                margin-top: 20px;
-                cursor: pointer;
-                color: #fff;
             }
         }
     }
