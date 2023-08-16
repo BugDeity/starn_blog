@@ -1,7 +1,8 @@
 <template>
     <div class='emoji-container'>
         <span class="emoji-item" v-for="(item, index) of emojiList" :key="index" @click="chooseEmoji(item)">
-            <span class="emoji">{{ item.emoji }}
+            <span class="emoji">
+                {{ item.emoji }}
             </span>
         </span>
     </div>
@@ -34,11 +35,13 @@ export default {
     overflow-y: auto;
     background-color: var(--background-color);
     border: 1px solid var(--border-line);
+    padding: 5px;
+    border-radius: 5px;
 
     .emoji-item {
         cursor: pointer;
         display: inline-block;
-        margin: 2px 0;
+        margin: 5px 0;
 
         .emoji {
             font-size: 20px;

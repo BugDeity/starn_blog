@@ -154,16 +154,6 @@ export default {
             position: relative;
             height: auto;
 
-            &:last-child {
-                .timeline-content .fgx {
-                    border: 0;
-                }
-
-                .timeline-box .long-line {
-                    height: 100%;
-                }
-            }
-
             .timeline-box {
                 text-align: center;
                 position: absolute;
@@ -206,8 +196,6 @@ export default {
                 height: auto;
                 padding: 0 0 0 20px;
                 text-align: left;
-
-
 
                 .timeline-title {
                     font-size: 14px;

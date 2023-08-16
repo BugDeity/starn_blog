@@ -351,6 +351,7 @@ export default {
                     /deep/ .el-textarea__inner {
                         background-color: var(--background-color) !important;
                         color: var(--article-color);
+                        border-color: var(--border-line);
                     }
 
                     .bottom {

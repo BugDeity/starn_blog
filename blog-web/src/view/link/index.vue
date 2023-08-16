@@ -312,6 +312,26 @@ export default {
                 .item-content {
                     display: flex;
                     margin-top: 10px;
+
+                    .info {
+                        margin-left: 15px;
+                        color: #fff;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        -webkit-line-clamp: 3;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+
+                    }
+
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        margin: 3px 0;
+                        margin-right: 8px;
+                    }
                 }
 
                 .name {
@@ -325,26 +345,7 @@ export default {
 
                 }
 
-                .info {
-                    margin-left: 15px;
-                    color: #fff;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    -webkit-line-clamp: 3;
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
 
-                }
-
-                img {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    object-fit: cover;
-                    margin: 3px 0;
-                    margin-right: 8px;
-
-                }
             }
         }
 

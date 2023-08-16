@@ -183,7 +183,7 @@ export default {
             color: var(--theme-color);
             font-size: 1rem;
             font-weight: bold;
-            border-bottom: 2px solid #e4e7ed;
+            border-bottom: 2px solid var(--border-line);
 
             span {
                 margin-right: 20px;

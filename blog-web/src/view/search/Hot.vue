@@ -69,6 +69,20 @@
                         </li>
                     </ul>
                 </div>
+                <div class="toutiao">
+                    <div class="title">
+                        <span>头条热搜</span>
+                        <svg-icon icon-class="hot"></svg-icon>
+                    </div>
+                    <ul>
+                        <li v-for="(item, index) in toutiaoList" :key="index" @click="go(item.url)">
+                            <span class="index">
+                                {{ index + 1 }}
+                            </span>
+                            <span>{{ item.keyword }}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <el-dialog :lock-scroll="false" title="切换搜索引擎" :visible.sync="dialogVisible" width="30%">
@@ -102,6 +116,7 @@ export default {
             weiboList: [],
             zhihuList: [],
             csdnList: [],
+            toutiaoList: [],
             text: null,
             loading: [],
             siteList: ['百度', 'Google', '知乎', 'Csdn', '码云', 'Github', '哔哩哔哩'],
@@ -128,6 +143,9 @@ export default {
         })
         getHot("csdn").then(res => {
             this.csdnList = res.data.data
+        })
+        getHot("toutiao").then(res => {
+            this.toutiaoList = res.data.data
         })
         this.loading.close()
     },
@@ -180,6 +198,7 @@ export default {
     @media screen and (max-width: 1118px) {
         .box {
             width: 100%;
+            padding: 10px;
 
             .nav {
                 width: 100%;
@@ -188,7 +207,8 @@ export default {
             .weibo,
             .baidu,
             .zhihu,
-            .csdn {
+            .csdn,
+            .toutiao {
                 width: 47%;
                 display: inline-block;
                 margin-right: 10px;
@@ -206,13 +226,14 @@ export default {
             }
 
             .hot {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(5, 1fr);
                 display: grid;
 
                 .weibo,
                 .baidu,
                 .zhihu,
-                .csdn {
+                .csdn,
+                .toutiao {
                     width: 250px;
                     display: inline-block;
                     margin-right: 30px;
@@ -223,7 +244,6 @@ export default {
 
     .box {
         height: 100%;
-        padding: 10px;
         margin-top: 80px;
 
         .nav {
@@ -287,6 +307,11 @@ export default {
                 background-image: radial-gradient(circle at 50% 3%, #d63736, #d52c2b);
             }
 
+            .toutiao .title {
+                background-color: #d10808;
+                background-image: radial-gradient(circle at 50% 3%, #d63736, #d52c2b);
+            }
+
             .baidu .title {
                 background-color: #4e6ef2;
                 background-image: radial-gradient(circle at 50% -45%, #53a7f5, #4e6ef2);
@@ -305,7 +330,8 @@ export default {
             .weibo,
             .baidu,
             .zhihu,
-            .csdn {
+            .csdn,
+            .toutiao {
 
                 .title {
                     width: 100%;
