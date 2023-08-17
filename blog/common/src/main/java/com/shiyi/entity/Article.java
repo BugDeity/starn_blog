@@ -72,14 +72,11 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "文章阅读量")
     private Integer quantity;
 
-    @ApiModelProperty(value = "说明")
-    private String remark;
-
-    @ApiModelProperty(value = "SEO关键词")
-    private String keywords;
-
     @ApiModelProperty(value = "是否首页轮播")
     private Integer isCarousel;
+
+    @ApiModelProperty(value = "是否推荐 0否 1是")
+    private Integer isRecommend;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)

@@ -237,8 +237,7 @@
             <el-col :span="5">
               <el-form-item :label-width="formLabelWidth" label="阅读方式" prop="readType">
                 <el-select v-model="article.readType" placeholder="请选择阅读方式">
-                  <el-option v-for="(  item, index  ) in   readTypeList  " :key="index" :label="item"
-                    :value="index">
+                  <el-option v-for="(  item, index  ) in   readTypeList  " :key="index" :label="item" :value="index">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -256,8 +255,10 @@
               </el-form-item>
             </el-col>
             <el-col :span="5">
-              <el-form-item :label-width="formLabelWidth" label="关键词">
-                <el-input v-model="article.keywords"></el-input>
+              <el-form-item :label-width="formLabelWidth" label="是否推荐" prop="isRecommend">
+                <el-radio-group v-model="article.isRecommend" size="small">
+                  <el-radio v-for="(  item, index  ) in   yesOrNoList  " :label="index" border>{{ item }}</el-radio>
+                </el-radio-group>
               </el-form-item>
             </el-col>
             <el-col :span="5">
@@ -385,7 +386,9 @@ export default {
         'isPublish': [{ required: true, message: '必填字段', trigger: 'change' }],
         'isOriginal': [{ required: true, message: '必填字段', trigger: 'change' }],
         'originalUrl': [{ required: true, message: '必填字段', trigger: 'blur' }],
-        'contentMd': [{ required: true, message: '必填字段', trigger: 'change' }]
+        'contentMd': [{ required: true, message: '必填字段', trigger: 'change' }],
+        'isRecommend': [{ required: true, message: '必填字段', trigger: 'change' }],
+        'isCarousel': [{ required: true, message: '必填字段', trigger: 'change' }]
       },
       params: {
         title: null,
@@ -651,6 +654,7 @@ export default {
         isStick: 0,
         isOriginal: 1,
         isCarousel: 0,
+        isRecommend: 0,
         remark: '',
         keywords: '',
         categoryName: null,

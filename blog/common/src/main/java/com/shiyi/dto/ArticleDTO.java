@@ -31,12 +31,13 @@ public class ArticleDTO {
     private Integer isStick;
     private Integer isOriginal;
     private String originalUrl;
-    private String remark;
-    private String keywords;
     private String categoryName;
     private Integer isPublish;
 
     private Integer isCarousel;
+
+    private Integer isRecommend;
+
     private List<String> tags;
 
     @TableField(fill = FieldFill.INSERT)

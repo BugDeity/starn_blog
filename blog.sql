@@ -60,11 +60,10 @@ CREATE TABLE `b_article`  (
   `is_original` int(11) NULL DEFAULT 1 COMMENT '是否原创  0：转载 1:原创',
   `original_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '转载地址',
   `quantity` bigint(20) NULL DEFAULT 0 COMMENT '文章阅读量',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '说明',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'seo关键词',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `is_carousel` int(11) NULL DEFAULT 0 COMMENT '是否首页轮播',
+  `is_recommend` int(11) DEFAULT '0' COMMENT '是否推荐 0:否 1：是',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 166 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客文章表' ROW_FORMAT = Dynamic;
 

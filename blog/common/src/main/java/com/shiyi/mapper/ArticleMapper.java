@@ -33,7 +33,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @param id 主键id
      * @return
      */
-    ArticleDTO selectPrimaryKey(Long id);
+    ArticleDTO selectArticlePrimaryKey(Long id);
 
     /**
      * 置顶文章
@@ -89,10 +89,10 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<SystemArticleListVO> selectListByBanner();
 
     /**
-     * 获取最新文章
+     * 获取推荐文章
      * @return
      */
-    List<ApiArticleListVO> selectUpToDateArticle();
+    List<ApiArticleListVO> selectRecommendArticle();
 
     /**
      * 获取所搜框热门文章

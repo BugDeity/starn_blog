@@ -80,8 +80,8 @@ public class ApiHomeServiceImpl implements ApiHomeService {
 
         //获取标签云
         List<Tags> tags = tagsMapper.selectList(null);
-        //最新文章
-        List<ApiArticleListVO> apiArticleListVOS = articleMapper.selectUpToDateArticle();
+        //推荐文章
+        List<ApiArticleListVO> apiArticleListVOS = articleMapper.selectRecommendArticle();
 
         return ResponseResult.success().putExtra("articles",articles).putExtra("newArticleList",apiArticleListVOS).putExtra("tagCloud",tags);
 

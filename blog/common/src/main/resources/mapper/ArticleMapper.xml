@@ -54,7 +54,7 @@
         GROUP BY a.id order by a.is_stick desc ,a.create_time desc
     </select>
 
-    <select id="selectPrimaryKey" resultType="com.shiyi.dto.ArticleDTO">
+    <select id="selectArticlePrimaryKey" resultType="com.shiyi.dto.ArticleDTO">
         select a.id,
                a.title,
                a.avatar,
@@ -67,11 +67,10 @@
                a.is_publish,
                a.is_original,
                a.original_url,
-               a.remark,
                a.create_time,
-               a.keywords,
                b.name as categoryName,
-               a.is_carousel
+               a.is_carousel,
+               a.is_recommend
         from b_article a
                  LEFT JOIN (SELECT id, name from b_category) b on a.category_id = b.id
         where a.id = #{id}
@@ -178,11 +177,13 @@
         where is_carousel = 1 and is_publish = 1
         order by is_stick desc ,create_time desc
     </select>
-    <select id="selectUpToDateArticle" resultType="com.shiyi.vo.ApiArticleListVO">
+
+    <select id="selectRecommendArticle" resultType="com.shiyi.vo.ApiArticleListVO">
         select *
-        from b_article where is_publish = 1
+         from b_article where is_recommend = 1
         order by create_time desc limit 5
     </select>
+
     <select id="selectHotArticleList" resultType="com.shiyi.vo.ApiArticleListVO">
         select id, title
         from b_article where is_publish = 1

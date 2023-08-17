@@ -77,11 +77,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      */
     @Override
     public ResponseResult selectArticleList(Map<String,Object> map) {
-        String loginId = StpUtil.getLoginIdAsString();
-        //如果没有admin权限 即不是网站拥有者就只能获取到当前用户所拥有的文章
-        if (!StpUtil.hasRole("admin")) {
-            map.put("userId",loginId);
-        }
         Page<SystemArticleListVO> data = baseMapper.selectArticle(new Page<>((Integer)map.get("pageNo"), (Integer)map.get("pageSize")),map);
         data.getRecords().forEach(item ->{
             SystemUserVO userInfo = userMapper.getById(item.getUserId());
@@ -96,7 +91,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      */
     @Override
     public ResponseResult selectArticleById(Long id) {
-        ArticleDTO articleDTO = baseMapper.selectPrimaryKey(id);
+        ArticleDTO articleDTO = baseMapper.selectArticlePrimaryKey(id);
         articleDTO.setTags(tagsMapper.selectByArticleId(id));
         return ResponseResult.success(articleDTO);
     }
