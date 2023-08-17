@@ -1,6 +1,6 @@
 <!-- 公告栏组件 -->
 <template>
-    <div class="msg-box" ref="msgBox">
+    <div class="msg-box" ref="msgBox" v-if="!noticeFlag">
 
         <span class="msg" ref="scrollMsg">
             <span class="title">
@@ -22,6 +22,7 @@ export default {
 
     data() {
         return {
+            noticeFlag: getNotice(),
             notice: {
                 id: 1,
                 msg: '发布文章按钮暂时隐藏。另外<a href="https://gitee.com/quequnlong/shiyi-blog">兄弟们去码云点点小星星，冲个1000 star 》》</a>',
@@ -29,14 +30,14 @@ export default {
         }
     },
     mounted() {
-        this.handleScrollMsg()
+        //  this.handleScrollMsg()
 
     },
 
     methods: {
         close() {
             setNotice(this.notice.id)
-            this.$emit("handleNotcieClose", false);
+            this.noticeFlag = true
         },
         //横向播放通知公告
         handleScrollMsg() {
@@ -67,21 +68,18 @@ export default {
 </script>
 <style scoped lang='scss'>
 .msg-box {
-    width: 100%;
-    overflow: hidden;
     position: relative;
-    height: 30px;
-    text-align: right;
     line-height: 30px;
-    color: var(--notice-color);
-
-
+    color: #000;
+    top: 70px;
+    text-align: center;
+    background-color: var(--theme-color);
+    width: 100%;
+    z-index: 99;
 
     .msg {
-        position: absolute;
         line-height: 30px;
         font-size: 14px;
-        white-space: nowrap;
         font-weight: 700;
 
         .title {
@@ -98,14 +96,14 @@ export default {
         .content {
             /deep/ a {
                 text-decoration: none;
-                color: var(--notice-color);
+                color: #000;
             }
         }
 
         .closeBtn {
-            color: var(--theme-color);
             margin-left: 15px;
             cursor: pointer;
+            color: #fff;
         }
     }
 }

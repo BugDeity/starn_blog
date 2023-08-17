@@ -212,9 +212,6 @@
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
-            <div class="notice" v-if="noticeShow">
-                <Notice @handleNotcieClose="handleNotcieClose" />
-            </div>
         </nav>
 
     </header>
@@ -222,12 +219,9 @@
 <script>
 import { logout } from '@/api'
 import { removeToken, getNotice } from '@/utils/cookieUtil'
-import Notice from '@/components/notice/Notice.vue'
 export default {
     name: 'Header',
-    components: {
-        Notice
-    },
+
     props: {
         userInfo: {
             type: Object,
@@ -236,7 +230,6 @@ export default {
     },
     data() {
         return {
-            noticeShow: getNotice() ? false : true,
             widthPre: '',
             keywords: null,
             user: this.$store.state.userInfo,

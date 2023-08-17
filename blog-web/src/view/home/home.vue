@@ -4,7 +4,9 @@
         <Header :userInfo="userInfo"></Header>
         <!-- 侧边导航栏 -->
         <SideNavBar></SideNavBar>
-        <Loading></Loading>
+        <!-- <Loading></Loading> -->
+        <Notice></Notice>
+
         <!-- 内容 -->
         <transition name="moveCartoon" appear>
             <div v-if="validate" style="min-height: calc(100vh - 167px);">
@@ -43,6 +45,7 @@ import ArticleModel from '@/view/article/Article.vue'
 import { selectUserInfoByToken, getWebSiteInfo } from '@/api'
 import { getNewSystemNotice } from '@/api/im'
 import { setToken, getToken } from '@/utils/cookieUtil'
+import Notice from '@/components/notice/Notice.vue'
 export default {
     components: {
         Header,
@@ -53,7 +56,8 @@ export default {
         SearchModle,
         User,
         ArticleModel,
-        Loading
+        Loading,
+        Notice
     },
     data() {
         return {

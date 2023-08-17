@@ -1,7 +1,6 @@
 package com.shiyi.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.shiyi.common.ResponseResult;
@@ -19,6 +18,7 @@ import com.shiyi.mapper.UserMapper;
 import com.shiyi.service.MenuService;
 import com.shiyi.service.UserService;
 import com.shiyi.utils.AesEncryptUtils;
+import com.shiyi.utils.DateUtil;
 import com.shiyi.utils.PageUtils;
 import com.shiyi.vo.SystemUserInfoVO;
 import com.shiyi.vo.SystemUserVO;
@@ -188,7 +188,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             onlineUsers = MySaTokenListener.ONLINE_USERS.stream().filter(item -> item.getNickname().contains(keywords)).collect(Collectors.toList());
         }
         //排序
-        onlineUsers.sort((o1, o2) -> DateUtil.compare(o2.getLoginTime(), o1.getLoginTime()));
+        onlineUsers.sort((o1,o2)->{
+            if (o2.getLoginTime().getTime() > o1.getLoginTime().getTime()) {
+                return 1;
+            }else {
+                return -1;
+            }
+        });
         int fromIndex = (pageNo-1) * pageSize;
         int toIndex = onlineUsers.size() - fromIndex > pageSize ? fromIndex + pageSize : onlineUsers.size();
         List<OnlineUser> userOnlineList = onlineUsers.subList(fromIndex, toIndex);
@@ -211,5 +217,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         StpUtil.kickoutByTokenValue(token);
         return ResponseResult.success();
     }
-
 }
