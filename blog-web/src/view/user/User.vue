@@ -224,7 +224,7 @@ export default {
             form: {},
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
             // 加载层信息
-            loading: [],
+
             activeName: "user",
             statuTag: ['下架', '发布', '待审批'],
             statuTagStyle: ['danger', 'success', 'info'],
@@ -393,7 +393,7 @@ export default {
 
         },
         uploadBefore: function () {
-            this.openLoading()
+
         },
         uploadSectionFile: function (param) {
             this.files = param.file
@@ -404,7 +404,7 @@ export default {
             upload(formData).then(res => {
                 this.form.avatar = res.data
             })
-            this.loading.close()
+
         },
         // 打开加载层
         openLoading: function () {
@@ -442,41 +442,41 @@ export default {
             }
         },
         selectMyArticleList() {
-            this.openLoading()
+
             getMyArticle(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
                 this.pages = res.data.pages
-                this.loading.close()
+
             }).catch(err => {
                 console.log(err)
             })
         },
         selectMyCollect() {
-            this.openLoading()
+
             getCollect(this.pageData).then(res => {
                 this.collectList.push(...res.data.records);
                 this.pages = res.data.pages
-                this.loading.close()
+
             }).catch(err => {
                 console.log(err)
             })
         },
         selectMyComment() {
-            this.openLoading()
+
             getMyComment(this.pageData).then(res => {
                 this.commentList.push(...res.data.records);
                 this.pages = res.data.pages
-                this.loading.close()
+
             }).catch(err => {
                 console.log(err)
             })
         },
         selectMyNote() {
-            this.openLoading()
+
             getMyNote(this.pageData).then(res => {
                 this.noteList.push(...res.data.records);
                 this.pages = res.data.pages
-                this.loading.close()
+
             }).catch(err => {
                 console.log(err)
             })
@@ -487,11 +487,11 @@ export default {
         cancelCollect(id, index) {
             this.$confirm('确认取消收藏吗？')
                 .then(_ => {
-                    this.openLoading()
+
                     cancelCollect(id).then(res => {
                         this.$message.success("取消收藏成功")
                         this.collectList.splice(index, 1)
-                        this.loading.close()
+
                     }).catch(err => {
                     })
                 })

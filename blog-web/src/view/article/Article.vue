@@ -73,7 +73,7 @@ export default {
             article: {},
             categoryList: [],
             // 加载层信息
-            loading: [],
+
             img: process.env.VUE_APP_IMG_API,
             tagList: [],
             rules: {
@@ -122,7 +122,7 @@ export default {
                         this.tagList = res.data
                     })
                     if (this.$store.state.articleDrawer.id) {
-                        this.openLoading()
+
                         getMyArticleInfo(this.$store.state.articleDrawer.id).then(res => {
                             this.article = res.data
                         })
@@ -175,7 +175,7 @@ export default {
         },
         handleUploadImage(event, insertImage, files) {
             // 拿到 files 之后上传到文件服务器，然后向编辑框中插入对应的内容
-            this.openLoading()
+
             const file = files[0]
             // FormData 对象
             var formData = new FormData()
@@ -189,10 +189,10 @@ export default {
                     height: '300px',
                 });
             })
-            this.loading.close()
+
         },
         uploadBefore: function () {
-            this.openLoading()
+
         },
         uploadSectionFile: function (param) {
             this.files = param.file
@@ -203,7 +203,7 @@ export default {
             upload(formData).then(res => {
                 this.article.avatar = res.data
             })
-            this.loading.close()
+
         },
         // 打开加载层
         openLoading: function () {

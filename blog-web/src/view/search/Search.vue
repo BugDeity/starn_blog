@@ -102,7 +102,7 @@ export default {
             total: 0,
             tagStyle: ['', 'success', 'info', 'warning', 'danger'],
             articleList: [],
-            loading: [],
+
         }
     },
 
@@ -122,12 +122,12 @@ export default {
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })
         },
         fetchArticleList() {
-            this.openLoading()
+
             searchArticle(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
                 this.pages = res.data.pages
                 this.total = res.data.total
-                this.loading.close()
+
             })
         },
         // 打开加载层

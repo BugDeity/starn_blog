@@ -4,7 +4,7 @@
         <Header :userInfo="userInfo"></Header>
         <!-- 侧边导航栏 -->
         <SideNavBar></SideNavBar>
-        <!-- <Loading></Loading> -->
+        <Loading></Loading>
         <Notice></Notice>
 
         <!-- 内容 -->

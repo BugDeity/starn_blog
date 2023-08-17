@@ -93,7 +93,7 @@ export default {
                 type: this.$route.query.type ? this.$route.query.type : 0,
             },
             pages: 0,
-            loading: [],
+
             leftIems: [
                 {
                     name: "系统",
@@ -139,7 +139,7 @@ export default {
                 lockScroll: false,
                 type: 'warning'
             }).then(() => {
-                this.openLoading()
+
                 let params = {
                     id: id,
                     type: this.pageData.type
@@ -151,9 +151,9 @@ export default {
                         this.noticeList = []
                     }
                     this.$message.success("删除成功")
-                    this.loading.close()
+
                 }).catch(err => {
-                    this.loading.close()
+
                 })
             }).catch(() => {
                 this.$message({
@@ -180,13 +180,13 @@ export default {
             this.getList()
         },
         getList() {
-            this.openLoading()
+
             getMessageNotice(this.pageData).then(res => {
                 this.noticeList.push(...res.data.records)
                 this.pages = res.data.pages
-                this.loading.close()
+
             }).catch(err => {
-                this.loading.close()
+
             })
         },
         // 打开加载层

@@ -41,14 +41,14 @@
 <script>
 import { archive } from '@/api'
 export default {
-    created() {
+    mounted() {
         document.title = "文章归档";
         this.fetchArticleList();
     },
     data: function () {
         return {
             archiveList: [],
-            loading: [],
+
             count: 0,
             icon: "el-icon-arrow-down",
             showIcon: true,
@@ -76,13 +76,15 @@ export default {
             }
         },
         fetchArticleList() {
-            this.openLoading()
+            this.$bus.$emit('showLoading');
             archive().then(res => {
                 this.archiveList = res.data
                 this.count = res.extra.total
-                this.loading.close()
+                // 隐藏 loading 组件
+                this.$bus.$emit('hideLoading');
             }).catch(err => {
-                this.loading.close()
+                // 隐藏 loading 组件
+                this.$bus.$emit('hideLoading');
             });
         },
 

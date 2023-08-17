@@ -115,7 +115,7 @@ export default {
             },
             pages: 0,
             noteList: [],
-            loading: [],
+
             categoryList: [],
             chooseIndex: 0,
             chooseCategory: {
@@ -190,13 +190,13 @@ export default {
         },
         handlePage() {
             this.pageData.pageNo++
-            this.openLoading()
+
             getNote(this.pageData).then(res => {
                 this.noteList.push(...res.data.records)
                 this.pages = res.data.pages
-                this.loading.close()
+
             }).catch(err => {
-                this.loading.close()
+
             })
         },
         addNote() {
@@ -204,7 +204,7 @@ export default {
                 this.$message.error("内容不能为空！");
                 return;
             }
-            this.openLoading()
+
             let note = {
                 content: this.content,
                 categoryId: this.chooseCategory ? this.chooseCategory.id : null
@@ -213,20 +213,20 @@ export default {
                 this.content = ""
                 this.$message.success("发布笔记成功");
                 this.pageData.pageNo = 1
-                this.loading.close()
+
                 this.getNoteList()
             }).catch(err => {
-                this.loading.close()
+
             })
         },
         getNoteList() {
-            this.openLoading()
+
             getNote(this.pageData).then(res => {
                 this.noteList = res.data.records
                 this.pages = res.data.pages
-                this.loading.close()
+
             }).catch(err => {
-                this.loading.close()
+
             })
         },
         // 打开加载层

@@ -359,7 +359,7 @@ export default {
                 pageSize: 8,
             },
             // 加载层信息
-            loading: [],
+
             activeName: "0",
             bannerList: [],
             categoryList: [
@@ -452,7 +452,7 @@ export default {
             })
         },
         handleTabClick(tab) {
-            this.openLoading()
+
             let item = this.categoryList[tab.index]
             this.pageData.pageNo = 1
             this.pageData.categoryId = item.id
@@ -460,7 +460,7 @@ export default {
             fetchArticleList(this.pageData).then(res => {
                 this.articleList = res.data.records;
                 this.pages = res.data.pages
-                this.loading.close()
+
             })
         },
         handleLogin() {
@@ -473,11 +473,11 @@ export default {
 
         },
         fetchArticleList() {
-            this.openLoading()
+
             fetchArticleList(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
                 this.pages = res.data.pages
-                this.loading.close()
+
             })
         },
         fetchCategoryList() {

@@ -69,7 +69,7 @@ Vue.config.productionTip = false
 Vue.prototype.config = config;
 import router from './router'
 
-new Vue({
+window.vm = new Vue({
   store,
   router,
   render: h => h(App),

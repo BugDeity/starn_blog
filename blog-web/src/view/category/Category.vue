@@ -65,7 +65,7 @@ export default {
                 categoryId: this.$route.query.id,
             },
             // 加载层信息
-            loading: [],
+
             articleList: [],
             pageTotal: 0,
             isInfiniteScroll: false, // 控制滚动禁用
@@ -101,22 +101,22 @@ export default {
                 this.$refs.category[i].className = "item-index"
             }
             this.$refs.category[index].className = "item-index active"
-            this.openLoading()
+
             this.pageData.categoryId = id
             this.pageData.pageNo = 1
             this.articleList = []
             this.fetchArticleList()
-            this.loading.close()
+
         },
         featchCategory() {
-            this.openLoading()
+
             featchCategory().then(res => {
                 this.categoryList = res.data
                 if (!this.pageData.categoryId) {
                     this.pageData.categoryId = this.categoryList[0].id
                 }
                 this.fetchArticleList()
-                this.loading.close()
+
             })
         },
         fetchArticleList() {

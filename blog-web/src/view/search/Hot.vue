@@ -118,7 +118,7 @@ export default {
             csdnList: [],
             toutiaoList: [],
             text: null,
-            loading: [],
+
             siteList: ['百度', 'Google', '知乎', 'Csdn', '码云', 'Github', '哔哩哔哩'],
             dialogVisible: false,
             tabPosition: 0,
@@ -131,7 +131,7 @@ export default {
 
     created() {
         document.title = "网站热搜"
-        this.openLoading()
+
         getHot("baidu").then(res => {
             this.baiduList = res.data.data
         })
@@ -147,7 +147,7 @@ export default {
         getHot("toutiao").then(res => {
             this.toutiaoList = res.data.data
         })
-        this.loading.close()
+
     },
     methods: {
         color(index) {

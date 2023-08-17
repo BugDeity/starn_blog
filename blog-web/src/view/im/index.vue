@@ -233,7 +233,7 @@ export default {
                 pageSize: 10
             },
             onlineUserList: [],
-            loading: [],
+
             roomList: [
                 {
                     avatar: this.$store.state.webSiteInfo.logo,
@@ -337,7 +337,7 @@ export default {
             });
         },
         uploadBefore: function () {
-            this.openLoading()
+
         },
         // 打开加载层
         openLoading: function () {
@@ -351,7 +351,7 @@ export default {
 
         //发送图片
         uploadSectionFile: function (param) {
-            this.openLoading()
+
             var formData = new FormData()
             if (!param) {
                 var dialogImg = document.getElementById('dialogImg');
@@ -386,9 +386,9 @@ export default {
                 let content = `<img src="${res.data}" alt="" class="messageImg" style="width: 150px;height: 150px;">`
                 this.send(content, 2)
                 this.imgDialogVisible = false
-                this.loading.close()
+
             }).catch(err => {
-                this.loading.close()
+
             })
         },
         //截取地址

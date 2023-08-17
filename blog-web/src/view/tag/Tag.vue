@@ -65,7 +65,7 @@ export default {
                 tagId: this.$route.query.id,
             },
             // 加载层信息
-            loading: [],
+
             articleList: [],
             pageTotal: 0,
             isInfiniteScroll: false, // 控制滚动禁用
@@ -105,14 +105,14 @@ export default {
             this.fetchArticleList()
         },
         fetchTagList() {
-            this.openLoading()
+
             fetchTagList().then(res => {
                 this.tagList = res.data
                 if (!this.pageData.tagId) {
                     this.pageData.tagId = this.tagList[0].id
                 }
                 this.fetchArticleList()
-                this.loading.close()
+
             })
         },
         fetchArticleList() {

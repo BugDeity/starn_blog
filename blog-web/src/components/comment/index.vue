@@ -202,7 +202,7 @@ export default {
             user: this.$store.state.userInfo,
             articleId: window.location.search.split("=")[1],
             // 加载层信息
-            loading: [],
+
             emoji: "emoji1"
         }
     },
@@ -268,10 +268,10 @@ export default {
                 pageSize: 5,
                 articleId: this.articleId
             }
-            this.openLoading()
+
             featchComments(query).then(res => {
                 this.commentList = res.data.records
-                this.loading.close()
+
             })
         },
         addComment() {
@@ -305,7 +305,7 @@ export default {
 
         },
         moreComment() {
-            this.openLoading()
+
             this.pageNo++;
             let query = {
                 pageNo: this.pageNo,
@@ -316,7 +316,7 @@ export default {
                 res.data.records.forEach(item => {
                     this.commentList.push(item);
                 })
-                this.loading.close()
+
             })
         },
 

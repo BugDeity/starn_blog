@@ -366,7 +366,7 @@ export default {
             commentPages: 0,
             user: {},
             // 加载层信息
-            loading: [],
+
             serceShow: 0,
         }
     },
@@ -432,7 +432,7 @@ export default {
         }).catch(err => {
         });
 
-        this.openLoading()
+
         articleInfo(this.articleId).then(res => {
             this.article = res.data
             this.serceShow = this.article.activeReadType
@@ -442,7 +442,7 @@ export default {
             //修改标题
             document.title = this.article.title
             this.getCommens();
-            this.loading.close()
+
         }).catch(err => {
 
         });
@@ -469,25 +469,25 @@ export default {
             this.$router.push({ path: "/im", query: { userId: this.userInfo.id } })
         },
         handleFollowedUser() {
-            this.openLoading()
+
             followedUser(this.article.userId).then(res => {
                 this.article.isFollowed = 1
                 this.$message.success("关注成功");
                 this.userInfo.fansCount++
-                this.loading.close()
+
             }).catch(err => {
-                this.loading.close()
+
             });
         },
         handleDeleteFollowedUser() {
-            this.openLoading()
+
             deleteFollowedUser(this.article.userId).then(res => {
                 this.article.isFollowed = 0
                 this.$message.success("取消关注成功");
                 this.userInfo.fansCount--
-                this.loading.close()
+
             }).catch(err => {
-                this.loading.close()
+
             });
         },
         checkLikeAndCoomment(desc) {
@@ -548,25 +548,25 @@ export default {
             });
         },
         handleCollect() {
-            this.openLoading()
+
             let id = this.article.id;
             if (this.article.isCollect) {
                 cancelCollect(id).then(res => {
                     this.article.collectCount--
                     this.article.isCollect = 0
                     this.$message.success("取消收藏成功")
-                    this.loading.close()
+
                 }).catch(err => {
-                    this.loading.close()
+
                 })
             } else {
                 collect(id).then(res => {
                     this.article.collectCount++
                     this.article.isCollect = 1
                     this.$message.success("收藏成功")
-                    this.loading.close()
+
                 }).catch(err => {
-                    this.loading.close()
+
                 })
             }
         },
@@ -607,8 +607,8 @@ export default {
             }
         },
         like(articleId) {
-            //  this.openLoading()
-            this.openLoading()
+            //  
+
             articleLike(articleId).then(res => {
                 if (this.article.isLike) {
                     this.article.likeCount--;
@@ -622,9 +622,9 @@ export default {
                     }
                     this.$message.success("点赞成功");
                 }
-                this.loading.close()
+
             }).catch(err => {
-                this.loading.close()
+
             })
         },
 
