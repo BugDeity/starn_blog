@@ -32,7 +32,7 @@
                 <li>
                     <span>
                         <router-link :class="path == '/' ? 'active' : ''" :to="'/'">
-                            <i class="el-icon-star-off"></i> 首页
+                            <i class="iconfont icon-shouye"></i> 首页
                         </router-link>
                     </span>
                 </li>
@@ -57,7 +57,7 @@
 
                             <router-link style="text-decoration: none;color: #71777c;" :to="'/tag'">
                                 <el-dropdown-item>
-                                    <i class="el-icon-position"></i>标签
+                                    <i class="el-icon-collection-tag"></i>标签
                                 </el-dropdown-item>
                             </router-link>
                         </el-dropdown-menu>
@@ -67,7 +67,7 @@
                 <li>
                     <span>
                         <router-link :class="path == '/navigation' ? 'active' : ''" :to="'/navigation'">
-                            <i class="el-icon-s-promotion"></i> 网址导航
+                            <i class="el-icon-s-operation"></i> 网址导航
                         </router-link>
                     </span>
                 </li>
@@ -91,7 +91,7 @@
                 <li>
                     <span>
                         <router-link :class="path == '/hot' ? 'active' : ''" :to="'/hot'">
-                            <i class="el-icon-sunny"></i> 热搜
+                            <i class="iconfont icon-resou"></i> 热搜
                         </router-link>
                     </span>
                 </li>
@@ -125,7 +125,7 @@
                             <a style="text-decoration: none;color: #71777c;" href="https://gitee.com/quequnlong/shiyi-blog"
                                 target="_blank">
                                 <el-dropdown-item>
-                                    <i class="el-icon-tableware"></i>网站源码
+                                    <i class="iconfont icon-code"></i>网站源码
                                 </el-dropdown-item>
                             </a>
 

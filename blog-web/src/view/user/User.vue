@@ -210,8 +210,9 @@
 <script>
 import {
     updateUserInfo, getUserInfo, upload, updatePassword, getMyArticle,
-    deleteMyArticle, addFeedback, getCollect, cancelCollect
+    deleteMyArticle, addFeedback
 } from '@/api'
+import { cancelCollect, getCollect } from '@/api/collect'
 import { getMyNote, deleteNote } from '@/api/note'
 import { getMyComment } from '@/api/comment'
 import Pagination from '@/components/pagination/index.vue'

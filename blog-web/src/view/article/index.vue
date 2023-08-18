@@ -316,7 +316,8 @@
     </div>
 </template>
 <script>
-import { articleInfo, articleLike, checkCode, collect, cancelCollect, followedUser, deleteFollowedUser, selectUserInfoByArticleId } from '@/api'
+import { articleInfo, articleLike, checkCode, followedUser, deleteFollowedUser, selectUserInfoByArticleId } from '@/api'
+import { collect, cancelCollect } from '@/api/collect'
 import { featchComments } from '@/api/comment'
 import SiteInfo from '@/components/site/index.vue'
 import Comment from '@/components/comment/index.vue'
@@ -556,17 +557,12 @@ export default {
                     this.article.isCollect = 0
                     this.$message.success("取消收藏成功")
 
-                }).catch(err => {
-
                 })
             } else {
                 collect(id).then(res => {
                     this.article.collectCount++
                     this.article.isCollect = 1
                     this.$message.success("收藏成功")
-
-                }).catch(err => {
-
                 })
             }
         },
@@ -1045,6 +1041,17 @@ export default {
                 &:hover {
                     .rewardItem {
                         display: block;
+                        animation: left-in 1s ease;
+
+                        @keyframes left-in {
+                            0% {
+                                transform: translateY(-50%);
+                            }
+
+                            100% {
+                                transform: translateX(0);
+                            }
+                        }
                     }
                 }
             }

@@ -2,7 +2,6 @@
     <!-- 动画节点 -->
     <div id="loader-wrapper" v-if="isLoading">
         <div id="loader"></div>
-
         <div class="load_title">正在拼命加载中,请耐心等待....</div>
     </div>
 </template>
@@ -16,9 +15,15 @@ export default {
     mounted() {
         this.$bus.$on('showLoading', () => {
             this.isLoading = true;
+            var mo = function (e) { e.preventDefault(); };
+            document.body.style.overflow = 'hidden';
+            document.addEventListener("touchmove", mo, false);//禁止页面滑动}, false)
         });
         this.$bus.$on('hideLoading', () => {
             this.isLoading = false;
+            var mo = function (e) { e.preventDefault(); };
+            document.body.style.overflow = '';//出现滚动条
+            document.removeEventListener("touchmove", mo, false);
         });
     },
     beforeDestroy() {
@@ -35,7 +40,7 @@ export default {
     width: 100%;
     height: 100%;
     z-index: 999999;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
 
     #loader {
         display: block;
