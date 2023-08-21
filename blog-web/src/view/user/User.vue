@@ -236,7 +236,7 @@ export default {
             noteList: [],
             pageData: {
                 pageNo: 1,
-                pageSize: 5
+                pageSize: 10
             },
             pages: 0,
             rules: {
@@ -292,7 +292,8 @@ export default {
         activeName(newValue) {
             this.pageData = {
                 pageNo: 1,
-                pageSize: 5
+                pageSize: 10
+
             }
             // 修改密码
             if (newValue == "password") {
@@ -427,6 +428,9 @@ export default {
             })
         },
         handlePage(type) {
+            if (this.pageData.pageNo == this.pages) {
+                return;
+            }
             this.pageData.pageNo++
             if (type == "article") {
                 this.selectMyArticleList()
@@ -570,6 +574,8 @@ export default {
 .myCollect,
 .myComent,
 .myNote {
+    padding: 10px;
+
     h4 {
         cursor: pointer;
     }

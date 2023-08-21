@@ -209,8 +209,7 @@
                     <i class="iconfont icon-pinglun"></i>
                     评论
                 </div>
-                <Comment :comment-list="commentList" :total="commentPages" @reloadComment="getCommens"
-                    :articleUserId="article.userId" />
+                <Comment @reloadComment="getCommens" :articleUserId="article.userId" />
             </div>
         </el-card>
         <!-- 右边侧边栏 -->
@@ -427,9 +426,7 @@ export default {
         //获取文章作者信息
         selectUserInfoByArticleId(this.articleId).then(res => {
             this.userInfo = res.data
-        }).catch(err => {
-        });
-
+        })
 
         articleInfo(this.articleId).then(res => {
             this.article = res.data

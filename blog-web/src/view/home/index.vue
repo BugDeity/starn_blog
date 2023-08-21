@@ -319,6 +319,14 @@
                         </div>
                     </el-card>
 
+                    <!-- 天气组件 -->
+                    <el-card class="box-card weather">
+                        <div class="clearfix">
+                            <svg-icon icon-class="weather"></svg-icon>
+                            <span> 今日天气</span>
+                        </div>
+                        <div id="he-plugin-standard"></div>
+                    </el-card>
                 </div>
             </div>
         </div>
@@ -402,8 +410,25 @@ export default {
         this.getHomeData()
         this.fetchCategoryList()
         //this.getMusic()
+        this.insertWeather()
     },
     methods: {
+        insertWeather() {
+            window.WIDGET = {
+                "CONFIG": {
+                    "layout": "2",
+                    "width": 230,
+                    "height": 270,
+                    "background": "2",
+                    "dataColor": "000000",
+                    "borderRadius": "5",
+                    "key": "632bf35b75f643fda4f7154697df9f47"
+                }
+            }
+            const script = document.createElement('script')
+            script.src = 'https://widget.qweather.net/standard/static/js/he-standard-common.js?v=2.0'
+            document.body.appendChild(script)
+        },
         getMusic() {
             getMusic().then(res => {
                 let musicList = res.data.data.songs
@@ -468,16 +493,17 @@ export default {
         },
         // 分页
         onPage() {
+            if (this.pageData.pageNo == this.pages) {
+                return;
+            }
             this.pageData.pageNo++;
             this.fetchArticleList()
 
         },
         fetchArticleList() {
-
             fetchArticleList(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
                 this.pages = res.data.pages
-
             })
         },
         fetchCategoryList() {
@@ -1271,7 +1297,7 @@ export default {
 
                         font-size: 0.9rem;
                         background-color: var(--background-color);
-                        color: var(--text-color);
+
 
                         &:hover {
                             transition: all .3s;
@@ -1279,7 +1305,6 @@ export default {
 
                         .clearfix {
                             font-size: 16px;
-                            font-weight: 700;
 
                             .more {
                                 float: right;
@@ -1327,6 +1352,12 @@ export default {
 
                         .aplayer {
                             margin-left: 10px;
+                        }
+                    }
+
+                    .weather {
+                        /deep/ #he-plugin-standard {
+                            width: 100% !important;
                         }
                     }
                 }

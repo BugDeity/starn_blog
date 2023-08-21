@@ -9,7 +9,6 @@
   <meta name="description" content="一个专注于技术分享的博客平台,大家以共同学习,乐于分享,拥抱开源的价值观进行学习交流">
   <link rel="icon" href="http://img.shiyit.com/logo-ico.png">
   <title>拾壹博客-一个专注于技术分享的博客平台</title>
-
   <style lang="scss">
     * {
       padding: 0;
@@ -20,7 +19,14 @@
       background-color: var(--background-color) !important;
       color: var(--text-color) !important;
       border: 0 !important;
+
+      .el-dropdown-menu__item:hover {
+        background-color: var(--menu-background-color) !important;
+      }
+
     }
+
+
 
     /* 修改滚动条宽度 */
     ::-webkit-scrollbar {

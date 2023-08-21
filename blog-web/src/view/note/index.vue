@@ -189,6 +189,9 @@ export default {
             this.getNoteList()
         },
         handlePage() {
+            if (this.pageData.pageNo == this.pages) {
+                return;
+            }
             this.pageData.pageNo++
             getNote(this.pageData).then(res => {
                 this.noteList.push(...res.data.records)

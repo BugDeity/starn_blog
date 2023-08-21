@@ -1,7 +1,9 @@
 <template>
     <el-card class="box">
+
         <img src="http://img.shiyit.com/beijing.jpg" alt="">
         <div class="user">
+
             <div class="avatar_wrapper">
                 <img :src="$store.state.webSiteInfo.authorAvatar" alt="">
             </div>
@@ -58,10 +60,7 @@ export default {
             window.location.href = val
         },
         handleCollect() {
-            this.$message({
-                message: '按CTRL+D 键将本页加入书签',
-                type: 'success'
-            });
+            this.$message.success('按CTRL+D 键将本页加入书签')
         }
     }
 }

@@ -17,7 +17,7 @@
                 <div style="display: flex;position: relative;">
                     <h3 class="directory2">申请格式</h3>
                     <div class="btn-box" @click="handleAdd">
-                        <i class="el-icon-circle-plus-outline"></i>
+                        <svg-icon icon-class="add"></svg-icon>
                         加入友链
                     </div>
 
@@ -360,6 +360,12 @@ export default {
                 right: 0;
                 line-height: 24px;
                 cursor: pointer;
+
+                svg {
+                    width: 17px;
+                    height: 17px;
+                    vertical-align: -3px;
+                }
             }
         }
 
@@ -375,6 +381,10 @@ export default {
             a {
                 text-decoration: none;
                 color: var(--theme-color);
+
+                &:hover {
+                    color: crimson;
+                }
             }
 
             span {

@@ -154,7 +154,12 @@
                         </div>
                     </ul>
                 </li>
-                <div class="more-btn" v-if="pageNo < total" @click="moreComment">加载更多...</div>
+                <!-- <div class="more-btn" v-if="pageNo < total" @click="moreComment">加载更多...</div> -->
+
+                <!-- 分页按钮 -->
+                <div @click="moreComment">
+                    <Pagination :pageNo="pageData.pageNo" :pages="pages" />
+                </div>
             </div>
         </ul>
     </div>
@@ -164,20 +169,14 @@ import { postComment, featchComments } from '@/api/comment'
 import { browserMatch } from '@/utils/index'
 import Reply from './Reply.vue'
 import Emoji from '@/components/emoji'
+import Pagination from '@/components/pagination/index.vue'
 export default {
     components: {
         Reply,
-        Emoji
+        Emoji,
+        Pagination
     },
     props: {
-        commentList: {
-            type: Array,
-            default: () => [],
-        },
-        total: {
-            type: Number,
-            default: 0,
-        },
         articleUserId: {
             type: String,
             default: "",
@@ -188,16 +187,23 @@ export default {
             chooseEmoji: false,
             commentContent: "",
             opacity: 0,
-            pageNo: 1,
             show: null,
             user: this.$store.state.userInfo,
             articleId: window.location.search.split("=")[1],
             // 加载层信息
 
-            emoji: "emoji1"
+            emoji: "emoji1",
+            pageData: {
+                pageNo: 1,
+                pageSize: 5,
+                articleId: window.location.search.split("=")[1],
+            },
+            commentList: [],
+            pages: 0,
         }
     },
     mounted() {
+        this.getCommens()
         document.addEventListener("click", e => {
             if (e.target.className != "iconfont icon-biaoqing") {
                 this.chooseEmoji = false
@@ -205,6 +211,14 @@ export default {
         })
     },
     methods: {
+        getCommens() {
+            featchComments(this.pageData).then(res => {
+                if (res.data) {
+                    this.commentList.push(...res.data.records)
+                    this.pages = res.data.pages;
+                }
+            })
+        },
         handleEmojiMouseEnter() {
             this.emoji = "emoji2"
         },
@@ -296,43 +310,15 @@ export default {
 
         },
         moreComment() {
-
-            this.pageNo++;
-            let query = {
-                pageNo: this.pageNo,
-                pageSize: 5,
-                articleId: this.articleId
+            if (this.pageData.pageNo == this.pages) {
+                return;
             }
-            featchComments(query).then(res => {
-                res.data.records.forEach(item => {
-                    this.commentList.push(item);
-                })
-
-            })
+            this.pageData.pageNo++;
+            this.getCommens()
         },
 
         splitIpAddress(address) {
             return address.split("|")[1]
-        },
-        formatDate: function (value, args) {
-            var dt = new Date(value);
-            let year = dt.getFullYear();
-            let month = (dt.getMonth() + 1).toString().padStart(2, '0');
-            let date = dt.getDate().toString().padStart(2, '0');
-            if (args === "MM/dd") {
-                return `${month}/${date}`;
-            }
-            return `${year}-${month}-${date}`;
-        },
-        // 打开加载层
-        openLoading: function () {
-            this.loading = this.$loading({
-                lock: true,
-                text: "正在加载中~",
-                spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)",
-                fullscreen: false
-            });
         },
     },
 }

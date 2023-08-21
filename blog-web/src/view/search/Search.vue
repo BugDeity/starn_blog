@@ -115,6 +115,9 @@ export default {
         },
         // 分页
         onPage() {
+            if (this.pageData.pageNo == this.pages) {
+                return;
+            }
             this.pageData.pageNo++;
             this.fetchArticleList()
         },
@@ -122,23 +125,12 @@ export default {
             this.$router.push({ path: '/articleInfo', query: { articleId: id } })
         },
         fetchArticleList() {
-
             searchArticle(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
                 this.pages = res.data.pages
                 this.total = res.data.total
 
             })
-        },
-        // 打开加载层
-        openLoading: function () {
-            this.loading = this.$loading({
-                lock: true,
-                text: "正在加载中~",
-                spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)",
-                fullscreen: false
-            });
         },
     }
 }
