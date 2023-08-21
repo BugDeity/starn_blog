@@ -73,7 +73,6 @@ export default {
         };
     },
     created() {
-        document.title = "文章分类";
         this.featchCategory()
     },
 

@@ -38,4 +38,11 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
         baseMapper.deleteBatchIds(ids);
         return ResponseResult.success();
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult updateNote(Note note) {
+        baseMapper.updateById(note);
+        return ResponseResult.success();
+    }
 }

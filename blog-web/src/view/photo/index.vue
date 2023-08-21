@@ -52,7 +52,6 @@ export default {
         }
     },
     created() {
-        document.title = "我的图库";
         this.getPhotoAlbum()
         this.getPhotoList()
     },

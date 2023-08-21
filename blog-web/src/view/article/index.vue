@@ -223,10 +223,7 @@
                             <div class="userInfo">
                                 <p class="nickname">
                                     {{ userInfo.nickname }}
-                                    <el-tooltip v-if="article.userId != 1" effect="dark" content="作者标签" placement="top">
-                                        <svg-icon class="tag" icon-class="bozhu">作者</svg-icon>
-                                    </el-tooltip>
-                                    <el-tooltip effect="dark" content="官方标签" placement="top" v-else>
+                                    <el-tooltip effect="dark" content="博主" placement="right">
                                         <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                     </el-tooltip>
                                 </p>
@@ -755,7 +752,7 @@ export default {
 
             .box-article {
                 .warpper {
-                    background-color: #c0c4cc;
+                    background-color: var(--article-sercet-backcolor);
                     position: relative;
                     height: 210px;
                     padding: 5px;
@@ -875,6 +872,7 @@ export default {
 
             .dianzanBox {
                 text-align: center;
+                margin-top: 15px;
 
                 .dianzan-item {
                     .likeCountItem {
@@ -958,7 +956,7 @@ export default {
 @media screen and (min-width: 1119px) {
 
     /deep/ .el-dialog {
-        width: 25%;
+        width: 24%;
         border-radius: 10px;
     }
 
@@ -969,7 +967,7 @@ export default {
 
         .left-sidbarnav {
             position: fixed;
-            left: 150px;
+            left: 120px;
             top: 150px;
             z-index: 999;
 
@@ -1176,7 +1174,7 @@ export default {
 
             .box-article {
                 .warpper {
-                    background-color: #c0c4cc;
+                    background-color: var(--article-sercet-backcolor);
                     position: relative;
                     height: 210px;
                     padding: 5px;
@@ -1435,9 +1433,9 @@ export default {
                         font-weight: 700;
 
                         .tag {
-                            width: 20px;
-                            height: 20px;
-                            vertical-align: -4px;
+                            width: 18px;
+                            height: 18px;
+                            vertical-align: -3px;
                         }
                     }
 
@@ -1487,6 +1485,7 @@ export default {
                     ul {
                         margin-top: 8px;
                         list-style: none;
+                        padding: 0 10px;
                     }
 
                     /deep/ .el-card__header {
@@ -1507,12 +1506,13 @@ export default {
                         padding: 5px 0;
                         padding-left: 20px;
                         margin-bottom: 10px;
+                        border-radius: 5px;
                     }
 
                     .active,
                     .structure:hover {
                         color: var(--theme-color);
-                        background-color: #ecf5ff;
+                        background-color: var(--article-structure-backcolor);
                     }
                 }
             }
@@ -1526,5 +1526,6 @@ export default {
     margin: 0 auto;
     width: 50%;
     height: 50%;
+    margin-bottom: 15px;
 }
 </style>

@@ -198,7 +198,7 @@ export default {
 
     @media screen and (min-width: 1119px) {
         .link-content {
-            width: 65%;
+            width: 70%;
             margin-top: 80px;
 
             h1 {
@@ -213,7 +213,7 @@ export default {
 
             .links {
                 grid-template-columns: repeat(4, 1fr);
-                margin-left: 40px;
+                margin-left: 10px;
 
                 .item {
                     width: 237px;

@@ -12,7 +12,7 @@
                     </ul>
                 </div>
                 <div class="rigthBox">
-                    <div class="sendBox">
+                    <div class="sendBox" v-if="$store.state.userInfo">
                         <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 100 }"
                             placeholder="请输入笔记内容,支持【Markdown】语法" v-model="content">
                         </el-input>
@@ -68,7 +68,7 @@
                                     <v-md-preview v-highlight :text="item.content" ref="preview" />
                                 </div>
                                 <div class="content-btn">
-                                    <span v-if="$store.state.userInfo.id == item.userId"
+                                    <span v-if="$store.state.userInfo && $store.state.userInfo.id == item.userId"
                                         @click="handleDelete(item.id, index)">删除</span>
                                 </div>
                             </li>
@@ -190,13 +190,9 @@ export default {
         },
         handlePage() {
             this.pageData.pageNo++
-
             getNote(this.pageData).then(res => {
                 this.noteList.push(...res.data.records)
                 this.pages = res.data.pages
-
-            }).catch(err => {
-
             })
         },
         addNote() {

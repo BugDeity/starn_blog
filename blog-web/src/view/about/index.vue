@@ -19,7 +19,6 @@ export default {
         }]
     },
     created() {
-        document.title = "关于本站";
     },
     data() {
         return {

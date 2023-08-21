@@ -22,7 +22,10 @@ public class SystemNoteListVO {
     @ApiModelProperty(value = "内容")
     private String content;
 
-    @ApiModelProperty(value = "评论时间")
+    @ApiModelProperty(value = "笔记状态")
+    private Integer status;
+
+    @ApiModelProperty(value = "发表时间")
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date createTime;
 }

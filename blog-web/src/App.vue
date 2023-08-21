@@ -32,23 +32,4 @@ export default {
 #app {
   background: var(--body-color);
 }
-
-/deep/ .el-card__body {
-  padding: 0;
-}
-
-/deep/ .el-card {
-  border: 0;
-}
-
-
-@media screen and (max-width: 1118px) {
-  .dialog {
-    width: 100%;
-
-    /deep/ .el-dialog {
-      width: 100% !important;
-    }
-  }
-}
 </style>

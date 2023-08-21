@@ -9,14 +9,14 @@ const routes = [
         path: "/",
         component: home,
         meta: {
-            title: "拾壹博客"
+            title: "拾壹博客-一个专注于技术分享的博客平台"
         },
         children: [
             {
                 path: "/",
                 component: resolve => require(["@/view/home/index.vue"], resolve),
                 meta: {
-                    title: "拾壹博客"
+                    title: "拾壹博客-一个专注于技术分享的博客平台"
                 }
             },
             {
@@ -30,9 +30,6 @@ const routes = [
             {
                 path: "/articleInfo",
                 component: resolve => require(["@/view/article/index.vue"], resolve),
-                meta: {
-                    title: "文章详情"
-                }
             },
             {
                 path: "/message",
@@ -45,7 +42,7 @@ const routes = [
                 path: "/about",
                 component: resolve => require(["@/view/about/index.vue"], resolve),
                 meta: {
-                    title: "关于作者"
+                    title: "关于本站"
                 }
             },
             {
@@ -79,6 +76,9 @@ const routes = [
             {
                 path: "/photo",
                 component: resolve => require(["@/view/photo/index"], resolve),
+                meta: {
+                    title: "我的图库"
+                }
             },
             {
                 path: "/sponsor",
@@ -90,28 +90,37 @@ const routes = [
             {
                 path: "/im",
                 component: resolve => require(["@/view/im/index"], resolve),
+                meta: {
+                    title: "拾壹博客-一个专注于技术分享的博客平台"
+                }
             },
             {
                 path: "/hot",
                 component: resolve => require(["@/view/search/Hot.vue"], resolve),
+                meta: {
+                    title: "网站热搜"
+                }
             },
             {
                 path: "/note",
                 component: resolve => require(["@/view/note/index.vue"], resolve),
                 meta: {
-                    title: "笔记"
+                    title: "拾壹博客-一个专注于技术分享的博客平台"
                 }
             },
             {
                 path: "/notice",
                 component: resolve => require(["@/view/notice/index.vue"], resolve),
                 meta: {
-                    title: "通知"
+                    title: "拾壹博客-一个专注于技术分享的博客平台"
                 }
             },
             {
                 path: "/navigation",
                 component: resolve => require(["@/view/navigation/index.vue"], resolve),
+                meta: {
+                    title: "网站导航"
+                }
             },
 
         ],
@@ -145,6 +154,10 @@ VueRouter.prototype.replace = function replace(location) {
 }
 
 router.beforeEach((to, from, next) => {
+    console.log(window.vm)
+    if (to.meta.title) {
+        document.title = to.meta.title
+    }
     setSkin()
     next()
 })

@@ -43,13 +43,8 @@
                                         <h4 class="author">
                                             <a :href="item.webSite" target="_blank" class="disabled">
                                                 {{ item.nickname }}
-                                                <el-tooltip effect="dark" content="作者标签" placement="top"
-                                                    v-if="item.userId == articleUserId && item.userId != 1">
-                                                    <svg-icon class="tag" icon-class="bozhu"></svg-icon>
-                                                </el-tooltip>
-
-                                                <el-tooltip effect="dark" content="官方标签" placement="top"
-                                                    v-if="item.userId == 1">
+                                                <el-tooltip effect="dark" content="博主" placement="top"
+                                                    v-if="item.userId == articleUserId">
                                                     <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                                 </el-tooltip>
                                             </a>
@@ -108,12 +103,8 @@
                                                         <a :href="childrenItem.webSite" target="_blank" class="disabled">
                                                             {{ childrenItem.nickname }}
 
-                                                            <el-tooltip effect="dark" content="作者标签" placement="top"
-                                                                v-if="childrenItem.userId == articleUserId && childrenItem.userId != 1">
-                                                                <svg-icon class="tag" icon-class="bozhu"></svg-icon>
-                                                            </el-tooltip>
-                                                            <el-tooltip effect="dark" content="官方标签" placement="top"
-                                                                v-if="childrenItem.userId == 1">
+                                                            <el-tooltip effect="dark" content="博主" placement="top"
+                                                                v-if="childrenItem.userId == articleUserId">
                                                                 <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                                             </el-tooltip>
                                                         </a>
@@ -575,9 +566,9 @@ export default {
                                             font-weight: 600;
 
                                             .tag {
-                                                width: 18px;
-                                                height: 18px;
-                                                vertical-align: -4px;
+                                                width: 15px;
+                                                height: 15px;
+                                                vertical-align: -3px;
                                             }
                                         }
                                     }
@@ -764,9 +755,9 @@ export default {
                                                     }
 
                                                     .tag {
-                                                        width: 18px;
-                                                        height: 18px;
-                                                        vertical-align: -5px;
+                                                        width: 15px;
+                                                        height: 15px;
+                                                        vertical-align: -3px;
                                                     }
                                                 }
 

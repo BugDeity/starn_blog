@@ -16,3 +16,10 @@ export function deleteNote(data) {
         data
     })
 }
+export function updateNote(data) {
+    return request({
+        url: '/system/note/update',
+        method: 'put',
+        data
+    })
+}

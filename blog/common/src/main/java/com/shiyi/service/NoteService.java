@@ -23,4 +23,11 @@ public interface NoteService extends IService<Note> {
      * @return
      */
     ResponseResult deleteNoteByIds(List<Integer> ids);
+
+    /**
+     * 修改笔记
+     * @param note
+     * @return
+     */
+    ResponseResult updateNote(Note note);
 }

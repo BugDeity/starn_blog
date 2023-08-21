@@ -32,6 +32,9 @@ public class Note implements Serializable {
     @ApiModelProperty(value = "分类id")
     private Integer categoryId;
 
+    @ApiModelProperty(value = "状态 0：未通过 1：通过  2：待审核")
+    private Integer status;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;

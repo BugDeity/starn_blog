@@ -23,7 +23,7 @@
                                 <div class="nickname noSelect userInfo">
                                     {{ item.fromUserNickname }}
                                     <span v-if="item.fromUserId == 1">
-                                        <el-tooltip effect="dark" content="拾壹博客官方" placement="top">
+                                        <el-tooltip effect="dark" content="博主" placement="top">
                                             <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                         </el-tooltip>
                                     </span>
@@ -57,7 +57,7 @@
                                             IP属地:{{ splitIpAddress(item.ipSource) }}
                                         </span>
                                         <span v-if="item.fromUserId == 1">
-                                            <el-tooltip effect="dark" content="拾壹博客官方" placement="top">
+                                            <el-tooltip effect="dark" content="博主" placement="top">
                                                 <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                             </el-tooltip>
                                         </span>
@@ -937,9 +937,10 @@ export default {
                     margin-bottom: 20px;
 
                     .tag {
-                        width: 20px;
-                        height: 20px;
-                        vertical-align: -5px;
+                        width: 15px;
+                        height: 15px;
+                        vertical-align: -3px;
+                        margin: 0 5px;
                     }
 
                     .withdraw {

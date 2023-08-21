@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Note;
+import com.shiyi.enums.NoteStatusEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.mapper.NoteMapper;
@@ -44,6 +45,7 @@ public class ApiNoteServiceImpl implements ApiNoteService {
             throw new BusinessException("笔记内容不能为空！");
         }
         note.setUserId(StpUtil.getLoginIdAsString());
+        note.setStatus(NoteStatusEnum.APPLY.getCode());
         noteMapper.insert(note);
         return ResponseResult.success();
     }

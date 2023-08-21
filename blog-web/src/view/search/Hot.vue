@@ -130,7 +130,6 @@ export default {
     },
 
     created() {
-        document.title = "网站热搜"
 
         getHot("baidu").then(res => {
             this.baiduList = res.data.data
@@ -219,7 +218,7 @@ export default {
 
     @media screen and (min-width: 1119px) {
         .box {
-            width: 65%;
+            // width: 70%;
 
             .nav {
                 width: 70%;
@@ -249,19 +248,20 @@ export default {
         .nav {
             margin: 0 auto;
             display: block;
-
             height: 40px;
 
             /deep/ .el-input__inner {
                 border-radius: 0 !important;
                 background-color: var(--background-color);
-                border: 1px solid var(--border-line);
+                border: 1px solid var(--hot-border-color);
+
             }
 
             .siteBox {
                 display: inline-block;
                 height: calc(100% - 2px);
-                border: 1px solid var(--border-line);
+                border: 1px solid var(--hot-border-color);
+
                 line-height: 36px;
                 border-right: none;
                 padding-left: 20px;
@@ -291,7 +291,7 @@ export default {
                 display: inline-block;
                 height: calc(100% - 2px);
                 line-height: 36px;
-                border: 1px solid var(--border-line);
+                border: 1px solid var(--hot-border-color);
                 border-left: none;
                 padding-left: 20px;
                 padding-right: 20px;

@@ -73,7 +73,6 @@ export default {
         };
     },
     created() {
-        document.title = "文章标签";
         this.fetchTagList()
     },
 

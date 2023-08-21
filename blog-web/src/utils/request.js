@@ -13,7 +13,9 @@ const service = axios.create({
 service.interceptors.request.use(
 
     config => {
-        window.vm.$bus.$emit('showLoading');
+        if (config.url != '/oauth/wechat/is_login' && config.url != '/v1/im/chat') {
+            window.vm.$bus.$emit('showLoading');
+        }
         //do something before request is sent
         let token = getToken()
         if (token != null) {
