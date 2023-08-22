@@ -97,6 +97,9 @@ public class ApiArticleServiceImpl implements ApiArticleService {
     @Override
     public ResponseResult selectArticleInfo(Integer id) {
         ApiArticleInfoVO apiArticleInfoVO = articleMapper.selectArticleByIdToVO(id);
+        if (apiArticleInfoVO == null) {
+            throw new BusinessException("抱歉，文章不存在");
+        }
         //获取收藏量
         int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, id));
         apiArticleInfoVO.setCollectCount(collectCount);

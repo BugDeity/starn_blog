@@ -101,15 +101,20 @@ export default {
         -webkit-transform: scale(1);
         transform: scale(1);
         position: fixed;
-        bottom: 158px;
-        right: 10px;
+        bottom: 160px;
+        right: 30px;
     }
 
     .chat {
         position: fixed;
-        bottom: 190px;
-        right: 10px;
+        bottom: 250px;
+        right: 0px;
         margin-bottom: 10px;
+
+        svg {
+            width: 100px !important;
+            height: 100px !important;
+        }
     }
 
     .toolbar_item {
@@ -130,8 +135,8 @@ export default {
         -webkit-transform: scale(1);
         transform: scale(1);
         position: fixed;
-        bottom: 110px;
-        right: 10px;
+        bottom: 120px;
+        right: 30px;
         animation: fade-in 0.3s linear 1;
     }
 

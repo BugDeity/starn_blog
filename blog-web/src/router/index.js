@@ -154,7 +154,6 @@ VueRouter.prototype.replace = function replace(location) {
 }
 
 router.beforeEach((to, from, next) => {
-    console.log(window.vm)
     if (to.meta.title) {
         document.title = to.meta.title
     }

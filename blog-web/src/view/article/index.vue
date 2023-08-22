@@ -166,7 +166,9 @@
                     </a>
                 </div>
             </div>
-
+            <div class="wechatImg">
+                <img src="http://img.shiyit.com/souyisou1.png" alt="">
+            </div>
             <!-- 版权 -->
             <div class="copyright">
                 <div class="copyrightItem">
@@ -423,10 +425,7 @@ export default {
     },
 
     created() {
-        //获取文章作者信息
-        selectUserInfoByArticleId(this.articleId).then(res => {
-            this.userInfo = res.data
-        })
+
 
         articleInfo(this.articleId).then(res => {
             this.article = res.data
@@ -437,7 +436,10 @@ export default {
             //修改标题
             document.title = this.article.title
             this.getCommens();
-
+            //获取文章作者信息
+            selectUserInfoByArticleId(this.articleId).then(res => {
+                this.userInfo = res.data
+            })
         }).catch(err => {
 
         });
@@ -876,12 +878,34 @@ export default {
                 }
             }
 
+            .wechatImg {
+                img {
+                    width: 100%;
+                }
+            }
+
             .copyright {
                 background-color: var(--article-copyr--color);
                 border-radius: 5px;
                 width: 100%;
                 min-height: 130px;
                 position: relative;
+                margin-top: 20px;
+                border: 1px dashed var(--theme-color);
+
+                &::before {
+                    content: "声明";
+                    background-image: linear-gradient(to right, #FFCC99, #FF99CC);
+                    width: 30%;
+                    padding: 5px;
+                    border-radius: 999px;
+                    position: absolute;
+                    top: -18px;
+                    left: 35%;
+                    text-align: center;
+                    border: 1px dashed var(--theme-color);
+                    font-weight: 700;
+                }
 
                 .copyrightItem {
                     padding: 10px 10px;
@@ -1245,6 +1269,7 @@ export default {
                 position: relative;
                 border-bottom: 1px solid var(--border-line);
                 margin-top: 20px;
+                min-height: 30px;
 
                 .tagBtn {
                     cursor: pointer;
@@ -1331,12 +1356,34 @@ export default {
 
             }
 
+            .wechatImg {
+                img {
+                    width: 100%;
+                }
+            }
+
             .copyright {
                 background-color: var(--article-copyr--color);
                 border-radius: 5px;
                 width: 100%;
                 min-height: 130px;
                 position: relative;
+                border: 1px dashed var(--theme-color);
+                margin-top: 20px;
+
+                &::before {
+                    content: "声明";
+                    background-image: linear-gradient(to right, #FFCC99, #FF99CC);
+                    width: 30%;
+                    padding: 5px;
+                    border-radius: 999px;
+                    position: absolute;
+                    top: -18px;
+                    left: 35%;
+                    text-align: center;
+                    border: 1px dashed var(--theme-color);
+                    font-weight: 700;
+                }
 
                 .copyrightItem {
                     padding: 10px 10px;

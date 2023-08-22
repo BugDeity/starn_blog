@@ -2,16 +2,24 @@
     <div class="link-main">
         <el-card class="link-content">
             <h1>友情链接</h1>
-            <h3 class="directory1">友链列表 <span class="num"> {{ linkList.length }} 条</span></h3>
+            <h3 class="directory1">
+                友链列表
+                <span class="num"> {{ linkList.length }} 条</span>
+                <span class="num">以下友链仅是时间排序，博客不分先后</span>
+            </h3>
             <div class="links">
-                <a class="item" target="_blank" :href="item.url" :style="{ backgroundColor: `${randomColor()}` }"
-                    v-for="item in linkList">
-                    <span class="name">{{ item.name }}</span>
-                    <div class="item-content">
-                        <div class="info">{{ item.info }}</div>
-                        <img :src="item.avatar" alt="" />
-                    </div>
-                </a>
+                <div class="linksItem" v-for="item in linkList">
+                    <a class="item" target="_blank" :href="item.url">
+                        <div class="avatarItem">
+                            <img :src="item.avatar" alt="" />
+                        </div>
+                        <div class="item-content">
+                            <span class="name">{{ item.name }}</span>
+                            <div class="info">{{ item.info }}</div>
+                        </div>
+                    </a>
+                </div>
+
             </div>
             <div class="infoBox">
                 <div style="display: flex;position: relative;">
@@ -112,7 +120,6 @@ export default {
     },
 
     created() {
-        document.title = "友情链接";
         featchLinks().then(res => {
             this.linkList = res.data
         })
@@ -125,16 +132,6 @@ export default {
         handleAdd() {
             this.form = {}
             this.tipsDialogFormVisible = true
-        },
-        randomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            do {
-                for (var i = 0; i < 6; i++) {
-                    color += letters[Math.floor(Math.random() * 16)];
-                }
-            } while (color === '#FFFFFF' || color === '#000000');
-            return color;
         },
         addLink() {
             this.$refs['ruleForm'].validate((valid) => {
@@ -180,7 +177,6 @@ export default {
 
             .links {
                 grid-template-columns: repeat(3, 1fr);
-
                 width: 100%;
 
                 .item {
@@ -198,7 +194,7 @@ export default {
 
     @media screen and (min-width: 1119px) {
         .link-content {
-            width: 70%;
+            width: 65%;
             margin-top: 80px;
 
             h1 {
@@ -213,10 +209,10 @@ export default {
 
             .links {
                 grid-template-columns: repeat(4, 1fr);
-                margin-left: 10px;
+                margin-left: 30px;
 
                 .item {
-                    width: 237px;
+                    width: 85%;
                     height: 118px;
                 }
             }
@@ -291,62 +287,122 @@ export default {
             }
         }
 
+
         .links {
             margin-top: 20px;
             display: grid;
             gap: 15px;
             margin-bottom: 50px;
+            border-radius: 10px;
 
-            .item {
-                display: inline-block;
+            .linksItem {
+                position: relative;
+                border-radius: 10px;
 
-                border-top-left-radius: 10px;
-                border-bottom-right-radius: 30px;
-                transition: all 0.3s;
-                text-decoration: none;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    background: var(--theme-color);
+                    transition-timing-function: ease-out;
+                    transition-duration: .35s;
+                    transition-property: transform;
+                    transform: scale(0);
+                    border-radius: 10px;
 
-                &:hover {
-                    transform: scale(1.1);
                 }
 
-                .item-content {
+                .item {
+                    display: inline-block;
+                    text-decoration: none;
+                    position: relative;
                     display: flex;
-                    margin-top: 10px;
+                    align-items: center;
 
-                    .info {
+                    .avatarItem {
+                        height: 50px;
+                        width: 50px;
+                        margin: 0 10px;
+
+                        img {
+                            width: inherit;
+                            height: inherit;
+                            border-radius: 50%;
+                            object-fit: cover;
+                            margin: 3px 0;
+                            margin-right: 8px;
+                            vertical-align: middle;
+                            transition: transform .35s;
+                        }
+                    }
+
+
+                    .item-content {
+                        width: 100%;
                         margin-left: 15px;
-                        color: #fff;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        -webkit-line-clamp: 3;
-                        display: -webkit-box;
-                        -webkit-box-orient: vertical;
-                        min-width: 70%;
+
+                        .info,
+                        .name {
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            -webkit-line-clamp: 2;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            min-width: 60%;
+
+                        }
+
+                        .info {
+
+                            color: var(--text-color);
+                        }
+
+                        .name {
+                            position: relative;
+                            font-weight: 700;
+                            color: var(--article-color);
+                            padding-bottom: 5px;
+                            margin-bottom: 10px;
+
+                            &::after {
+                                content: "";
+                                width: 50%;
+                                height: 2px;
+                                position: absolute;
+                                bottom: 0;
+                                left: 0;
+                                background-color: var(--text-color);
+                            }
+                        }
+
+                    }
+                }
+
+                &:hover {
+                    &::before {
+                        transform: scale(1);
+
+                    }
+
+                    .item-content .info,
+                    .name {
+                        color: #fff !important;
                     }
 
                     img {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        object-fit: cover;
-                        margin: 3px 0;
-                        margin-right: 8px;
+                        transform: rotate(360deg);
                     }
+
+                    box-shadow: 5px 4px 8px 3px #49b0f563;
+                    transition: all 0.2s;
                 }
-
-                .name {
-                    color: #fff;
-                    border-bottom: 1px solid #fff;
-                    font-weight: 700;
-                    padding-bottom: 5px;
-                    margin-left: 15px;
-                    margin-top: 10px;
-                    display: inline-block;
-
-                }
-
 
             }
+
+
         }
 
         .infoBox {

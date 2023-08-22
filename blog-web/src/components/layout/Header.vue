@@ -32,7 +32,7 @@
                 <li>
                     <span>
                         <router-link :class="path == '/' ? 'active' : ''" :to="'/'">
-                            <i class="iconfont icon-shouye"></i> 首页
+                            <svg-icon icon-class="home"></svg-icon> 首页
                         </router-link>
                     </span>
                 </li>
@@ -41,7 +41,7 @@
                     <el-dropdown trigger="hover">
                         <span class="el-dropdown-link" :class="path == '/archive' || path == '/categorys' || path == '/tag'
                             ? 'active' : ''">
-                            <i class="el-icon-receiving"></i> 文章归档<i class="el-icon-arrow-down el-icon--right"></i>
+                            <svg-icon icon-class="archive"></svg-icon> 文章归档<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <router-link style="text-decoration: none;color: #71777c;" :to="'/archive'">
@@ -67,7 +67,7 @@
                 <li>
                     <span>
                         <router-link :class="path == '/navigation' ? 'active' : ''" :to="'/navigation'">
-                            <i class="el-icon-s-operation"></i> 网址导航
+                            <svg-icon icon-class="navication"></svg-icon> 网址导航
                         </router-link>
                     </span>
                 </li>
@@ -75,7 +75,7 @@
                 <li>
                     <span>
                         <router-link :class="path == '/photo' ? 'active' : ''" :to="'/photo'">
-                            <i class="el-icon-picture"></i> 画廊
+                            <svg-icon icon-class="photo"></svg-icon> 画廊
                         </router-link>
                     </span>
                 </li>
@@ -83,7 +83,7 @@
                 <li>
                     <span>
                         <router-link :class="path == '/note' ? 'active' : ''" :to="'/note'">
-                            <i class="el-icon-edit"></i> 笔记
+                            <svg-icon icon-class="note"></svg-icon> 笔记
                         </router-link>
                     </span>
                 </li>
@@ -91,28 +91,28 @@
                 <li>
                     <span>
                         <router-link :class="path == '/hot' ? 'active' : ''" :to="'/hot'">
-                            <i class="iconfont icon-resou"></i> 热搜
+                            <svg-icon icon-class="hot2"></svg-icon> 热搜
                         </router-link>
                     </span>
                 </li>
                 <li>
                     <span>
                         <router-link :class="path == '/message' ? 'active' : ''" :to="'/message'">
-                            <i class="el-icon-chat-dot-square"></i> 留言板
+                            <svg-icon icon-class="message"></svg-icon> 留言板
                         </router-link>
                     </span>
                 </li>
                 <li>
                     <span>
                         <router-link :class="path == '/links' ? 'active' : ''" :to="'/links'">
-                            <i class="el-icon-link"></i> 友情链接
+                            <svg-icon icon-class="friendLink"></svg-icon> 友情链接
                         </router-link>
                     </span>
                 </li>
                 <li>
                     <el-dropdown trigger="hover">
                         <span class="el-dropdown-link">
-                            <i class="el-icon-warning-outline"></i> 关于本站<i class="el-icon-arrow-down el-icon--right"></i>
+                            <svg-icon icon-class="about"></svg-icon> 关于本站<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
 
@@ -539,6 +539,12 @@ export default {
                     font-size: 14px;
                     padding: 0 15px;
                     position: relative;
+
+                    svg {
+                        width: 18px;
+                        height: 18px;
+                        vertical-align: -3px;
+                    }
 
                     i {
                         font-weight: 700;
