@@ -111,7 +111,7 @@
                 </li>
                 <li>
                     <el-dropdown trigger="hover">
-                        <span class="el-dropdown-link">
+                        <span class="el-dropdown-link" :class="path == '/about' ? 'active' : ''">
                             <svg-icon icon-class="about"></svg-icon> 关于本站<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
@@ -164,7 +164,8 @@
             <div class="noticeBtn">
                 <el-dropdown trigger="hover">
                     <div class="el-dropdown-link">
-                        <i class="el-icon-bell"></i>
+                        <!-- <i class="el-icon-bell"></i> -->
+                        <svg-icon icon-class="notice"></svg-icon>
                         <span v-if="topBageShow()" class="notice-bage topBage"></span>
                     </div>
                     <el-dropdown-menu slot="dropdown">
@@ -552,6 +553,7 @@ export default {
 
                     .active {
                         color: var(--theme-color);
+                        font-weight: 700;
                     }
 
                     a {
@@ -687,7 +689,10 @@ export default {
                 right: 180px;
                 top: 0;
 
-
+                svg {
+                    width: 20px;
+                    height: 20px;
+                }
 
                 i {
                     font-size: 1.5rem;

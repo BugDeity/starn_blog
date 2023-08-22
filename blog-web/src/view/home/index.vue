@@ -208,12 +208,15 @@
                         <ul class="recomArticleUl">
                             <li v-for="(item, index) in    newArticleList   ">
                                 <div class="article-item">
-                                    <el-image style="float: left;" :src="item.avatar" fit="fit" />
+                                    <div class="recomCover">
+                                        <el-image :src="item.avatar" fit="fit" />
+                                    </div>
                                     <p class="info">
-                                        <a class="tuijian-title" href="javascript:;" @click="handleClick(item.id)">{{
-                                            item.title }}</a>
+                                        <a class="tuijian-title" href="javascript:;" @click="handleClick(item.id)">
+                                            {{ item.title }}
+                                        </a>
+                                        <span class="time">{{ item.createTime }}</span>
                                     </p>
-                                    <p class="time">{{ item.createTime }}</p>
                                 </div>
                             </li>
                         </ul>
@@ -1102,37 +1105,49 @@ export default {
 
                                 .article-item {
                                     height: 100%;
+                                    display: flex;
 
-                                    /deep/ .el-image {
-                                        width: 100px;
-                                        height: 75px;
-                                        margin-right: 10px;
-                                    }
+                                    .info {
+                                        display: flex;
+                                        flex-direction: column;
 
-                                    /deep/ .el-image__inner {
-                                        transition: all 0.5s;
-                                        margin-right: 10px;
-                                    }
+                                        .tuijian-title {
+                                            text-decoration: none;
+                                            color: var(--article-color);
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            display: -webkit-box;
+                                            -webkit-box-orient: vertical;
+                                            -webkit-line-clamp: 2;
+                                            height: 50%;
 
-                                    .tuijian-title {
-                                        text-decoration: none;
-                                        color: var(--article-color);
-                                        overflow: hidden;
-                                        text-overflow: ellipsis;
-                                        display: -webkit-box;
-                                        -webkit-box-orient: vertical;
-                                        -webkit-line-clamp: 2;
+                                            &:hover {
+                                                color: var(--theme-color);
+                                            }
+                                        }
 
-                                        &:hover {
-                                            color: var(--theme-color);
+
+                                        .time {
+                                            font-size: 0.8rem;
+                                            color: var(--text-color);
+                                            margin-top: 10px;
                                         }
                                     }
 
+                                    .recomCover {
+                                        // border: 1px solid var(--border-line);
 
-                                    .time {
-                                        font-size: 0.8rem;
-                                        color: var(--text-color);
-                                        margin-top: 10px;
+                                        /deep/ .el-image {
+                                            width: 100px;
+                                            height: 75px;
+                                            margin-right: 10px;
+                                            border-radius: 5px;
+                                        }
+
+                                        /deep/ .el-image__inner {
+                                            transition: all 0.5s;
+                                            margin-right: 10px;
+                                        }
                                     }
                                 }
                             }

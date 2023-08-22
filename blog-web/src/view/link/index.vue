@@ -5,7 +5,7 @@
             <h3 class="directory1">
                 友链列表
                 <span class="num"> {{ linkList.length }} 条</span>
-                <span class="num">以下友链仅是时间排序，博客不分先后</span>
+                <span class="num">以下友链仅是时间排序，不分先后</span>
             </h3>
             <div class="links">
                 <div class="linksItem" v-for="item in linkList">
@@ -282,7 +282,7 @@ export default {
                 line-height: 18px;
                 font-size: 12px;
                 color: #909399;
-                background: #f5f5f5;
+                background: var(--friend-tip-color);
                 border-radius: 3px;
             }
         }
