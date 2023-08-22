@@ -7,6 +7,7 @@ import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Article;
 import com.shiyi.entity.Collect;
 import com.shiyi.entity.ImMessage;
+import com.shiyi.handle.SystemNoticeHandle;
 import com.shiyi.im.MessageConstant;
 import com.shiyi.mapper.ArticleMapper;
 import com.shiyi.mapper.CollectMapper;
@@ -53,17 +54,9 @@ public class ApiCollectServiceImpl implements ApiCollectService {
     public ResponseResult collect(Integer articleId, HttpServletRequest request) {
         Collect collect = Collect.builder().userId(StpUtil.getLoginIdAsString()).articleId(articleId).build();
         collectMapper.insert(collect);
-        try {
-            Article article = articleMapper.selectById(articleId);
-            String ip = IpUtil.getIp(request);
-            ImMessage message = ImMessage.builder().fromUserId(StpUtil.getLoginIdAsString()).toUserId(article.getUserId())
-                    .noticeType(MessageConstant.MESSAGE_COLLECT_NOTICE).code(MessageConstant.SYSTEM_MESSAGE_CODE)
-                    .ip(ip).ipSource(IpUtil.getIp2region(ip)).articleId(articleId).build();
-            imMessageMapper.insert(message);
-        } catch (Exception e) {
-            //添加失败的话不抛异常，还是要点赞执行成功
-            log.error("生成收藏消息通知失败，错误原因：{}",e.getMessage());
-        }
+        // 发送系统通知
+        Article article = articleMapper.selectById(articleId);
+        SystemNoticeHandle.sendNotice(request,article.getUserId(),MessageConstant.MESSAGE_COLLECT_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,articleId,null);
         return ResponseResult.success();
     }
 

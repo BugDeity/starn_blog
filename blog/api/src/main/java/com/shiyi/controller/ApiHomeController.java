@@ -51,11 +51,5 @@ public class ApiHomeController {
         return homeService.hot(type);
     }
 
-    @GetMapping("/music")
-    @ApiOperation(value = "获取每日推荐歌曲", httpMethod = "GET", response = ResponseResult.class, notes = "获取每日推荐歌曲")
-    public ResponseResult getMusic(){
-        return homeService.getMusic();
-    }
-
 }
 

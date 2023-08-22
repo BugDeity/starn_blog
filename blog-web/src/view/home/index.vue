@@ -219,16 +219,6 @@
                         </ul>
                     </el-card>
 
-                    <!-- 今日歌曲推荐 -->
-                    <el-card class="music" v-if="$store.state.webSiteInfo.isMusicPlayer && audio.length">
-                        <div class="title">
-                            今日歌曲推荐
-                        </div>
-                        <div>
-                            <a-player :music="audio[0]" :list="audio" ref="music" />
-                        </div>
-                    </el-card>
-
                     <!-- 关注我 -->
                     <el-card class="box-card guanzhu">
                         <div class="clearfix">
@@ -327,6 +317,7 @@
                         </div>
                         <div id="he-plugin-standard"></div>
                     </el-card>
+
                 </div>
             </div>
         </div>
@@ -334,15 +325,13 @@
 </template>
 
 <script>
-import { fetchArticleList, featchHomeData, featchCategory, getMusic } from '@/api'
+import { fetchArticleList, featchHomeData, featchCategory } from '@/api'
 import Notcie from '@/components/notice/index.vue'
 import SiteInfo from '@/components/site/index.vue'
-import APlayer from 'vue-aplayer'
 import Pagination from '@/components/pagination/index.vue'
 export default {
     components: {
         Notcie,
-        APlayer,
         SiteInfo,
         Pagination
     },
@@ -360,14 +349,11 @@ export default {
     data() {
         return {
             centerDialogVisible: false,
-            audio: [],
             emojis: [],
             pageData: {
                 pageNo: 1,
                 pageSize: 8,
             },
-            // 加载层信息
-
             activeName: "0",
             bannerList: [],
             categoryList: [
@@ -385,9 +371,6 @@ export default {
                 }
             ],
             articleList: [],
-            medal: {
-                type: 1
-            },
             pages: 0,
             tagList: [],
             newArticleList: [],
@@ -395,21 +378,10 @@ export default {
 
         };
     },
-    mounted() {
-        //设置音乐列表为隐藏
-        // window.setTimeout(() => {
-        //     if (this.$refs.music != undefined) {
-        //         this.$refs.music.showList = false
-        //     }
-        // }, 400)
-
-    },
-
     created() {
         this.fetchArticleList()
         this.getHomeData()
         this.fetchCategoryList()
-        //this.getMusic()
         this.insertWeather()
     },
     methods: {
@@ -428,20 +400,6 @@ export default {
             const script = document.createElement('script')
             script.src = 'https://widget.qweather.net/standard/static/js/he-standard-common.js?v=2.0'
             document.body.appendChild(script)
-        },
-        getMusic() {
-            getMusic().then(res => {
-                let musicList = res.data.data.songs
-                for (let i = 0; i < musicList.length; i++) {
-                    const music = {
-                        title: musicList[i].title,
-                        artist: musicList[i].singer,
-                        url: musicList[i].songUrl,
-                        pic: musicList[i].imageUrl
-                    }
-                    this.audio.push(music)
-                }
-            })
         },
         openUserInfoDrawer(value) {
             this.$store.state.userInfoDrawer.flag = true;
@@ -524,16 +482,7 @@ export default {
         handleCategoryClike(item) {
             this.$router.push({ name: "/category", query: { id: item.id, name: item.name } })
         },
-        // 打开加载层
-        openLoading: function () {
-            this.loading = this.$loading({
-                lock: true,
-                text: "正在加载中~",
-                spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)",
-                fullscreen: false
-            });
-        },
+
     },
 }
 </script>
@@ -1312,6 +1261,10 @@ export default {
                                 font-size: 13px;
                                 color: var(--text-color);
                                 text-decoration: none;
+
+                                &:hover {
+                                    color: var(--theme-color);
+                                }
                             }
                         }
 
@@ -1358,6 +1311,12 @@ export default {
                     .weather {
                         /deep/ #he-plugin-standard {
                             width: 100% !important;
+                            background-color: var(--background-color) !important;
+
+                            span,
+                            a {
+                                color: var(--text-color) !important;
+                            }
                         }
                     }
                 }

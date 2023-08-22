@@ -339,15 +339,7 @@ export default {
         uploadBefore: function () {
 
         },
-        // 打开加载层
-        openLoading: function () {
-            this.loading = this.$loading({
-                lock: true,
-                text: "正在发送图片中~",
-                spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)"
-            });
-        },
+
 
         //发送图片
         uploadSectionFile: function (param) {

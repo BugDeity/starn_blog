@@ -210,34 +210,18 @@ export default {
             }
             insertNote(note).then(res => {
                 this.content = ""
-                this.$message.success("发布笔记成功");
+                this.$message.success("发布成功，请等待审核！");
                 this.pageData.pageNo = 1
-
                 this.getNoteList()
-            }).catch(err => {
-
             })
         },
         getNoteList() {
-
             getNote(this.pageData).then(res => {
                 this.noteList = res.data.records
                 this.pages = res.data.pages
-
-            }).catch(err => {
-
             })
         },
-        // 打开加载层
-        openLoading: function () {
-            this.loading = this.$loading({
-                lock: true,
-                text: "正在加载中~",
-                spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)",
-                fullscreen: false
-            });
-        },
+
     },
 }
 </script>

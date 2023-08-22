@@ -122,18 +122,4 @@ public class ApiHomeServiceImpl implements ApiHomeService {
         JSONObject jsonObject = MyHttpUtil.sendCuApiHttpUrl(url);
         return ResponseResult.success(jsonObject);
     }
-
-
-
-    /**
-     * 获取每日推荐歌曲
-     * @return
-     */
-    @Override
-    public ResponseResult getMusic() {
-        String url = "https://www.coderutil.com/api/music/v1/recommend";
-        JSONObject jsonObject = MyHttpUtil.sendCuApiHttpUrl(url);
-        return ResponseResult.success(jsonObject);
-    }
-
 }

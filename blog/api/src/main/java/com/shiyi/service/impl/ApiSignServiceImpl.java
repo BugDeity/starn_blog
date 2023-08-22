@@ -8,6 +8,7 @@ import com.shiyi.entity.Prop;
 import com.shiyi.entity.Sign;
 import com.shiyi.enums.PropTypeEnum;
 import com.shiyi.exception.BusinessException;
+import com.shiyi.handle.SystemNoticeHandle;
 import com.shiyi.im.MessageConstant;
 import com.shiyi.mapper.ImMessageMapper;
 import com.shiyi.mapper.PropMapper;
@@ -77,16 +78,9 @@ public class ApiSignServiceImpl implements ApiSignService {
 
         sign = Sign.builder().userId(userId).createTime(DateUtil.strToDateTime(time,DateUtil.YYYY_MM_DD)).build();
         signMapper.insert(sign);
-        try {
-            String ip = IpUtil.getIp(request);
 
-            ImMessage message = ImMessage.builder().fromUserId("0").toUserId(userId).content("恭喜你签到成功")
-                    .noticeType(MessageConstant.MESSAGE_SYSTEM_NOTICE).code(MessageConstant.SYSTEM_MESSAGE_CODE).build();
-            imMessageMapper.insert(message);
-        } catch (Exception e) {
-            //添加失败的话不抛异常，还是要点赞执行成功
-            log.error("生成关注消息通知失败，错误原因：{}",e.getMessage());
-        }
+        //发送系统通知
+        SystemNoticeHandle.sendNotice(request,userId,MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,null);
         return ResponseResult.success();
     }
 }

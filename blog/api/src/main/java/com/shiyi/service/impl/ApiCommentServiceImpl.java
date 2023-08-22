@@ -10,6 +10,7 @@ import com.shiyi.entity.ImMessage;
 import com.shiyi.entity.UserInfo;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
+import com.shiyi.handle.SystemNoticeHandle;
 import com.shiyi.im.MessageConstant;
 import com.shiyi.mapper.ArticleMapper;
 import com.shiyi.mapper.CommentMapper;
@@ -76,21 +77,13 @@ public class ApiCommentServiceImpl implements ApiCommentService {
         if (insert == 0){
             throw new BusinessException("评论失败");
         }
-        try {
-            String toUserId =  comment.getReplyUserId();
-            int mark = comment.getReplyUserId() == null ? 2 : 1;
-            if (comment.getReplyUserId() == null) {
-                Article article = articleMapper.selectById(comment.getArticleId());
-                toUserId =  article.getUserId();
-            }
-            ImMessage message = ImMessage.builder().fromUserId(StpUtil.getLoginIdAsString()).toUserId(toUserId).commentMark(mark)
-                    .noticeType(MessageConstant.MESSAGE_COMMENT_NOTICE).code(MessageConstant.SYSTEM_MESSAGE_CODE)
-                    .ip(ip).ipSource(ipAddress).content(comment.getContent()).articleId(comment.getArticleId()).build();
-            imMessageMapper.insert(message);
-        } catch (Exception e) {
-            //添加失败的话不抛异常，还是要点赞执行成功
-            log.error("生成评论消息通知失败，错误原因：{}",e.getMessage());
+        String toUserId =  comment.getReplyUserId();
+        int mark = toUserId == null ? 2 : 1;
+        if (toUserId == null) {
+            Article article = articleMapper.selectById(comment.getArticleId());
+            toUserId =  article.getUserId();
         }
+        SystemNoticeHandle.sendNotice(request,toUserId,MessageConstant.MESSAGE_COMMENT_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,mark);
         return ResponseResult.success(comment);
     }
 

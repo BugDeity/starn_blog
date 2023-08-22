@@ -14,6 +14,7 @@ import com.shiyi.enums.ReadTypeEnum;
 import com.shiyi.enums.YesOrNoEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
+import com.shiyi.handle.SystemNoticeHandle;
 import com.shiyi.im.MessageConstant;
 import com.shiyi.mapper.*;
 import com.shiyi.service.ApiArticleService;
@@ -235,18 +236,8 @@ public class ApiArticleServiceImpl implements ApiArticleService {
             redisService.hIncr(ARTICLE_LIKE_COUNT, articleId.toString(), 1L);
 
             //构建通知消息
-            String ip = IpUtil.getIp(request);
-            String ip2region = IpUtil.getIp2region(ip);
             Article article = articleMapper.selectById(articleId);
-            try {
-                ImMessage message = ImMessage.builder().fromUserId(userId).toUserId(article.getUserId())
-                        .noticeType(MessageConstant.MESSAGE_LIKE_NOTICE).code(MessageConstant.SYSTEM_MESSAGE_CODE)
-                        .ip(ip).ipSource(ip2region).articleId(articleId).build();
-                imMessageMapper.insert(message);
-            } catch (Exception e) {
-                //添加失败的话不抛异常，还是要点赞执行成功
-                log.error("生成点赞消息通知失败，错误原因：{}",e.getMessage());
-            }
+            SystemNoticeHandle.sendNotice(request,article.getUserId(),MessageConstant.MESSAGE_LIKE_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,articleId,null);
         }
 
         return ResponseResult.success();

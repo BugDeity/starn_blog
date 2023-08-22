@@ -6,6 +6,7 @@ import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Followed;
 import com.shiyi.entity.ImMessage;
 import com.shiyi.exception.BusinessException;
+import com.shiyi.handle.SystemNoticeHandle;
 import com.shiyi.im.MessageConstant;
 import com.shiyi.mapper.FollowedMapper;
 import com.shiyi.mapper.ImMessageMapper;
@@ -39,17 +40,8 @@ public class ApiFollowedServiceImpl implements ApiFollowedService {
         }
         Followed followed = Followed.builder().userId(StpUtil.getLoginIdAsString()).followedUserId(userId).build();
         followedMapper.insert(followed);
-        try {
-            String ip = IpUtil.getIp(request);
-
-            ImMessage message = ImMessage.builder().fromUserId(StpUtil.getLoginIdAsString()).toUserId(userId)
-                    .noticeType(MessageConstant.MESSAGE_WATCH_NOTICE).code(MessageConstant.SYSTEM_MESSAGE_CODE)
-                    .ip(ip).ipSource(IpUtil.getIp2region(ip)).build();
-            imMessageMapper.insert(message);
-        } catch (Exception e) {
-            //添加失败的话不抛异常，还是要点赞执行成功
-            log.error("生成关注消息通知失败，错误原因：{}",e.getMessage());
-        }
+        // 发送系统通知
+        SystemNoticeHandle.sendNotice(request,userId,MessageConstant.MESSAGE_WATCH_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,null);
         return ResponseResult.success();
     }
 

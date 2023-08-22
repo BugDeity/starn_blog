@@ -321,7 +321,7 @@ export default {
                         -webkit-line-clamp: 3;
                         display: -webkit-box;
                         -webkit-box-orient: vertical;
-
+                        min-width: 70%;
                     }
 
                     img {
