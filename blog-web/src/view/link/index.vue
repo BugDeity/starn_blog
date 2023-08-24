@@ -396,9 +396,12 @@ export default {
                         transform: rotate(360deg);
                     }
 
-                    box-shadow: 5px 4px 8px 3px #49b0f563;
+                    box-shadow: 2px 2px 10px 5px #49b0f563;
                     transition: all 0.2s;
+
                 }
+
+
 
             }
 
