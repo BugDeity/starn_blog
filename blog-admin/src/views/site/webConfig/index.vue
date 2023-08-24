@@ -113,9 +113,16 @@
           </el-row>
           <el-row :gutter="24">
             <el-form-item label="关于我">
-              <mavon-editor placeholder="开始编辑...." :subfield="false" style="height: 300px" ref=md
-                v-model="form.aboutMe" />
+              <!-- <mavon-editor placeholder="开始编辑...." :subfield="false" style="height: 300px" ref=md
+                v-model="form.aboutMe" /> -->
+              <div style="border: 1px solid #ccc;">
+                <Toolbar style="border-bottom: 1px solid #ccc" :editor="editor" :defaultConfig="toolbarConfig"
+                  :mode="mode" />
+                <Editor style="height: 500px; overflow-y: hidden;" v-model="form.aboutMe" :defaultConfig="editorConfig"
+                  :mode="mode" @onCreated="onCreated" />
+              </div>
             </el-form-item>
+
           </el-row>
 
           <el-form-item>
@@ -217,10 +224,18 @@ import { getDataByDictType } from "@/api/dictData"
 import { mapGetters } from "vuex";
 import { hasAuth } from "@/utils/auth";
 import { upload } from "@/api/imgUpload";
-
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 export default {
+  components: {
+    Editor,
+    Toolbar
+  },
   data() {
     return {
+      editor: null,
+      toolbarConfig: {},
+      editorConfig: { placeholder: '请输入内容...' },
+      mode: 'default', // or 'simple'
       loginTypeLists: [],
       showList: [],
       loading: [],
@@ -282,7 +297,15 @@ export default {
     // 获取配置
     this.getWebConfigFun();
   },
+  beforeDestroy() {
+    const editor = this.editor
+    if (editor == null) return
+    editor.destroy() // 组件销毁时，及时销毁编辑器
+  },
   methods: {
+    onCreated(editor) {
+      this.editor = Object.seal(editor) // 一定要用 Object.seal() ，否则会报错
+    },
     /**
      * 字典查询
      */
@@ -397,7 +420,7 @@ export default {
   }
 };
 </script>
-
+<style src="@wangeditor/editor/dist/css/style.css"></style>
 <style scoped>
 .uploadImgBody :hover {
   border: dashed 1px #00ccff;
