@@ -51,7 +51,8 @@
                                     {{ item.summary }}
                                 </p>
                             </div>
-                            <el-image class="articleImg" :src="item.avatar" fit="scale - down"></el-image>
+                            <el-image class="articleImg" @click="handleClick(item.id)" :src="item.avatar"
+                                fit="scale - down"></el-image>
                         </div>
                         <div class="bottumItem">
                             <div class="articleUser">
@@ -209,7 +210,7 @@
                             <li v-for="(item, index) in    newArticleList   ">
                                 <div class="article-item">
                                     <div class="recomCover">
-                                        <el-image :src="item.avatar" fit="fit" />
+                                        <el-image @click="handleClick(item.id)" :src="item.avatar" fit="fit" />
                                     </div>
                                     <p class="info">
                                         <a class="tuijian-title" href="javascript:;" @click="handleClick(item.id)">
@@ -912,6 +913,7 @@ export default {
                                 right: 20px;
                                 top: 20px;
                                 border-radius: 3px;
+                                cursor: pointer;
 
                                 /deep/ .el-image__inner {
                                     transition: all 0.5s;
@@ -1136,6 +1138,7 @@ export default {
 
                                     .recomCover {
                                         // border: 1px solid var(--border-line);
+                                        cursor: pointer;
 
                                         /deep/ .el-image {
                                             width: 100px;
@@ -1166,6 +1169,8 @@ export default {
                                 font-size: 12px;
                                 display: flex;
                                 position: relative;
+                                border-radius: 3px;
+                                border: 1px solid #333;
 
                                 a {
                                     text-decoration: none;
@@ -1206,7 +1211,7 @@ export default {
                             }
 
                             .github {
-                                border: 1px solid #606266;
+                                border-color: #606266;
 
                                 .name {
                                     background-color: #606266;
@@ -1214,7 +1219,7 @@ export default {
                             }
 
                             .gitee {
-                                border: 1px solid red;
+                                border-color: red;
 
                                 .name {
                                     background-color: red;
@@ -1222,7 +1227,7 @@ export default {
                             }
 
                             .email {
-                                border: 1px solid #F56C87;
+                                border-color: #F56C87;
 
                                 .name {
                                     background-color: #F56C87;
@@ -1230,7 +1235,7 @@ export default {
                             }
 
                             .wechat {
-                                border: 1px solid #67C23A;
+                                border-color: #67C23A;
 
                                 .name {
                                     background-color: #67C23A;
@@ -1238,7 +1243,7 @@ export default {
                             }
 
                             .qq {
-                                border: 1px solid #409EFF;
+                                border-color: #409EFF;
 
                                 .name {
                                     background-color: #409EFF;
@@ -1246,7 +1251,7 @@ export default {
                             }
 
                             .qqgroup {
-                                border: 1px solid #ea9518;
+                                border-color: #ea9518;
 
                                 .name {
                                     background-color: #ea9518;
