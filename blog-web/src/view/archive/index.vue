@@ -25,7 +25,7 @@
                             </span>
                         </div>
                         <div ref="liCol" style="overflow: hidden;transition: height 0.3s;">
-                            <router-link :to="'/article/' + item.id" v-for="chriden in item.list" :key="chriden.id"
+                            <router-link :to="'/article/' + chriden.id" v-for="chriden in item.list" :key="chriden.id"
                                 class="timeline-title">
                                 <span style="margin-right: 10px;">{{ chriden.formatTime }} : </span> {{ chriden.title }}
                             </router-link>
