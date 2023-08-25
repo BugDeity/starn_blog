@@ -367,7 +367,6 @@ export default {
                         border-radius: 4px;
                         background-color: transparent;
                         border-style: none;
-
                     }
                 }
 
