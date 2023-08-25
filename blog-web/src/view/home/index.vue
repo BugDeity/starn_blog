@@ -593,7 +593,7 @@ export default {
             }
 
             .articleInfo-item {
-                width: 100%;
+                width: 95%;
 
             }
         }

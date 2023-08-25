@@ -149,6 +149,10 @@ export default {
             width: 100%;
             margin-top: 70px;
 
+            .articleInfo-item {
+                width: 90%;
+            }
+
             .articleImg {
                 display: none;
             }
@@ -175,6 +179,14 @@ export default {
         .box {
             width: 55%;
             margin-top: 80px;
+
+            .articleInfo {
+                display: flex;
+            }
+
+            .articleInfo-item {
+                width: 60%;
+            }
 
             .articleImg {
                 width: 20%;
@@ -251,7 +263,7 @@ export default {
 
 
             .articleInfo {
-                display: flex;
+
                 color: var(--article-color);
 
                 .original {
@@ -276,7 +288,7 @@ export default {
                 }
 
                 .articleInfo-item {
-                    width: 60%;
+
 
                     a {
                         color: var(--article-color);

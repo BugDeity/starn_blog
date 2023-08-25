@@ -40,7 +40,7 @@ export default {
     width: 100%;
     height: 100%;
     z-index: 999999;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(236, 227, 227, 0.8);
 
     #loader {
         display: block;
@@ -97,7 +97,7 @@ export default {
 
     .load_title {
         font-family: 'Open Sans';
-        color: #ccc;
+        color: #000;
         font-size: 1rem;
         width: 100%;
         text-align: center;
