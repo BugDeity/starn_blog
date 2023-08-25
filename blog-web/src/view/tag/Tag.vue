@@ -17,7 +17,9 @@
                         :key="index">
                         <el-card
                             style="padding: 15px;background-color: var(--background-color);border: 1px solid var(--border-line);">
-                            <h4 @click="handleArticleClike(item.id)" class="title">{{ item.title }}</h4>
+                            <router-link :to="'/article/' + item.id">
+                                <h4 class="title">{{ item.title }}</h4>
+                            </router-link>
                             <div class="bottumItem">
                                 <div class="articleUser">
                                     <el-avatar class="userAvatar" :src="item.userAvatar"></el-avatar>
@@ -83,9 +85,7 @@ export default {
             }
             return index == 0;
         },
-        handleArticleClike(id) {
-            this.$router.push({ path: '/articleInfo', query: { articleId: id } })
-        },
+
         load() {
 
             if (this.pageData.pageNo < this.pageTotal) {
@@ -186,9 +186,9 @@ export default {
             height: 800px;
             overflow-y: scroll;
 
-            .title {
-                color: var(--text-color);
-                cursor: pointer;
+            a {
+                text-decoration: none;
+                color: var(--article-color);
 
                 &:hover {
                     color: var(--theme-color);

@@ -28,7 +28,7 @@ const routes = [
                 }
             },
             {
-                path: "/articleInfo",
+                path: "/article/:articleId",
                 component: resolve => require(["@/view/article/index.vue"], resolve),
             },
             {

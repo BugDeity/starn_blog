@@ -21,12 +21,16 @@
                             </el-tooltip>
 
                             <span v-if="item.isStick" class="top">置顶</span>
-                            <h3 @click="handleClick(item.id)" v-html="item.title"></h3>
+                            <router-link :to="'/article/' + item.id">
+                                <h3 v-html="item.title"></h3>
+                            </router-link>
                             <p>
                                 {{ item.summary }}
                             </p>
                         </div>
-                        <el-image class="articleImg" :src="item.avatar" fit="scale - down"></el-image>
+                        <router-link :to="'/article/' + item.id">
+                            <el-image class="articleImg" :src="item.avatar" fit="scale - down"></el-image>
+                        </router-link>
                     </div>
                     <div class="bottumItem">
                         <div class="articleUser">
@@ -121,9 +125,7 @@ export default {
             this.pageData.pageNo++;
             this.fetchArticleList()
         },
-        handleClick(id) {
-            this.$router.push({ path: '/articleInfo', query: { articleId: id } })
-        },
+
         fetchArticleList() {
             searchArticle(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
@@ -275,6 +277,10 @@ export default {
 
                 .articleInfo-item {
                     width: 60%;
+
+                    a {
+                        color: var(--article-color);
+                    }
 
                     .top {
                         background-image: -webkit-linear-gradient(0deg, #3ca5f6 0, #a86af9 100%);

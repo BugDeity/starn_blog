@@ -41,7 +41,9 @@
                         <el-timeline-item :timestamp="item.createTime" placement="top" v-for="(item, index) in articleList"
                             :key="index">
                             <el-card class="myArticle">
-                                <h4 @click="goArticleInfo(item.id)">{{ item.title }}</h4>
+                                <router-link :to="'/article/' + item.id">
+                                    <h4>{{ item.title }}</h4>
+                                </router-link>
                                 <div class="box">
                                     <div class="statu">
                                         <el-tag :type="statuTagStyle[item.isPublish]" size="small">{{
@@ -76,7 +78,9 @@
                         <el-timeline-item :timestamp="item.createTime" placement="top" v-for="(item, index) in collectList"
                             :key="index">
                             <el-card class="myCollect">
-                                <h4 @click="goArticleInfo(item.id)">{{ item.title }}</h4>
+                                <router-link :to="'/article/' + item.id">
+                                    <h4>{{ item.title }}</h4>
+                                </router-link>
                                 <div class="box">
                                     <div class="user">
                                         <el-avatar class="avatar" :size="40" :src="item.userAvatar">
@@ -110,7 +114,9 @@
                         <el-timeline-item :timestamp="item.createTime" placement="top" v-for="(item, index) in commentList"
                             :key="index">
                             <el-card class="myComent">
-                                <h4 @click="goArticleInfo(item.id)">{{ item.title }}</h4>
+                                <router-link :to="'/article/' + item.id">
+                                    <h4>{{ item.title }}</h4>
+                                </router-link>
                                 <div class="box">
                                     <div class="content">
                                         {{ item.commentContent }}
@@ -333,10 +339,7 @@ export default {
                 }
             })
         },
-        goArticleInfo(id) {
-            this.close()
-            this.$router.push({ path: '/articleInfo', query: { articleId: id } })
-        },
+
         close() {
             this.$store.state.userInfoDrawer.flag = false;
             this.$store.state.userInfoDrawer.name = null;
@@ -567,9 +570,15 @@ export default {
 .myNote {
     padding: 10px;
 
-    h4 {
-        cursor: pointer;
+    a {
+        text-decoration: none;
+        color: var(--article-color);
+
+        &:hover {
+            color: var(--theme-color);
+        }
     }
+
 
     .box {
         height: 40px;

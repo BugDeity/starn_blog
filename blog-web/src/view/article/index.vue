@@ -357,11 +357,11 @@ export default {
             locationUrl: window.location.href,
             commentList: [],
             tempList: null,
-            articleId: this.$route.query.articleId,
+            articleId: this.$route.params.articleId,
             commentQuery: {
                 pageNo: 1,
                 pageSize: 5,
-                articleId: this.$route.query.articleId,
+                articleId: this.$route.params.articleId,
             },
             commentPages: 0,
             user: {},

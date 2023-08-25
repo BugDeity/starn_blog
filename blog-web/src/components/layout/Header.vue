@@ -150,11 +150,11 @@
                 </div>
                 <!-- 热搜框 -->
                 <div class="hot_search_main" :style="style">
-                    <a @click="handleArticle(item.id)" href="javascript:;" v-for="(item, index) in $store.state.hotArticles"
-                        :key="index">
+                    <router-link :to="'/article/' + item.id" v-for="(item, index) in $store.state.hotArticles" :key="index">
                         <span class="number">{{ index + 1 }}</span>
                         {{ item.title }}
-                    </a>
+                    </router-link>
+
                 </div>
             </div>
             <!-- <div class="articleBtn">
@@ -321,9 +321,7 @@ export default {
             this.$store.state.userInfoDrawer.flag = true;
             this.$store.state.userInfoDrawer.name = null;
         },
-        handleArticle(id) {
-            this.$router.push({ path: '/articleInfo', query: { articleId: id } })
-        },
+
         focus() {
             this.style = "transform:translate3d(0, 0, 0);opacity:1;visibility:visible;border: 1px solid var(--background-color)"
         },

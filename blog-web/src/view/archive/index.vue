@@ -25,10 +25,10 @@
                             </span>
                         </div>
                         <div ref="liCol" style="overflow: hidden;transition: height 0.3s;">
-                            <div @click="handleClike(chriden.id)" v-for="chriden in item.list" :key="chriden.id"
+                            <router-link :to="'/article/' + item.id" v-for="chriden in item.list" :key="chriden.id"
                                 class="timeline-title">
                                 <span style="margin-right: 10px;">{{ chriden.formatTime }} : </span> {{ chriden.title }}
-                            </div>
+                            </router-link>
                             <el-divider></el-divider>
                         </div>
                     </div>
@@ -86,10 +86,6 @@ export default {
                 // 隐藏 loading 组件
                 this.$bus.$emit('hideLoading');
             });
-        },
-
-        handleClike(id) {
-            this.$router.push({ path: "articleInfo", query: { articleId: id } })
         },
 
         formatTime(time) {
@@ -198,7 +194,8 @@ export default {
                     font-weight: 500;
                     cursor: pointer;
                     margin-left: 20px;
-
+                    display: block;
+                    text-decoration: none;
 
                     &:hover {
                         color: var(--theme-color);

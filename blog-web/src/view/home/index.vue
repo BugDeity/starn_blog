@@ -6,10 +6,10 @@
                     <!-- 轮播图 -->
                     <el-carousel class="banner" :interval="5000" arrow="always">
                         <el-carousel-item v-for="(item, index) in bannerList" :key="index">
-                            <a href="javascript:;" @click="handleClick(item.id)">
+                            <router-link :to="'/article/' + item.id">
                                 <el-image class="bannerImg" :src="item.avatar"></el-image>
                                 <h3 class="title">{{ item.title }}</h3>
-                            </a>
+                            </router-link>
                         </el-carousel-item>
                     </el-carousel>
                 </div>
@@ -46,13 +46,17 @@
                                 </el-tooltip>
 
                                 <span v-if="item.isStick" class="top">置顶</span>
-                                <h3 @click="handleClick(item.id)">{{ item.title }}</h3>
+                                <router-link :to="'/article/' + item.id">
+                                    <h3>{{ item.title }}</h3>
+                                </router-link>
                                 <p>
                                     {{ item.summary }}
                                 </p>
                             </div>
-                            <el-image class="articleImg" @click="handleClick(item.id)" :src="item.avatar"
-                                fit="scale - down"></el-image>
+                            <router-link :to="'/article/' + item.id">
+                                <el-image class="articleImg" :src="item.avatar" fit="scale - down"></el-image>
+                            </router-link>
+
                         </div>
                         <div class="bottumItem">
                             <div class="articleUser">
@@ -210,12 +214,15 @@
                             <li v-for="(item, index) in    newArticleList   ">
                                 <div class="article-item">
                                     <div class="recomCover">
-                                        <el-image @click="handleClick(item.id)" :src="item.avatar" fit="fit" />
+                                        <router-link :to="'/article/' + item.id">
+                                            <el-image :src="item.avatar" fit="fit" />
+                                        </router-link>
                                     </div>
                                     <p class="info">
-                                        <a class="tuijian-title" href="javascript:;" @click="handleClick(item.id)">
+                                        <router-link class="tuijian-title" :to="'/article/' + item.id">
                                             {{ item.title }}
-                                        </a>
+                                        </router-link>
+
                                         <span class="time">{{ item.createTime }}</span>
                                     </p>
                                 </div>
@@ -480,9 +487,7 @@ export default {
                 this.newArticleList = res.extra.newArticleList
             })
         },
-        handleClick(id) {
-            this.$router.push({ path: '/articleInfo', query: { articleId: id } })
-        },
+
         handleCategoryClike(item) {
             this.$router.push({ name: "/category", query: { id: item.id, name: item.name } })
         },
@@ -618,7 +623,6 @@ export default {
                 right: 20px;
                 top: 20px;
                 border-radius: 3px;
-                cursor: pointer;
 
                 /deep/ .el-image__inner {
                     transition: all 0.5s;
@@ -1064,6 +1068,10 @@ export default {
                         .articleInfo-item {
 
                             height: 100px;
+
+                            a {
+                                color: var(--article-color);
+                            }
 
                             .top {
                                 background-image: -webkit-linear-gradient(0deg, #3ca5f6 0, #a86af9 100%);
