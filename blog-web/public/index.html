@@ -69,10 +69,15 @@
 
       }
 
-      .el-input__inner {
-        background-color: var(--background-color) !important;
-        border: 1px solid var(--hot-border-color) !important;
 
+    }
+
+    .el-input__inner {
+      background-color: var(--background-color) !important;
+      border-color: var(--hot-border-color) !important;
+
+      &:focus {
+        border-color: #3ca5f6 !important;
       }
     }
 

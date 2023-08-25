@@ -135,7 +135,7 @@ export default {
         -webkit-transform: scale(1);
         transform: scale(1);
         position: fixed;
-        bottom: 120px;
+        bottom: 110px;
         right: 30px;
         animation: fade-in 0.3s linear 1;
     }
