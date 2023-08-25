@@ -147,6 +147,10 @@ export default {
             width: 100%;
             margin-top: 70px;
 
+            .articleImg {
+                display: none;
+            }
+
             .bottumItem {
                 flex-wrap: wrap;
                 margin-bottom: 10px;
@@ -167,8 +171,28 @@ export default {
 
     @media screen and (min-width: 1119px) {
         .box {
-            width: 60%;
+            width: 55%;
             margin-top: 80px;
+
+            .articleImg {
+                width: 20%;
+                height: 100px;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                border-radius: 3px;
+
+                /deep/ .el-image__inner {
+                    transition: all 0.5s;
+                }
+
+                &:hover {
+                    /deep/ .el-image__inner {
+                        transform: scale(1.1);
+
+                    }
+                }
+            }
 
             .articleUser {
                 line-height: 50px;
@@ -303,25 +327,7 @@ export default {
                     }
                 }
 
-                .articleImg {
-                    width: 20%;
-                    height: 100px;
-                    position: absolute;
-                    right: 20px;
-                    top: 20px;
-                    border-radius: 3px;
 
-                    /deep/ .el-image__inner {
-                        transition: all 0.5s;
-                    }
-
-                    &:hover {
-                        /deep/ .el-image__inner {
-                            transform: scale(1.1);
-
-                        }
-                    }
-                }
             }
 
             .bottumItem {

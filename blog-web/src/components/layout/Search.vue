@@ -13,7 +13,7 @@
             </div>
             <!-- 标签搜索 -->
             <div class="tag-wrapper">
-                <i class="iconfont icon-biaoqian"></i>
+                <svg-icon icon-class="tag"></svg-icon>
                 <span>标签搜索</span>
                 <div class="tag">
                     <span @click="handleClike(item)" :style="{ backgroundColor: `${randomColor()}` }" class="item"
@@ -63,7 +63,7 @@ export default {
             if (this.keywords == null || this.keywords == "") {
                 this.$message({
                     message: '请输入搜索内容',
-                    type: 'warning'
+                    type: 'error'
                 });
                 return;
             }
@@ -159,15 +159,16 @@ export default {
         .tag-wrapper {
             margin-top: 50px;
 
-            i {
+            svg {
+                width: 20px;
+                height: 20px;
+                vertical-align: -3px;
                 margin-left: 20px;
-                margin-right: 10px;
             }
 
             i,
             span {
                 font-size: 1rem;
-
             }
 
             .tag {

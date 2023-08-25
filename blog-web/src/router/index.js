@@ -47,7 +47,7 @@ const routes = [
             },
             {
                 path: "/search",
-                component: resolve => require(["@/view/search/Search"], resolve),
+                component: resolve => require(["@/view/search"], resolve),
                 meta: {
                     title: "搜索文章"
                 }
