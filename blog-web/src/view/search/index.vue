@@ -169,7 +169,7 @@ export default {
 
     @media screen and (min-width: 1119px) {
         .box {
-            width: 55%;
+            width: 45%;
             margin-top: 80px;
 
             .articleInfo {

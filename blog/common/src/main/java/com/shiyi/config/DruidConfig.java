@@ -20,10 +20,10 @@ public class DruidConfig {
     public ServletRegistrationBean druidServlet() { // 主要实现WEB监控的配置处理
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(
                 new StatViewServlet(), "/druid/*"); // 现在要进行druid监控的配置处理操作
-        servletRegistrationBean.addInitParameter("allow", "127.0.0.1"); // 白名单
+        servletRegistrationBean.addInitParameter("allow", "localhost"); // 白名单
         // servletRegistrationBean.addInitParameter("deny", "192.168.1.200"); // 黑名单
         servletRegistrationBean.addInitParameter("loginUsername", "admin"); // 用户名
-        servletRegistrationBean.addInitParameter("loginPassword", "123456"); // 密码
+        servletRegistrationBean.addInitParameter("loginPassword", "queql"); // 密码
         servletRegistrationBean.addInitParameter("resetEnable", "false"); // 是否可以重置数据源
         return servletRegistrationBean ;
     }

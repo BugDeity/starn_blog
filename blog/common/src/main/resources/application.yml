@@ -11,10 +11,10 @@ spring:
   application:
     name: shiyiblog
   datasource:
-    url: jdbc:mysql://42.192.150.44:3306/blog_demo?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&tinyInt1isBit=false
+    url: jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&tinyInt1isBit=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password:
+    password: root
     type: com.alibaba.druid.pool.DruidDataSource
     initial-size: 10
     max-active: 150
@@ -30,11 +30,11 @@ spring:
     min-evictable-idle-time-millis: 30000
     filters: stat,wall,log4j
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-#  elasticsearch:
-#    rest:
-#      uris: localhost:9200
+  #  elasticsearch:
+  #    rest:
+  #      uris: localhost:9200
   redis:
-    host: 42.192.150.44
+    host: 127.0.0.1
     port: 6379
     timeout: 3000
     password:
@@ -56,13 +56,13 @@ task:
 
 #==============================公众号配置==============================
 wechat:
-  app-id:
-# 公众号AppSecret
-  secret:
-# 公众号Token
-  token:
-# 公众号AES Key
-  aesKey:
+  app-id: wx353b7afac6ad0fa1
+  # 公众号AppSecret
+  secret: 65eb00eeebdd0ea03300036707c1ab98
+  # 公众号Token
+  token: shiyi2022
+  # 公众号AES Key
+  aesKey: F4PBhRxwb9fCoe6TGfetnSMLtZObf29MhpGrFZXPzCF
 
 #==============================Sa-Token配置==============================
 sa-token:
@@ -73,7 +73,7 @@ sa-token:
   # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
   activity-timeout: -1
   # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
-  is-concurrent: true
+  is-concurrent: false
   # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
   is-share: false
   # token风格
@@ -113,7 +113,7 @@ knife4j:
     # Basic认证用户名
     username: admin
     # Basic认证密码
-    password:
+    password: queql
 
 #============================第三方登录配置信息===================================
 qq:

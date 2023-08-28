@@ -8,7 +8,7 @@
                         <el-image class="img" style="width: 50px;border-radius: 50%; height: 45px;"
                             :src="$store.state.webSiteInfo.logo">
                         </el-image>
-                        <a href="javascript:;">拾壹博客</a>
+                        <span class="name">拾壹博客</span>
                     </router-link>
 
                 </div>
@@ -446,9 +446,9 @@ export default {
                     margin-top: -6px;
                 }
 
-                a {
-                    margin-left: 10px;
-                    color: var(--theme-color);
+                .name {
+                    margin-left: 10px !important;
+                    color: var(--theme-color) !important;
                 }
             }
 
@@ -515,9 +515,10 @@ export default {
                     margin-top: -6px;
                 }
 
-                a {
-                    margin-left: 10px;
-                    color: var(--theme-color);
+                .name {
+                    margin-left: 10px !important;
+                    color: var(--theme-color) !important;
+                    font-family: "Lucida Calligraphy", cursive, serif, sans-serif;
                 }
             }
 
