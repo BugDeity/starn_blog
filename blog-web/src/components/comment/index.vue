@@ -310,7 +310,7 @@ export default {
 
         },
         moreComment() {
-            if (this.pageData.pageNo == this.pages) {
+            if (this.pages == 0 || this.pageData.pageNo == this.pages) {
                 return;
             }
             this.pageData.pageNo++;

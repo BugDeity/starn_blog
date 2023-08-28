@@ -126,7 +126,6 @@ export default {
                         getMyArticleInfo(this.$store.state.articleDrawer.id).then(res => {
                             this.article = res.data
                         })
-                        this.loading.close(0)
                     }
                 }
                 return this.$store.state.articleDrawer.flag;
