@@ -449,6 +449,7 @@ export default {
                 .name {
                     margin-left: 10px !important;
                     color: var(--theme-color) !important;
+                    font-family: "Lucida Calligraphy", cursive, serif, sans-serif;
                 }
             }
 
