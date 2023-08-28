@@ -68,14 +68,6 @@ Vue.use(vueBaberrage)
 Vue.config.productionTip = false
 Vue.prototype.config = config;
 import router from './router'
-import VueLazyload from 'vue-lazyload';
-
-Vue.use(VueLazyload, {
-  preLoad: 1.3, // 预加载的高度比例
-  error: 'path/to/error.png', // 图片加载失败时显示的图片
-  loading: 'path/to/loading.gif', // 图片加载中显示的图片
-  attempt: 1 // 加载错误后的重试次数
-});
 
 window.vm = new Vue({
   store,
