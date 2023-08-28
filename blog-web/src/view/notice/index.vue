@@ -64,11 +64,11 @@
 
                     <!-- 分页按钮 -->
                     <div @click="onPage">
-                        <Pagination :pageNo="pageData.pageNo" :pages="pages" />
+                        <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
                     </div>
                 </div>
                 <div class="empty-box" v-else>
-                    <el-empty description="暂未新通知哦"></el-empty>
+                    <sy-empty message="暂未新通知哦" />
                 </div>
 
 
@@ -79,11 +79,7 @@
    
 <script>
 import { getMessageNotice, deleteMessage } from '@/api/im'
-import Pagination from '@/components/pagination/index.vue'
 export default {
-    components: {
-        Pagination
-    },
     name: '',
     data() {
         return {
