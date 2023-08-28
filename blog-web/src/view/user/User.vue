@@ -3,7 +3,7 @@
         <el-drawer class="drawer" :append-to-body="true" title="我是标题" :with-header="false" :visible.sync="drawer"
             direction="rtl">
             <el-tabs style="height: calc(100vh - 50px);overflow: scroll;" v-model="activeName" tab-position="left"
-                type="border-card" @tab-click="handeClike">
+                type="border-card">
 
                 <!-- 个人中心 -->
                 <el-tab-pane name="user">
@@ -11,8 +11,7 @@
                     <el-form label-position="left" label-width="60px" :model="form">
                         <el-form-item label="昵称：">
                             <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
-                                :action="uploadPictureHost" :before-upload="uploadBefore" :http-request="uploadSectionFile"
-                                multiple>
+                                :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
                                 <img v-if="form.avatar" style="width: 100%;height: 100%;" :src="form.avatar"
                                     class="imgAvatar">
                                 <i v-else class="el-icon-plus avatar-img-icon"></i>
@@ -63,9 +62,7 @@
                             </el-card>
                         </el-timeline-item>
                         <!-- 分页按钮 -->
-                        <div @click="handlePage('article')">
-                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
-                        </div>
+                        <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handleArticlePage" />
                     </el-timeline>
                     <sy-empty v-else message="暂未发表任何文章" />
                 </el-tab-pane>
@@ -99,9 +96,7 @@
                         </el-timeline-item>
 
                         <!-- 分页按钮 -->
-                        <div @click="handlePage('collect')">
-                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
-                        </div>
+                        <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handleCollectPage" />
                     </el-timeline>
                     <sy-empty v-else message="暂未收藏文章" />
                 </el-tab-pane>
@@ -124,9 +119,7 @@
                             </el-card>
                         </el-timeline-item>
                         <!-- 分页按钮 -->
-                        <div @click="handlePage('comment')">
-                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
-                        </div>
+                        <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handleCommentPage" />
                     </el-timeline>
                     <sy-empty v-else message="暂未评论过文章" />
 
@@ -149,9 +142,7 @@
                         </el-timeline-item>
 
                         <!-- 分页按钮 -->
-                        <div @click="handlePage('note')">
-                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
-                        </div>
+                        <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handleNotePage" />
                     </el-timeline>
                     <sy-empty v-else message="暂未发布过笔记" />
                 </el-tab-pane>
@@ -392,9 +383,7 @@ export default {
             });
 
         },
-        uploadBefore: function () {
 
-        },
         uploadSectionFile: function (param) {
             this.files = param.file
             // FormData 对象
@@ -416,27 +405,23 @@ export default {
             }).catch(err => {
             })
         },
-        handlePage(type) {
-            if (this.pages == 0 || this.pageData.pageNo == this.pages) {
-                return;
-            }
-            this.pageData.pageNo++
-            if (type == "article") {
-                this.selectMyArticleList()
-            }
-            if (type == "collect") {
-                this.selectMyCollect()
-            }
-
-            if (type == "comment") {
-                this.selectMyComment()
-            }
-            if (type == "note") {
-                this.selectMyNote()
-            }
+        handleArticlePage(val) {
+            this.pageData.pageNo = val
+            this.selectMyArticleList()
+        },
+        handleCollectPage(val) {
+            this.pageData.pageNo = val
+            this.selectMyCollect()
+        },
+        handleCommentPage(val) {
+            this.pageData.pageNo = val
+            this.selectMyComment()
+        },
+        handleNotePage(val) {
+            this.pageData.pageNo = val
+            this.selectMyNote()
         },
         selectMyArticleList() {
-
             getMyArticle(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
                 this.pages = res.data.pages
@@ -446,27 +431,20 @@ export default {
             })
         },
         selectMyCollect() {
-
             getCollect(this.pageData).then(res => {
                 this.collectList.push(...res.data.records);
                 this.pages = res.data.pages
 
-            }).catch(err => {
-                console.log(err)
             })
         },
         selectMyComment() {
-
             getMyComment(this.pageData).then(res => {
                 this.commentList.push(...res.data.records);
                 this.pages = res.data.pages
 
-            }).catch(err => {
-                console.log(err)
             })
         },
         selectMyNote() {
-
             getMyNote(this.pageData).then(res => {
                 this.noteList.push(...res.data.records);
                 this.pages = res.data.pages
@@ -474,9 +452,6 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
-        },
-        handeClike(event) {
-
         },
         cancelCollect(id, index) {
             this.$confirm('确认取消收藏吗？')

@@ -102,8 +102,8 @@
                         </div>
                     </el-card>
                     <!-- 分页按钮 -->
-                    <div @click="onPage">
-                        <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
+                    <div>
+                        <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
                     </div>
 
                 </div>
@@ -459,13 +459,9 @@ export default {
             this.$store.state.loginFlag = true
         },
         // 分页
-        onPage() {
-            if (this.pages == 0 || this.pageData.pageNo == this.pages) {
-                return;
-            }
-            this.pageData.pageNo++;
+        handlePage(val) {
+            this.pageData.pageNo = val;
             this.fetchArticleList()
-
         },
         fetchArticleList() {
             fetchArticleList(this.pageData).then(res => {

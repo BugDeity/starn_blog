@@ -63,9 +63,7 @@
                     </div>
 
                     <!-- 分页按钮 -->
-                    <div @click="onPage">
-                        <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
-                    </div>
+                    <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
                 </div>
                 <div class="empty-box" v-else>
                     <sy-empty message="暂未新通知哦" />
@@ -124,8 +122,8 @@ export default {
         this.getList()
     },
     methods: {
-        onPage() {
-            this.pageData.pageNo++;
+        handlePage(val) {
+            this.pageData.pageNo = val;
             this.getList()
         },
         clearMessage(id, index) {

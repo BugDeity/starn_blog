@@ -154,11 +154,10 @@
                         </div>
                     </ul>
                 </li>
-                <!-- <div class="more-btn" v-if="pageNo < total" @click="moreComment">加载更多...</div> -->
 
                 <!-- 分页按钮 -->
-                <div @click="moreComment">
-                    <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
+                <div>
+                    <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="moreComment" />
                 </div>
             </div>
         </ul>
@@ -187,14 +186,13 @@ export default {
             opacity: 0,
             show: null,
             user: this.$store.state.userInfo,
-            articleId: window.location.search.split("=")[1],
+            articleId: this.$route.params.articleId,
             // 加载层信息
-
             emoji: "emoji1",
             pageData: {
                 pageNo: 1,
                 pageSize: 5,
-                articleId: window.location.search.split("=")[1],
+                articleId: this.$route.params.articleId
             },
             commentList: [],
             pages: 0,
@@ -307,11 +305,8 @@ export default {
             })
 
         },
-        moreComment() {
-            if (this.pages == 0 || this.pageData.pageNo == this.pages) {
-                return;
-            }
-            this.pageData.pageNo++;
+        moreComment(val) {
+            this.pageData.pageNo = val;
             this.getCommens()
         },
 

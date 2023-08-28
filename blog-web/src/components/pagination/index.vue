@@ -1,10 +1,10 @@
 <template>
     <div class=''>
         <!-- 分页按钮 -->
-        <div class="page" v-if="pageNo < pages">
+        <div class="page" v-if="pageNoProp < pages" @click="handlePage">
             加载更多
         </div>
-        <div style="text-align: center;color: var(--text-color);" v-else>
+        <div class="tips" v-else>
             我也是有底线的--
         </div>
     </div>
@@ -21,18 +21,26 @@ export default {
         pages: {
             type: Number,
             default: 0
+        },
+        changePage: {
+            type: Function,
+            default: () => { }
         }
     },
     name: '',
     data() {
         return {
+            pageNoProp: this.pageNo
         }
     },
     created() {
         // console.log('------created--------');
     },
     methods: {
-
+        handlePage() {
+            this.pageNoProp++;
+            this.$emit('changePage', this.pageNoProp);
+        },
     },
 }
 </script>
@@ -49,5 +57,10 @@ export default {
     margin-top: 20px;
     cursor: pointer;
     color: #fff;
+}
+
+.tips {
+    text-align: center;
+    color: var(--text-color);
 }
 </style>

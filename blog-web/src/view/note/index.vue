@@ -73,9 +73,7 @@
                                 </div>
                             </li>
                             <!-- 分页按钮 -->
-                            <div @click="handlePage">
-                                <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
-                            </div>
+                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
                         </ul>
                         <sy-empty v-else message="暂未发布笔记" />
                     </div>
@@ -183,11 +181,8 @@ export default {
             this.pageData.categoryId = item.id
             this.getNoteList()
         },
-        handlePage() {
-            if (this.pages == 0 || this.pageData.pageNo == this.pages) {
-                return;
-            }
-            this.pageData.pageNo++
+        handlePage(val) {
+            this.pageData.pageNo = val;
             getNote(this.pageData).then(res => {
                 this.noteList.push(...res.data.records)
                 this.pages = res.data.pages
