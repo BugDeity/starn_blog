@@ -64,11 +64,10 @@
                         </el-timeline-item>
                         <!-- 分页按钮 -->
                         <div @click="handlePage('article')">
-                            <Pagination :pageNo="pageData.pageNo" :pages="pages" />
+                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
                         </div>
                     </el-timeline>
-
-                    <el-empty v-else description="暂未发表任何文章"></el-empty>
+                    <sy-empty v-else message="暂未发表任何文章" />
                 </el-tab-pane>
 
                 <!-- 我的收藏 -->
@@ -101,10 +100,10 @@
 
                         <!-- 分页按钮 -->
                         <div @click="handlePage('collect')">
-                            <Pagination :pageNo="pageData.pageNo" :pages="pages" />
+                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
                         </div>
                     </el-timeline>
-                    <el-empty v-else description="暂未收藏文章"></el-empty>
+                    <sy-empty v-else message="暂未收藏文章" />
                 </el-tab-pane>
 
                 <!-- 我的评论 -->
@@ -126,10 +125,10 @@
                         </el-timeline-item>
                         <!-- 分页按钮 -->
                         <div @click="handlePage('comment')">
-                            <Pagination :pageNo="pageData.pageNo" :pages="pages" />
+                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
                         </div>
                     </el-timeline>
-                    <el-empty v-else description="暂未评论过文章"></el-empty>
+                    <sy-empty v-else message="暂未评论过文章" />
 
                 </el-tab-pane>
 
@@ -151,11 +150,10 @@
 
                         <!-- 分页按钮 -->
                         <div @click="handlePage('note')">
-                            <Pagination :pageNo="pageData.pageNo" :pages="pages" />
+                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
                         </div>
                     </el-timeline>
-                    <el-empty v-else description="暂未发布过笔记"></el-empty>
-
+                    <sy-empty v-else message="暂未发布过笔记" />
                 </el-tab-pane>
 
                 <!-- 我的反馈 -->
@@ -221,11 +219,8 @@ import {
 import { cancelCollect, getCollect } from '@/api/collect'
 import { getMyNote, deleteNote } from '@/api/note'
 import { getMyComment } from '@/api/comment'
-import Pagination from '@/components/pagination/index.vue'
 export default {
-    components: {
-        Pagination
-    },
+
     data() {
         return {
             form: {},

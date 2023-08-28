@@ -158,7 +158,7 @@
 
                 <!-- 分页按钮 -->
                 <div @click="moreComment">
-                    <Pagination :pageNo="pageData.pageNo" :pages="pages" />
+                    <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
                 </div>
             </div>
         </ul>
@@ -169,12 +169,10 @@ import { postComment, featchComments } from '@/api/comment'
 import { browserMatch } from '@/utils/index'
 import Reply from './Reply.vue'
 import Emoji from '@/components/emoji'
-import Pagination from '@/components/pagination/index.vue'
 export default {
     components: {
         Reply,
-        Emoji,
-        Pagination
+        Emoji
     },
     props: {
         articleUserId: {

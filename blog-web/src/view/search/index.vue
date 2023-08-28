@@ -77,12 +77,12 @@
                 </el-card>
                 <!-- 分页按钮 -->
                 <div @click="onPage">
-                    <Pagination :pageNo="pageData.pageNo" :pages="pages" />
+                    <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
                 </div>
 
             </div>
             <div class="empty-box" v-else>
-                <el-empty description="哎呀，文章丢失啦..."></el-empty>
+                <sy-empty message="哎呀，文章丢失啦..." />
             </div>
         </div>
 
@@ -90,11 +90,8 @@
 </template>
 <script>
 import { searchArticle } from '@/api'
-import Pagination from '@/components/pagination/index.vue'
 export default {
-    components: {
-        Pagination
-    },
+
     data() {
         return {
             pageData: {

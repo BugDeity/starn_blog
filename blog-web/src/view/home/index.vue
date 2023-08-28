@@ -103,11 +103,11 @@
                     </el-card>
                     <!-- 分页按钮 -->
                     <div @click="onPage">
-                        <Pagination :pageNo="pageData.pageNo" :pages="pages" />
+                        <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
                     </div>
 
                 </div>
-                <el-empty style=" width: 100%;" v-else description="很抱歉，暂无文章"></el-empty>
+                <sy-empty v-else message="很抱歉，暂无文章" />
 
                 <!-- 右侧内容 -->
                 <div class="rightBox">
@@ -339,12 +339,10 @@
 import { fetchArticleList, featchHomeData, featchCategory } from '@/api'
 import Notcie from '@/components/notice/index.vue'
 import SiteInfo from '@/components/site/index.vue'
-import Pagination from '@/components/pagination/index.vue'
 export default {
     components: {
         Notcie,
-        SiteInfo,
-        Pagination
+        SiteInfo
     },
     name: 'Home',
     metaInfo: {

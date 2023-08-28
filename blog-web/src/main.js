@@ -67,6 +67,12 @@ Vue.prototype.$setSkin = setSkin;
 Vue.use(vueBaberrage)
 Vue.config.productionTip = false
 Vue.prototype.config = config;
+import Empty from '@/components/empty/index.vue'
+Vue.component("sy-empty", Empty);
+import pagination from '@/components/pagination/index.vue'
+Vue.component("sy-pagination", pagination);
+
+
 import router from './router'
 
 window.vm = new Vue({

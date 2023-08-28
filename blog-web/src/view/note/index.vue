@@ -74,11 +74,10 @@
                             </li>
                             <!-- 分页按钮 -->
                             <div @click="handlePage">
-                                <Pagination :pageNo="pageData.pageNo" :pages="pages" />
+                                <sy-pagination :pageNo="pageData.pageNo" :pages="pages" />
                             </div>
                         </ul>
-                        <el-empty v-else description="暂未发布笔记"></el-empty>
-
+                        <sy-empty v-else message="暂未发布笔记" />
                     </div>
 
                 </div>
@@ -91,11 +90,7 @@
 <script>
 import { getNote, insertNote, deleteNote } from '@/api/note'
 import { featchCategory } from '@/api'
-import Pagination from '@/components/pagination/index.vue'
 export default {
-    components: {
-        Pagination
-    },
     metaInfo: {
         meta: [{
             name: 'keyWords',
