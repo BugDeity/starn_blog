@@ -58,7 +58,7 @@ public interface ApiArticleService {
      * 查询我的文章
      * @return
      */
-    public ResponseResult selectMyArticle();
+    public ResponseResult selectMyArticle(Integer type);
 
     /**
      * 删除我的文章

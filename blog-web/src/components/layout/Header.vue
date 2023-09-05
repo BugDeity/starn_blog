@@ -186,9 +186,14 @@
                         <img v-else :src="userInfo.avatar" alt="" />
                     </div>
                     <el-dropdown-menu slot="dropdown" v-if="userInfo">
-                        <a style="text-decoration: none;color: #71777c;" @click="openUserInfoDrawer">
+                        <!-- <a style="text-decoration: none;color: #71777c;" @click="openUserInfoDrawer">
                             <el-dropdown-item>个人中心</el-dropdown-item>
-                        </a>
+                        </a> -->
+                        <router-link style="text-decoration: none;color: #71777c;" :to="'/user'">
+                            <el-dropdown-item>
+                                个人中心
+                            </el-dropdown-item>
+                        </router-link>
                         <a style="text-decoration: none;color: #71777c;" @click="logout">
                             <el-dropdown-item>退出登录</el-dropdown-item>
                         </a>

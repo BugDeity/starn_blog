@@ -122,6 +122,13 @@ const routes = [
                     title: "网站导航"
                 }
             },
+            {
+                path: "/user",
+                component: resolve => require(["@/view/user/index.vue"], resolve),
+                meta: {
+                    title: "拾壹博客-一个专注于技术分享的博客平台"
+                }
+            },
 
         ],
     },

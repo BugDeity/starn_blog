@@ -26,6 +26,8 @@ public interface NoteMapper extends BaseMapper<Note> {
     Page<ApiNoteListVO> selectPublicNoteList(Page<ApiNoteListVO> apiNoteListVOPage,@Param("categoryId") Integer categoryId,
                                              @Param("userId") String userId);
 
+    Page<ApiNoteListVO> selectMyNoteList(Page<ApiNoteListVO> apiNoteListVOPage,@Param("userId") String userId);
+
     /**
      * 后台系统-获取笔记列表
      * @param systemNoteListVOPage

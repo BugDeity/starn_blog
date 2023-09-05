@@ -1,5 +1,7 @@
 package com.shiyi.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.shiyi.utils.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -53,6 +55,23 @@ public class UserInfoVO {
      * 个人网站
      */
     private String webSite;
+
+    /**
+     * 地址
+     */
+    private String address;
+
+    /**
+     * 注册时间
+     */
+    @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
+    private String registerTime;
+
+    /**
+     * 最后登录时间
+     */
+    @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
+    private String lastLoginTime;
 
     /**
      * 文章量

@@ -113,7 +113,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * 查询我的文章
      * @return
      */
-    Page<ApiArticleListVO> selectMyArticle(@Param("page")Page<Object> objectPage,@Param("userId") String userId);
+    Page<ApiArticleListVO> selectMyArticle(@Param("page")Page<Object> objectPage,@Param("userId") String userId,@Param("type") Integer type);
 
     /**
      * 获取我的文章详情

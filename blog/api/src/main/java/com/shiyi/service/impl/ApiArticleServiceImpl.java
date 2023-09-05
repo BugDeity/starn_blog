@@ -283,8 +283,12 @@ public class ApiArticleServiceImpl implements ApiArticleService {
      * @return
      */
     @Override
-    public ResponseResult selectMyArticle() {
-        Page<ApiArticleListVO> list = articleMapper.selectMyArticle(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString());
+    public ResponseResult selectMyArticle(Integer type) {
+        Page<ApiArticleListVO> list = articleMapper.selectMyArticle(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString(),type);
+        list.getRecords().forEach(item ->{
+            List<Tags> tags = tagsMapper.selectTagByArticleId(item.getId());
+            item.setTagList(tags);
+        });
         return ResponseResult.success(list);
     }
 

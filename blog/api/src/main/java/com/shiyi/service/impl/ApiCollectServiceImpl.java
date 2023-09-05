@@ -7,11 +7,13 @@ import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Article;
 import com.shiyi.entity.Collect;
 import com.shiyi.entity.ImMessage;
+import com.shiyi.entity.Tags;
 import com.shiyi.handle.SystemNoticeHandle;
 import com.shiyi.im.MessageConstant;
 import com.shiyi.mapper.ArticleMapper;
 import com.shiyi.mapper.CollectMapper;
 import com.shiyi.mapper.ImMessageMapper;
+import com.shiyi.mapper.TagsMapper;
 import com.shiyi.service.ApiCollectService;
 import com.shiyi.utils.IpUtil;
 import com.shiyi.utils.PageUtils;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -34,14 +37,20 @@ public class ApiCollectServiceImpl implements ApiCollectService {
 
     private final ArticleMapper articleMapper;
 
+    private final TagsMapper tagsMapper;
+
     /**
      * 我的收藏列表
      * @return
      */
     @Override
     public ResponseResult selectCollectList() {
-        Page<ApiArticleListVO> result = collectMapper.selectCollectList(new Page<ApiArticleListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString());
-        return ResponseResult.success(result);
+        Page<ApiArticleListVO> list = collectMapper.selectCollectList(new Page<ApiArticleListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString());
+        list.getRecords().forEach(item ->{
+            List<Tags> tags = tagsMapper.selectTagByArticleId(item.getId());
+            item.setTagList(tags);
+        });
+        return ResponseResult.success(list);
     }
 
     /**

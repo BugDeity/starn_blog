@@ -176,7 +176,7 @@ public class ApiUserServiceImpl implements ApiUserService {
      */
     @Override
     public ResponseResult selectUserInfo() {
-        UserInfo userInfo = userInfoMapper.getByUserId(StpUtil.getLoginIdAsString());
+        UserInfoVO userInfo = userInfoMapper.selectUserInfoByUserId(StpUtil.getLoginIdAsString());
         return ResponseResult.success(userInfo);
     }
 

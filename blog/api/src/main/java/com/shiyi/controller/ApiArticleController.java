@@ -87,8 +87,8 @@ public class ApiArticleController {
     @GetMapping(value = "/selectMyArticle")
     @BusinessLogger(value = "查询我的文章",type = "查询",desc = "查询我的文章")
     @ApiOperation(value = "查询我的文章", httpMethod = "GET", response = ResponseResult.class, notes = "查询我的文章")
-    public ResponseResult selectMyArticle() {
-        return articleService.selectMyArticle();
+    public ResponseResult selectMyArticle(Integer type) {
+        return articleService.selectMyArticle(type);
     }
 
     @SaCheckLogin

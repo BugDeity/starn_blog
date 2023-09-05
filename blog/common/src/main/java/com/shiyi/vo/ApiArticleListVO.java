@@ -92,7 +92,14 @@ public class ApiArticleListVO {
      * 我的评论内容
      */
     private String commentContent;
-
+    /**
+     * 分类名
+     */
+    private String categoryName;
+    /**
+     * 分类名
+     */
+    private String categoryId;
 
 
     /**

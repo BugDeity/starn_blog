@@ -434,7 +434,6 @@ export default {
             getCollect(this.pageData).then(res => {
                 this.collectList.push(...res.data.records);
                 this.pages = res.data.pages
-
             })
         },
         selectMyComment() {

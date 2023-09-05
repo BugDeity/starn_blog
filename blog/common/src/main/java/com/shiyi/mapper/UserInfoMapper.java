@@ -2,6 +2,7 @@ package com.shiyi.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.shiyi.entity.UserInfo;
+import com.shiyi.vo.UserInfoVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -26,5 +27,7 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
      * @return
      */
     UserInfo getByUserId(Object loginId);
+
+    UserInfoVO selectUserInfoByUserId(String userId);
 
 }

@@ -192,11 +192,18 @@
     <select id="selectMyArticle" resultType="com.shiyi.vo.ApiArticleListVO">
         SELECT
         a.*,
-        b.NAME AS categoryName
+        ui.nickname AS username,
+        b.NAME AS categoryName,
+        b.id AS categoryId
         FROM
         b_article a
-        JOIN b_category b ON a.category_id = b.id
+        left JOIN b_category b ON a.category_id = b.id
+        left JOIN b_user u ON a.user_id = u.id
+        left join b_user_info ui on u.user_info_id = ui.id
         where a.user_id =#{userId}
+        <if test="type != null and type != ''">
+            and a.is_publish = #{type}
+        </if>
         order by a.create_time desc
     </select>
     <select id="selectMyArticleInfo" resultType="com.shiyi.dto.ArticleInsertDTO">

@@ -5,7 +5,9 @@
             加载更多
         </div>
         <div class="tips" v-else>
-            我也是有底线的--
+            <div class="divider"></div>
+            <div class="content">没有更多内容了</div>
+            <div class="divider"></div>
         </div>
     </div>
 </template>
@@ -62,5 +64,20 @@ export default {
 .tips {
     text-align: center;
     color: var(--text-color);
+    display: flex;
+    align-items: center;
+
+    .divider {
+        display: inline-block;
+        width: 100%;
+        background-color: #ccc;
+        height: 1px;
+    }
+
+    .content {
+        display: inline-block;
+        width: 300px;
+        font-size: 14px;
+    }
 }
 </style>
