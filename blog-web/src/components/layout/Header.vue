@@ -5,7 +5,8 @@
             <div class="logo" style="cursor: pointer;">
                 <div class="logoBox">
                     <router-link :to="'/'">
-                        <el-image class="img" style="width: 50px;border-radius: 50%; height: 45px;"
+                        <el-image class="img"
+                            style="width: 50px;border-radius: 50%; height: 45px;border: 1px solid var(--border-line);"
                             :src="$store.state.webSiteInfo.logo">
                         </el-image>
                         <span class="name">拾壹博客</span>
@@ -518,8 +519,6 @@ export default {
                 font-weight: 700;
 
                 .img {
-                    width: 80px;
-                    height: 40px;
                     vertical-align: middle;
                     margin-top: -6px;
                 }
