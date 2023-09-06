@@ -51,7 +51,7 @@
                         <li ref="btn" :class="index == 0 ? 'active' : ''" @click="btnClike(index)"
                             v-for="(item, index) in btnList" :key="index">
                             <span class="item-title">
-                                <i :class="item.icon"></i>{{ item.name }}
+                                <i :class="item.icon"></i> {{ item.name }}
                             </span>
                         </li>
                     </ul>
@@ -63,81 +63,84 @@
                     <div class="btn" @click="handleClike(0)">下架</div>
                 </div> -->
                 <div class="articleBox" v-if="dataList.length">
-                    <div v-if="pageData.index != 2" class="article" v-for="(item, index) in dataList" :key="index">
-                        <router-link :to="'/article/' + item.id">
-                            <div class="article-cover">
-                                <el-image :src="item.avatar"></el-image>
-                            </div>
-                        </router-link>
-
-                        <div class="article-info">
+                    <div>
+                        <div v-if="pageData.index != 2" class="article" v-for="(item, index) in dataList" :key="index">
                             <router-link :to="'/article/' + item.id">
-                                <div class="article-title">
-                                    {{ item.title }}
+                                <div class="article-cover">
+                                    <el-image :src="item.avatar"></el-image>
                                 </div>
                             </router-link>
 
-                            <div class="article-desc">
-                                {{ item.summary }}
-                            </div>
-                            <div class="article-tag">
-                                <el-tag size="small" @click="handleClike(item.categoryId, '/categorys')">
-                                    <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
-                                </el-tag>
-                                <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="small"
-                                    v-for="tag in item.tagList" :key="tag.id" @click="handleClike(tag.id, '/tag')">
-                                    <i class="el-icon-collection-tag"></i> {{ tag.name }}
-                                </el-tag>
-                            </div>
-                            <div class="article-user">
-                                <span class=" item">
-                                    <i class=" el-icon-user"></i>
-                                    <span class="nickname">{{ item.username }}</span>
-                                </span>
+                            <div class="article-info">
+                                <router-link :to="'/article/' + item.id">
+                                    <div class="article-title">
+                                        {{ item.title }}
+                                    </div>
+                                </router-link>
 
-                                <span class="time item">
-                                    <i class="el-icon-time"></i>{{ item.createTime }}
-                                </span>
+                                <div class="article-desc">
+                                    {{ item.summary }}
+                                </div>
+                                <div class="article-tag">
+                                    <el-tag size="small" @click="handleClike(item.categoryId, '/categorys')">
+                                        <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
+                                    </el-tag>
+                                    <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="small"
+                                        v-for="tag in item.tagList" :key="tag.id" @click="handleClike(tag.id, '/tag')">
+                                        <i class="el-icon-collection-tag"></i> {{ tag.name }}
+                                    </el-tag>
+                                </div>
+                                <div class="article-user">
+                                    <span class=" item">
+                                        <i class=" el-icon-user"></i>
+                                        <span class="nickname">{{ item.username }}</span>
+                                    </span>
+
+                                    <span class="time item">
+                                        <i class="el-icon-time"></i>{{ item.createTime }}
+                                    </span>
+
+                                </div>
 
                             </div>
+                            <span class="articleBtn">
+                                <div v-if="pageData.index == 0">
+                                    <el-tooltip class="item" effect="dark" content="修改文章" placement="top">
+                                        <el-button type="primary" size="mini" @click="handleUpdateArticle(item.id)"
+                                            icon="el-icon-edit" circle></el-button>
+                                    </el-tooltip>
+                                    <el-tooltip class="item" effect="dark" content="删除文章" placement="top">
+                                        <el-button type="danger" size="mini" @click="handleDeleteArticle(index, item.id)"
+                                            icon="el-icon-delete" circle></el-button>
+                                    </el-tooltip>
+                                </div>
 
-                        </div>
-                        <span class="articleBtn">
-                            <div v-if="pageData.index == 0">
-                                <el-tooltip class="item" effect="dark" content="修改文章" placement="top">
-                                    <el-button type="primary" size="mini" @click="handleUpdateArticle(item.id)"
-                                        icon="el-icon-edit" circle></el-button>
-                                </el-tooltip>
-                                <el-tooltip class="item" effect="dark" content="删除文章" placement="top">
-                                    <el-button type="danger" size="mini" @click="handleDeleteArticle(index, item.id)"
-                                        icon="el-icon-delete" circle></el-button>
-                                </el-tooltip>
-                            </div>
-
-                            <el-tooltip v-if="pageData.index == 1" class="item" effect="dark" content="取消收藏"
-                                placement="top">
-                                <el-button type="danger" size="mini" @click="handleCanCollect(index, item.id)"
-                                    icon="el-icon-delete" circle></el-button>
-                            </el-tooltip>
-                        </span>
-                    </div>
-                    <!-- 笔记列表 -->
-                    <div v-if="pageData.index == 2" class="note" v-for="(item, index) in dataList" :key="index">
-                        <div style="width: 100%;">
-                            <span class="time">
-                                <i class="el-icon-time"></i> {{ item.createTime }}
-                            </span>
-                            <span style="float: right;">
-                                <el-tag style="margin-right: 10px;" size="small" v-if="item.categoryName">{{
-                                    item.categoryName }}</el-tag>
-                                <el-tooltip class="item" effect="dark" content="删除笔记" placement="top">
-                                    <el-button type="danger" size="mini" @click="handleDeleteNote(index, item.id)"
+                                <el-tooltip v-if="pageData.index == 1" class="item" effect="dark" content="取消收藏"
+                                    placement="top">
+                                    <el-button type="danger" size="mini" @click="handleCanCollect(index, item.id)"
                                         icon="el-icon-delete" circle></el-button>
                                 </el-tooltip>
                             </span>
                         </div>
-                        <v-md-preview :text="item.content" ref="preview" v-highlight />
+                        <!-- 笔记列表 -->
+                        <div v-if="pageData.index == 2" class="note" v-for="(item, index) in dataList" :key="index">
+                            <div style="width: 100%;">
+                                <span class="time">
+                                    <i class="el-icon-time"></i> {{ item.createTime }}
+                                </span>
+                                <span style="float: right;">
+                                    <el-tag style="margin-right: 10px;" size="small" v-if="item.categoryName">{{
+                                        item.categoryName }}</el-tag>
+                                    <el-tooltip class="item" effect="dark" content="删除笔记" placement="top">
+                                        <el-button type="danger" size="mini" @click="handleDeleteNote(index, item.id)"
+                                            icon="el-icon-delete" circle></el-button>
+                                    </el-tooltip>
+                                </span>
+                            </div>
+                            <v-md-preview :text="item.content" ref="preview" v-highlight />
+                        </div>
                     </div>
+
                     <!-- 分页按钮 -->
                     <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="onPage" />
                 </div>
@@ -675,7 +678,6 @@ export default {
                     margin-right: 20px;
                     cursor: pointer;
                     color: var(--text-color);
-                    width: 55px;
 
                     &:hover {
                         color: var(--theme-color);
@@ -726,6 +728,10 @@ export default {
                 border-bottom: 2px dashed var(--border-line);
                 margin-bottom: 20px;
                 border-radius: 5px;
+
+                &:last-child {
+                    border-bottom: 0;
+                }
 
                 .articleBtn {
                     margin-left: 150px;
@@ -811,6 +817,10 @@ export default {
             .note {
                 margin-bottom: 20px;
                 border-bottom: 2px dashed var(--border-line);
+
+                &:last-child {
+                    border-bottom: 0;
+                }
 
                 .time {
                     color: var(--text-color);

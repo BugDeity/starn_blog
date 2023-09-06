@@ -109,6 +109,7 @@ const routes = [
                 }
             },
             {
+                name: "notice",
                 path: "/notice",
                 component: resolve => require(["@/view/notice/index.vue"], resolve),
                 meta: {

@@ -286,7 +286,7 @@ export default {
                 this.$router.push({ path: "/im" })
                 return
             }
-            this.$router.push({ path: "notice", query: { type: index } })
+            this.$router.push({ path: "/notice", query: { type: index } })
         },
         topBageShow() {
             return this.$store.state.systemNotcie.system > 0 || this.$store.state.systemNotcie.comment > 0

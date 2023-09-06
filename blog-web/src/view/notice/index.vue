@@ -20,60 +20,64 @@
                     </span>
                 </div>
 
-                <div v-if="noticeList.length">
-                    <div class="rigth-bottom" v-for="(item, index) in noticeList" :key="index">
-                        <div class="user-info">
-                            <img v-if="item.noticeType" class="avatar" :src="item.fromUserAvatar" alt="">
-                            <img v-else class="avatar" :src="$store.state.webSiteInfo.logo" alt="">
-                            <span class="nickname" v-if="item.noticeType">{{ item.fromUserNickname }}</span>
-                            <span class="nickname" v-else>系统</span>
-                            <span class="user-item" v-if="item.noticeType">
-                                <i class="el-icon-location"></i> IP属地:{{ splitIpAddress(item.ipSource) }}
-                            </span>
-                            <span class="user-item">
-                                <i class="el-icon-time"></i> {{ item.createTimeStr }}
-                            </span>
-                            <span class="user-item" v-if="item.commentMark == 1">
-                                <i class="el-icon-link"></i> 在文章
-                                <router-link :to="'/article/' + item.articleId">
-                                    <span class="title">
-                                        {{ item.articleTitle }}
-                                    </span>
-                                </router-link>
-                                中，回复了你的评论
-                            </span>
-                            <span class="user-item" v-if="item.commentMark == 2">
-                                <i class="el-icon-link"></i>
-                                评论了你的文章:
-                                <router-link :to="'/article/' + item.articleId">
-                                    <span class="title">
-                                        {{ item.articleTitle }}
-                                    </span>
-                                </router-link>
-                            </span>
-                            <span class="clearBtn" @click="clearMessage(item.id, index)">
-                                <i class="el-icon-delete"></i>
-                            </span>
-                        </div>
-                        <div class="content-box">
-                            <div class="imContentItem" v-if="item.noticeType <= 1" v-html="item.content">
-                            </div>
+                <div v-if="noticeList.length" class="box">
+                    <div>
+                        <div class="rigth-bottom" v-for="(item, index) in noticeList" :key="index">
 
-                            <div v-if="item.noticeType == 2">
-                                关注了你
+                            <div class="user-info">
+                                <img v-if="item.noticeType" class="avatar" :src="item.fromUserAvatar" alt="">
+                                <img v-else class="avatar" :src="$store.state.webSiteInfo.logo" alt="">
+                                <span class="nickname" v-if="item.noticeType">{{ item.fromUserNickname }}</span>
+                                <span class="nickname" v-else>系统</span>
+                                <span class="user-item" v-if="item.noticeType">
+                                    <i class="el-icon-location"></i> IP属地:{{ splitIpAddress(item.ipSource) }}
+                                </span>
+                                <span class="user-item">
+                                    <i class="el-icon-time"></i> {{ item.createTimeStr }}
+                                </span>
+                                <span class="user-item" v-if="item.commentMark == 1">
+                                    <i class="el-icon-link"></i> 在文章
+                                    <router-link :to="'/article/' + item.articleId">
+                                        <span class="title">
+                                            {{ item.articleTitle }}
+                                        </span>
+                                    </router-link>
+                                    中，回复了你的评论
+                                </span>
+                                <span class="user-item" v-if="item.commentMark == 2">
+                                    <i class="el-icon-link"></i>
+                                    评论了你的文章:
+                                    <router-link :to="'/article/' + item.articleId">
+                                        <span class="title">
+                                            {{ item.articleTitle }}
+                                        </span>
+                                    </router-link>
+                                </span>
+                                <span class="clearBtn" @click="clearMessage(item.id, index)">
+                                    <i class="el-icon-delete"></i>
+                                </span>
                             </div>
-                            <div v-if="item.noticeType == 3">
-                                点赞了你的文章 <span class="title" @click="handleArticleClick(item.articleId)">" {{
-                                    item.articleTitle
-                                }} "</span>
-                            </div>
-                            <div v-if="item.noticeType == 4">
-                                收藏了你的文章 <span class="title" @click="handleArticleClick(item.articleId)">" {{
-                                    item.articleTitle
-                                }} "</span>
+                            <div class="content-box">
+                                <div class="imContentItem" v-if="item.noticeType <= 1" v-html="item.content">
+                                </div>
+
+                                <div v-if="item.noticeType == 2">
+                                    关注了你
+                                </div>
+                                <div v-if="item.noticeType == 3">
+                                    点赞了你的文章 <span class="title" @click="handleArticleClick(item.articleId)">" {{
+                                        item.articleTitle
+                                    }} "</span>
+                                </div>
+                                <div v-if="item.noticeType == 4">
+                                    收藏了你的文章 <span class="title" @click="handleArticleClick(item.articleId)">" {{
+                                        item.articleTitle
+                                    }} "</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+
 
                     <!-- 分页按钮 -->
                     <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
@@ -263,7 +267,7 @@ export default {
             background-color: var(--background-color);
             margin-right: 10px;
             border-radius: 5px;
-            height: 235px;
+            height: 245px;
             width: 25%;
             padding: 10px;
 
@@ -315,6 +319,8 @@ export default {
 
             .active {
                 color: var(--theme-color);
+                font-weight: 600;
+                font-style: italic;
             }
         }
 
@@ -344,11 +350,19 @@ export default {
                 }
             }
 
+
+
             .rigth-bottom {
                 margin-top: 10px;
+                border-bottom: 2px dashed var(--border-line);
+
+                &:last-child {
+                    border-bottom: 0;
+                }
 
                 .user-info {
                     position: relative;
+
 
                     .avatar {
                         vertical-align: middle;
@@ -390,9 +404,11 @@ export default {
                 .content-box {
                     margin-left: 50px;
                     margin-top: 20px;
-                    border-bottom: 2px solid var(--border-line);
+
                     padding-bottom: 20px;
                     color: var(--text-color);
+
+
 
                     /deep/ .imContentItem a {
                         text-decoration: none;
@@ -400,7 +416,11 @@ export default {
                     }
 
                 }
+
+
             }
+
+
         }
     }
 }
