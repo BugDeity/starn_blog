@@ -265,7 +265,7 @@ export default {
         },
         reloadReply(index) {
             let query = {
-                pageNo: this.pageNo,
+                pageNo: this.pageData.pageNo,
                 pageSize: 5,
                 articleId: this.articleId
             }
@@ -300,7 +300,7 @@ export default {
                 });
                 this.$store.commit("isCommentFlag", true)
                 this.commentContent = ""
-                this.pageNo = 1
+                this.pageData.pageNo = 1
             }).catch(err => {
             })
 

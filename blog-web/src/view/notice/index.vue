@@ -34,12 +34,22 @@
                                 <i class="el-icon-time"></i> {{ item.createTimeStr }}
                             </span>
                             <span class="user-item" v-if="item.commentMark == 1">
-                                <i class="el-icon-link"></i> 在文章 <span @click="handleArticleClick(item.articleId)"
-                                    class="title">{{ item.articleTitle }}</span> 中，回复了你的评论
+                                <i class="el-icon-link"></i> 在文章
+                                <router-link :to="'/article/' + item.articleId">
+                                    <span class="title">
+                                        {{ item.articleTitle }}
+                                    </span>
+                                </router-link>
+                                中，回复了你的评论
                             </span>
                             <span class="user-item" v-if="item.commentMark == 2">
-                                <i class="el-icon-link"></i> 评论了你的文章: <span class="title"
-                                    @click="handleArticleClick(item.articleId)">{{ item.articleTitle }}</span>
+                                <i class="el-icon-link"></i>
+                                评论了你的文章:
+                                <router-link :to="'/article/' + item.articleId">
+                                    <span class="title">
+                                        {{ item.articleTitle }}
+                                    </span>
+                                </router-link>
                             </span>
                             <span class="clearBtn" @click="clearMessage(item.id, index)">
                                 <i class="el-icon-delete"></i>
@@ -356,6 +366,10 @@ export default {
                         margin-left: 10px;
                         color: var(--text-color);
                         font-size: 0.8rem;
+
+                        a {
+                            text-decoration: none;
+                        }
                     }
 
                     .clearBtn {

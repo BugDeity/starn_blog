@@ -83,7 +83,7 @@ public class ApiCommentServiceImpl implements ApiCommentService {
             Article article = articleMapper.selectById(comment.getArticleId());
             toUserId =  article.getUserId();
         }
-        SystemNoticeHandle.sendNotice(request,toUserId,MessageConstant.MESSAGE_COMMENT_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,mark);
+        SystemNoticeHandle.sendNotice(request,toUserId,MessageConstant.MESSAGE_COMMENT_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,comment.getArticleId(),mark,comment.getContent());
         return ResponseResult.success(comment);
     }
 

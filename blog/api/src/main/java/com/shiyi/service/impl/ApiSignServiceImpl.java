@@ -80,7 +80,7 @@ public class ApiSignServiceImpl implements ApiSignService {
         signMapper.insert(sign);
 
         //发送系统通知
-        SystemNoticeHandle.sendNotice(request,userId,MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,null);
+        SystemNoticeHandle.sendNotice(request,userId,MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,null,"恭喜您签到成功");
         return ResponseResult.success();
     }
 }

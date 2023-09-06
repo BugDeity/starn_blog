@@ -41,7 +41,7 @@ public class ApiFollowedServiceImpl implements ApiFollowedService {
         Followed followed = Followed.builder().userId(StpUtil.getLoginIdAsString()).followedUserId(userId).build();
         followedMapper.insert(followed);
         // 发送系统通知
-        SystemNoticeHandle.sendNotice(request,userId,MessageConstant.MESSAGE_WATCH_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,null);
+        SystemNoticeHandle.sendNotice(request,userId,MessageConstant.MESSAGE_WATCH_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,null,null);
         return ResponseResult.success();
     }
 

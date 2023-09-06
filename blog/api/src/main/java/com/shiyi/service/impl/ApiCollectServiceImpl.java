@@ -65,7 +65,7 @@ public class ApiCollectServiceImpl implements ApiCollectService {
         collectMapper.insert(collect);
         // 发送系统通知
         Article article = articleMapper.selectById(articleId);
-        SystemNoticeHandle.sendNotice(request,article.getUserId(),MessageConstant.MESSAGE_COLLECT_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,articleId,null);
+        SystemNoticeHandle.sendNotice(request,article.getUserId(),MessageConstant.MESSAGE_COLLECT_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,articleId,null,null);
         return ResponseResult.success();
     }
 

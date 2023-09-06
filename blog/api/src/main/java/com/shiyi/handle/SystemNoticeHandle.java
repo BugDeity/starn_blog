@@ -20,12 +20,12 @@ public class SystemNoticeHandle {
      * @param noticeType
      * @param noticeCode
      */
-    public static void sendNotice(HttpServletRequest request,String toUserId,Integer noticeType,Integer noticeCode,Integer articleId,Integer commentMark) {
+    public static void sendNotice(HttpServletRequest request,String toUserId,Integer noticeType,Integer noticeCode,Integer articleId,Integer commentMark,String content) {
         ImMessageMapper imMessageMapper = SpringUtils.getBean(ImMessageMapper.class);
         try {
             String ip = IpUtil.getIp(request);
 
-            ImMessage message = ImMessage.builder().fromUserId(StpUtil.getLoginIdAsString()).toUserId(toUserId)
+            ImMessage message = ImMessage.builder().fromUserId(StpUtil.getLoginIdAsString()).toUserId(toUserId).content(content).commentMark(commentMark)
                     .noticeType(noticeType).code(noticeCode).ip(ip).ipSource(IpUtil.getIp2region(ip)).articleId(articleId).build();
             imMessageMapper.insert(message);
         } catch (Exception e) {

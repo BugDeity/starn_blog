@@ -240,7 +240,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
 
             //构建通知消息
             Article article = articleMapper.selectById(articleId);
-            SystemNoticeHandle.sendNotice(request,article.getUserId(),MessageConstant.MESSAGE_LIKE_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,articleId,null);
+            SystemNoticeHandle.sendNotice(request,article.getUserId(),MessageConstant.MESSAGE_LIKE_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,articleId,null,null);
         }
 
         return ResponseResult.success();
@@ -273,6 +273,9 @@ public class ApiArticleServiceImpl implements ApiArticleService {
             if (insert > 0){
                 tagsMapper.saveArticleTags(article.getId(),dto.getTagList());
             }
+            // 发送系统通知
+            SystemNoticeHandle.sendNotice(request,StpUtil.getLoginIdAsString(),MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,
+                    null,null,"恭喜您发布了一篇文章");
         }
 
         return ResponseResult.success();

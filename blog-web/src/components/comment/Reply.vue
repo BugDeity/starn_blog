@@ -80,10 +80,8 @@ export default {
                 return;
             }
             let browser = browserMatch()
-            const path = window.location.search;
-            const arr = path.split("=");
             let comment = {
-                articleId: arr[1],
+                articleId: this.$route.params.articleId,
                 avatar: "https://sdn.geekzu.org/avatar/eeb4fe09a1aaad7964b055f331f72608?s=256&d=monsterid",
                 content: this.commentContent,
                 replyUserId: this.replyUserId,
