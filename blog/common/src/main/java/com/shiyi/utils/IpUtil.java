@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -51,12 +53,27 @@ public class IpUtil {
         }
     }
 
+
     /**
-     * 获取ip地址
-     * @param request
+     * 获取request
      * @return
      */
-    public static String getIp(HttpServletRequest request){
+    public static HttpServletRequest getRequest(){
+
+        try {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+            return requestAttributes.getRequest();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * 获取ip地址
+     * @return
+     */
+    public static String getIp(){
+        HttpServletRequest request = getRequest();
         String ipAddress;
         try {
             ipAddress = request.getHeader("x-forwarded-for");

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/v1/followed")
@@ -26,8 +25,8 @@ public class ApiFollowedController {
     @SaCheckLogin
     @PostMapping(value = "/insertFollowed")
     @ApiOperation(value = "关注用户", httpMethod = "POST", response = ResponseResult.class, notes = "关注用户")
-    public ResponseResult insertFeedback(String userId, HttpServletRequest request) {
-        return  followedService.insertFollowed(userId,request);
+    public ResponseResult insertFeedback(String userId) {
+        return  followedService.insertFollowed(userId);
     }
 
     @AccessLimit

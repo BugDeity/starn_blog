@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static com.shiyi.common.ResultCode.PARAMS_ILLEGAL;
@@ -33,7 +32,6 @@ import static com.shiyi.common.ResultCode.PARAMS_ILLEGAL;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> implements MessageService {
 
-    private final HttpServletRequest request;
 
     /**
      * 留言列表

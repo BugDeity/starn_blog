@@ -25,8 +25,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -35,7 +33,6 @@ import java.util.HashMap;
 
 import static com.shiyi.common.Constants.CURRENT_USER;
 import static com.shiyi.common.ResultCode.NOT_LOGIN;
-import static com.shiyi.common.ResultCode.NO_PERMISSION;
 
 /**
  * 日志切面
@@ -77,7 +74,7 @@ public class OperationLoggerAspect {
         Object result = joinPoint.proceed();
         try {
             // 日志收集
-            handle(joinPoint, getHttpServletRequest());
+            handle(joinPoint, IpUtil.getRequest());
 
         } catch (Exception e) {
             logger.error("日志记录出错!", e);
@@ -89,8 +86,7 @@ public class OperationLoggerAspect {
 
     @AfterThrowing(value = "pointcut(operationLogger)", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, OperationLogger operationLogger, Throwable e) throws Exception {
-        HttpServletRequest request = getHttpServletRequest();
-        String ip = IpUtil.getIp(request);
+        String ip = IpUtil.getIp();
         String operationName = AspectUtils.INSTANCE.parseParams(joinPoint.getArgs(), operationLogger.value());
         // 获取参数名称字符串
         String paramsJson = getParamsJson((ProceedingJoinPoint) joinPoint);
@@ -128,7 +124,7 @@ public class OperationLoggerAspect {
         // 当前操作用户
         SystemUserVO user = (SystemUserVO) StpUtil.getSession().get(CURRENT_USER);
         String type = request.getMethod();
-        String ip = IpUtil.getIp(request);
+        String ip = IpUtil.getIp();
         String url = request.getRequestURI();
 
         // 存储日志
@@ -156,13 +152,5 @@ public class OperationLoggerAspect {
         boolean isContains = paramMap.containsKey("request");
         if (isContains) paramMap.remove("request");
         return JSONObject.toJSONString(paramMap);
-    }
-
-    private HttpServletRequest getHttpServletRequest() {
-        // 获取RequestAttributes
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        // 从获取RequestAttributes中获取HttpServletRequest的信息
-        assert requestAttributes != null;
-        return (HttpServletRequest) requestAttributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
     }
 }

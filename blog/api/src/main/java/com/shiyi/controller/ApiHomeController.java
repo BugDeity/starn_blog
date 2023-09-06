@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -29,8 +28,8 @@ public class ApiHomeController {
 
     @RequestMapping(value = "/report",method = RequestMethod.GET)
     @ApiOperation(value = "增加访问量", httpMethod = "GET", response = ResponseResult.class, notes = "增加访问量")
-    public ResponseResult report(HttpServletRequest request){
-        return homeService.report(request);
+    public ResponseResult report(){
+        return homeService.report();
     }
 
     @GetMapping("/webSiteInfo")

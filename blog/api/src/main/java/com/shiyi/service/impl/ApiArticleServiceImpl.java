@@ -11,7 +11,6 @@ import com.shiyi.dto.ArticleInsertDTO;
 import com.shiyi.entity.*;
 import com.shiyi.enums.PublishEnum;
 import com.shiyi.enums.ReadTypeEnum;
-import com.shiyi.enums.YesOrNoEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.handle.SystemNoticeHandle;
@@ -32,7 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -46,8 +44,6 @@ public class ApiArticleServiceImpl implements ApiArticleService {
     
     private final ArticleMapper articleMapper;
 
-    private final CategoryMapper categoryMapper;
-
     private final UserMapper userMapper;
 
     private final RedisService redisService;
@@ -56,11 +52,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
 
     private final CommentMapper commentMapper;
 
-    private final HttpServletRequest request;
-
     private final ElasticsearchUtil elasticsearchUtil;
-
-    private final ImMessageMapper imMessageMapper;
 
     private final CollectMapper collectMapper;
     private final FollowedMapper followedMapper;
@@ -147,14 +139,14 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         //校验文章是否已经进行过扫码验证
         if(apiArticleInfoVO.getReadType() == ReadTypeEnum.CODE.index){
             List<Object> cacheList = redisService.getCacheList(RedisConstants.CHECK_CODE_IP);
-            String ip = IpUtil.getIp(request);
+            String ip = IpUtil.getIp();
             if (cacheList.contains(ip)) {
                 apiArticleInfoVO.setActiveReadType(true);
             }
         }
 
         //增加文章阅读量
-        redisService.incrArticle(id.longValue(),ARTICLE_READING,IpUtil.getIp(request));
+        redisService.incrArticle(id.longValue(),ARTICLE_READING,IpUtil.getIp());
         return ResponseResult.success(apiArticleInfoVO);
     }
 
@@ -240,7 +232,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
 
             //构建通知消息
             Article article = articleMapper.selectById(articleId);
-            SystemNoticeHandle.sendNotice(request,article.getUserId(),MessageConstant.MESSAGE_LIKE_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,articleId,null,null);
+            SystemNoticeHandle.sendNotice(article.getUserId(),MessageConstant.MESSAGE_LIKE_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,articleId,null,null);
         }
 
         return ResponseResult.success();
@@ -274,7 +266,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
                 tagsMapper.saveArticleTags(article.getId(),dto.getTagList());
             }
             // 发送系统通知
-            SystemNoticeHandle.sendNotice(request,StpUtil.getLoginIdAsString(),MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,
+            SystemNoticeHandle.sendNotice(StpUtil.getLoginIdAsString(),MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,
                     null,null,"恭喜您发布了一篇文章");
         }
 
@@ -359,7 +351,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         if (cacheList.isEmpty()) {
             cacheList = new ArrayList<>();
         }
-        cacheList.add(IpUtil.getIp(request));
+        cacheList.add(IpUtil.getIp());
         redisService.setCacheList(CHECK_CODE_IP,cacheList);
         //通过删除验证码
         redisService.deleteObject(key);

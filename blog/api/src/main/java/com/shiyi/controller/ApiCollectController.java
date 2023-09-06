@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author blue
@@ -35,8 +34,8 @@ public class ApiCollectController {
     @AccessLimit
     @GetMapping(value = "collect")
     @ApiOperation(value = "收藏文章", httpMethod = "GET", response = ResponseResult.class, notes = "收藏文章")
-    public ResponseResult collect(Integer articleId, HttpServletRequest request) {
-        return apiCollectService.collect(articleId,request);
+    public ResponseResult collect(Integer articleId) {
+        return apiCollectService.collect(articleId);
     }
 
     @SaCheckLogin

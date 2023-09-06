@@ -8,10 +8,7 @@ import com.shiyi.config.properties.QqConfigProperties;
 import com.shiyi.config.properties.WeiboConfigProperties;
 import com.shiyi.dto.EmailLoginDTO;
 import com.shiyi.service.ApiUserService;
-import com.shiyi.service.UserInfoService;
-import com.shiyi.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.config.AuthConfig;
@@ -23,11 +20,9 @@ import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -68,10 +63,10 @@ public class ApiJustAuthController {
      * @return 第三方平台的用户信息
      */
     @RequestMapping("/callback/{source}")
-    public void login(AuthCallback callback, @PathVariable String source, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
+    public void login(AuthCallback callback, @PathVariable String source,  HttpServletResponse httpServletResponse) throws IOException {
         AuthRequest authRequest = getAuthRequest(source);
         AuthResponse response = authRequest.login(callback);
-        userService.authLogin(response,source,request,httpServletResponse);
+        userService.authLogin(response,source,httpServletResponse);
     }
 
     @AccessLimit

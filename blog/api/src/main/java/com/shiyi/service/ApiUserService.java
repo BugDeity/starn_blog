@@ -6,7 +6,6 @@ import com.shiyi.dto.UserInfoDTO;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.zhyd.oauth.model.AuthResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
@@ -65,10 +64,9 @@ public interface ApiUserService {
      * 第三方登录授权之后的逻辑
      * @param response
      * @param source
-     * @param request
      * @param httpServletResponse
      * @throws IOException
      */
-    public void authLogin(AuthResponse response, String source, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException;
+    public void authLogin(AuthResponse response, String source, HttpServletResponse httpServletResponse) throws IOException;
 
 }

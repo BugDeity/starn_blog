@@ -3,14 +3,12 @@ package com.shiyi.service.impl;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.shiyi.common.ResponseResult;
-import com.shiyi.entity.ImMessage;
 import com.shiyi.entity.Prop;
 import com.shiyi.entity.Sign;
 import com.shiyi.enums.PropTypeEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.SystemNoticeHandle;
 import com.shiyi.im.MessageConstant;
-import com.shiyi.mapper.ImMessageMapper;
 import com.shiyi.mapper.PropMapper;
 import com.shiyi.mapper.SignMapper;
 import com.shiyi.service.ApiSignService;
@@ -21,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -34,9 +31,7 @@ public class ApiSignServiceImpl implements ApiSignService {
 
     private final PropMapper propMapper;
 
-    private final HttpServletRequest request;
 
-    private final ImMessageMapper imMessageMapper;
 
     /**
      * 用户的签到记录
@@ -80,7 +75,7 @@ public class ApiSignServiceImpl implements ApiSignService {
         signMapper.insert(sign);
 
         //发送系统通知
-        SystemNoticeHandle.sendNotice(request,userId,MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,null,"恭喜您签到成功");
+        SystemNoticeHandle.sendNotice(userId,MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,null,"恭喜您签到成功");
         return ResponseResult.success();
     }
 }

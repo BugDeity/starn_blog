@@ -7,7 +7,6 @@ import com.shiyi.utils.IpUtil;
 import com.shiyi.utils.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 public class SystemNoticeHandle {
@@ -20,10 +19,10 @@ public class SystemNoticeHandle {
      * @param noticeType
      * @param noticeCode
      */
-    public static void sendNotice(HttpServletRequest request,String toUserId,Integer noticeType,Integer noticeCode,Integer articleId,Integer commentMark,String content) {
+    public static void sendNotice(String toUserId,Integer noticeType,Integer noticeCode,Integer articleId,Integer commentMark,String content) {
         ImMessageMapper imMessageMapper = SpringUtils.getBean(ImMessageMapper.class);
         try {
-            String ip = IpUtil.getIp(request);
+            String ip = IpUtil.getIp();
 
             ImMessage message = ImMessage.builder().fromUserId(StpUtil.getLoginIdAsString()).toUserId(toUserId).content(content).commentMark(commentMark)
                     .noticeType(noticeType).code(noticeCode).ip(ip).ipSource(IpUtil.getIp2region(ip)).articleId(articleId).build();

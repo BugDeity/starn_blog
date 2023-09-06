@@ -11,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
@@ -35,9 +33,9 @@ public class AccessLimitAspect {
     public void doBefore(JoinPoint joinPoint, AccessLimit accessLimit) throws Throwable {
         int time = accessLimit.time();
 
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-            // 拼接redis key = IP + Api限流
-            String key = IpUtil.getIp(request) + request.getRequestURI();
+        HttpServletRequest request = IpUtil.getRequest();
+        // 拼接redis key = IP + Api限流
+            String key = IpUtil.getIp() + request.getRequestURI();
             // 获取redis的value
             Integer maxTimes = null;
             Object value = redisTemplate.opsForValue().get(key);

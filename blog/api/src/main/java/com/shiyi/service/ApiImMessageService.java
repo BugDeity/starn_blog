@@ -1,13 +1,9 @@
 package com.shiyi.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.shiyi.common.ResponseResult;
-import com.shiyi.entity.ImMessage;
 import com.shiyi.vo.ImMessageVO;
 import com.shiyi.vo.ImOnlineUserVO;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -68,18 +64,16 @@ public interface ApiImMessageService {
     /**
      * 发送消息
      * @param message 消息
-     * @param request
      * @return
      */
-    ResponseResult chat(ImMessageVO message, HttpServletRequest request);
+    ResponseResult chat(ImMessageVO message);
 
     /**
      * 撤回消息
      * @param message 消息对象
-     * @param request
      * @return
      */
-    ResponseResult withdraw(ImMessageVO message, HttpServletRequest request);
+    ResponseResult withdraw(ImMessageVO message);
 
     /**
      * 获取跟当前用户有关的系统通知

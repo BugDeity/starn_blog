@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -34,8 +33,6 @@ public class MySaTokenListener implements SaTokenListener {
 
     private final UserMapper userMapper;
 
-    private final HttpServletRequest request;
-
     private final UserInfoMapper userInfoMapper;
 
     @PostConstruct
@@ -47,9 +44,9 @@ public class MySaTokenListener implements SaTokenListener {
     @Override
     public void doLogin(String loginType, Object loginId, SaLoginModel loginModel) {
         //修改登录信息
-        String ip = IpUtil.getIp(request);
+        String ip = IpUtil.getIp();
         String cityInfo = IpUtil.getCityInfo(ip);
-        UserAgent userAgent = IpUtil.getUserAgent(request);
+        UserAgent userAgent = IpUtil.getUserAgent(IpUtil.getRequest());
         userMapper.updateLoginInfo(loginId,ip,cityInfo,userAgent.getOperatingSystem().getName(),userAgent.getBrowser().getName());
         //暂时使用内存方式存储在线用户信息
         String token = StpUtil.getTokenValueByLoginId(loginId);

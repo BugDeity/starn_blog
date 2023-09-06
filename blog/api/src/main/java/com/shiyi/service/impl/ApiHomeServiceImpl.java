@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,15 +41,14 @@ public class ApiHomeServiceImpl implements ApiHomeService {
 
     /**
      * 添加访问量
-     * @param request
      * @return
      */
 
-    public ResponseResult report(HttpServletRequest request) {
+    public ResponseResult report() {
         // 获取ip
-        String ipAddress = IpUtil.getIp(request);
+        String ipAddress = IpUtil.getIp();
         // 通过浏览器解析工具类UserAgent获取访问设备信息
-        UserAgent userAgent = IpUtil.getUserAgent(request);
+        UserAgent userAgent = IpUtil.getUserAgent(IpUtil.getRequest());
         Browser browser = userAgent.getBrowser();
         OperatingSystem operatingSystem = userAgent.getOperatingSystem();
         // 生成唯一用户标识

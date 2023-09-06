@@ -2,16 +2,14 @@ package com.shiyi.service;
 
 import com.shiyi.common.ResponseResult;
 
-import javax.servlet.http.HttpServletRequest;
 
 public interface ApiHomeService {
 
     /**
      * 添加访问量
-     * @param request
      * @return
      */
-    public ResponseResult report(HttpServletRequest request);
+    public ResponseResult report();
 
     /**
      * 获取首页数据

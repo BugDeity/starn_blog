@@ -58,7 +58,6 @@ export default {
             line-height: 45px;
             font-size: 16px;
             padding-left: 10px;
-            font-weight: 600;
         }
     }
 

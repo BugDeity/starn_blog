@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/v1/im")
@@ -47,15 +46,15 @@ public class ApiImMessageController {
     @SaCheckLogin
     @PostMapping(value = "/chat")
     @ApiOperation(value = "发送消息", httpMethod = "POST", response = ResponseResult.class, notes = "发送消息")
-    public ResponseResult chat(@RequestBody ImMessageVO message, HttpServletRequest request){
-        return imMessageService.chat(message,request);
+    public ResponseResult chat(@RequestBody ImMessageVO message){
+        return imMessageService.chat(message);
     }
 
     @SaCheckLogin
     @PostMapping(value = "/withdraw")
     @ApiOperation(value = "撤回消息", httpMethod = "POST", response = ResponseResult.class, notes = "撤回消息")
-    public ResponseResult withdraw(@RequestBody ImMessageVO message, HttpServletRequest request){
-        return imMessageService.withdraw(message,request);
+    public ResponseResult withdraw(@RequestBody ImMessageVO message){
+        return imMessageService.withdraw(message);
     }
 
     @SaCheckLogin

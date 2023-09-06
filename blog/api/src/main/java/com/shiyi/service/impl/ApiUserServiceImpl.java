@@ -29,7 +29,6 @@ import me.zhyd.oauth.model.AuthResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -47,8 +46,6 @@ public class ApiUserServiceImpl implements ApiUserService {
     private final UserMapper userMapper;
 
     private final RedisService redisService;
-
-    private final HttpServletRequest request;
 
     private final UserInfoMapper userInfoMapper;
 
@@ -124,7 +121,7 @@ public class ApiUserServiceImpl implements ApiUserService {
         }
         UserInfoVO userInfoVO = userMapper.selectByUserName(message.getFromUser());
         if (userInfoVO == null) {
-            String ip = IpUtil.getIp(request);
+            String ip = IpUtil.getIp();
             String ipSource = IpUtil.getIp2region(ip);
 
             // 保存用户信息
@@ -218,20 +215,19 @@ public class ApiUserServiceImpl implements ApiUserService {
      *
      * @param response
      * @param source
-     * @param request
      * @param httpServletResponse
      * @throws IOException
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void authLogin(AuthResponse response, String source, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
+    public void authLogin(AuthResponse response, String source,  HttpServletResponse httpServletResponse) throws IOException {
         String result = com.alibaba.fastjson.JSONObject.toJSONString(response.getData());
         log.info("第三方登录验证结果:{}", result);
 
         com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(result);
         Object uuid = jsonObject.get("uuid");
         // 获取用户ip信息
-        String ipAddress = IpUtil.getIp(request);
+        String ipAddress = IpUtil.getIp();
         String ipSource = IpUtil.getIp2region(ipAddress);
         // 判断是否已注册
         User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUsername, uuid));
@@ -280,11 +276,10 @@ public class ApiUserServiceImpl implements ApiUserService {
      * 检查是否是一次登录
      *
      * @param wxMaUserInfo
-     * @param request
      * @return
      */
-    private UserInfoVO checkIsRegister(WxUserInfoVO.WxMaUserInfo wxMaUserInfo, HttpServletRequest request) {
-        String ip = IpUtil.getIp(request);
+    private UserInfoVO checkIsRegister(WxUserInfoVO.WxMaUserInfo wxMaUserInfo) {
+        String ip = IpUtil.getIp();
         String ipSource = IpUtil.getIp2region(ip);
 
         // 保存用户信息

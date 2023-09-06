@@ -28,7 +28,6 @@ import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -161,12 +160,11 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
      * 发送消息
      *
      * @param obj     消息
-     * @param request
      * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult chat(ImMessageVO obj, HttpServletRequest request) {
+    public ResponseResult chat(ImMessageVO obj) {
         Matcher matcher = pattern.matcher(obj.getContent());
         //字符串找出http地址
         String content = obj.getContent();
@@ -188,7 +186,7 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
 //            obj.setContent(filterContent);
 //        }
 
-        obj.setIp(IpUtil.getIp(request));
+        obj.setIp(IpUtil.getIp());
         obj.setIpSource(IpUtil.getIp2region(obj.getIp()));
         obj.setContent(content);
         ImMessage imMessage = BeanCopyUtils.copyObject(obj, ImMessage.class);
@@ -216,12 +214,11 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
      * 撤回消息
      *
      * @param message 消息对象
-     * @param request
      * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult withdraw(ImMessageVO message, HttpServletRequest request) {
+    public ResponseResult withdraw(ImMessageVO message) {
         ImMessage entity = imMessageMapper.selectById(message.getId());
         if (DateUtil.getDiffDateToMinutes(entity.getCreateTime(), DateUtil.getNowDate()) >= 2) {
             throw new BusinessException("撤回失败，只能撤回俩分钟以内的消息！");
@@ -230,7 +227,7 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
             throw new BusinessException("只能撤回自己的消息哦！");
         }
         ImMessage imMessage = BeanCopyUtils.copyObject(message, ImMessage.class);
-        imMessage.setIp(IpUtil.getIp(request));
+        imMessage.setIp(IpUtil.getIp());
         imMessage.setIpSource(IpUtil.getIp2region(imMessage.getIp()));
 
         //修改消息

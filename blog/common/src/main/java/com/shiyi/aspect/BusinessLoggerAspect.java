@@ -16,8 +16,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -65,11 +63,8 @@ public class BusinessLoggerAspect {
      * @throws Throwable
      */
     public void handle(ProceedingJoinPoint  joinPoint, ResponseResult result) throws Throwable {
-        // 获取RequestAttributes
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        // 从获取RequestAttributes中获取HttpServletRequest的信息
-        assert requestAttributes != null;
-        HttpServletRequest request = (HttpServletRequest) requestAttributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
+
+        HttpServletRequest request = IpUtil.getRequest();
         try {
             // 从切面织入点处通过反射机制获取织入点处的方法
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -82,7 +77,7 @@ public class BusinessLoggerAspect {
             }
 
             assert request != null;
-            String ip = IpUtil.getIp(request);
+            String ip = IpUtil.getIp();
             UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("user-agent"));
             String clientType = userAgent.getOperatingSystem().getDeviceType().toString();
             String os = userAgent.getOperatingSystem().getName();

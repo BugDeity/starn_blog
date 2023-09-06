@@ -28,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -41,10 +40,6 @@ public class ApiCommentServiceImpl implements ApiCommentService {
 
     private final UserInfoMapper userInfoMapper;
 
-    private final HttpServletRequest request;
-
-    private final ImMessageMapper imMessageMapper;
-
     private final ArticleMapper articleMapper;
 
     /**
@@ -55,9 +50,9 @@ public class ApiCommentServiceImpl implements ApiCommentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult insertComment(Comment comment) {
-        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("user-agent"));
+        UserAgent userAgent = UserAgent.parseUserAgentString(IpUtil.getRequest().getHeader("user-agent"));
         //获取ip地址
-        String ip = IpUtil.getIp(request);
+        String ip = IpUtil.getIp();
         String ipAddress = IpUtil.getIp2region(ip);
         String os = userAgent.getOperatingSystem().getName();
         if (os.contains("mac") || os.contains("Mac")) {
@@ -83,7 +78,7 @@ public class ApiCommentServiceImpl implements ApiCommentService {
             Article article = articleMapper.selectById(comment.getArticleId());
             toUserId =  article.getUserId();
         }
-        SystemNoticeHandle.sendNotice(request,toUserId,MessageConstant.MESSAGE_COMMENT_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,comment.getArticleId(),mark,comment.getContent());
+        SystemNoticeHandle.sendNotice(toUserId,MessageConstant.MESSAGE_COMMENT_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,comment.getArticleId(),mark,comment.getContent());
         return ResponseResult.success(comment);
     }
 

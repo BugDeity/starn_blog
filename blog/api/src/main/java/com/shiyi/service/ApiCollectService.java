@@ -2,7 +2,6 @@ package com.shiyi.service;
 
 import com.shiyi.common.ResponseResult;
 
-import javax.servlet.http.HttpServletRequest;
 
 public interface ApiCollectService {
 
@@ -17,7 +16,7 @@ public interface ApiCollectService {
      * @param articleId 文章id
      * @return
      */
-    public ResponseResult collect(Integer articleId, HttpServletRequest request);
+    public ResponseResult collect(Integer articleId);
 
     /**
      * 取消收藏

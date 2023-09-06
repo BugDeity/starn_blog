@@ -2,7 +2,6 @@ package com.shiyi.service;
 
 import com.shiyi.common.ResponseResult;
 
-import javax.servlet.http.HttpServletRequest;
 
 public interface ApiFollowedService {
     /**
@@ -10,7 +9,7 @@ public interface ApiFollowedService {
      * @param userId 关注的用户id
      * @return
      */
-    public ResponseResult insertFollowed(String userId, HttpServletRequest request);
+    public ResponseResult insertFollowed(String userId);
 
     /**
      * 关注用户
