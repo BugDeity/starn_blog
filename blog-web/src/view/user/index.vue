@@ -3,34 +3,46 @@
         <div class="user-warpper">
             <div class="userBox">
                 <div class="backgroupImg">
-                    <img src="https://www.imnian.com/wp-content/themes/zibll/img/user_t.jpg" alt="">
+                    <img :src="user.bjCover" alt="">
                     <div class="more">
-                        <div class="menu" :style="{ display: displayShow }">
+                        <div class="menu">
                             <ul>
+                                <li @click="handleUpdateInfo">
+                                    <i class="el-icon-edit"></i> 修改资料
+                                </li>
                                 <li @click="handleClikeMoreData">
                                     <i class="el-icon-user"></i> 更多资料
                                 </li>
-                                <li @click="handleClikeMenu">
-                                    <i class="el-icon-camera"></i> 修改封面
+                                <li>
+                                    <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
+                                        :action="uploadPictureHost" :http-request="uploadBjCoverFile" multiple>
+                                        <i class="el-icon-camera"></i> 修改封面
+                                    </el-upload>
                                 </li>
                             </ul>
                         </div>
-                        <i class="el-icon-more-outline" @click="showMenu"></i>
+                        <i class="el-icon-more-outline"></i>
                     </div>
 
                 </div>
                 <div class="user-item">
                     <div class="toolbar">
                         <a href="">
-                            <img class="cover" :src="$store.state.userInfo.avatar" alt="">
+                            <img class="cover" :src="user.avatar" alt="">
                         </a>
                     </div>
                     <div class="userInfo">
                         <div class="nickname">
-                            昵称：<span>{{ $store.state.userInfo.nickname }}</span>
+                            昵称：<span>{{ user.nickname }}</span>
+                            <el-tooltip class="item" effect="dark" content="LV1" placement="top">
+                                <span>
+                                    <svg-icon icon-class="level1"></svg-icon>
+                                </span>
+                            </el-tooltip>
+
                         </div>
                         <div class="desc">
-                            个人简介：{{ $store.state.userInfo.intro ? $store.state.userInfo.intro : "这家伙很懒，什么都没有写..." }}
+                            个人简介：{{ user.intro ? user.intro : "这家伙很懒，什么都没有写..." }}
                         </div>
                     </div>
                 </div>
@@ -40,7 +52,9 @@
                     <ul>
                         <li ref="btn" :class="index == 0 ? 'active' : ''" @click="btnClike(index)"
                             v-for="(item, index) in btnList" :key="index">
-                            <span class="item-title">{{ item }}</span>
+                            <span class="item-title">
+                                <i :class="item.icon"></i>{{ item.name }}
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -68,11 +82,11 @@
                                 {{ item.summary }}
                             </div>
                             <div class="article-tag">
-                                <el-tag size="small">
+                                <el-tag size="small" @click="handleClike(item.categoryId, '/categorys')">
                                     <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
                                 </el-tag>
                                 <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="small"
-                                    v-for="tag in item.tagList" :key="tag.id">
+                                    v-for="tag in item.tagList" :key="tag.id" @click="handleClike(tag.id, '/tag')">
                                     <i class="el-icon-collection-tag"></i> {{ tag.name }}
                                 </el-tag>
                             </div>
@@ -90,12 +104,20 @@
 
                         </div>
                         <span class="articleBtn">
-                            <el-tooltip class="item" effect="dark" content="修改文章" placement="top">
-                                <el-button type="primary" size="mini" @click="handleDeleteNote(index, item.id)"
-                                    icon="el-icon-edit" circle></el-button>
-                            </el-tooltip>
-                            <el-tooltip class="item" effect="dark" content="删除文章" placement="top">
-                                <el-button type="danger" size="mini" @click="handleDeleteArticle(index, item.id)"
+                            <div v-if="pageData.index == 0">
+                                <el-tooltip class="item" effect="dark" content="修改文章" placement="top">
+                                    <el-button type="primary" size="mini" @click="handleDeleteNote(index, item.id)"
+                                        icon="el-icon-edit" circle></el-button>
+                                </el-tooltip>
+                                <el-tooltip class="item" effect="dark" content="删除文章" placement="top">
+                                    <el-button type="danger" size="mini" @click="handleDeleteArticle(index, item.id)"
+                                        icon="el-icon-delete" circle></el-button>
+                                </el-tooltip>
+                            </div>
+
+                            <el-tooltip v-if="pageData.index == 1" class="item" effect="dark" content="取消收藏"
+                                placement="top">
+                                <el-button type="danger" size="mini" @click="handleCanCollect(index, item.id)"
                                     icon="el-icon-delete" circle></el-button>
                             </el-tooltip>
                         </span>
@@ -129,16 +151,16 @@
             <div style="">
                 <div class="dialogItem item">
                     <span>
-                        昵称：{{ user.nickname }}
+                        昵称：{{ form.nickname }}
                     </span>
                     <span>
-                        简介：{{ user.intro }}
+                        简介：{{ form.intro }}
                     </span>
                 </div>
 
                 <div class="dialogItem item">
                     <span>
-                        邮箱： {{ user.email }}
+                        邮箱： {{ form.email }}
                     </span>
                     <span>
                         性别： 保密
@@ -146,27 +168,56 @@
                 </div>
                 <div class="dialogItem item">
                     <span>
-                        地址： {{ user.address }}
+                        地址： {{ form.address }}
                     </span>
                     <span>
-                        个人网站： {{ user.webSite }}
+                        个人网站： {{ form.webSite }}
                     </span>
                 </div>
                 <div class="item">
-                    注册时间：{{ user.registerTime }}
+                    注册时间：{{ form.registerTime }}
                 </div>
                 <div class="item">
-                    最后登录：{{ user.lastLoginTime }}
+                    最后登录：{{ form.lastLoginTime }}
                 </div>
             </div>
         </el-dialog>
+
+        <!-- 修改资料弹出框 -->
+        <el-dialog title="修改资料" center :visible.sync="editDialogTableVisible" :lock-scroll="false"
+            :close-on-click-modal="false">
+            <el-form label-position="left" label-width="60px" :model="form">
+                <el-form-item label="昵称：">
+                    <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
+                        :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
+                        <img v-if="form.avatar" style="width: 100%;height: 100%;" :src="form.avatar" class="imgAvatar">
+                        <i v-else class="el-icon-plus avatar-img-icon"></i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="昵称：">
+                    <el-input v-model="form.nickname"></el-input>
+                </el-form-item>
+                <el-form-item label="简介：">
+                    <el-input v-model="form.intro"></el-input>
+                </el-form-item>
+                <el-form-item label="站点：">
+                    <el-input v-model="form.webSite"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱">
+                    <el-input v-model="form.email"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="updateUserInfo">提交</el-button>
+            </span>
+        </el-dialog>
     </div>
-</div></template>
+</template>
    
 <script>
 import {
-    updateUserInfo, getUserInfo, upload, updatePassword, getMyArticle,
-    deleteMyArticle, addFeedback
+    updateUserInfo, getUserInfo, upload, getMyArticle,
+    deleteMyArticle
 } from '@/api'
 import { cancelCollect, getCollect } from '@/api/collect'
 import { getMyNote, deleteNote } from '@/api/note'
@@ -174,35 +225,81 @@ export default {
     name: '',
     data() {
         return {
+            user: this.$store.state.userInfo,
+            uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
             dataList: [],
             pageData: {
                 pageNo: 1,
                 pageSize: 10,
                 index: 0
             },
+            form: {},
+            files: {},
             dialogTableVisible: false,
-            displayShow: "none",
+            editDialogTableVisible: false,
             tagStyle: ["success", "warning", "danger", "info"],
             btnList: ["文章", "收藏", "笔记"],
-            user: {}
+            btnList: [
+                {
+                    icon: "el-icon-document",
+                    name: "文章"
+                },
+                {
+                    icon: "el-icon-star-off",
+                    name: "收藏"
+                },
+                {
+                    icon: "el-icon-reading",
+                    name: "笔记"
+                },
+            ],
         }
     },
     created() {
-        // console.log('------created--------');
         this.selectAricleList()
     },
     methods: {
-        handleClikeMoreData() {
-            getUserInfo().then(res => {
-                this.user = res.data
+
+        updateUserInfo() {
+            updateUserInfo(this.form).then(res => {
+                this.user = this.form
+                this.$message.success("修改成功")
+                this.editDialogTableVisible = false
             })
+        },
+        handleClike(id, path) {
+            this.$router.push({ path: path, query: { id: id } })
+        },
+        handleUpdateInfo() {
+            this.handleBefore()
+            this.editDialogTableVisible = true
+        },
+        handleClikeMoreData() {
+            this.handleBefore()
             this.dialogTableVisible = true
         },
-        handleClikeMenu() {
-            this.$message.info("待开发！")
+        handleBefore() {
+            getUserInfo().then(res => {
+                this.form = res.data
+            })
         },
-        showMenu() {
-            this.displayShow = this.displayShow == "block" ? "none" : "block"
+
+        handleCanCollect(index, id) {
+            this.$confirm('确认取消收藏该文章吗？', '提示', {
+                lockScroll: false,
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            })
+                .then(_ => {
+                    cancelCollect(id).then(res => {
+                        this.dataList.splice(index, 1)
+                        this.$message.success("取消收藏成功")
+                    })
+                })
+                .catch(_ => {
+                    this.$message.info("取消关闭")
+                });
         },
         handleDeleteArticle(index, id) {
             this.$confirm('确认删除该文章吗？', '提示', {
@@ -292,6 +389,35 @@ export default {
                 this.pages = res.data.pages
             })
         },
+        uploadBjCoverFile: function (param) {
+            this.files = param.file
+            // FormData 对象
+            var formData = new FormData()
+            // 文件对象
+            formData.append('multipartFile', this.files)
+            upload(formData).then(res => {
+                let user = {
+                    id: this.user.id,
+                    bjCover: res.data
+                }
+                updateUserInfo(user).then(res => {
+                    this.user.bjCover = res.data
+                    this.$message.success("修改成功")
+                })
+            })
+
+        },
+        uploadSectionFile: function (param) {
+            this.files = param.file
+            // FormData 对象
+            var formData = new FormData()
+            // 文件对象
+            formData.append('multipartFile', this.files)
+            upload(formData).then(res => {
+                this.form.avatar = res.data
+            })
+
+        },
     },
 }
 </script>
@@ -371,7 +497,7 @@ export default {
 
         .article-cover {
             width: 160px;
-            height: 130px;
+            height: 110px;
             cursor: pointer;
 
             /deep/ .el-image {
@@ -408,6 +534,7 @@ export default {
 
             img {
                 width: 100%;
+                height: 400px;
                 border-top-left-radius: 10px;
                 border-top-right-radius: 10px;
 
@@ -430,7 +557,7 @@ export default {
                     text-align: center;
                     position: absolute;
                     right: 0px;
-                    bottom: 30px;
+                    bottom: 15px;
                     display: none;
                     transition: all 0.3s;
 
@@ -447,6 +574,10 @@ export default {
                         }
 
                     }
+                }
+
+                &:hover .menu {
+                    display: block;
                 }
             }
         }
@@ -481,7 +612,15 @@ export default {
 
                     margin-bottom: 10px;
 
+
+                    svg {
+                        width: 35px;
+                        height: 35px;
+                        vertical-align: -12px;
+                    }
+
                     span {
+                        margin-right: 5px;
                         font-weight: 700;
                         background: radial-gradient(circle at 49.86% 48.37%, #0090ff 0, #0089ff 3.33%, #3a82ff 6.67%, #717aff 10%, #9371fb 13.33%, #ae67ef 16.67%, #c45de1 20%, #d652d2 23.33%, #e448c2 26.67%, #ef3eb0 30%, #f7369e 33.33%, #fd318c 36.67%, #ff317a 40%, #ff3569 43.33%, #fd3d57 46.67%, #f94646 50%, #f35035 53.33%, #ea5a22 56.67%, #e16308 60%, #d56d00 63.33%, #c97500 66.67%, #bb7d00 70%, #ac8300 73.33%, #9d8900 76.67%, #8c8f00 80%, #7a9300 83.33%, #669700 86.67%, #4f9b00 90%, #309e0e 93.33%, #00a029 96.67%, #00a23d 100%);
                         -webkit-background-clip: text;
@@ -621,6 +760,7 @@ export default {
                     .article-tag {
                         .el-tag {
                             margin-right: 5px;
+                            cursor: pointer;
                         }
                     }
 

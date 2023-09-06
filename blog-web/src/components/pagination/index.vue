@@ -66,6 +66,7 @@ export default {
     color: var(--text-color);
     display: flex;
     align-items: center;
+    padding: 0 50px;
 
     .divider {
         display: inline-block;

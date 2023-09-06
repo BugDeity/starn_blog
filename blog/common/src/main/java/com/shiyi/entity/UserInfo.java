@@ -44,6 +44,9 @@ public class UserInfo implements Serializable {
     @ApiModelProperty(value = "个人站点")
     private String webSite;
 
+    @ApiModelProperty(value = "背景封面")
+    private String bjCover;
+
       @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 

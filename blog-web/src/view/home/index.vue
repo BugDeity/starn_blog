@@ -65,10 +65,14 @@
                             </div>
 
                             <div class="tag">
-                                <el-tag style="margin-right: 8px; cursor: pointer;"
-                                    :type="tagStyle[Math.round(Math.random() * 4)]" size="small" v-for="tag in item.tagList"
-                                    :key="tag.id" @click="handleTagClike(tag.id)">{{ tag.name
-                                    }}</el-tag>
+                                <el-tag size="small" @click="handleClike(item.categoryId, '/categorys')">
+                                    <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
+                                </el-tag>
+                                <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="small"
+                                    v-for="tag in item.tagList" :key="tag.id" @click="handleClike(tag.id, '/tag')">
+                                    <i class="el-icon-collection-tag"></i>
+                                    {{ tag.name }}
+                                </el-tag>
 
                             </div>
 
@@ -414,8 +418,8 @@ export default {
             this.$store.state.userInfoDrawer.flag = true;
             this.$store.state.userInfoDrawer.name = value;
         },
-        handleTagClike(id) {
-            this.$router.push({ path: "/tag", query: { id: id } })
+        handleClike(id, path) {
+            this.$router.push({ path: path, query: { id: id } })
         },
         randomColor() {
             var letters = '0123456789ABCDEF';
@@ -1149,6 +1153,11 @@ export default {
                         .tag {
                             display: inline-block;
                             margin-left: 20px;
+
+                            .el-tag {
+                                margin-right: 8px;
+                                cursor: pointer;
+                            }
                         }
 
                         .articleOhter {

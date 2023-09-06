@@ -2,10 +2,13 @@
     <div class='sysnotice'>
         <div class="notice-container">
             <div class="left-toolbar">
-                <div ref="leftIem" :class="pageData.type == index ? 'left-item active' : 'left-item'"
-                    v-for="(item, index) in leftIems" :key="index" @click="handleClike(item, index)">
-                    <i :class="item.icon"></i> {{ item.name }}
-                </div>
+
+                <ul>
+                    <li ref="leftIem" :class="pageData.type == index ? 'left-item active' : 'left-item'"
+                        v-for="(item, index) in leftIems" :key="index" @click="handleClike(item, index)">
+                        <svg-icon :icon-class="item.icon"></svg-icon> {{ item.name }}
+                    </li>
+                </ul>
             </div>
             <div class="rigth-toolbar">
                 <div class="rigth-top">
@@ -90,24 +93,24 @@ export default {
 
             leftIems: [
                 {
-                    name: "系统",
-                    icon: "el-icon-setting"
+                    name: "系统通知",
+                    icon: "notice"
                 },
                 {
-                    name: "评论",
-                    icon: "iconfont icon-pinglun"
+                    name: "文章评论",
+                    icon: "comment"
                 },
                 {
-                    name: "关注",
-                    icon: "el-icon-view"
+                    name: "用户关注",
+                    icon: "watch"
                 },
                 {
-                    name: "点赞",
-                    icon: "iconfont icon-dianzan1"
+                    name: "文章点赞",
+                    icon: "sxdianzan"
                 },
                 {
-                    name: "收藏",
-                    icon: "el-icon-star-off"
+                    name: "文章收藏",
+                    icon: "collect"
                 },
 
             ],
@@ -217,7 +220,7 @@ export default {
     .sysnotice {
         .notice-container {
             margin-top: 80px;
-            width: 70%;
+            width: 60%;
 
             .left-toolbar {
                 width: 10%;
@@ -243,18 +246,52 @@ export default {
     .notice-container {
         padding: 20px;
         display: flex;
-        background-color: var(--background-color);
         border-radius: 5px;
         color: var(--article-color);
 
         .left-toolbar {
-            padding-right: 20px;
-            border-right: 2px solid var(--border-line);
-            text-align: center;
+            background-color: var(--background-color);
+            margin-right: 10px;
+            border-radius: 5px;
+            height: 235px;
+            width: 25%;
+            padding: 10px;
 
+            ul {
+                list-style: none;
+
+                svg {
+                    width: 18px;
+                    height: 18px;
+                    vertical-align: -2px;
+                }
+            }
 
             .left-item {
                 cursor: pointer;
+                border-radius: 5px;
+                position: relative;
+                margin-top: 10px;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+
+
+                &::after {
+                    content: "";
+                    width: 100%;
+                    height: 1px;
+                    position: absolute;
+                    bottom: -5px;
+                    left: 0;
+                    background-color: var(--border-line);
+                }
+
+                &:last-child::after {
+                    content: "";
+                    height: 0;
+                }
 
                 .icon-dianzan1 {
                     font-size: 0.9rem;
@@ -262,6 +299,7 @@ export default {
 
                 &:hover {
                     color: var(--theme-color);
+                    background-color: var(--border-line);
                 }
             }
 
@@ -277,8 +315,11 @@ export default {
         }
 
         .rigth-toolbar {
+            padding: 20px;
             margin-left: 10px;
             width: 100%;
+            background-color: var(--background-color);
+            border-radius: 5px;
 
             .rigth-top {
                 border-bottom: 2px solid var(--border-line);

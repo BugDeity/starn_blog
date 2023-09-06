@@ -46,6 +46,7 @@
             ui.avatar,
             ui.intro,
             ui.web_site,
+            ui.bj_cover,
             count( DISTINCT a.id ) AS articleCount,
             count( DISTINCT n.id ) AS noteCount,
             count( DISTINCT c.id ) AS commentCount,

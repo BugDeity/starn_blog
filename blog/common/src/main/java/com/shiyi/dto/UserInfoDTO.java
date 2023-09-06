@@ -41,4 +41,9 @@ public class UserInfoDTO {
      * 验证码
      * */
     private String code;
+
+    /**
+     * 背景封面
+     * */
+    private String bjCover;
 }

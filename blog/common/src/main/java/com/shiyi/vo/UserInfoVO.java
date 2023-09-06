@@ -110,6 +110,11 @@ public class UserInfoVO {
     private int qiDayFollowedCount;
 
     /**
+     * 背景封面
+     */
+    private String bjCover;
+
+    /**
      * token
      */
     private String token;
