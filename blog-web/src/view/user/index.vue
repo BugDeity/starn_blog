@@ -3,7 +3,7 @@
         <div class="user-warpper">
             <div class="userBox">
                 <div class="backgroupImg">
-                    <img :src="user.bjCover" alt="">
+                    <el-image :src="user.bjCover"></el-image>
                     <div class="more">
                         <div class="menu">
                             <ul>
@@ -21,15 +21,13 @@
                                 </li>
                             </ul>
                         </div>
-                        <i class="el-icon-more-outline"></i>
+                        <i class="el-icon-more-outline moreBtn"></i>
                     </div>
 
                 </div>
                 <div class="user-item">
                     <div class="toolbar">
-                        <a href="">
-                            <img class="cover" :src="user.avatar" alt="">
-                        </a>
+                        <img class="cover" :src="user.avatar" alt="">
                     </div>
                     <div class="userInfo">
                         <div class="nickname">
@@ -57,6 +55,7 @@
                             </span>
                         </li>
                     </ul>
+
                 </div>
                 <!-- <div class="btnBox">
                     <div class="btn" @click="handleClike(1)">发布</div>
@@ -106,7 +105,7 @@
                         <span class="articleBtn">
                             <div v-if="pageData.index == 0">
                                 <el-tooltip class="item" effect="dark" content="修改文章" placement="top">
-                                    <el-button type="primary" size="mini" @click="handleDeleteNote(index, item.id)"
+                                    <el-button type="primary" size="mini" @click="handleUpdateArticle(item.id)"
                                         icon="el-icon-edit" circle></el-button>
                                 </el-tooltip>
                                 <el-tooltip class="item" effect="dark" content="删除文章" placement="top">
@@ -190,7 +189,7 @@
                 <el-form-item label="昵称：">
                     <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
                         :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
-                        <img v-if="form.avatar" style="width: 100%;height: 100%;" :src="form.avatar" class="imgAvatar">
+                        <img v-if="form.avatar" style="width: 50%;height: 50%;" :src="form.avatar" class="imgAvatar">
                         <i v-else class="el-icon-plus avatar-img-icon"></i>
                     </el-upload>
                 </el-form-item>
@@ -283,7 +282,10 @@ export default {
                 this.form = res.data
             })
         },
-
+        handleUpdateArticle(id) {
+            this.$store.state.articleDrawer.flag = true;
+            this.$store.state.articleDrawer.id = id;
+        },
         handleCanCollect(index, id) {
             this.$confirm('确认取消收藏该文章吗？', '提示', {
                 lockScroll: false,
@@ -532,7 +534,7 @@ export default {
             position: relative;
             width: 100%;
 
-            img {
+            .el-image {
                 width: 100%;
                 height: 400px;
                 border-top-left-radius: 10px;
@@ -559,7 +561,17 @@ export default {
                     right: 0px;
                     bottom: 15px;
                     display: none;
-                    transition: all 0.3s;
+                    animation: fade-in 0.3s linear 1;
+
+                    @keyframes fade-in {
+                        0% {
+                            transform: scale(0);
+                        }
+
+                        100% {
+                            transform: scale(1);
+                        }
+                    }
 
                     ul {
                         list-style: none;
@@ -576,8 +588,16 @@ export default {
                     }
                 }
 
-                &:hover .menu {
-                    display: block;
+                &:hover {
+                    .moreBtn {
+                        color: var(--theme-color);
+                    }
+
+                    .menu {
+                        display: block;
+
+                    }
+
                 }
             }
         }
@@ -655,6 +675,7 @@ export default {
                     margin-right: 20px;
                     cursor: pointer;
                     color: var(--text-color);
+                    width: 55px;
 
                     &:hover {
                         color: var(--theme-color);

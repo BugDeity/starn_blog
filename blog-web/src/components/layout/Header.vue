@@ -157,9 +157,12 @@
 
                 </div>
             </div>
-            <!-- <div class="articleBtn">
-                <el-button size="small" @click="addArticle" type="primary">发表文章</el-button>
-            </div> -->
+            <!-- 发布文章按钮 -->
+            <div class="articleBtn">
+                <el-button size="small" @click="addArticle" round type="primary">
+                    <i class="el-icon-edit-outline"></i> 发布
+                </el-button>
+            </div>
 
             <div class="noticeBtn">
                 <el-dropdown trigger="hover">
@@ -574,7 +577,7 @@ export default {
 
             .searchBox {
                 position: absolute;
-                right: 240px;
+                right: 320px;
                 top: 0;
                 display: flex;
                 -ms-flex-direction: column;
@@ -685,13 +688,13 @@ export default {
 
             .articleBtn {
                 position: absolute;
-                right: 230px;
+                right: 215px;
                 top: 0;
             }
 
             .noticeBtn {
                 position: absolute;
-                right: 180px;
+                right: 170px;
                 top: 0;
 
                 svg {

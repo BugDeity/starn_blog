@@ -40,6 +40,9 @@ public class ApiArticleInfoVO {
     @ApiModelProperty(value = "是否置顶 0否 1是")
     private Integer isStick;
 
+    @ApiModelProperty(value = "发布状态")
+    private Integer isPublish;
+
     @ApiModelProperty(value = "是否原创  0：转载 1:原创")
     private Integer isOriginal;
 

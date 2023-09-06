@@ -12,6 +12,7 @@
         <result column="content_md" jdbcType="INTEGER" property="contentMd"/>
         <result column="is_original" jdbcType="INTEGER" property="isOriginal"/>
         <result column="original_url" jdbcType="INTEGER" property="originalUrl"/>
+        <result column="is_publish" jdbcType="INTEGER" property="isPublish"/>
         <result column="quantity" jdbcType="INTEGER" property="quantity"/>
         <result column="create_time" jdbcType="DATE" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
@@ -165,6 +166,7 @@
                a.read_type,
                a.is_original,
                a.original_url,
+               a.is_publish,
                c.id   as cid,
                c.name as cname
         from b_article a

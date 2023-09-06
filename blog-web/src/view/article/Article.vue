@@ -154,7 +154,7 @@ export default {
                     }
                     insertArticle(this.article).then(res => {
                         this.$store.state.articleDrawer.flag = false
-                        this.$message.success("发表成功")
+                        this.$message.success("提交成功，请耐心等待审核")
                     }).catch(err => {
                     })
                 } else {
@@ -164,7 +164,12 @@ export default {
             });
         },
         handleClose() {
-            this.$confirm('确认关闭吗？编写的文章不会保存哦')
+            this.$confirm('确认关闭吗？编写的文章不会保存哦', '提示', {
+                lockScroll: false,
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            })
                 .then(_ => {
                     this.$store.state.articleDrawer.flag = false
                 })

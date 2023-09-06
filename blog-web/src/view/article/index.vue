@@ -66,8 +66,10 @@
             <el-tag @click="handleClike(article.category.id, '/categorys')" effect="dark" class="category">
                 {{ article.category.name }}
             </el-tag>
-            <h1 class="article-title">{{ article.title }}</h1>
-
+            <h1 class="article-title">
+                {{ article.title }}
+                <svg-icon v-if="article.isPublish == 2" icon-class="audit"></svg-icon>
+            </h1>
             <div class="article-desc">
                 <div class="article-item">
                     <img :src="userInfo.avatar" @error="img" alt="">
@@ -426,8 +428,6 @@ export default {
     },
 
     created() {
-
-
         articleInfo(this.articleId).then(res => {
             this.article = res.data
             this.serceShow = this.article.activeReadType
@@ -441,6 +441,9 @@ export default {
             selectUserInfoByArticleId(this.articleId).then(res => {
                 this.userInfo = res.data
             })
+            if (this.article.isPublish == 2) {
+                this.$message.warning("该文章未审核，仅供自己预览");
+            }
         }).catch(err => {
 
         });
@@ -920,6 +923,12 @@ export default {
             word-break: break-word;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
             font-weight: 500;
+
+            svg {
+                width: 50px;
+                height: 50px;
+                vertical-align: -10px;
+            }
         }
 
         .article-desc {
