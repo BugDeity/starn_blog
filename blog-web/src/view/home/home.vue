@@ -108,7 +108,7 @@ export default {
         //         if (loginUrl.indexOf("articleId") != -1) {
         //             let arr = loginUrl.split("=")
         //             this.$router.push({ path: '/articleInfo', query: { articleId: arr[1] } })
-        //         } else {
+        //         } else {2
         //             this.$router.push({ path: loginUrl });
         //         }
         //     } else {

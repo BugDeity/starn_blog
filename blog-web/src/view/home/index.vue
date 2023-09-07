@@ -7,7 +7,7 @@
                     <el-carousel class="banner" :interval="5000" arrow="always">
                         <el-carousel-item v-for="(item, index) in bannerList" :key="index">
                             <router-link :to="'/article/' + item.id">
-                                <el-image class="bannerImg" :src="item.avatar"></el-image>
+                                <img class="bannerImg" v-lazy="item.avatar" :key="item.avatar" />
                                 <h3 class="title">{{ item.title }}</h3>
                             </router-link>
                         </el-carousel-item>
@@ -54,7 +54,7 @@
                                 </p>
                             </div>
                             <router-link :to="'/article/' + item.id">
-                                <el-image class="articleImg" :src="item.avatar" fit="scale - down"></el-image>
+                                <img class="articleImg" v-lazy="item.avatar" :key="item.avatar">
                             </router-link>
 
                         </div>
@@ -615,22 +615,18 @@ export default {
             }
 
             .articleImg {
-                width: 20%;
-                height: 100px;
+                border: 1px solid var(--border-line);
+                width: 180px;
+                height: 110px;
                 position: absolute;
-                right: 20px;
+                right: 30px;
                 top: 20px;
                 border-radius: 3px;
+                transition: all 0.5s;
 
-                /deep/ .el-image__inner {
-                    transition: all 0.5s;
-                }
 
                 &:hover {
-                    /deep/ .el-image__inner {
-                        transform: scale(1.1);
-
-                    }
+                    transform: scale(1.1);
                 }
             }
 

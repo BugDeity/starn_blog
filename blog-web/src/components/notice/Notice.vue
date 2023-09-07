@@ -21,7 +21,7 @@ export default {
 
     data() {
         return {
-            noticeFlag: getNotice(),
+            noticeFlag: true,
             notice: {
                 id: 2,
                 msg: '发布文章按钮打开。另外<a href="https://gitee.com/quequnlong/shiyi-blog">兄弟们去码云点点小星星，冲个1000 star 》》</a>',
@@ -30,6 +30,10 @@ export default {
     },
     created() {
         //this.handleScrollMsg()
+        const noticeId = getNotice()
+        if (noticeId != this.notice.id) {
+            this.noticeFlag = false
+        }
     },
 
     methods: {

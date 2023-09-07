@@ -3,7 +3,7 @@
         <div class="user-warpper">
             <div class="userBox">
                 <div class="backgroupImg">
-                    <el-image :src="user.bjCover"></el-image>
+                    <img v-lazy="user.bjCover" :key="user.bjCover">
                     <div class="more">
                         <div class="menu">
                             <ul>
@@ -67,7 +67,7 @@
                         <div v-if="pageData.index != 2" class="article" v-for="(item, index) in dataList" :key="index">
                             <router-link :to="'/article/' + item.id">
                                 <div class="article-cover">
-                                    <el-image :src="item.avatar"></el-image>
+                                    <img v-lazy="item.avatar" :key="item.avatar">
                                 </div>
                             </router-link>
 
@@ -504,21 +504,22 @@ export default {
             width: 160px;
             height: 110px;
             cursor: pointer;
+            overflow: hidden;
+            border: 1px solid var(--border-line);
 
-            /deep/ .el-image {
+
+            img {
                 height: 100%;
                 width: 100%;
                 border-radius: 5px;
-            }
-
-            /deep/ .el-image__inner {
                 transition: all 0.5s;
             }
 
-            &:hover {
-                /deep/ .el-image__inner {
-                    transform: scale(1.1);
 
+
+            &:hover {
+                img {
+                    transform: scale(1.1);
                 }
             }
         }
@@ -537,7 +538,7 @@ export default {
             position: relative;
             width: 100%;
 
-            .el-image {
+            img {
                 width: 100%;
                 height: 400px;
                 border-top-left-radius: 10px;
