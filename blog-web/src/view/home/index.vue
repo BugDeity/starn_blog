@@ -68,14 +68,20 @@
                             </div>
 
                             <div class="tag">
-                                <el-tag size="small" @click="handleClike(item.categoryId, '/categorys')">
-                                    <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
-                                </el-tag>
-                                <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="small"
-                                    v-for="tag in item.tagList" :key="tag.id" @click="handleClike(tag.id, '/tag')">
-                                    <i class="el-icon-collection-tag"></i>
-                                    {{ tag.name }}
-                                </el-tag>
+
+                                <el-tooltip class="item" effect="dark" content="文章分类" placement="top">
+                                    <el-tag size="mini" @click="handleClike(item.categoryId, '/categorys')">
+                                        <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
+                                    </el-tag>
+                                </el-tooltip>
+                                <el-tooltip class="item" effect="dark" content="文章标签" placement="top">
+                                    <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
+                                        v-for="tag in item.tagList" :key="tag.id" @click="handleClike(tag.id, '/tag')">
+                                        <i class="el-icon-collection-tag"></i>
+                                        {{ tag.name }}
+                                    </el-tag>
+                                </el-tooltip>
+
 
                             </div>
 
@@ -1148,7 +1154,6 @@ export default {
 
                         .articleUser {
                             line-height: 50px;
-                            font-size: 0.8rem;
 
                             span {
                                 color: var(--theme-color);

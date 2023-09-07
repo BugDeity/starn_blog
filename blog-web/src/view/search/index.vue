@@ -41,10 +41,18 @@
                         </div>
 
                         <div class="tag">
-                            <el-tag style="margin-right: 8px; cursor: pointer;"
-                                :type="tagStyle[Math.round(Math.random() * 4)]" size="small" v-for="tag in item.tagList"
-                                :key="tag.id" @click="handleTagClike(tag.id)">{{ tag.name
-                                }}</el-tag>
+                            <el-tooltip class="item" effect="dark" content="文章分类" placement="top">
+                                <el-tag size="mini" @click="handleClike(item.categoryId, '/categorys')">
+                                    <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
+                                </el-tag>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="文章标签" placement="top">
+                                <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
+                                    v-for="tag in item.tagList" :key="tag.id" @click="handleClike(tag.id, '/tag')">{{
+                                        tag.name
+                                    }}</el-tag>
+                            </el-tooltip>
+
 
                         </div>
 
@@ -111,8 +119,9 @@ export default {
         this.fetchArticleList()
     },
     methods: {
-        handleTagClike(id) {
-            this.$router.push({ path: "/tag", query: { id: id } })
+
+        handleClike(id, path) {
+            this.$router.push({ path: path, query: { id: id } })
         },
         // 分页
         handlePage(val) {
@@ -203,12 +212,16 @@ export default {
 
             .articleUser {
                 line-height: 50px;
-                font-size: 0.8rem;
             }
 
             .tag {
                 display: inline-block;
                 margin-left: 20px;
+
+                .el-tag {
+                    margin-right: 8px;
+                    cursor: pointer;
+                }
             }
 
             .articleOhter {

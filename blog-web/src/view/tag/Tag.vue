@@ -27,10 +27,16 @@
                                 </div>
 
                                 <div class="tag">
-                                    <el-tag style="margin-right: 8px; cursor: pointer;"
-                                        :type="tagStyle[Math.round(Math.random() * 4)]" size="small"
-                                        v-for="tag in item.tagList" :key="tag.id">{{ tag.name
-                                        }}</el-tag>
+                                    <el-tooltip class="item1" effect="dark" content="文章分类" placement="top">
+                                        <el-tag size="mini" @click="handleCategoryClike(item.categoryId)">
+                                            <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
+                                        </el-tag>
+                                    </el-tooltip>
+                                    <el-tooltip class="item1" effect="dark" content="文章标签" placement="top">
+                                        <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
+                                            v-for="tag in item.tagList" :key="tag.id">{{ tag.name
+                                            }}</el-tag>
+                                    </el-tooltip>
                                 </div>
                             </div>
 
@@ -80,6 +86,9 @@ export default {
     },
 
     methods: {
+        handleCategoryClike(id) {
+            this.$router.push({ path: "/categorys", query: { id: id } })
+        },
         handleChoose(item, index) {
             if (this.pageData.tagId) {
                 return item.id == this.pageData.tagId
@@ -210,7 +219,7 @@ export default {
 
                 .articleUser {
                     line-height: 50px;
-                    font-size: 0.8rem;
+                    font-size: 1rem;
 
                     span {
                         color: var(--theme-color);
@@ -231,6 +240,11 @@ export default {
                 .tag {
                     display: inline-block;
                     margin-left: 20px;
+
+                    .el-tag {
+                        cursor: pointer;
+                        margin-right: 5px;
+                    }
                 }
             }
 
