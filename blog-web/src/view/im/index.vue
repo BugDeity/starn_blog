@@ -23,7 +23,7 @@
                                 <div class="nickname noSelect userInfo">
                                     {{ item.fromUserNickname }}
                                     <span v-if="item.fromUserId == 1">
-                                        <el-tooltip effect="dark" content="博主" placement="top">
+                                        <el-tooltip effect="dark" content="作者" placement="top">
                                             <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                         </el-tooltip>
                                     </span>
@@ -57,7 +57,7 @@
                                             IP属地:{{ splitIpAddress(item.ipSource) }}
                                         </span>
                                         <span v-if="item.fromUserId == 1">
-                                            <el-tooltip effect="dark" content="博主" placement="top">
+                                            <el-tooltip effect="dark" content="作者" placement="top">
                                                 <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                             </el-tooltip>
                                         </span>

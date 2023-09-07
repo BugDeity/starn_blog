@@ -97,7 +97,7 @@ export default {
             }
 
             .title {
-                background-color: #f56c6cdb;
+                background-color: #94ce6f61;
                 line-height: 40px;
                 height: 40px;
                 color: #000;

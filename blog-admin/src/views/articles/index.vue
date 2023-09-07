@@ -578,11 +578,8 @@ export default {
       })
     },
     onClick: function (row) {
-      if (row.isPublish === 0) {
-        this.$message.error("文章暂未发布，无法进行浏览")
-        return false;
-      }
-      window.open(this.BLOG_WEB_URL + "articleInfo?articleId=" + row.id);
+    
+      window.open(this.BLOG_WEB_URL + "article/" + row.id);
     },
     handleSelectionChange: function (val) {
       this.multipleSelection = val;

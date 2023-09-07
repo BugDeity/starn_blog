@@ -227,7 +227,7 @@
                             <div class="userInfo">
                                 <p class="nickname">
                                     {{ userInfo.nickname }}
-                                    <el-tooltip effect="dark" content="博主" placement="right">
+                                    <el-tooltip effect="dark" content="作者" placement="right">
                                         <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                     </el-tooltip>
                                 </p>

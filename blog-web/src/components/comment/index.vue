@@ -43,7 +43,7 @@
                                         <h4 class="author">
                                             <a :href="item.webSite" target="_blank" class="disabled">
                                                 {{ item.nickname }}
-                                                <el-tooltip effect="dark" content="博主" placement="top"
+                                                <el-tooltip effect="dark" content="作者" placement="top"
                                                     v-if="item.userId == articleUserId">
                                                     <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                                 </el-tooltip>
@@ -103,7 +103,7 @@
                                                         <a :href="childrenItem.webSite" target="_blank" class="disabled">
                                                             {{ childrenItem.nickname }}
 
-                                                            <el-tooltip effect="dark" content="博主" placement="top"
+                                                            <el-tooltip effect="dark" content="作者" placement="top"
                                                                 v-if="childrenItem.userId == articleUserId">
                                                                 <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                                             </el-tooltip>
