@@ -209,10 +209,8 @@ export default {
     methods: {
         getCommens() {
             featchComments(this.pageData).then(res => {
-                if (res.data) {
-                    this.commentList.push(...res.data.records)
-                    this.pages = res.data.pages;
-                }
+                this.commentList = res.data.records
+                this.pages = res.data.pages;
             })
         },
         handleEmojiMouseEnter() {
@@ -272,7 +270,6 @@ export default {
 
             featchComments(query).then(res => {
                 this.commentList = res.data.records
-
             })
         },
         addComment() {
@@ -293,21 +290,19 @@ export default {
                 browserVersion: browser.browser + " " + browser.version,
             }
             postComment(comment).then(res => {
-                this.$emit("reloadComment");
-                this.$message({
-                    message: '评论成功',
-                    type: 'success'
-                });
+                this.pageData.pageNo = 1
+                this.getCommens()
+                this.$message.success('评论成功');
                 this.$store.commit("isCommentFlag", true)
                 this.commentContent = ""
-                this.pageData.pageNo = 1
-            }).catch(err => {
             })
-
         },
         moreComment(val) {
             this.pageData.pageNo = val;
-            this.getCommens()
+            featchComments(this.pageData).then(res => {
+                this.commentList.push(...res.data.records)
+                this.pages = res.data.pages;
+            })
         },
 
         splitIpAddress(address) {

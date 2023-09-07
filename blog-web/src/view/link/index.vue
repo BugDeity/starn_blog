@@ -11,7 +11,7 @@
                 <div class="linksItem" v-for="item in linkList">
                     <a class="item" target="_blank" :href="item.url">
                         <div class="avatarItem">
-                            <img :src="item.avatar" alt="" />
+                            <img v-lazy="item.avatar" :key="item.avatar" />
                         </div>
                         <div class="item-content">
                             <span class="name">{{ item.name }}</span>

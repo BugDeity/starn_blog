@@ -99,6 +99,12 @@
             <el-tag :type="readTypeStyle[scope.row.readType]">{{ readTypeList[scope.row.readType] }}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column align="center" width="120" label="状态">
+          <template slot-scope="scope">
+            <el-tag v-for="(item, index) in publishList" v-if="item.value == scope.row.isPublish" :type="item.style">{{
+              item.label }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column width="200" align="center" prop="createTime" sortable label="添加时间">
           <template slot-scope="scope">
             <span>{{ dataFormat(scope.row.createTime) }}</span>

@@ -14,7 +14,7 @@
             </el-card>
             <div class="photoBox">
                 <a href="javascript:;" @click="previewImg(item.url)" v-for="item in photoList" :key="item.id">
-                    <img class="" :src="item.url" alt="" />
+                    <img class="" v-lazy="item.url" :key="item.url" />
                     <span class="overlay"></span>
                     <span class="desc">
                         {{ item.info }}

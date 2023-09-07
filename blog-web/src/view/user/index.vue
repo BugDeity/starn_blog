@@ -550,7 +550,7 @@ export default {
                 position: absolute;
                 right: 20px;
                 bottom: 15px;
-                color: #fff;
+                color: rgba(0, 0, 0, .8);
                 cursor: pointer;
 
                 .menu {
@@ -586,7 +586,7 @@ export default {
 
                         &:hover {
                             color: var(--theme-color);
-                            background-color: #eee;
+                            background-color: #9093994a;
                         }
 
                     }

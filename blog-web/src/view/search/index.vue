@@ -29,7 +29,9 @@
                             </p>
                         </div>
                         <router-link :to="'/article/' + item.id">
-                            <el-image class="articleImg" :src="item.avatar" fit="scale - down"></el-image>
+                            <div class="articleImgBox">
+                                <img class="articleImg" v-lazy="item.avatar" :key="item.avatar" />
+                            </div>
                         </router-link>
                     </div>
                     <div class="bottumItem">
@@ -172,31 +174,30 @@ export default {
             width: 45%;
             margin-top: 80px;
 
-            .articleInfo {
-                display: flex;
-            }
+
 
             .articleInfo-item {
-                width: 60%;
+                width: 70%;
             }
 
-            .articleImg {
-                width: 20%;
-                height: 100px;
+            .articleImgBox {
+                width: 180px;
+                height: 110px;
+                overflow: hidden;
+                border: 1px solid var(--border-line);
                 position: absolute;
-                right: 20px;
+                right: 30px;
                 top: 20px;
-                border-radius: 3px;
+                border-radius: 5px;
 
-                /deep/ .el-image__inner {
-                    transition: all 0.5s;
+                &:hover .articleImg {
+                    transform: scale(1.1);
                 }
 
-                &:hover {
-                    /deep/ .el-image__inner {
-                        transform: scale(1.1);
-
-                    }
+                .articleImg {
+                    width: 100%;
+                    height: 100%;
+                    transition: all 0.5s;
                 }
             }
 

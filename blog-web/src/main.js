@@ -72,6 +72,19 @@ Vue.component("sy-empty", Empty);
 import pagination from '@/components/pagination/index.vue'
 Vue.component("sy-pagination", pagination);
 
+import VueLazyLoad from 'vue-lazyload'
+// 2.注册插件
+Vue.use(VueLazyLoad, {
+  preLoad: 1,
+  // 懒加载默认加载图片
+  loading: 'http://img.shiyit.com/img-loading.png',
+  // 加载失败后加载的图片
+  error: 'http://img.shiyit.com/img-loading-error.png',
+  attempt: 1
+  // the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
+  // listenEvents: [ 'scroll' ]
+})
+
 
 import router from './router'
 

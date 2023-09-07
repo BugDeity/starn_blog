@@ -54,7 +54,10 @@
                                 </p>
                             </div>
                             <router-link :to="'/article/' + item.id">
-                                <img class="articleImg" v-lazy="item.avatar" :key="item.avatar">
+                                <div class="articleImgBox" style="">
+                                    <img class="articleImg" v-lazy="item.avatar" :key="item.avatar">
+                                </div>
+
                             </router-link>
 
                         </div>
@@ -219,7 +222,9 @@
                                 <div class="article-item">
                                     <div class="recomCover">
                                         <router-link :to="'/article/' + item.id">
-                                            <el-image :src="item.avatar" fit="fit" />
+                                            <div class="imgBox">
+                                                <img v-lazy="item.avatar" :key="item.avatar" />
+                                            </div>
                                         </router-link>
                                     </div>
                                     <p class="info">
@@ -611,24 +616,31 @@ export default {
             }
 
             .articleInfo-item {
-                width: 60%;
+                width: 70%;
             }
 
-            .articleImg {
-                border: 1px solid var(--border-line);
+            .articleImgBox {
                 width: 180px;
                 height: 110px;
+                overflow: hidden;
+                border: 1px solid var(--border-line);
                 position: absolute;
                 right: 30px;
                 top: 20px;
-                border-radius: 3px;
-                transition: all 0.5s;
+                border-radius: 5px;
 
-
-                &:hover {
+                &:hover .articleImg {
                     transform: scale(1.1);
                 }
+
+                .articleImg {
+                    width: 100%;
+                    height: 100%;
+                    transition: all 0.5s;
+                }
             }
+
+
 
             .tuijian {
                 display: inline-block;
@@ -809,19 +821,27 @@ export default {
                                 }
 
                                 .recomCover {
-                                    // border: 1px solid var(--border-line);
+                                    //
                                     cursor: pointer;
 
-                                    /deep/ .el-image {
+                                    .imgBox {
                                         width: 100px;
                                         height: 75px;
                                         margin-right: 10px;
                                         border-radius: 5px;
-                                    }
+                                        overflow: hidden;
+                                        border: 1px solid var(--border-line);
 
-                                    /deep/ .el-image__inner {
-                                        transition: all 0.5s;
-                                        margin-right: 10px;
+                                        img {
+                                            width: 100%;
+                                            height: 100%;
+                                            transition: all 0.5s;
+                                            margin-right: 10px;
+                                        }
+
+                                        &:hover img {
+                                            transform: scale(1.1);
+                                        }
                                     }
                                 }
                             }
@@ -961,14 +981,14 @@ export default {
                     }
 
                     .tag {
-                        padding-left: 10px;
+
                         padding-bottom: 10px;
                         height: auto;
                         margin-top: 10px;
 
                         span {
                             text-decoration: none;
-                            margin-left: 15px;
+                            margin-right: 10px;
                             padding: 5px;
                             display: inline-block;
                             margin-bottom: 10px;
@@ -1035,7 +1055,7 @@ export default {
 
 
                     .articleInfo {
-                        display: flex;
+
                         color: var(--article-color);
 
                         .original {

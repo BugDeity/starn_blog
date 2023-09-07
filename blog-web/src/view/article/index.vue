@@ -214,7 +214,7 @@
                     <svg-icon icon-class="comment"></svg-icon>
                     评论
                 </div>
-                <Comment @reloadComment="getCommens" :articleUserId="article.userId" />
+                <Comment :articleUserId="article.userId" />
             </div>
         </el-card>
         <!-- 右边侧边栏 -->
@@ -432,11 +432,10 @@ export default {
             this.article = res.data
             this.serceShow = this.article.activeReadType
             if (this.article.readType != 0 && !this.serceShow) {
-                this.style = "max-height: 1500px;overflow: hidden;"
+                this.style = "max-height: 1300px;overflow: hidden;"
             }
             //修改标题
             document.title = this.article.title
-            this.getCommens();
             //获取文章作者信息
             selectUserInfoByArticleId(this.articleId).then(res => {
                 this.userInfo = res.data
@@ -562,12 +561,6 @@ export default {
         },
         handleClike(id, path) {
             this.$router.push({ path: path, query: { id: id } })
-        },
-        getCommens() {
-            featchComments(this.commentQuery).then(res => {
-                this.commentList = res.data != null ? res.data.records : [];
-                this.commentPages = res.data != null ? res.data.pages : 0;
-            })
         },
 
         formatDate: function (value, args) {
