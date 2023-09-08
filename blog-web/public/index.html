@@ -108,7 +108,24 @@
   <div id="app"></div>
   <!-- built files will be auto injected -->
 </body>
-<span class="js-cursor-container"></span>
+<script>
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      //离开此标签页
+      document.title = "不要走吗o(>﹏<)o"
+    } else {
+      //进入此标签页
+      document.title = "好嘛O(∩_∩)O哈哈~"
+
+      window.setTimeout(() => {
+        document.title = "拾壹博客-一个专注于技术分享的博客平台"
+      }, 800)
+      //进入此标签页
+    }
+  });
+</script>
+
+<!-- <span class="js-cursor-container"></span>
 <script>
   var vm;
   (function fairyDustCursor() {
@@ -234,7 +251,7 @@
 
     if (!('ontouchstart' in window || navigator.msMaxTouchPoints)) init();
   })();
-</script>
+</script> -->
 
 
 </html>

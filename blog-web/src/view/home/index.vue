@@ -328,7 +328,7 @@
                             <a href="/tag" class="more">更多</a>
                         </div>
                         <div class="tag">
-                            <span @click="handleTagClike(item.id)" :style="{ backgroundColor: `${randomColor()}` }"
+                            <span @click="handleClike(item.id, '/tag')" :style="{ backgroundColor: `${randomColor()}` }"
                                 class="item" v-for="(item, index) in tagList" :key="index">
                                 {{ item.name }}
                             </span>

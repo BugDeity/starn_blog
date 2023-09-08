@@ -54,7 +54,7 @@
             </div>
         </el-dialog>
 
-        <el-dialog class="dialog" :visible.sync="dialogFormVisible" :lock-scroll="false">
+        <el-dialog title="申请友链" class="dialog" :visible.sync="dialogFormVisible" :lock-scroll="false">
             <el-form :model="form" :rules="rules" ref="ruleForm">
                 <el-form-item label="网站名称" :label-width="formLabelWidth" prop="name">
                     <el-input v-model="form.name" autocomplete="off"></el-input>

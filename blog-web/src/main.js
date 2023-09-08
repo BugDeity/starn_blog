@@ -79,7 +79,7 @@ Vue.use(VueLazyLoad, {
   // 懒加载默认加载图片
   loading: 'http://img.shiyit.com/img-loading.png',
   // 加载失败后加载的图片
-  error: 'http://img.shiyit.com/img-loading-error.png',
+  error: 'http://img.shiyit.com/loading.gif',
   attempt: 1
   // the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
   // listenEvents: [ 'scroll' ]

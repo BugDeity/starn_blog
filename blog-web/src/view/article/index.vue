@@ -212,7 +212,7 @@
                 <div class="title">
                     <!-- <i class="iconfont icon-pinglun"></i> -->
                     <svg-icon icon-class="comment"></svg-icon>
-                    评论
+                    评论 <span style="color: var(--text-color);font-size: 0.8rem;">发表评论,来抢沙发</span>
                 </div>
                 <Comment :articleUserId="article.userId" />
             </div>
@@ -1247,6 +1247,8 @@ export default {
 
 
         .comment-mian {
+            margin-top: 30px;
+
             .title {
                 font-weight: 700;
                 font-size: 20px;

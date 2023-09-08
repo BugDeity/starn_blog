@@ -4,7 +4,7 @@
             <div class="site">
                 <p class="run_time">
                     <svg-icon icon-class="shandian"></svg-icon>
-                    <span>已运行
+                    <span>本站居然运行了
                         <strong>{{ day }}</strong> 天
                         <strong>{{ hours }}</strong> 时
                         <strong>{{ minute }}</strong> 分
