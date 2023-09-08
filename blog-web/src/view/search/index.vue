@@ -46,9 +46,10 @@
                                     <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
                                 </el-tag>
                             </el-tooltip>
-                            <el-tooltip class="item" effect="dark" content="文章标签" placement="top">
+                            <el-tooltip class="item" effect="dark" content="文章标签" placement="top"
+                                v-for="tag in item.tagList" :key="tag.id">
                                 <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
-                                    v-for="tag in item.tagList" :key="tag.id" @click="handleClike(tag.id, '/tag')">{{
+                                    @click="handleClike(tag.id, '/tag')">{{
                                         tag.name
                                     }}</el-tag>
                             </el-tooltip>
