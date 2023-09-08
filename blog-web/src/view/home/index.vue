@@ -57,7 +57,6 @@
                                 <div class="articleImgBox" style="">
                                     <img class="articleImg" v-lazy="item.avatar" :key="item.avatar">
                                 </div>
-
                             </router-link>
 
                         </div>
@@ -831,7 +830,7 @@ export default {
                                     cursor: pointer;
 
                                     .imgBox {
-                                        width: 100px;
+                                        width: 120px;
                                         height: 75px;
                                         margin-right: 10px;
                                         border-radius: 5px;

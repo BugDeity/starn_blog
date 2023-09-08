@@ -61,7 +61,8 @@ export default {
     },
     data() {
         return {
-            userInfo: null
+            userInfo: null,
+            timer: "",
         }
     },
     methods: {
@@ -95,7 +96,8 @@ export default {
             if (getToken()) {
                 getNewSystemNotice().then(res => {
                     this.$store.commit("setSystemNotice", res.data)
-                })
+                });
+
             }
         }
 

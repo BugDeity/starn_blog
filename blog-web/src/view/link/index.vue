@@ -33,13 +33,20 @@
 
                 <div class="site">
                     <span>博客名称：{{ $store.state.webSiteInfo.name }}</span>
-                    <span>博客地址: <a :href="$store.state.webSiteInfo.webUrl" target="_blank">{{
-                        $store.state.webSiteInfo.webUrl
-                    }}</a> </span>
-                    <span>博客Logo: <a :href="$store.state.webSiteInfo.logo" target="_blank">{{ $store.state.webSiteInfo.logo
-                    }}</a>
-                    </span>
                     <span>博客简介：{{ $store.state.webSiteInfo.summary }}</span>
+                    <span>
+                        博客头像:
+                        <a :href="$store.state.webSiteInfo.logo" target="_blank">
+                            {{ $store.state.webSiteInfo.logo }}
+                        </a>
+                    </span>
+                    <span>
+                        博客地址:
+                        <a :href="$store.state.webSiteInfo.webUrl" target="_blank">
+                            {{ $store.state.webSiteInfo.webUrl }}
+                        </a>
+                    </span>
+
                 </div>
             </div>
         </el-card>

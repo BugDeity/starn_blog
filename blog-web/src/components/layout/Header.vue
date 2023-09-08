@@ -159,11 +159,11 @@
                 </div>
             </div>
             <!-- 发布文章按钮 -->
-            <div class="articleBtn">
+            <!-- <div class="articleBtn">
                 <el-button size="small" @click="addArticle" round type="primary">
                     <i class="el-icon-edit-outline"></i> 发布
                 </el-button>
-            </div>
+            </div> -->
 
             <div class="noticeBtn">
                 <el-dropdown trigger="hover">
@@ -575,7 +575,7 @@ export default {
 
             .searchBox {
                 position: absolute;
-                right: 320px;
+                right: 220px;
                 top: 0;
                 display: flex;
                 -ms-flex-direction: column;

@@ -24,7 +24,7 @@ export default {
             noticeFlag: true,
             notice: {
                 id: 2,
-                msg: '发布文章按钮打开。另外<a href="https://gitee.com/quequnlong/shiyi-blog">兄弟们去码云点点小星星，冲个1000 star 》》</a>',
+                msg: '发布文章按钮继续关闭。另外<a href="https://gitee.com/quequnlong/shiyi-blog">兄弟们去码云点点小星星，冲个1000 star 》》</a>',
             }
         }
     },

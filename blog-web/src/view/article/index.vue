@@ -147,7 +147,7 @@
                 <div>
                     <a class="tagBtn" v-for="item in article.tagList" :key="item.id" @click="handleClike(item.id, '/tag')">
                         <el-tag type="success">
-                            {{ item.name }}
+                            <i class="el-icon-collection-tag"></i> {{ item.name }}
                         </el-tag>
                     </a>
 
