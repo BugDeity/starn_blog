@@ -19,7 +19,25 @@
                         </div>
                     </a>
                 </div>
-
+            </div>
+            <div class="condition">
+                <div class="title">
+                    <h3 class="directory2">申请条件</h3>
+                </div>
+                <div class="condition-info">
+                    <div>
+                        🍅不接受贵站承接任何广告
+                    </div>
+                    <div>
+                        🎄先友后链，申请前请先提前做好本站友情链接
+                    </div>
+                    <div>
+                        💖稳定更新，每月至少发布1篇 原创 文章
+                    </div>
+                    <div>
+                        🍧凡内容污秽、暴力的、广告挂马的、违背社会主义核心价值观的勿扰
+                    </div>
+                </div>
             </div>
             <div class="infoBox">
                 <div style="display: flex;position: relative;">
@@ -28,7 +46,6 @@
                         <svg-icon icon-class="add"></svg-icon>
                         加入友链
                     </div>
-
                 </div>
 
                 <div class="site">
@@ -47,6 +64,14 @@
                         </a>
                     </span>
 
+                </div>
+            </div>
+            <div class="delTips">
+                <div class="title">
+                    <h3 class="directory2">无法访问或单方面取消❌</h3>
+                </div>
+                <div class="delTips-info">
+                    不定时排查，长期不更新文章、无法访问或单方面取消，将会移除链接，恕不告知🧐
                 </div>
             </div>
         </el-card>
@@ -299,7 +324,7 @@ export default {
             margin-top: 20px;
             display: grid;
             gap: 15px;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             border-radius: 10px;
 
             .linksItem {
@@ -415,6 +440,18 @@ export default {
 
         }
 
+        .condition {
+            margin-bottom: 20px;
+
+            .condition-info {
+                margin-left: 30px;
+
+                div {
+                    margin-top: 10px;
+                }
+            }
+        }
+
         .infoBox {
 
             .btn-box {
@@ -432,6 +469,14 @@ export default {
                     height: 17px;
                     vertical-align: -3px;
                 }
+            }
+        }
+
+        .delTips {
+            .delTips-info {
+                margin-left: 40px;
+                color: red;
+                margin-top: 10px;
             }
         }
 

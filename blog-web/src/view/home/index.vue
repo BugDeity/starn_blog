@@ -67,7 +67,6 @@
                             </div>
 
                             <div class="tag">
-
                                 <el-tooltip class="item" effect="dark" content="文章分类" placement="top">
                                     <el-tag size="mini" @click="handleClike(item.categoryId, '/categorys')">
                                         <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
@@ -81,8 +80,6 @@
                                         {{ tag.name }}
                                     </el-tag>
                                 </el-tooltip>
-
-
                             </div>
 
                             <div class="articleOhter">

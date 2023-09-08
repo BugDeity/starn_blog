@@ -676,6 +676,7 @@ CREATE TABLE `b_note`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户id',
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
+  `status` int(11) DEFAULT '0' COMMENT '状态 0：未通过 1：通过  2：待审核',
   `category_id` int(11) NULL DEFAULT NULL COMMENT '分类id',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
