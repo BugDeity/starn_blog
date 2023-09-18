@@ -32,4 +32,10 @@ public interface SignMapper extends BaseMapper<Sign> {
      * @return
      */
     List<String> getSignRecordsByUserId(@Param("startTime") String startTime, @Param("endTime")String endTime, @Param("userId")String userId);
+
+    /**
+     * 验证用户当日是否签到
+     * @return
+     */
+    Sign validateTodayIsSign(@Param("time") String time, @Param("userId") String userId);
 }

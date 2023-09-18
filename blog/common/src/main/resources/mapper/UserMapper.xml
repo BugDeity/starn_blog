@@ -65,6 +65,20 @@
         WHERE u.id = #{userId} group by u.id
     </select>
 
+    <select id="selectInfoByUserIdNew" resultType="com.shiyi.vo.UserInfoVO">
+        SELECT
+            u.id,
+            ui.nickname,
+            ui.avatar,
+            ui.intro,
+            ui.web_site,
+            ui.bj_cover
+        FROM
+            b_user u
+                LEFT JOIN b_user_info ui ON u.user_info_id = ui.id
+        WHERE u.id = #{userId} group by u.id
+    </select>
+
     <update id="updateLoginInfo">
         update b_user set last_login_time = now(),ip_address=#{ip},ip_source=#{cityInfo},os=#{os},browser=#{browser} where id=#{loginId}
     </update>

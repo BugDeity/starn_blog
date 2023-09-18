@@ -47,4 +47,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     UserInfoVO selectInfoByUserId(Object userId);
+
+    UserInfoVO selectInfoByUserIdNew(Object userId);
+
 }

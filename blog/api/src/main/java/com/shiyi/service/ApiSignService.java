@@ -21,4 +21,11 @@ public interface ApiSignService {
      */
     ResponseResult sign(String time);
 
+    /**
+     * 验证用户当日是否签到
+     * @return
+     */
+    ResponseResult validateTodayIsSign();
+
+
 }

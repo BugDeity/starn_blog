@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.shiyi.common.Constants.*;
-import static com.shiyi.common.FieldConstants.LIMIT_ONE;
 import static com.shiyi.common.ResultCode.DATA_TAG_IS_EXIST;
 import static com.shiyi.enums.PublishEnum.PUBLISH;
 
@@ -69,8 +68,7 @@ public class DictDataServiceImpl extends ServiceImpl<DictDataMapper, DictData> i
         // 判断添加的字典数据是否存在
         DictData temp = baseMapper.selectOne(new QueryWrapper<DictData>()
                 .eq(FieldConstants.DICT_LABEL, dictData.getLabel())
-                .eq(FieldConstants.DICT_TYPE_ID, dictData.getDictId())
-                .last(LIMIT_ONE));
+                .eq(FieldConstants.DICT_TYPE_ID, dictData.getDictId()));
         if (temp != null) {
             throw new BusinessException(DATA_TAG_IS_EXIST);
         }

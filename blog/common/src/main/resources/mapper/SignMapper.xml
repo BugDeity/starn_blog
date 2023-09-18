@@ -8,4 +8,7 @@
     <select id="getSignRecordsByUserId" resultType="java.lang.String">
         select create_time from b_sign where user_id =#{userId} and create_time BETWEEN #{startTime} and #{endTime}
     </select>
+    <select id="validateTodayIsSign" resultType="com.shiyi.entity.Sign">
+        select * from b_sign where user_id = #{userId} and create_time = #{time}
+    </select>
 </mapper>

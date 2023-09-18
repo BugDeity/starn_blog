@@ -36,5 +36,11 @@ public class ApiSignController {
         return apiSignService.sign(time);
     }
 
+    @SaCheckLogin
+    @RequestMapping(value = "validateTodayIsSign",method = RequestMethod.GET)
+    @ApiOperation(value = "验证用户当日是否签到", httpMethod = "GET", response = ResponseResult.class, notes = "验证用户当日是否签到")
+    public ResponseResult validateTodayIsSign(){
+        return apiSignService.validateTodayIsSign();
+    }
 
 }

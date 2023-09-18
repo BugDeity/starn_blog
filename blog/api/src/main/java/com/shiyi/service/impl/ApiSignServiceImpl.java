@@ -78,4 +78,15 @@ public class ApiSignServiceImpl implements ApiSignService {
         SystemNoticeHandle.sendNotice(userId,MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,null,null,"恭喜您签到成功");
         return ResponseResult.success();
     }
+
+    /**
+     * 验证用户当日是否签到
+     * @return
+     */
+    @Override
+    public ResponseResult validateTodayIsSign() {
+        String today = DateUtil.dateTimeToStr(DateUtil.getNowDate(), DateUtil.YYYY_MM_DD);
+        Sign sign = signMapper.validateTodayIsSign(today,StpUtil.getLoginIdAsString());
+        return ResponseResult.success(sign);
+    }
 }

@@ -43,7 +43,15 @@
                             个人简介：{{ user.intro ? user.intro : "这家伙很懒，什么都没有写..." }}
                         </div>
                     </div>
+                    <div class="sign">
+                        <button :class="!isTodaySign ? 'signBtn' : 'disabledSignBtn'" :disabled="isTodaySign"
+                            @click="handleSign">
+                            <svg-icon icon-class="sign1"></svg-icon>
+                            <span>{{ isTodaySign ? "今天已签到" : "立即签到" }}</span>
+                        </button>
+                    </div>
                 </div>
+
             </div>
             <el-card class="bottom-box" style="background-color: var(--background-color);">
                 <div class="title">
@@ -90,8 +98,10 @@
                                     </el-tooltip>
                                     <el-tooltip class="item1" effect="dark" content="文章标签" placement="top"
                                         v-for="tag in item.tagList" :key="tag.id">
+
                                         <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
-                                            @click="handleClike(tag.id, '/tag')">{{ tag.name
+                                            @click="handleClike(tag.id, '/tag')">
+                                            <i class="el-icon-collection-tag"></i> {{ tag.name
                                             }}</el-tag>
                                     </el-tooltip>
                                 </div>
@@ -154,7 +164,8 @@
                 </div>
             </el-card>
         </div>
-        <el-dialog title="个人信息" :visible.sync="dialogTableVisible" :lock-scroll="false" :close-on-click-modal="false">
+        <el-dialog title="个人信息" center :visible.sync="dialogTableVisible" :lock-scroll="false"
+            :close-on-click-modal="false">
             <div style="">
                 <div class="dialogItem item">
                     <span>
@@ -226,8 +237,10 @@ import {
     updateUserInfo, getUserInfo, upload, getMyArticle,
     deleteMyArticle
 } from '@/api'
+
 import { cancelCollect, getCollect } from '@/api/collect'
 import { getMyNote, deleteNote } from '@/api/note'
+import { sign, validateTodayIsSign } from '@/api/sign'
 export default {
     name: '',
     data() {
@@ -260,13 +273,30 @@ export default {
                     name: "笔记"
                 },
             ],
+            today: new Date().getFullYear() + '-' + (new Date().getMonth() + 1 < 10 ? ('0' + (new Date().getMonth() + 1)) : new Date().getMonth() + 1) + '-'
+                + (new Date().getDate() < 10 ? ('0' + new Date().getDate()) : new Date().getDate()),
+            isTodaySign: false,
+
         }
     },
     created() {
         this.selectAricleList()
+        this.validateTodayIsSign()
     },
     methods: {
-
+        validateTodayIsSign() {
+            validateTodayIsSign().then(res => {
+                if (res.data != null) {
+                    this.isTodaySign = true
+                }
+            })
+        },
+        handleSign() {
+            sign(this.today).then(res => {
+                this.isTodaySign = true
+                this.$message.success("签到成功")
+            })
+        },
         updateUserInfo() {
             updateUserInfo(this.form).then(res => {
                 this.user = this.form
@@ -616,6 +646,7 @@ export default {
             display: flex;
             margin-bottom: 20px;
             position: relative;
+            align-items: center;
 
             .toolbar {
                 padding: 5px;
@@ -660,6 +691,40 @@ export default {
                 .desc {
 
                     font-size: 0.9rem;
+                }
+            }
+
+            .sign {
+                position: absolute;
+                right: 50px;
+                padding: 5px;
+                border-radius: 5px;
+
+
+                .signBtn,
+                .disabledSignBtn {
+                    border: none;
+                    cursor: pointer;
+                    color: var(--text-color);
+                    background-color: var(--background-color);
+                }
+
+                .signBtn {
+                    &:hover {
+                        color: var(--theme-color);
+                    }
+                }
+
+                .disabledSignBtn {
+                    cursor: no-drop;
+
+                }
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    vertical-align: -4px;
+                    margin-right: 5px;
                 }
             }
         }

@@ -24,7 +24,6 @@ import org.springframework.util.DigestUtils;
 import java.util.List;
 import java.util.Optional;
 
-import static com.shiyi.common.FieldConstants.LIMIT_ONE;
 
 @Service
 @RequiredArgsConstructor
@@ -96,8 +95,7 @@ public class ApiHomeServiceImpl implements ApiHomeService {
                         WebConfig::getQqNumber,WebConfig::getGitee,WebConfig::getGithub,WebConfig::getLogo,WebConfig::getWechat,
                         WebConfig::getAboutMe,WebConfig::getEmail,WebConfig::getShowList,WebConfig::getLoginTypeList,
                         WebConfig::getRecordNum,WebConfig::getAuthor,WebConfig::getAliPay,WebConfig::getWeixinPay,
-                        WebConfig::getQqGroup,WebConfig::getWebUrl, WebConfig::getSummary,WebConfig::getName,WebConfig::getKeyword)
-                .last(LIMIT_ONE));
+                        WebConfig::getQqGroup,WebConfig::getWebUrl, WebConfig::getSummary,WebConfig::getName,WebConfig::getKeyword));
 
         //获取访问量
         Object count = redisService.getCacheObject(RedisConstants.BLOG_VIEWS_COUNT);

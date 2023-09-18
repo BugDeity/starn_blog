@@ -5,17 +5,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.SystemConfig;
-import com.shiyi.entity.User;
 import com.shiyi.mapper.SystemConfigMapper;
 import com.shiyi.service.SystemConfigService;
-import com.shiyi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.shiyi.common.Constants.USER_ROLE_ID;
-import static com.shiyi.common.FieldConstants.ID;
 import static com.shiyi.common.FieldConstants.LIMIT_ONE;
 
 /**
@@ -31,19 +27,19 @@ import static com.shiyi.common.FieldConstants.LIMIT_ONE;
 public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, SystemConfig> implements SystemConfigService {
 
 
-    private final UserService userService;
-
     /**
      * 获取系统配置
      * @return
      */
     @Override
     public ResponseResult getConfig() {
-        QueryWrapper<SystemConfig> queryWrapper = new QueryWrapper<>();
-        User user = userService.getById(StpUtil.getLoginIdAsString());
-        if (user.getRoleId() > USER_ROLE_ID) queryWrapper.orderByDesc(ID);
-        queryWrapper.last(LIMIT_ONE);
-        SystemConfig systemConfig = baseMapper.selectOne(queryWrapper);
+        SystemConfig systemConfig = baseMapper.selectOne(new QueryWrapper<SystemConfig>().last(LIMIT_ONE));
+        if (!StpUtil.hasRole("admin")){
+            systemConfig.setQiNiuAccessKey(null);
+            systemConfig.setQiNiuSecretKey(null);
+            systemConfig.setEmailPassword(null);
+            systemConfig.setEmailUsername(null);
+        }
         return ResponseResult.success(systemConfig);
     }
 

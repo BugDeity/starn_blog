@@ -7,6 +7,12 @@ export function getSignRecords(params) {
         params: params
     })
 }
+export function validateTodayIsSign() {
+    return request({
+        url: '/v1/sign/validateTodayIsSign',
+        method: 'get',
+    })
+}
 export function sign(time) {
     return request({
         url: '/v1/sign/',

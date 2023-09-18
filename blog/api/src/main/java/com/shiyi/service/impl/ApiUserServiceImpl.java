@@ -204,9 +204,9 @@ public class ApiUserServiceImpl implements ApiUserService {
             throw new BusinessException("无效的token");
         }
 
-        UserInfoVO userInfoVO = userMapper.selectInfoByUserId(userId);
-        int  followedCount = followedMapper.countQiDay(userInfoVO.getId());
-        userInfoVO.setQiDayFollowedCount(followedCount);
+        UserInfoVO userInfoVO = userMapper.selectInfoByUserIdNew(userId);
+//        int  followedCount = followedMapper.countQiDay(userInfoVO.getId());
+//        userInfoVO.setQiDayFollowedCount(followedCount);
         return ResponseResult.success(userInfoVO);
     }
 
