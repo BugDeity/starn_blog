@@ -297,7 +297,7 @@
         </div>
 
         <!-- 公众号扫码验证框 -->
-        <el-dialog :lock-scroll="false" title="关注公众号验证" :visible.sync="dialogVisible">
+        <el-dialog :lock-scroll="false" title="关注公众号验证" center :visible.sync="dialogVisible">
             <div style="text-align: center;">
                 <div>扫码关注公众号<span style="color: red;">【 拾壹学编程 】</span></div>
                 <div>回复<span style="color: red;">【 验证码 】</span>获取验证码</div>
