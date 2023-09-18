@@ -72,7 +72,7 @@
                 </div>
                 <div v-else>
                     <div class="menus-item">
-                        <a @click="openUserInfoDrawer"><i class="el-icon-user" /> 个人中心 </a>
+                        <a @click="handleClike('/user')"><i class="el-icon-user" /> 个人中心 </a>
                     </div>
                     <div class="menus-item">
                         <a @click="logout"><i class="el-icon-switch-button" /> 退出</a>
@@ -109,10 +109,6 @@ export default {
     },
 
     methods: {
-        openUserInfoDrawer() {
-            this.$store.state.userInfoDrawer.flag = true;
-            this.$store.state.userInfoDrawer.name = null;
-        },
         handleClike(val) {
             this.$store.state.drawer = false
             this.$router.push({ path: val })

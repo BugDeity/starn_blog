@@ -534,10 +534,6 @@ export default {
             }
         }
 
-        .article {
-            max-height: 150px;
-        }
-
         .user-warpper {
             width: 65%;
             margin-top: 80px;
@@ -545,7 +541,7 @@ export default {
 
         .article-cover {
             width: 160px;
-            height: 100%;
+            height: 150px;
             cursor: pointer;
             overflow: hidden;
             border-radius: 5px;
@@ -806,7 +802,6 @@ export default {
             }
 
             .article {
-
                 display: flex;
                 padding: 10px;
                 margin-bottom: 20px;
@@ -846,7 +841,6 @@ export default {
                     .article-title {
                         font-size: 1.1rem;
                         font-weight: 600;
-                        width: 80%;
 
                         &:hover {
                             color: var(--theme-color);

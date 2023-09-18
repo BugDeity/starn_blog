@@ -10,7 +10,6 @@ export default new Vuex.Store({
     siteAccess: 0,
     visitorAccess: 0,
     systemNotcie: {},
-    userInfoDrawer: { flag: false, name: null },
     userInfo: sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : null,
     isCommentFlag: false,
     articleDrawer: {
@@ -41,9 +40,6 @@ export default new Vuex.Store({
     },
     setDrawer(state, newValue) {
       state.drawer = newValue
-    },
-    setUserInfoDrawer(state, newValue) {
-      state.userInfoDrawer = newValue
     },
     setSearchDrawer(state, newValue) {
       state.searchDrawer = newValue
