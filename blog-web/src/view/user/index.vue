@@ -53,7 +53,7 @@
                 </div>
 
             </div>
-            <el-card class="bottom-box" style="background-color: var(--background-color);">
+            <div class="bottom-box">
                 <div class="title">
                     <ul>
                         <li ref="btn" :class="index == 0 ? 'active' : ''" @click="btnClike(index)"
@@ -71,7 +71,7 @@
                     <div class="btn" @click="handleClike(0)">下架</div>
                 </div> -->
                 <div class="articleBox" v-if="dataList.length">
-                    <div>
+                    <div class="articleItem">
                         <div v-if="pageData.index != 2" class="article" v-for="(item, index) in dataList" :key="index">
                             <router-link :to="'/article/' + item.id">
                                 <div class="article-cover">
@@ -79,12 +79,33 @@
                                 </div>
                             </router-link>
 
+
+
                             <div class="article-info">
-                                <router-link :to="'/article/' + item.id">
-                                    <div class="article-title">
-                                        {{ item.title }}
+                                <div style="display: flex;position: relative;">
+                                    <router-link :to="'/article/' + item.id">
+                                        <div class="article-title">
+                                            {{ item.title }}
+                                        </div>
+                                    </router-link>
+                                    <div class="articleBtn">
+                                        <el-tooltip class="item" effect="dark" content="修改文章" placement="top">
+                                            <el-button type="primary" size="mini" @click="handleUpdateArticle(item.id)"
+                                                icon="el-icon-edit" circle></el-button>
+                                        </el-tooltip>
+                                        <el-tooltip class="item" effect="dark" content="删除文章" placement="top">
+                                            <el-button type="danger" size="mini"
+                                                @click="handleDeleteArticle(index, item.id)" icon="el-icon-delete"
+                                                circle></el-button>
+                                        </el-tooltip>
+                                        <el-tooltip v-if="pageData.index == 1" class="item" effect="dark" content="取消收藏"
+                                            placement="top">
+                                            <el-button type="danger" size="mini" @click="handleCanCollect(index, item.id)"
+                                                icon="el-icon-delete" circle></el-button>
+                                        </el-tooltip>
                                     </div>
-                                </router-link>
+                                </div>
+
 
                                 <div class="article-desc">
                                     {{ item.summary }}
@@ -114,55 +135,38 @@
                                     <span class="time item">
                                         <i class="el-icon-time"></i>{{ item.createTime }}
                                     </span>
-
                                 </div>
 
                             </div>
-                            <span class="articleBtn">
-                                <div v-if="pageData.index == 0">
-                                    <el-tooltip class="item" effect="dark" content="修改文章" placement="top">
-                                        <el-button type="primary" size="mini" @click="handleUpdateArticle(item.id)"
-                                            icon="el-icon-edit" circle></el-button>
-                                    </el-tooltip>
-                                    <el-tooltip class="item" effect="dark" content="删除文章" placement="top">
-                                        <el-button type="danger" size="mini" @click="handleDeleteArticle(index, item.id)"
-                                            icon="el-icon-delete" circle></el-button>
-                                    </el-tooltip>
-                                </div>
+                        </div>
 
-                                <el-tooltip v-if="pageData.index == 1" class="item" effect="dark" content="取消收藏"
-                                    placement="top">
-                                    <el-button type="danger" size="mini" @click="handleCanCollect(index, item.id)"
+                    </div>
+                    <!-- 笔记列表 -->
+                    <div v-if="pageData.index == 2" class="note" v-for="(item, index) in dataList" :key="index">
+                        <div style="width: 100%;margin-bottom: 15px;">
+                            <span class="time">
+                                <i class="el-icon-time"></i> {{ item.createTime }}
+                            </span>
+                            <span style="float: right;">
+                                <el-tag style="margin-right: 10px;" size="small" v-if="item.categoryName">{{
+                                    item.categoryName }}</el-tag>
+                                <el-tooltip class="item" effect="dark" content="删除笔记" placement="top">
+                                    <el-button type="danger" size="mini" @click="handleDeleteNote(index, item.id)"
                                         icon="el-icon-delete" circle></el-button>
                                 </el-tooltip>
                             </span>
                         </div>
-                        <!-- 笔记列表 -->
-                        <div v-if="pageData.index == 2" class="note" v-for="(item, index) in dataList" :key="index">
-                            <div style="width: 100%;">
-                                <span class="time">
-                                    <i class="el-icon-time"></i> {{ item.createTime }}
-                                </span>
-                                <span style="float: right;">
-                                    <el-tag style="margin-right: 10px;" size="small" v-if="item.categoryName">{{
-                                        item.categoryName }}</el-tag>
-                                    <el-tooltip class="item" effect="dark" content="删除笔记" placement="top">
-                                        <el-button type="danger" size="mini" @click="handleDeleteNote(index, item.id)"
-                                            icon="el-icon-delete" circle></el-button>
-                                    </el-tooltip>
-                                </span>
-                            </div>
+                        <div style="width: 100%;">
                             <v-md-preview :text="item.content" ref="preview" v-highlight />
                         </div>
                     </div>
-
                     <!-- 分页按钮 -->
                     <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="onPage" />
                 </div>
                 <div v-else>
                     <sy-empty />
                 </div>
-            </el-card>
+            </div>
         </div>
         <el-dialog title="个人信息" center :visible.sync="dialogTableVisible" :lock-scroll="false"
             :close-on-click-modal="false">
@@ -530,6 +534,10 @@ export default {
             }
         }
 
+        .article {
+            max-height: 150px;
+        }
+
         .user-warpper {
             width: 65%;
             margin-top: 80px;
@@ -537,11 +545,10 @@ export default {
 
         .article-cover {
             width: 160px;
-            height: 110px;
+            height: 100%;
             cursor: pointer;
             overflow: hidden;
-            border: 1px solid var(--border-line);
-
+            border-radius: 5px;
 
             img {
                 height: 100%;
@@ -791,23 +798,25 @@ export default {
 
         .articleBox {
             height: 100%;
-            padding: 10px;
+            padding-top: 10px;
+
+            .articleItem {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
 
             .article {
+
                 display: flex;
                 padding: 10px;
-                border-bottom: 2px dashed var(--border-line);
                 margin-bottom: 20px;
                 border-radius: 5px;
-
-                &:last-child {
-                    border-bottom: 0;
-                }
+                margin-right: 10px;
+                background-color: var(--background-color);
 
                 .articleBtn {
-                    margin-left: 150px;
-                    width: 20%;
-                    text-align: right;
+                    position: absolute;
+                    right: 0;
                     display: none;
                 }
 
@@ -837,6 +846,7 @@ export default {
                     .article-title {
                         font-size: 1.1rem;
                         font-weight: 600;
+                        width: 80%;
 
                         &:hover {
                             color: var(--theme-color);
@@ -844,12 +854,17 @@ export default {
                         }
                     }
 
+                    .article-title,
                     .article-desc {
-                        overflow: hidden;
-                        text-overflow: ellipsis;
                         display: -webkit-box;
                         -webkit-box-orient: vertical;
                         -webkit-line-clamp: 2;
+                        overflow: hidden;
+                    }
+
+                    .article-desc {
+                        text-overflow: ellipsis;
+
                         margin-bottom: 10px;
                         margin-top: 5px;
                         color: var(--text-color);
@@ -888,13 +903,11 @@ export default {
             .note {
                 margin-bottom: 20px;
                 border-bottom: 2px dashed var(--border-line);
-
-                &:last-child {
-                    border-bottom: 0;
-                }
+                margin-right: 10px;
 
                 .time {
                     color: var(--text-color);
+                    margin-bottom: 20px;
                 }
             }
         }
