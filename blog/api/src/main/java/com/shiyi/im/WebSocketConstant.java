@@ -6,7 +6,7 @@ public class WebSocketConstant {
 
     public static final String WEB_SOCKET_IP = "127.0.0.1";
 
-    public static final String WEB_SOCKET_URL = "ws://" + WEB_SOCKET_IP + ":"+ WEB_SOCKET_PORT +"/websocket";
+    public static final String WEB_SOCKET_URL = "wss://" + WEB_SOCKET_IP + ":"+ WEB_SOCKET_PORT +"/websocket";
 
 }
 

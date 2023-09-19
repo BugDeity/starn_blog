@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       title: '拾壹博客管理系统',
-      logo: 'http://img.shiyit.com/9cf1222617fd4fa197991476a53cc883.jpg'
+      logo: 'https://img.shiyit.com/9cf1222617fd4fa197991476a53cc883.jpg'
     }
   }
 }
