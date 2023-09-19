@@ -59,6 +59,10 @@ export default {
     margin-top: 20px;
     cursor: pointer;
     color: #fff;
+
+    &:hover {
+        color: var(--theme-color);
+    }
 }
 
 .tips {

@@ -123,11 +123,11 @@ export default {
             position: absolute;
             width: 25px;
             height: 25px;
-            fill: var(--theme-color);
             top: 9px;
             right: 10px;
         }
     }
+
 
     .back2top.active {
         pointer-events: auto;

@@ -5,7 +5,8 @@
         <div class="user">
 
             <div class="avatar_wrapper">
-                <img :src="$store.state.webSiteInfo.authorAvatar" alt="">
+                <img :src="$store.state.webSiteInfo.authorAvatar" alt="" class="userAvatar">
+                <img class="guajian" src="https://img.shiyit.com/gaoda.png" alt="">
             </div>
             <a class="username">{{ $store.state.webSiteInfo.author }}</a>
             <span class="desc" :title="$store.state.webSiteInfo.authorInfo">
@@ -109,9 +110,10 @@ export default {
             height: 75px;
             margin-bottom: 12px;
 
-            img {
-                width: 75px;
-                height: 75px;
+
+            .userAvatar {
+                width: 70px;
+                height: 70px;
                 border-radius: 50%;
                 display: block;
                 overflow: hidden;
@@ -119,10 +121,18 @@ export default {
                 -o-object-fit: cover;
                 object-fit: cover;
                 transition: transform .5s;
+                z-index: 99;
 
                 &:hover {
                     transform: rotate(360deg);
                 }
+            }
+
+            .guajian {
+                z-index: 98;
+                position: absolute;
+                top: -20px;
+                right: -3px;
             }
         }
 

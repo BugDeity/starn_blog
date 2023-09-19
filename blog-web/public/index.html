@@ -15,7 +15,6 @@
       margin: 0;
       /* font-family: "Lucida Calligraphy", cursive, serif, sans-serif; */
       font-family: "shajiati";
-
     }
 
     @font-face {
@@ -29,10 +28,15 @@
       color: var(--text-color) !important;
       border: 0 !important;
 
-      .el-dropdown-menu__item:hover {
-        background-color: var(--menu-background-color) !important;
+      .el-dropdown-menu__item {
+        transition: transform .35s !important;
       }
 
+      .el-dropdown-menu__item:hover {
+        background-color: rgb(0, 0, 0, 0) !important;
+        transform: translateX(6px);
+
+      }
     }
 
     /* 修改滚动条宽度 */
@@ -115,7 +119,7 @@
       document.title = "不要走吗o(>﹏<)o"
     } else {
       //进入此标签页
-      document.title = "好嘛O(∩_∩)O哈哈~"
+      document.title = "咦~ 你又回来了O(∩_∩)O哈哈~"
 
       window.setTimeout(() => {
         document.title = "拾壹博客-一个专注于技术分享的博客平台"
