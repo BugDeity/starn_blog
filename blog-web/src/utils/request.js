@@ -14,7 +14,7 @@ service.interceptors.request.use(
 
     config => {
         if (config.url != '/oauth/wechat/is_login' && config.url != '/v1/im/chat') {
-            window.vm.$bus.$emit('showLoading');
+            // window.vm.$bus.$emit('showLoading');
         }
         //do something before request is sent
         let token = getToken()

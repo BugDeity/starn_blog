@@ -467,7 +467,7 @@ export default {
                 position: absolute;
                 right: 0;
                 line-height: 24px;
-                cursor: pointer;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
 
                 svg {
                     width: 17px;

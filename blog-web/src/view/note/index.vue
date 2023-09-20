@@ -23,7 +23,8 @@
                                     <i class="iconfont icon-code"></i> 代码块
                                 </span>
                                 <el-dropdown trigger="click" placement="bottom-start">
-                                    <span class="el-dropdown-link item" style="cursor: pointer;">
+                                    <span class="el-dropdown-link item"
+                                        style="cursor: url(https://img.shiyit.com/link.cur),pointer;">
                                         <i class="el-icon-position"></i>
                                         笔记分类
                                     </span>
@@ -309,7 +310,7 @@ export default {
                 .category_item,
                 .active {
                     margin-bottom: 5px;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     padding: 8px;
                     text-align: center;
                     color: var(--article-color);
@@ -352,7 +353,7 @@ export default {
                             font-size: 0.9rem;
 
                             .item {
-                                cursor: pointer;
+                                cursor: url(https://img.shiyit.com/link.cur), pointer;
                                 margin-right: 20px;
                                 color: var(--text-color);
                             }
@@ -399,7 +400,7 @@ export default {
 
                                 span {
                                     color: var(--text-color);
-                                    cursor: pointer;
+                                    cursor: url(https://img.shiyit.com/link.cur), pointer;
 
                                     &:hover {
                                         color: var(--theme-color);

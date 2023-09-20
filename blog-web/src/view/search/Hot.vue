@@ -274,7 +274,7 @@ export default {
 
                 i {
                     margin-left: 10px;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     font-size: 14px;
                 }
 
@@ -294,7 +294,7 @@ export default {
                 border-left: none;
                 padding-left: 20px;
                 padding-right: 20px;
-                cursor: pointer;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
             }
         }
 
@@ -364,7 +364,7 @@ export default {
 
                     li {
                         margin-bottom: 20px;
-                        cursor: pointer;
+                        cursor: url(https://img.shiyit.com/link.cur), pointer;
                         font-size: 13px;
                         height: 100%;
                         padding: 5px;

@@ -361,7 +361,12 @@ export default {
                         width: 100%;
                         border-radius: 4px;
                         border-style: none;
-                        background: url(https://sunjyyyyy.oss-cn-hangzhou.aliyuncs.com/other/commentBack.webp) 100% 100% no-repeat;
+                        background: url('https://img.shiyit.com/plun.gif') 100% 100% no-repeat;
+                        transition: all 0.25s ease-in-out 0s;
+
+                        &:focus {
+                            background-position-y: 150px;
+                        }
                     }
                 }
 
@@ -374,7 +379,7 @@ export default {
                         svg {
                             width: 20px;
                             height: 20px;
-                            cursor: pointer
+                            cursor: url(https://img.shiyit.com/link.cur), pointer
                         }
                     }
 
@@ -386,7 +391,7 @@ export default {
                         font-size: 14px;
                         transition: all .3s;
                         outline: none;
-                        cursor: pointer;
+                        cursor: url(https://img.shiyit.com/link.cur), pointer;
                     }
 
                     @media screen and (max-width: 767px) {
@@ -459,7 +464,7 @@ export default {
                 height: 30px;
                 width: 100px;
                 margin: auto;
-                cursor: pointer;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
                 color: #fff;
             }
 

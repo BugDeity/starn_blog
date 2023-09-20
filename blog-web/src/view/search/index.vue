@@ -221,7 +221,7 @@ export default {
 
                 .el-tag {
                     margin-right: 8px;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                 }
             }
 
@@ -314,7 +314,7 @@ export default {
                     }
 
                     h3 {
-                        cursor: pointer;
+                        cursor: url(https://img.shiyit.com/link.cur), pointer;
                         position: relative;
                         display: inline-block;
 

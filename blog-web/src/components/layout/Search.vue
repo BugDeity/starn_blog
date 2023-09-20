@@ -185,7 +185,7 @@ export default {
                     margin-bottom: 10px;
                     border-radius: 8px;
                     color: #fff;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     transition: all .3s;
 
                     &:hover {

@@ -116,7 +116,7 @@ export default {
             li {
                 margin-bottom: 10px;
                 padding: 10px;
-                cursor: pointer;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
                 font-size: 15px;
 
 

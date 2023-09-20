@@ -166,7 +166,7 @@ export default {
                     display: inline-block;
                     height: auto;
                     padding: 5px 5px;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     margin-right: 20px;
                     position: relative;
                     font-size: 14px;

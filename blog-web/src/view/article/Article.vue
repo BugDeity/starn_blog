@@ -229,7 +229,7 @@ export default {
 /deep/ .avatar-uploader {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
-    cursor: pointer;
+    cursor: url(https://img.shiyit.com/link.cur), pointer;
     position: relative;
     overflow: hidden;
     width: 200px;

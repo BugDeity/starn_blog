@@ -834,7 +834,7 @@ export default {
                 list-style: none;
 
                 .onlineLi {
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     padding: 5px;
                     line-height: 30px;
                     border-radius: 5px;
@@ -954,7 +954,7 @@ export default {
                 .more {
                     text-align: center;
                     margin-top: 10px;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     color: rgba(185, 183, 183, 0.898)
                 }
 
@@ -1090,7 +1090,7 @@ export default {
                     padding: 10px;
 
                     .item {
-                        cursor: pointer;
+                        cursor: url(https://img.shiyit.com/link.cur), pointer;
                         margin-left: 10px;
                         padding: 5px;
                         border-radius: 5px;
@@ -1190,7 +1190,7 @@ export default {
                     margin: 0;
                     padding: 5px;
                     width: 100px;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     color: #fff;
                     position: relative;
 

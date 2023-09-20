@@ -183,7 +183,7 @@
     </select>
 
     <select id="selectRecommendArticle" resultType="com.shiyi.vo.ApiArticleListVO">
-        select *
+        select id, title, avatar,create_time
          from b_article where is_recommend = 1
         order by create_time desc limit 5
     </select>

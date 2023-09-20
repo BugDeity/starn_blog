@@ -84,7 +84,6 @@ export default {
         getWebSiteInfo().then(res => {
             this.$store.commit("setWebSiteInfo", res.data)
             this.$store.commit("setHotArticles", res.extra.hotArticles)
-
             this.$store.state.siteAccess = res.extra.siteAccess
             this.$store.state.visitorAccess = res.extra.visitorAccess
         })

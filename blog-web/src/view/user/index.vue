@@ -211,7 +211,7 @@
         <el-dialog title="修改资料" center :visible.sync="editDialogTableVisible" :lock-scroll="false"
             :close-on-click-modal="false">
             <el-form label-position="left" label-width="60px" :model="form">
-                <el-form-item label="昵称：">
+                <el-form-item label="头像：">
                     <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
                         :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
                         <img v-if="form.avatar" style="width: 50%;height: 50%;" :src="form.avatar" class="imgAvatar">
@@ -573,14 +573,14 @@ export default {
         }
 
         .user-warpper {
-            width: 65%;
+            width: 60%;
             margin-top: 80px;
         }
 
         .article-cover {
             width: 160px;
             height: 150px;
-            cursor: pointer;
+            cursor: url(https://img.shiyit.com/link.cur), pointer;
             overflow: hidden;
             border-radius: 5px;
 
@@ -627,7 +627,7 @@ export default {
                 right: 20px;
                 bottom: 15px;
                 color: rgba(0, 0, 0, .8);
-                cursor: pointer;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
 
                 .menu {
                     background-color: var(--background-color);
@@ -745,7 +745,7 @@ export default {
                 .signBtn,
                 .disabledSignBtn {
                     border: none;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     color: var(--text-color);
                     background-color: var(--background-color);
                 }
@@ -787,7 +787,7 @@ export default {
 
                 li {
                     margin-right: 20px;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     color: var(--text-color);
 
                     &:hover {
@@ -820,7 +820,7 @@ export default {
                 border-radius: 5px;
                 font-size: 0.9rem;
                 color: var(--text-color);
-                cursor: pointer;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
 
                 &:hover {
                     background-color: var(--theme-color);
@@ -883,7 +883,7 @@ export default {
 
                         &:hover {
                             color: var(--theme-color);
-                            cursor: pointer;
+                            cursor: url(https://img.shiyit.com/link.cur), pointer;
                         }
                     }
 
@@ -907,7 +907,7 @@ export default {
                     .article-tag {
                         .el-tag {
                             margin-right: 5px;
-                            cursor: pointer;
+                            cursor: url(https://img.shiyit.com/link.cur), pointer;
                         }
                     }
 

@@ -118,7 +118,6 @@ export default {
         border-radius: 4px;
         padding: 10px;
         margin: 10px 0 10px;
-        background-color: var(--comment-backgroud-color);
 
         .box {
             display: flex;
@@ -155,7 +154,12 @@ export default {
                         border-radius: 4px;
                         background-color: transparent;
                         border-style: none;
+                        background: url('https://img.shiyit.com/plun.gif') 100% 100% no-repeat;
+                        transition: all 0.25s ease-in-out 0s;
 
+                        &:focus {
+                            background-position-y: 150px;
+                        }
                     }
                 }
 
@@ -165,7 +169,7 @@ export default {
                     margin: 10px 0;
 
                     .emoji-btn {
-                        cursor: pointer;
+                        cursor: url(https://img.shiyit.com/link.cur), pointer;
 
                         svg {
                             width: 20px;
@@ -187,7 +191,7 @@ export default {
                         font-size: 14px;
                         transition: all .3s;
                         outline: none;
-                        cursor: pointer;
+                        cursor: url(https://img.shiyit.com/link.cur), pointer;
                     }
 
                     .cancle-btn {

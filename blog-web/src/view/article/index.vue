@@ -744,7 +744,7 @@ export default {
                 text-align: center;
                 line-height: 50px;
                 background-color: var(--background-color);
-                cursor: pointer;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
                 position: relative;
                 color: var(--text-color);
 
@@ -913,7 +913,7 @@ export default {
                     }
 
                     .structure {
-                        cursor: pointer;
+                        cursor: url(https://img.shiyit.com/link.cur), pointer;
                         color: var(--article-color);
                         padding: 5px 0;
                         padding-left: 20px;
@@ -940,7 +940,7 @@ export default {
 
         .category {
             border-radius: 5px;
-            cursor: pointer;
+            cursor: url(https://img.shiyit.com/link.cur), pointer;
             transition: transform .5s;
             height: 30px;
             line-height: 30px;
@@ -1111,7 +1111,7 @@ export default {
                 border-radius: 5px !important;
                 margin-top: 10px;
                 transition: box-shadow .35s, transform .35s;
-                cursor: pointer;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
                 max-height: 500px;
                 width: 100%;
 
@@ -1135,7 +1135,7 @@ export default {
             min-height: 30px;
 
             .tagBtn {
-                cursor: pointer;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
                 margin-right: 5px;
             }
 

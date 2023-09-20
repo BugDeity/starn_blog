@@ -113,7 +113,7 @@ export default {
         .closeBtn {
             margin-left: 15px;
             margin-right: 150px;
-            cursor: pointer;
+            cursor: url(https://img.shiyit.com/link.cur), pointer;
             float: right;
             font-weight: 400;
         }

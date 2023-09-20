@@ -288,7 +288,7 @@ export default {
             }
 
             .left-item {
-                cursor: pointer;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
                 border-radius: 5px;
                 position: relative;
                 margin-top: 10px;
@@ -332,7 +332,7 @@ export default {
 
         .clearAllbtn,
         .clearBtn {
-            cursor: pointer;
+            cursor: url(https://img.shiyit.com/link.cur), pointer;
             float: right;
         }
 
@@ -398,7 +398,7 @@ export default {
                 }
 
                 .title {
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     font-weight: 600;
                     font-style: italic;
 

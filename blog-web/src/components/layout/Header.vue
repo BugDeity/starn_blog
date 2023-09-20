@@ -2,7 +2,7 @@
     <header class="header">
         <div id="pre" :style="{ width: widthPre + '%' }"></div>
         <nav>
-            <div class="logo" style="cursor: pointer;">
+            <div class="logo" style="cursor: url(https://img.shiyit.com/link.cur),pointer;">
                 <div class="logoBox">
                     <router-link :to="'/'">
                         <el-image class="img"
@@ -30,89 +30,89 @@
             </div>
 
             <ul class="starlist">
-                <li>
+                <li :class="path == '/' ? 'active' : ''">
                     <span>
-                        <router-link :class="path == '/' ? 'active' : ''" :to="'/'">
+                        <router-link :to="'/'">
                             <svg-icon icon-class="home"></svg-icon> 首页
                         </router-link>
                     </span>
                 </li>
 
-                <li>
+                <li :class="path == '/archive' || path == '/categorys' || path == '/tag'
+                    ? 'active' : ''">
                     <el-dropdown trigger="hover">
-                        <span class="el-dropdown-link" :class="path == '/archive' || path == '/categorys' || path == '/tag'
-                            ? 'active' : ''">
+                        <span class="el-dropdown-link">
                             <svg-icon icon-class="archive"></svg-icon> 文章归档<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <router-link style="text-decoration: none;color: #71777c;" :to="'/archive'">
                                 <el-dropdown-item>
-                                    <i class="el-icon-date"></i>归档
+                                    <i class="el-icon-date"></i>文章归档
                                 </el-dropdown-item>
                             </router-link>
                             <router-link style="text-decoration: none;color: #71777c;" :to="'/categorys'">
                                 <el-dropdown-item>
-                                    <i class="el-icon-menu"></i>分类
+                                    <i class="el-icon-menu"></i>文章分类
                                 </el-dropdown-item>
                             </router-link>
 
                             <router-link style="text-decoration: none;color: #71777c;" :to="'/tag'">
                                 <el-dropdown-item>
-                                    <i class="el-icon-collection-tag"></i>标签
+                                    <i class="el-icon-collection-tag"></i>文章标签
                                 </el-dropdown-item>
                             </router-link>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </li>
 
-                <li>
+                <li :class="path == '/navigation' ? 'active' : ''">
                     <span>
-                        <router-link :class="path == '/navigation' ? 'active' : ''" :to="'/navigation'">
+                        <router-link :to="'/navigation'">
                             <svg-icon icon-class="navication"></svg-icon> 网址导航
                         </router-link>
                     </span>
                 </li>
 
-                <li>
+                <li :class="path == '/photo' ? 'active' : ''">
                     <span>
-                        <router-link :class="path == '/photo' ? 'active' : ''" :to="'/photo'">
+                        <router-link :to="'/photo'">
                             <svg-icon icon-class="photo"></svg-icon> 画廊
                         </router-link>
                     </span>
                 </li>
 
-                <li>
+                <li :class="path == '/note' ? 'active' : ''">
                     <span>
-                        <router-link :class="path == '/note' ? 'active' : ''" :to="'/note'">
+                        <router-link :to="'/note'">
                             <svg-icon icon-class="note"></svg-icon> 笔记
                         </router-link>
                     </span>
                 </li>
 
-                <li>
+                <li :class="path == '/hot' ? 'active' : ''">
                     <span>
-                        <router-link :class="path == '/hot' ? 'active' : ''" :to="'/hot'">
+                        <router-link :to="'/hot'">
                             <svg-icon icon-class="hot2"></svg-icon> 热搜
                         </router-link>
                     </span>
                 </li>
-                <li>
+                <li :class="path == '/message' ? 'active' : ''">
                     <span>
-                        <router-link :class="path == '/message' ? 'active' : ''" :to="'/message'">
+                        <router-link :to="'/message'">
                             <svg-icon icon-class="message"></svg-icon> 留言板
                         </router-link>
                     </span>
                 </li>
-                <li>
+                <li :class="path == '/links' ? 'active' : ''">
                     <span>
-                        <router-link :class="path == '/links' ? 'active' : ''" :to="'/links'">
+                        <router-link :to="'/links'">
                             <svg-icon icon-class="friendLink"></svg-icon> 友情链接
                         </router-link>
                     </span>
                 </li>
-                <li>
+                <li :class="path == '/about' ? 'active' : ''">
                     <el-dropdown trigger="hover">
-                        <span class="el-dropdown-link" :class="path == '/about' ? 'active' : ''">
+                        <span class="el-dropdown-link">
                             <svg-icon icon-class="about"></svg-icon> 关于本站<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
@@ -541,8 +541,10 @@ export default {
                 max-width: 1500px;
 
                 .el-dropdown-link {
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                 }
+
+
 
                 li {
                     float: left;
@@ -550,6 +552,23 @@ export default {
                     font-size: 14px;
                     padding: 0 15px;
                     position: relative;
+
+
+                    &:hover::before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        width: 60%;
+                        height: 4px;
+                        border-bottom-left-radius: 15px;
+                        border-bottom-right-radius: 15px;
+                        background-color: var(--theme-color);
+                        margin: 0 auto;
+                        text-align: center;
+                    }
 
                     svg {
                         width: 18px;
@@ -561,17 +580,37 @@ export default {
                         font-weight: 700;
                     }
 
-                    .active {
-                        color: var(--theme-color);
-                        font-weight: 700;
-                    }
-
                     a {
                         color: #71777c;
 
                         &:hover {
                             color: var(--theme-color);
                         }
+                    }
+
+                }
+
+                .active {
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        width: 60%;
+                        height: 4px;
+                        border-bottom-left-radius: 15px;
+                        border-bottom-right-radius: 15px;
+                        background-color: var(--theme-color);
+                        margin: 0 auto;
+                        text-align: center;
+                    }
+
+                    /deep/ a,
+                    span {
+                        color: var(--theme-color) !important;
+                        font-weight: 700;
                     }
 
                 }
@@ -611,7 +650,7 @@ export default {
                     padding: 0;
                     margin: 0;
                     line-height: 60px;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     text-align: right;
 
                     .iconfont {

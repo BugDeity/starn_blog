@@ -15,12 +15,21 @@
       margin: 0;
       /* font-family: "Lucida Calligraphy", cursive, serif, sans-serif; */
       font-family: "shajiati";
+
     }
 
+    body {
+      cursor: url(https://img.shiyit.com/normal.cur), default;
+    }
+
+    a,
+    button {
+      cursor: url(https://img.shiyit.com/link.cur), pointer !important
+    }
 
     @font-face {
       font-family: 'shajiati';
-      src: url('./assets/shajiati.woff2');
+      src: url('./assets/2.woff2');
     }
 
 
@@ -36,7 +45,7 @@
       .el-dropdown-menu__item:hover {
         background-color: rgb(0, 0, 0, 0) !important;
         transform: translateX(6px);
-
+        cursor: url(https://img.shiyit.com/link.cur), pointer !important
       }
     }
 

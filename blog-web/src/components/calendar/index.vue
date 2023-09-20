@@ -200,7 +200,7 @@ export default {
         }
 
         i {
-            cursor: pointer;
+            cursor: url(https://img.shiyit.com/link.cur), pointer;
         }
 
         .disabled {
@@ -252,7 +252,7 @@ export default {
                 .calendar-item-number {
                     width: 100%;
                     height: 20px;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
 
                     .icon {
                         position: absolute;
@@ -320,7 +320,7 @@ export default {
         }
 
         .btn {
-            cursor: pointer;
+            cursor: url(https://img.shiyit.com/link.cur), pointer;
 
             /deep/ .el-button--primary {
                 background-color: #66b1ff;

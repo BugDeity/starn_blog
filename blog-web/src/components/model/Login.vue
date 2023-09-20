@@ -49,7 +49,8 @@
                 </p>
                 <p>
                     登录验证码： <span style="color: red;margin-right: 5px;">{{ this.wechatLoginCode }}</span>
-                    <i style="cursor: pointer;" @click="getWecahtLoginCode()" class="el-icon-refresh"></i>
+                    <i style="cursor: url(https://img.shiyit.com/link.cur),pointer;" @click="getWecahtLoginCode()"
+                        class="el-icon-refresh"></i>
                 </p>
             </div>
             <div slot="footer" class="dialog-footer">
@@ -288,7 +289,7 @@ export default {
         a {
             text-decoration: none;
             margin-left: 20px;
-            cursor: pointer;
+            cursor: url(https://img.shiyit.com/link.cur), pointer;
 
             svg {
                 width: 30px;

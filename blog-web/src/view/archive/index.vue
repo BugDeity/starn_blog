@@ -76,16 +76,11 @@ export default {
             }
         },
         fetchArticleList() {
-            this.$bus.$emit('showLoading');
+
             archive().then(res => {
                 this.archiveList = res.data
                 this.count = res.extra.total
-                // 隐藏 loading 组件
-                this.$bus.$emit('hideLoading');
-            }).catch(err => {
-                // 隐藏 loading 组件
-                this.$bus.$emit('hideLoading');
-            });
+            })
         },
 
         formatTime(time) {
@@ -192,7 +187,7 @@ export default {
                     margin-bottom: 16px;
                     color: var(--article-color);
                     font-weight: 500;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     margin-left: 20px;
                     display: block;
                     text-decoration: none;
@@ -212,7 +207,7 @@ export default {
                     height: 35px;
                     line-height: 35px;
                     border-radius: 5px;
-                    cursor: pointer;
+                    cursor: url(https://img.shiyit.com/link.cur), pointer;
 
                     &::before {
                         content: "";

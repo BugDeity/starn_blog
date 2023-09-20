@@ -1,7 +1,7 @@
 <template>
     <div class='emoji-container'>
         <span class="emoji-item" v-for="(item, index) of emojiList" :key="index" @click="chooseEmoji(item)">
-            <span class="emoji">
+            <span class="emoji" :title="item.description">
                 {{ item.emoji }}
             </span>
         </span>
@@ -39,7 +39,7 @@ export default {
     border-radius: 5px;
 
     .emoji-item {
-        cursor: pointer;
+        cursor: url(https://img.shiyit.com/link.cur), pointer;
         display: inline-block;
         margin: 5px 0;
 
