@@ -165,7 +165,11 @@ export default {
         },
         handleCommit() {
             if (!this.text) {
-                this.$message.error("请输入搜索内容")
+                this.$notify({
+                    title: '失败',
+                    message: "请输入搜索内容",
+                    type: 'warning'
+                });
                 return;
             }
             window.open(this.searchUrl[this.selectSite] + this.text, '_blank');
@@ -173,7 +177,11 @@ export default {
         handleClose() {
             this.dialogVisible = false
             this.selectSite = this.tabPosition
-            this.$message.success("切换成功")
+            this.$notify({
+                title: '成功',
+                message: "切换成功",
+                type: 'success'
+            });
         },
 
     }

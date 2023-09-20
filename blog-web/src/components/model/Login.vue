@@ -111,7 +111,11 @@ export default {
         getWecahtLoginCode() {
             getWechatLoginCode().then(res => {
                 this.wechatLoginCode = res.data
-                this.$message.success("验证码获取成功");
+                this.$notify({
+                    title: '成功',
+                    message: '验证码获取成功',
+                    type: 'success'
+                });
                 this.countdown = 60
                 this.timer = setInterval(() => {
                     if (this.countdown > 0) {
@@ -122,9 +126,17 @@ export default {
                             this.$store.commit("setUserInfo", res.data)
                             this.close()
                             if (res.data.email == null) {
-                                this.$message.warning("请绑定邮箱以便及时收到回复");
+                                this.$notify({
+                                    title: '警告',
+                                    message: '请绑定邮箱以便及时收到回复',
+                                    type: 'warning'
+                                });
                             } else {
-                                this.$message.success("登录成功");
+                                this.$notify({
+                                    title: '成功',
+                                    message: '登录成功',
+                                    type: 'success'
+                                });
                             }
                             location.reload()
                         })
@@ -158,7 +170,11 @@ export default {
                         setToken(res.data.token)
                         this.$store.commit("setUserInfo", res.data)
                         this.close()
-                        this.$message.success("登录成功");
+                        this.$notify({
+                            title: '成功',
+                            message: '登录成功',
+                            type: 'success'
+                        });
                         location.reload()
                     })
                 } else {

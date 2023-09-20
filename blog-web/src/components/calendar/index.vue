@@ -88,13 +88,21 @@ export default {
         },
         handleClike(ite) {
             if (ite != null && ite.afterToday == "afterToday") {
-                this.$message.error("未到签到时间，请耐心等待！")
+                this.$notify({
+                    title: '失败',
+                    message: "未到签到时间，请耐心等待！",
+                    type: 'error'
+                });
                 return;
             }
             const time = ite ? ite.timeStr : this.today
             sign(time).then(res => {
                 this.signRecords.push(time)
-                this.$message.success("签到成功")
+                this.$notify({
+                    title: '成功',
+                    message: "签到成功",
+                    type: 'success'
+                });
             })
         },
         lastMonth() {

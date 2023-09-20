@@ -114,7 +114,6 @@
                                     {{ item.summary }}
                                 </div>
                                 <div class="article-tag">
-
                                     <el-tooltip class="item1" effect="dark" content="文章分类" placement="top">
                                         <el-tag size="mini" @click="handleClike(item.categoryId, '/categorys')">
                                             <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
@@ -301,13 +300,21 @@ export default {
         handleSign() {
             sign(this.today).then(res => {
                 this.isTodaySign = true
-                this.$message.success("签到成功")
+                this.$notify({
+                    title: '成功',
+                    message: "签到成功",
+                    type: 'success'
+                });
             })
         },
         updateUserInfo() {
             updateUserInfo(this.form).then(res => {
                 this.user = this.form
-                this.$message.success("修改成功")
+                this.$notify({
+                    title: '成功',
+                    message: "修改成功",
+                    type: 'success'
+                });
                 this.editDialogTableVisible = false
             })
         },
@@ -341,11 +348,19 @@ export default {
                 .then(_ => {
                     cancelCollect(id).then(res => {
                         this.dataList.splice(index, 1)
-                        this.$message.success("取消收藏成功")
+                        this.$notify({
+                            title: '成功',
+                            message: "取消收藏成功",
+                            type: 'success'
+                        });
                     })
                 })
                 .catch(_ => {
-                    this.$message.info("取消关闭")
+                    this.$notify({
+                        title: '提示',
+                        message: "取消关闭",
+                        type: 'info'
+                    });
                 });
         },
         handleDeleteArticle(index, id) {
@@ -358,11 +373,19 @@ export default {
                 .then(_ => {
                     deleteMyArticle(id).then(res => {
                         this.dataList.splice(index, 1)
-                        this.$message.success("删除成功")
+                        this.$notify({
+                            title: '成功',
+                            message: "删除成功",
+                            type: 'success'
+                        });
                     })
                 })
                 .catch(_ => {
-                    this.$message.info("取消关闭")
+                    this.$notify({
+                        title: '提示',
+                        message: "取消关闭",
+                        type: 'info'
+                    });
                 });
         },
         handleDeleteNote(index, id) {
@@ -375,11 +398,19 @@ export default {
                 .then(_ => {
                     deleteNote(id).then(res => {
                         this.dataList.splice(index, 1)
-                        this.$message.success("删除成功")
+                        this.$notify({
+                            title: '成功',
+                            message: "删除成功",
+                            type: 'success'
+                        });
                     })
                 })
                 .catch(_ => {
-                    this.$message.info("取消关闭")
+                    this.$notify({
+                        title: '提示',
+                        message: "取消关闭",
+                        type: 'info'
+                    });
                 });
         },
         onPage() {
@@ -449,7 +480,11 @@ export default {
                 }
                 updateUserInfo(user).then(res => {
                     this.user.bjCover = res.data
-                    this.$message.success("修改成功")
+                    this.$notify({
+                        title: '成功',
+                        message: "修改成功",
+                        type: 'success'
+                    });
                 })
             })
 
@@ -741,7 +776,6 @@ export default {
     .bottom-box {
         border-radius: 10px;
         margin-top: 20px;
-        padding: 10px;
         min-height: 500px;
 
         .title {
@@ -809,7 +843,7 @@ export default {
                 padding: 10px;
                 margin-bottom: 20px;
                 border-radius: 5px;
-                margin-right: 10px;
+                margin-left: 10px;
                 background-color: var(--background-color);
 
                 .articleBtn {
@@ -835,6 +869,7 @@ export default {
                 .article-info {
                     margin-left: 20px;
                     width: 70%;
+                    position: relative;
 
                     a {
                         text-decoration: none;
@@ -844,6 +879,7 @@ export default {
                     .article-title {
                         font-size: 1.1rem;
                         font-weight: 600;
+                        -webkit-line-clamp: 1;
 
                         &:hover {
                             color: var(--theme-color);
@@ -855,16 +891,17 @@ export default {
                     .article-desc {
                         display: -webkit-box;
                         -webkit-box-orient: vertical;
-                        -webkit-line-clamp: 2;
+
                         overflow: hidden;
+                        text-overflow: ellipsis;
                     }
 
                     .article-desc {
-                        text-overflow: ellipsis;
-
+                        -webkit-line-clamp: 3;
                         margin-bottom: 10px;
                         margin-top: 5px;
                         color: var(--text-color);
+                        min-height: 60px;
                     }
 
                     .article-tag {

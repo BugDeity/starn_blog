@@ -61,7 +61,8 @@ export default {
         },
         search() {
             if (this.keywords == null || this.keywords == "") {
-                this.$message({
+                this.$notify({
+                    title: '失败',
                     message: '请输入搜索内容',
                     type: 'error'
                 });

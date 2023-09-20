@@ -170,7 +170,11 @@ export default {
                 if (valid) {
                     addLink(this.form).then(res => {
                         this.dialogFormVisible = false
-                        this.$message({ type: "success", message: "提交成功，请等待审核" });
+                        this.$notify({
+                            title: '成功',
+                            message: "提交成功，请等待审核",
+                            type: 'success'
+                        });
                     }).catch(err => {
                     })
                 } else {
@@ -330,6 +334,7 @@ export default {
             .linksItem {
                 position: relative;
                 border-radius: 10px;
+                background-color: #8fbca275;
 
                 &::before {
                     content: "";

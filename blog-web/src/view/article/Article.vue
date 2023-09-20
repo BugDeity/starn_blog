@@ -149,12 +149,20 @@ export default {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
                     if (!this.article.contentMd) {
-                        this.$message.error("请编写文章内容！")
+                        this.$notify({
+                            title: '失败',
+                            message: '请编写文章内容！',
+                            type: 'error'
+                        });
                         return;
                     }
                     insertArticle(this.article).then(res => {
                         this.$store.state.articleDrawer.flag = false
-                        this.$message.success("提交成功，请耐心等待审核")
+                        this.$notify({
+                            title: '成功',
+                            message: '提交成功，请耐心等待审核',
+                            type: 'success'
+                        });
                     }).catch(err => {
                     })
                 } else {
@@ -174,7 +182,11 @@ export default {
                     this.$store.state.articleDrawer.flag = false
                 })
                 .catch(_ => {
-                    this.$message.info("取消关闭")
+                    this.$notify({
+                        title: '消息',
+                        message: '取消关闭',
+                        type: 'info'
+                    });
                 });
         },
         handleUploadImage(event, insertImage, files) {

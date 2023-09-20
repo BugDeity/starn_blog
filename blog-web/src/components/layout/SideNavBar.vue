@@ -127,7 +127,11 @@ export default {
             logout().then(res => {
                 removeToken()
                 location.reload()
-                this.$message({ type: "success", message: "注销成功" });
+                this.$notify({
+                    title: '成功',
+                    message: '注销成功',
+                    type: 'success'
+                });
             }).catch(err => {
                 console.log(err)
             });

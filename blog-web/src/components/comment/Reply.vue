@@ -76,7 +76,11 @@ export default {
         },
         addComment() {
             if (!this.commentContent) {
-                this.$message.error('评论不能为空');
+                this.$notify({
+                    title: '失败',
+                    message: '评论不能为空',
+                    type: 'error'
+                });
                 return;
             }
             let browser = browserMatch()
@@ -91,7 +95,8 @@ export default {
             }
             postComment(comment).then(res => {
                 this.$emit("reloadReply", this.index);
-                this.$message({
+                this.$notify({
+                    title: '成功',
                     message: '评论成功',
                     type: 'success'
                 });

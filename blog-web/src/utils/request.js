@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import { getToken, removeToken } from '@/utils/cookieUtil'
-import { Message } from 'element-ui';
+import { Notification } from 'element-ui';
 import Vue from 'vue'
 // create an axios instance
 const service = axios.create({
@@ -61,10 +61,11 @@ service.interceptors.response.use(
             }
             //如果是校验微信登录是否授权的接口 则不进行错误输出
             if (response.config.url !== "/oauth/wechat/is_login") {
-                Message({
+                Notification({
+                    title: '失败',
                     message: res.message,
                     type: 'error'
-                })
+                });
             }
 
             return Promise.reject(new Error(res.message || 'Error'))

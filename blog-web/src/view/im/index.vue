@@ -319,20 +319,28 @@ export default {
                 type: 'warning'
             }).then(() => {
                 if (!id) {
-                    this.$message.warning("群聊不允许删除!")
+                    this.$notify({
+                        title: '警告',
+                        message: "群聊不允许删除",
+                        type: 'warning'
+                    });
                     return;
                 }
                 deleteRoom(id).then(res => {
                     this.$delete(this.roomList, index);
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
+
+                    this.$notify({
+                        title: '成功',
+                        message: "删除成功",
+                        type: 'success'
                     });
                 })
             }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
+
+                this.$notify({
+                    title: '消息',
+                    message: "已取消删除",
+                    type: 'info'
                 });
             });
         },
@@ -435,7 +443,11 @@ export default {
             this.message.index = index
         },
         atUser() {
-            this.$message.info("待开发")
+            this.$notify({
+                title: '消息',
+                message: "待开发",
+                type: 'info'
+            });
             return;
             if (this.atMember.indexOf(this.message.fromUserId) != -1) {
                 return;
@@ -479,11 +491,19 @@ export default {
                 text: () => this.message.content
             })
             clipboard.on('success', () => {
-                this.$message.success("复制成功");
+                this.$notify({
+                    title: '成功',
+                    message: "复制成功",
+                    type: 'success'
+                });
                 clipboard.destroy()
             })
             clipboard.on('error', () => {
-                this.$message.error('复制失败');
+                this.$notify({
+                    title: '失败',
+                    message: "复制失败",
+                    type: 'error'
+                });
                 clipboard.destroy()
             })
         },
@@ -570,12 +590,22 @@ export default {
         },
         //发送消息
         send(content, type) {
+            this.$notify({
+                title: '失败',
+                message: "功能暂时关闭",
+                type: 'error'
+            });
+            return
             if (typeof (WebSocket) == "undefined") {
                 console.log("您的浏览器不支持WebSocket");
                 return;
             }
             if (!this.user) {
-                this.$message.error('请先登录');
+                this.$notify({
+                    title: '失败',
+                    message: "请先登录",
+                    type: 'error'
+                });
                 this.$store.state.loginFlag = true
                 return;
             }
@@ -619,7 +649,11 @@ export default {
         init() {
             let _this = this;
             if (!_this.user) {
-                this.$message.error('登录才能进行群聊');
+                this.$notify({
+                    title: '失败',
+                    message: "登录才能进行群聊",
+                    type: 'error'
+                });
                 return;
             }
             if (typeof (WebSocket) == "undefined") {

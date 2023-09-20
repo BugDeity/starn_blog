@@ -126,7 +126,11 @@ export default {
                 this.chooseEmoji = false
             }
             if (e.target.className === "v-md-copy-code-btn") {
-                this.$message.success("复制成功")
+                this.$notify({
+                    title: '成功',
+                    message: "复制成功",
+                    type: 'success'
+                });
             }
         })
     },
@@ -151,15 +155,19 @@ export default {
             }).then(() => {
                 deleteNote(id).then(respose => {
                     this.$delete(this.noteList, index);
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
+
+                    this.$notify({
+                        title: '成功',
+                        message: "删除成功",
+                        type: 'success'
                     });
                 })
             }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
+
+                this.$notify({
+                    title: '提示',
+                    message: "已取消删除",
+                    type: 'info'
                 });
             });
         },
@@ -190,7 +198,11 @@ export default {
         },
         addNote() {
             if (this.content == null || this.content == "") {
-                this.$message.error("内容不能为空！");
+                this.$notify({
+                    title: '失败',
+                    message: "内容不能为空！",
+                    type: 'error'
+                });
                 return;
             }
 
@@ -200,7 +212,11 @@ export default {
             }
             insertNote(note).then(res => {
                 this.content = ""
-                this.$message.success("发布成功，请等待审核！");
+                this.$notify({
+                    title: '成功',
+                    message: "发布成功，请等待审核！",
+                    type: 'success'
+                });
                 this.pageData.pageNo = 1
                 this.getNoteList()
             })

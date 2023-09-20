@@ -278,7 +278,11 @@ export default {
                 return
             }
             if (!this.commentContent) {
-                this.$message.error('评论不能为空');
+                this.$notify({
+                    title: '失败',
+                    message: '评论不能为空',
+                    type: 'error'
+                });
                 return;
             }
             let browser = browserMatch()
@@ -292,7 +296,11 @@ export default {
             postComment(comment).then(res => {
                 this.pageData.pageNo = 1
                 this.getCommens()
-                this.$message.success('评论成功');
+                this.$notify({
+                    title: '成功',
+                    message: '评论成功',
+                    type: 'success'
+                });
                 this.$store.commit("isCommentFlag", true)
                 this.commentContent = ""
             })
@@ -318,7 +326,6 @@ export default {
         border-radius: 4px;
         padding: 10px;
         margin: 10px 0 10px;
-        background-color: var(--comment-backgroud-color);
 
         .box {
             display: flex;
@@ -353,8 +360,8 @@ export default {
                         resize: none;
                         width: 100%;
                         border-radius: 4px;
-                        background-color: transparent;
                         border-style: none;
+                        background: url(https://sunjyyyyy.oss-cn-hangzhou.aliyuncs.com/other/commentBack.webp) 100% 100% no-repeat;
                     }
                 }
 
@@ -364,11 +371,10 @@ export default {
                     margin: 10px 0;
 
                     .emoji-btn {
-                        cursor: pointer;
-
                         svg {
                             width: 20px;
                             height: 20px;
+                            cursor: pointer
                         }
                     }
 

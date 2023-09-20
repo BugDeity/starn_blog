@@ -161,15 +161,21 @@ export default {
                     } else {
                         this.noticeList = []
                     }
-                    this.$message.success("删除成功")
+                    this.$notify({
+                        title: '成功',
+                        message: "删除成功",
+                        type: 'success'
+                    });
 
                 }).catch(err => {
 
                 })
             }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
+
+                this.$notify({
+                    title: '提示',
+                    message: "已取消删除",
+                    type: 'info'
                 });
             });
 

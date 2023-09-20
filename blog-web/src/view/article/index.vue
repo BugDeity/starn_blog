@@ -404,7 +404,11 @@ export default {
                 //添加代码复制按钮复制成功提示
                 document.addEventListener("click", e => {
                     if (e.target.className === "v-md-copy-code-btn") {
-                        this.$message.success("复制成功")
+                        this.$notify({
+                            title: '成功',
+                            message: '复制成功',
+                            type: 'success'
+                        });
                     }
                 })
             }
@@ -441,7 +445,11 @@ export default {
                 this.userInfo = res.data
             })
             if (this.article.isPublish == 2) {
-                this.$message.warning("该文章未审核，仅供自己预览");
+                this.$notify({
+                    title: '警告',
+                    message: '该文章未审核，仅供自己预览',
+                    type: 'warning'
+                });
             }
         }).catch(err => {
 
@@ -451,28 +459,31 @@ export default {
     methods: {
         qqShare() {
             const url = `https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${window.location.href}&sharesource=qzone&title=${this.article.title}&summary=${this.article.title}`
-            window.open(url)
+            window.open(url, 'renren-share', 'width=490,height=700');
         },
         qqHyShare() {
             const url = `http://connect.qq.com/widget/shareqq/index.html?url=${window.location.href}&sharesource=qzone&title=${this.article.title}&summary=${this.article.title}`
-            window.open(url)
+            window.open(url, 'renren-share', 'width=490,height=700');
         },
         weiboShare() {
             const url = `http://service.weibo.com/share/share.php?url=${window.location.href}&title=${this.article.title}`;
-            window.open(url, '_blank');
+            window.open(url, 'renren-share', 'width=490,height=700');
         },
         weixinShare() {
-            const url = `http://share.v.t.qq.com/index.php?c=share&a=index&title=${this.article.title}&url=${window.location.href}`;
-            window.open(url, '_blank');
+            const url = `https://api.pwmqr.com/qrcode/create/?url=${window.location.href}`;
+            window.open(url, 'renren-share', 'width=490,height=700');
         },
         handleGoIm() {
             this.$router.push({ path: "/im", query: { userId: this.userInfo.id } })
         },
         handleFollowedUser() {
-
             followedUser(this.article.userId).then(res => {
                 this.article.isFollowed = 1
-                this.$message.success("关注成功");
+                this.$notify({
+                    title: '成功',
+                    message: '关注成功',
+                    type: 'success'
+                });
                 this.userInfo.fansCount++
 
             }).catch(err => {
@@ -483,7 +494,11 @@ export default {
 
             deleteFollowedUser(this.article.userId).then(res => {
                 this.article.isFollowed = 0
-                this.$message.success("取消关注成功");
+                this.$notify({
+                    title: '成功',
+                    message: '取消关注成功',
+                    type: 'success'
+                });
                 this.userInfo.fansCount--
 
             }).catch(err => {
@@ -491,15 +506,27 @@ export default {
             });
         },
         checkLikeAndCoomment(desc) {
-            this.$message.info(desc)
+            this.$notify({
+                title: '消息',
+                message: desc,
+                type: 'info'
+            });
         },
         checkCode() {
             if (!this.code) {
-                this.$message.error("验证码不能为空！")
+                this.$notify({
+                    title: '失败',
+                    message: "验证码不能为空！",
+                    type: 'error'
+                });
                 return;
             }
             checkCode(this.code).then(res => {
-                this.$message.success("验证成功")
+                this.$notify({
+                    title: '成功',
+                    message: "验证成功",
+                    type: 'success'
+                });
                 this.checkAfter()
             }).catch(err => {
             })
@@ -545,14 +572,22 @@ export default {
                 cancelCollect(id).then(res => {
                     this.article.collectCount--
                     this.article.isCollect = 0
-                    this.$message.success("取消收藏成功")
+                    this.$notify({
+                        title: '成功',
+                        message: "取消收藏成功",
+                        type: 'success'
+                    });
 
                 })
             } else {
                 collect(id).then(res => {
                     this.article.collectCount++
                     this.article.isCollect = 1
-                    this.$message.success("收藏成功")
+                    this.$notify({
+                        title: '成功',
+                        message: "收藏成功",
+                        type: 'success'
+                    });
                 })
             }
         },
@@ -593,14 +628,22 @@ export default {
                 if (this.article.isLike) {
                     this.article.likeCount--;
                     this.article.isLike = false
-                    this.$message.success("取消成功");
+                    this.$notify({
+                        title: '成功',
+                        message: "取消点赞",
+                        type: 'success'
+                    });
                 } else {
                     this.article.likeCount++;
                     this.article.isLike = true
                     if (this.article.readType == 2) {
                         this.checkAfter()
                     }
-                    this.$message.success("点赞成功");
+                    this.$notify({
+                        title: '成功',
+                        message: "点赞成功",
+                        type: 'success'
+                    });
                 }
 
             }).catch(err => {
@@ -1070,6 +1113,7 @@ export default {
                 transition: box-shadow .35s, transform .35s;
                 cursor: pointer;
                 max-height: 500px;
+                width: 100%;
 
                 &:hover {
                     box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2);

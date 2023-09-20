@@ -447,11 +447,19 @@ export default {
                 text: () => value
             })
             clipboard.on('success', () => {
-                this.$message.success("复制成功");
+                this.$notify({
+                    title: '成功',
+                    message: "复制成功",
+                    type: 'success'
+                });
                 clipboard.destroy()
             })
             clipboard.on('error', () => {
-                this.$message.error('复制失败');
+                this.$notify({
+                    title: '失败',
+                    message: "复制失败",
+                    type: 'error'
+                });
                 clipboard.destroy()
             })
         },
@@ -1052,7 +1060,7 @@ export default {
                     transition: box-shadow .35s, transform .35s;
 
                     &:hover {
-                        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+                        box-shadow: 5px 8px 3px rgba(126, 35, 165, 0.4);
                         transform: translateY(-2px)
                     }
 
