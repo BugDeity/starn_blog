@@ -41,4 +41,5 @@
     --article-sercet-backcolor: #dcdfe6;
     --menu-background-color: #b5d1ec;
     --friend-tip-color: #f5f5f5;
+    --article-srect-background: repeating-linear-gradient(145deg, #f2f6fc, #f2f6fc 15px, #fff 0, #fff 25px);
 }

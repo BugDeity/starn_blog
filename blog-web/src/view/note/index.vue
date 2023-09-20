@@ -380,7 +380,7 @@ export default {
                             border-radius: 5px;
 
                             &:hover {
-                                box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+                                box-shadow: 5px 8px 3px rgba(126, 35, 165, 0.4);
                                 transform: translateY(-2px)
                             }
 

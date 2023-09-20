@@ -939,14 +939,14 @@ export default {
         margin-top: 80px;
 
         .category {
-            border-radius: 5px;
+            border-radius: 3px;
             cursor: url(https://img.shiyit.com/link.cur), pointer;
-            transition: transform .5s;
+            transition: transform .35s;
             height: 30px;
             line-height: 30px;
 
             &:hover {
-                transform: scale(1.1);
+                transform: translateY(-5px)
             }
         }
 
@@ -1048,7 +1048,7 @@ export default {
 
         .box-article {
             .warpper {
-                background-color: var(--article-sercet-backcolor);
+                background: var(--article-srect-background);
                 position: relative;
                 height: 210px;
                 padding: 5px;

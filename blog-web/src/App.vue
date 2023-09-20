@@ -12,7 +12,13 @@ export default {
   name: 'App',
 
   created() {
-    report();
+    report().then(res => {
+      this.$notify({
+        title: '欢迎来自 ' + res.data.split("|")[2] + ' 的朋友',
+        message: "但愿本博客能够值得你喜欢以及常来",
+        type: 'success'
+      });
+    });
   },
   beforeCreate() {
     if (getSkin() == null) {

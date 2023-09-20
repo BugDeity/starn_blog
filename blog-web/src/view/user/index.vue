@@ -8,16 +8,19 @@
                         <div class="menu">
                             <ul>
                                 <li @click="handleUpdateInfo">
-                                    <i class="el-icon-edit"></i> 修改资料
+                                    <svg-icon icon-class="edit"></svg-icon> 修改资料
                                 </li>
                                 <li @click="handleClikeMoreData">
-                                    <i class="el-icon-user"></i> 更多资料
+                                    <svg-icon icon-class="xiangqing"></svg-icon> 更多资料
                                 </li>
                                 <li>
                                     <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
                                         :action="uploadPictureHost" :http-request="uploadBjCoverFile" multiple>
-                                        <i class="el-icon-camera"></i> 修改封面
+                                        <svg-icon icon-class="photo"></svg-icon> 修改封面
                                     </el-upload>
+                                </li>
+                                <li @click="feedbackDialogTableVisible = true">
+                                    <svg-icon icon-class="feedback"></svg-icon> 添加反馈
                                 </li>
                             </ul>
                         </div>
@@ -235,13 +238,33 @@
                 <el-button type="primary" @click="updateUserInfo">提交</el-button>
             </span>
         </el-dialog>
+
+        <!-- 添加反馈弹出框 -->
+        <el-dialog title="添加反馈" center :visible.sync="feedbackDialogTableVisible" :lock-scroll="false"
+            :close-on-click-modal="false">
+            <el-form label-position="left" label-width="100px" :model="form" :rules="rules" ref="ruleForm">
+                <el-form-item label="反馈类型:" prop="type">
+                    <el-radio v-model="form.type" label="1">需求</el-radio>
+                    <el-radio v-model="form.type" label="2">缺陷</el-radio>
+                </el-form-item>
+                <el-form-item label="反馈标题:" prop="title">
+                    <el-input v-model="form.title"></el-input>
+                </el-form-item>
+                <el-form-item label="详细内容：" prop="content">
+                    <el-input v-model="form.content"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="insertFeedback">提交</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
    
 <script>
 import {
     updateUserInfo, getUserInfo, upload, getMyArticle,
-    deleteMyArticle
+    deleteMyArticle, addFeedback
 } from '@/api'
 
 import { cancelCollect, getCollect } from '@/api/collect'
@@ -263,6 +286,7 @@ export default {
             files: {},
             dialogTableVisible: false,
             editDialogTableVisible: false,
+            feedbackDialogTableVisible: false,
             tagStyle: ["success", "warning", "danger", "info"],
             btnList: ["文章", "收藏", "笔记"],
             btnList: [
@@ -282,6 +306,18 @@ export default {
             today: new Date().getFullYear() + '-' + (new Date().getMonth() + 1 < 10 ? ('0' + (new Date().getMonth() + 1)) : new Date().getMonth() + 1) + '-'
                 + (new Date().getDate() < 10 ? ('0' + new Date().getDate()) : new Date().getDate()),
             isTodaySign: false,
+            rules: {
+                title: [
+                    { required: true, message: '请输入反馈标题', trigger: 'blur' },
+                ],
+                type: [
+                    { required: true, message: '请选择反馈类型', trigger: 'blur' },
+                ],
+                content: [
+                    { required: true, message: '请输入反馈详细内容', trigger: 'blur' },
+                ],
+
+            }
 
         }
     },
@@ -290,6 +326,25 @@ export default {
         this.validateTodayIsSign()
     },
     methods: {
+        insertFeedback() {
+            this.$refs['ruleForm'].validate((valid) => {
+                if (valid) {
+                    addFeedback(this.form).then(res => {
+                        this.$notify({
+                            title: '成功通知',
+                            message: "反馈成功",
+                            type: 'success'
+                        });
+                        this.feedbackDialogTableVisible = false
+                        this.form = {}
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+
+        },
         validateTodayIsSign() {
             validateTodayIsSign().then(res => {
                 if (res.data != null) {
@@ -625,9 +680,10 @@ export default {
             .more {
                 position: absolute;
                 right: 20px;
-                bottom: 15px;
-                color: rgba(0, 0, 0, .8);
+                bottom: 10px;
+                color: var(--theme-color);
                 cursor: url(https://img.shiyit.com/link.cur), pointer;
+                font-size: 20px;
 
                 .menu {
                     background-color: var(--background-color);
@@ -635,13 +691,13 @@ export default {
                     padding: 10px 0;
                     border-radius: 5px;
                     font-size: 0.9rem;
-                    width: 100px;
                     text-align: center;
                     position: absolute;
-                    right: 0px;
-                    bottom: 15px;
+                    right: -15px;
+                    bottom: 20px;
                     display: none;
                     animation: fade-in 0.3s linear 1;
+                    width: 120px;
 
                     @keyframes fade-in {
                         0% {
@@ -659,25 +715,25 @@ export default {
 
                     li {
                         padding: 5px;
+                        transition: transform .35s !important;
 
                         &:hover {
                             color: var(--theme-color);
-                            background-color: #9093994a;
+                            transform: translateX(6px);
                         }
 
+                        svg {
+                            width: 20px;
+                            height: 20px;
+                            vertical-align: -5px;
+                        }
                     }
                 }
 
                 &:hover {
-                    .moreBtn {
-                        color: var(--theme-color);
-                    }
-
                     .menu {
                         display: block;
-
                     }
-
                 }
             }
         }
@@ -725,6 +781,7 @@ export default {
                         font-weight: 700;
                         background: radial-gradient(circle at 49.86% 48.37%, #0090ff 0, #0089ff 3.33%, #3a82ff 6.67%, #717aff 10%, #9371fb 13.33%, #ae67ef 16.67%, #c45de1 20%, #d652d2 23.33%, #e448c2 26.67%, #ef3eb0 30%, #f7369e 33.33%, #fd318c 36.67%, #ff317a 40%, #ff3569 43.33%, #fd3d57 46.67%, #f94646 50%, #f35035 53.33%, #ea5a22 56.67%, #e16308 60%, #d56d00 63.33%, #c97500 66.67%, #bb7d00 70%, #ac8300 73.33%, #9d8900 76.67%, #8c8f00 80%, #7a9300 83.33%, #669700 86.67%, #4f9b00 90%, #309e0e 93.33%, #00a029 96.67%, #00a23d 100%);
                         -webkit-background-clip: text;
+                        background-clip: text;
                         -webkit-text-fill-color: transparent;
                     }
                 }

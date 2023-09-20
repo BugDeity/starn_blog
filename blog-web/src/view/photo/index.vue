@@ -134,7 +134,7 @@ export default {
                 color: #fff;
                 font-weight: 500;
                 line-height: 30px;
-                background: var(--theme-color);
+                background-color: rgba(0, 0, 0, 1);
                 border-radius: 2px 2px 2px 0;
                 box-shadow: 2px 5px 10px rgba(49, 58, 70, .15);
                 user-select: none;
@@ -143,7 +143,7 @@ export default {
                     position: absolute;
                     bottom: -10px;
                     left: -10px;
-                    border-color: var(--theme-color) transparent transparent;
+                    border-color: rgba(0, 0, 0, 1) transparent transparent;
                     border-style: solid;
                     border-width: 10px;
                     -webkit-transform: rotate(90deg);
@@ -154,7 +154,7 @@ export default {
                 svg {
                     width: 20px;
                     height: 20px;
-                    vertical-align: -3px;
+                    vertical-align: -5px;
                 }
             }
 

@@ -63,7 +63,7 @@ public class ApiHomeServiceImpl implements ApiHomeService {
         // 访问量+1
         redisService.incr(RedisConstants.BLOG_VIEWS_COUNT, 1);
 
-        return ResponseResult.success();
+        return ResponseResult.success(IpUtil.getIp2region(ipAddress));
     }
 
     /**
