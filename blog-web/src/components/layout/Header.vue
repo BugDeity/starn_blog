@@ -568,6 +568,17 @@ export default {
                         background-color: var(--theme-color);
                         margin: 0 auto;
                         text-align: center;
+                        animation: fade-in 0.3s linear 1;
+                    }
+
+                    @keyframes fade-in {
+                        0% {
+                            transform: scale(0);
+                        }
+
+                        100% {
+                            transform: scale(1);
+                        }
                     }
 
                     svg {

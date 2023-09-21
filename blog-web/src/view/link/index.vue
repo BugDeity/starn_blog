@@ -363,6 +363,7 @@ export default {
                         height: 50px;
                         width: 50px;
                         margin: 0 10px;
+                        transition: width .35s !important;
 
                         img {
                             width: inherit;
@@ -421,16 +422,15 @@ export default {
                 &:hover {
                     &::before {
                         transform: scale(1);
+                    }
 
+                    .avatarItem {
+                        width: 0;
                     }
 
                     .item-content .info,
                     .name {
                         color: #fff !important;
-                    }
-
-                    img {
-                        transform: rotate(360deg);
                     }
 
                     box-shadow: 2px 2px 10px 5px #49b0f563;

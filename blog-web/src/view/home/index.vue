@@ -35,185 +35,98 @@
 
             <div class="content">
                 <!-- 左侧内容 -->
-                <div class="articleBox" v-if="articleList.length > 0">
-                    <el-card class="articleItem" v-for="(item, index) in articleList" :key="item.id">
-                        <div class="articleInfo">
-                            <div class="articleInfo-item">
-                                <el-tooltip class="item" effect="dark" content="原创文章" placement="top">
-                                    <span v-if="item.isOriginal" class="original">
-                                        <i class="el-icon-tickets"></i>
-                                    </span>
-                                </el-tooltip>
+                <div style="width: 100%;">
+                    <div class="articleBox" v-if="articleList.length > 0">
+                        <el-card class="articleItem" v-for="(item, index) in articleList" :key="item.id">
+                            <div class="articleInfo">
+                                <div class="articleInfo-item">
+                                    <el-tooltip class="item" effect="dark" content="原创文章" placement="top">
+                                        <span v-if="item.isOriginal" class="original">
+                                            <i class="el-icon-tickets"></i>
+                                        </span>
+                                    </el-tooltip>
 
-                                <span v-if="item.isStick" class="top">置顶</span>
-                                <router-link :to="'/article/' + item.id">
-                                    <h3>{{ item.title }}</h3>
-                                </router-link>
-                                <p>
-                                    {{ item.summary }}
-                                </p>
-                            </div>
-                            <router-link :to="'/article/' + item.id">
-                                <div class="articleImgBox" style="">
-                                    <img class="articleImg" v-lazy="item.avatar" :key="item.avatar">
+                                    <span v-if="item.isStick" class="top">置顶</span>
+                                    <router-link :to="'/article/' + item.id">
+                                        <h3>{{ item.title }}</h3>
+                                    </router-link>
+                                    <p>
+                                        {{ item.summary }}
+                                    </p>
                                 </div>
-                            </router-link>
+                                <router-link :to="'/article/' + item.id">
+                                    <div class="articleImgBox" style="">
+                                        <img class="articleImg" v-lazy="item.avatar" :key="item.avatar">
+                                    </div>
+                                </router-link>
 
-                        </div>
-                        <div class="bottumItem">
-                            <div class="articleUser">
-                                <el-avatar class="userAvatar" :src="item.userAvatar"></el-avatar>
-                                <span>{{ item.username }}</span>
                             </div>
+                            <div class="bottumItem">
+                                <div class="articleUser">
+                                    <el-avatar class="userAvatar" :src="item.userAvatar"></el-avatar>
+                                    <span>{{ item.username }}</span>
+                                </div>
 
-                            <div class="tag">
-                                <el-tooltip class="item" effect="dark" content="文章分类" placement="top">
-                                    <el-tag size="mini" @click="handleClike(item.categoryId, '/categorys')">
-                                        <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
-                                    </el-tag>
-                                </el-tooltip>
-                                <el-tooltip class="item" effect="dark" content="文章标签" placement="top"
-                                    v-for="tag in item.tagList" :key="tag.id">
-                                    <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
-                                        @click="handleClike(tag.id, '/tag')">
-                                        <i class="el-icon-collection-tag"></i>
-                                        {{ tag.name }}
-                                    </el-tag>
-                                </el-tooltip>
-                            </div>
+                                <div class="tag">
+                                    <el-tooltip class="item" effect="dark" content="文章分类" placement="top">
+                                        <el-tag size="mini" @click="handleClike(item.categoryId, '/categorys')">
+                                            <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
+                                        </el-tag>
+                                    </el-tooltip>
+                                    <el-tooltip class="item" effect="dark" content="文章标签" placement="top"
+                                        v-for="tag in item.tagList" :key="tag.id">
+                                        <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
+                                            @click="handleClike(tag.id, '/tag')">
+                                            <i class="el-icon-collection-tag"></i>
+                                            {{ tag.name }}
+                                        </el-tag>
+                                    </el-tooltip>
+                                </div>
 
-                            <div class="articleOhter">
-                                <span class="item">
-                                    <i class="el-icon-view"></i>
-                                    <span class="name">阅读</span>{{ item.quantity }}
-                                </span>
-                                <span class="item">
-                                    <i class="el-icon-chat-dot-round"></i>
-                                    <span class="name">评论</span>{{ item.commentCount }}
-                                </span>
-                                <span class="item">
-                                    <span v-if="item.isCollect">
-                                        <i style="font-size: 1rem;" class="el-icon-star-on"></i>
-                                        <span class="name">收藏</span>{{ item.collectCount }}
+                                <div class="articleOhter">
+                                    <span class="item">
+                                        <i class="el-icon-view"></i>
+                                        <span class="name">阅读</span>{{ item.quantity }}
                                     </span>
-                                    <span v-else>
-                                        <i style="font-size: 1rem;" class="el-icon-star-off"></i>
-                                        <span class="name">收藏</span>{{ item.collectCount }}
+                                    <span class="item">
+                                        <i class="el-icon-chat-dot-round"></i>
+                                        <span class="name">评论</span>{{ item.commentCount }}
                                     </span>
-                                </span>
-                                <span class="item">
-                                    <i style="font-size: 0.8rem;" class="iconfont icon-dianzan1"></i>
-                                    <span class="name">赞</span>{{ item.likeCount }}
-                                </span>
-                                <span class="item">
-                                    <i class="el-icon-time"></i>{{ item.formatCreateTime }}
-                                </span>
+                                    <span class="item">
+                                        <span v-if="item.isCollect">
+                                            <i style="font-size: 1rem;" class="el-icon-star-on"></i>
+                                            <span class="name">收藏</span>{{ item.collectCount }}
+                                        </span>
+                                        <span v-else>
+                                            <i style="font-size: 1rem;" class="el-icon-star-off"></i>
+                                            <span class="name">收藏</span>{{ item.collectCount }}
+                                        </span>
+                                    </span>
+                                    <span class="item">
+                                        <i style="font-size: 0.8rem;" class="iconfont icon-dianzan1"></i>
+                                        <span class="name">赞</span>{{ item.likeCount }}
+                                    </span>
+                                    <span class="item">
+                                        <i class="el-icon-time"></i>{{ item.formatCreateTime }}
+                                    </span>
+                                </div>
                             </div>
+                        </el-card>
+                        <!-- 分页按钮 -->
+                        <div>
+                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
                         </div>
-                    </el-card>
-                    <!-- 分页按钮 -->
-                    <div>
-                        <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
+
                     </div>
-
+                    <sy-empty v-else message="很抱歉，暂无文章" />
                 </div>
-                <sy-empty v-else message="很抱歉，暂无文章" />
+
 
                 <!-- 右侧内容 -->
                 <div class="rightBox">
-                    <!-- 登录提示框 -->
-                    <!-- <el-card v-if="!$store.state.userInfo" class="box-card">
-                        <div style="margin-bottom: 15px;margin-top: 10px;">
-                            登录网站，开启你的创作之旅：
-                        </div>
-                        <div style="margin-bottom: 15px;margin-top: 30px;">
-                            <span>
-                                <i class="el-icon-cloudy"></i>参与互动评论
-                            </span>
-                            <span style="margin-left: 20px;">
-                                <i class="el-icon-cloudy"></i>发表优质文章
-                            </span>
-
-                            <el-button style="margin-top: 20px;width: 100%;" size="small" type="success"
-                                @click="handleLogin">立即登录</el-button>
-                        </div>
-                    </el-card> -->
-                    <!-- 个人信息 -->
-                    <!-- <el-card v-else class="box-card myUserInfo">
-                        <div style="margin-bottom: 15px;margin-top: 10px;">
-                            <a href="javascript:;" @click="openUserInfoDrawer(null)" style="display: flex;">
-                                <el-avatar style="border: 1px solid var(--border-line);"
-                                    :src="$store.state.userInfo.avatar"></el-avatar>
-                                <div class="userInfo">
-                                    <p class="nickname">{{ $store.state.userInfo.nickname }}</p>
-                                    <p class="intor">{{ $store.state.userInfo.intro ? $store.state.userInfo.intro
-                                        : '这个博主很懒，什么都没有留下' }}</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div style="margin-bottom: 15px;margin-top: 30px;display: flex;">
-                            <span class="myArticle" @click="openUserInfoDrawer('article')">
-                                <div>
-                                    {{ $store.state.userInfo.articleCount }}
-                                </div>
-                                <div class="name">
-                                    文章
-                                </div>
-                            </span>
-                            <span class="myComment" @click="openUserInfoDrawer('comment')">
-                                <div>
-                                    {{ $store.state.userInfo.commentCount }}
-                                </div>
-                                <div class="name">
-                                    评论
-                                </div>
-                            </span>
-                            <span class="myNote" @click="openUserInfoDrawer('note')">
-                                <div>
-                                    {{ $store.state.userInfo.noteCount }}
-                                </div>
-                                <div class="name">
-                                    笔记
-                                </div>
-                            </span>
-                            <span class="myCollect" @click="openUserInfoDrawer('collect')">
-                                <div>
-                                    {{ $store.state.userInfo.collectCount }}
-                                </div>
-                                <div class="name">
-                                    收藏
-                                </div>
-                            </span>
-                            <span class="myFans">
-                                <div>
-                                    {{ $store.state.userInfo.fansCount }}
-                                </div>
-                                <div class="name">
-                                    粉丝
-                                </div>
-                            </span>
-                        </div>
-
-                        <div class="qidayBox">
-                            <span class="qidayFans">
-                                <div class="name">
-                                    7日新增粉丝量
-                                </div>
-                                <div>
-                                    {{ $store.state.userInfo.qiDayFollowedCount }}
-                                </div>
-                            </span>
-                            <span class="qidayYuedu">
-                                <div class="name">
-                                    7日新增阅读量
-                                </div>
-                                <div>
-                                    0
-                                </div>
-                            </span>
-                        </div>
-                    </el-card> -->
-
+                    <el-card class="box-card">
+                        <img style="width: 100%;" src="https://img.shiyit.com/1.jpg" alt="">
+                    </el-card>
                     <!-- 推荐文章 -->
                     <el-card class="box-card recomArticle">
                         <div class="clearfix">
@@ -373,7 +286,7 @@ export default {
             emojis: [],
             pageData: {
                 pageNo: 1,
-                pageSize: 8,
+                pageSize: 10,
             },
             activeName: "0",
             bannerList: [],
@@ -720,61 +633,6 @@ export default {
                         }
                     }
 
-                }
-
-                .myUserInfo {
-                    a {
-                        text-decoration: none;
-
-                    }
-
-                    .qidayBox {
-                        display: flex;
-                        background-color: var(--home-user-back-color);
-                        padding: 10px 0;
-
-                        .qidayFans,
-                        .qidayYuedu {
-                            width: 50%;
-                        }
-                    }
-
-                    .userInfo {
-                        margin-left: 10px;
-
-                        .nickname {
-                            color: var(--article-color);
-                            font-weight: 700;
-                        }
-
-                        .intor {
-                            font-size: 0.9rem;
-                            color: var(--text-color);
-                            margin-top: 2px;
-                        }
-                    }
-
-                    .myArticle,
-                    .myComment,
-                    .myCollect,
-                    .myNote,
-                    .myFans,
-                    .qidayFans,
-                    .qidayYuedu {
-                        text-align: center;
-                        margin-left: 20px;
-                        width: 20%;
-                        cursor: url(https://img.shiyit.com/link.cur), pointer;
-
-                        .name {
-                            margin-top: 2px;
-                        }
-                    }
-
-                    .qidayFans,
-                    .qidayYuedu {
-                        margin: 0;
-                    }
                 }
 
                 .recomArticle {
