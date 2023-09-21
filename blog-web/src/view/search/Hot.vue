@@ -261,7 +261,7 @@ export default {
                 height: calc(100% - 2px);
                 border: 1px solid var(--hot-border-color);
 
-                line-height: 36px;
+                line-height: 38px;
                 border-right: none;
                 padding-left: 20px;
                 padding-right: 20px;

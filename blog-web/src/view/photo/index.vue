@@ -251,19 +251,15 @@ export default {
                     bottom: 0;
                     left: 0;
                     padding: 5px;
-                    opacity: 0;
+                    transform: translateX(150px);
                     text-align: center;
                     color: var(--baise);
-
+                    transition: transform .35s ease-in-out;
                 }
 
                 &:hover {
-                    box-shadow: 5px 4px 8px 6px rgba(2, 6, 10, 0.06);
-                    transition: all .3s;
-
                     .desc {
-                        opacity: 1;
-                        transition: all 0.5s;
+                        transform: translateY(0);
                     }
 
                     .overlay {
@@ -272,7 +268,6 @@ export default {
 
                     img {
                         transform: scale(1.2);
-
                     }
                 }
 
