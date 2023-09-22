@@ -2,7 +2,7 @@
     <div class="say-main">
         <div class="containner">
             <div class="cover">
-                <img src="https://img-img.lwgzs.cn/img/3/zwbo/2022/12/d53aeb78abc8-scaled.jpg" alt="">
+                <img src="http://img.shiyit.com/72d9854940be46579f098b49f9d9035c.jpg" alt="">
                 <div class="info">说说</div>
             </div>
             <div class="contentBox">

@@ -9,7 +9,12 @@ export const setSkin = function () {
         link.type = "text/css";
         link.id = "theme";
         link.rel = "stylesheet";
-        link.href = `./assets/${skin}.css`;
+        if (window.location.href.indexOf("article") != -1) {
+            link.href = `../assets/${skin}.css`;
+
+        } else {
+            link.href = `./assets/${skin}.css`;
+        }
         document.getElementsByTagName("head")[0].appendChild(link);
     }, 100);
 }
