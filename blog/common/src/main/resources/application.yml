@@ -56,13 +56,13 @@ task:
 
 #==============================公众号配置==============================
 wechat:
-  app-id: wx353b7afac6ad0fa1
+  app-id:
   # 公众号AppSecret
-  secret: 65eb00eeebdd0ea03300036707c1ab98
+  secret:
   # 公众号Token
-  token: shiyi2022
+  token:
   # 公众号AES Key
-  aesKey: F4PBhRxwb9fCoe6TGfetnSMLtZObf29MhpGrFZXPzCF
+  aesKey:
 
 #==============================Sa-Token配置==============================
 sa-token:
