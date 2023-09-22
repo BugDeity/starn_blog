@@ -48,7 +48,7 @@ service.interceptors.response.use(
     // 401: Illegal token;
     if (res.code === 401) {
       // to re-login
-      MessageBox.confirm(res.message, 'Confirm logout', {
+      MessageBox.confirm(res.message, '提示', {
         confirmButtonText: '重新登录',
         cancelButtonText: '取消',
         type: 'warning'

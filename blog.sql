@@ -1379,4 +1379,33 @@ CREATE TABLE `b_web_config`  (
 -- ----------------------------
 INSERT INTO `b_web_config` VALUES (1, 'http://img.shiyit.com/9cf1222617fd4fa197991476a53cc883.jpg', '拾壹博客', '一个专注技术分享的平台', '拾壹,拾壹博客', '拾壹', '湘ICP备2022002110号-1', '2021-11-27 13:43:16', '2022-01-20 13:30:44', 'http://www.shiyit.com', 'http://img.shiyit.com/alipay.jpg', '\r\nhttp://img.shiyit.com/wxpay.jpg', 'https://github.com/quequnlong', 'https://gitee.com/quequnlong', '1248954763', '779881756', '1248954763@qq.com', '1248954763', '1,3,4,2,5,6', '1,2,5,6,4', '1', 1, 'http://img.shiyit.com/66bb121d47e94b89945d29bb6e3e6cab.jpg', '如果本项目对你有帮助，请前往码云给仓库点上你的小星星', '正在努力搬砖~~~~', 'http://img.shiyit.com/chihuo.png', '<h4 style=\"line-height: 2;\">关于我</h4><p style=\"line-height: 2;\">拾壹是一个并非科班的java博主，目前正在努力学习Java和前端技术</p><p style=\"line-height: 2;\"><span style=\"color: rgb(225, 60, 57);\">本来想着入了这行有点高级，收入也应该不菲，原来都是错觉!</span></p><p style=\"line-height: 2;\"><span style=\"color: rgb(247, 89, 171);\">入行到现在，钱鸡毛没赚下，b装的不少，人胖了不少，关键枸杞也没少买！还好头发尚在！😀😀</span></p><p style=\"line-height: 2;\"><img src=\"https://pic2.zhimg.com/v2-77d8d8fad8c2425d62f935d7dece19a9_b.gif\" alt=\"\" data-href=\"https://pic2.zhimg.com/v2-77d8d8fad8c2425d62f935d7dece19a9_b.gif\" style=\"width: 220.00px;height: 220.00px;\"></p><h4 style=\"line-height: 2;\">项目背景</h4><p>由于本人喜欢研究各种新东西，特别是博客，见到漂亮的博客系统就也想部署一份。但是呢，很多好看的系统都是用的建站软件开发的，所以并没有源码，有源码也不是我特别喜欢的类型。所以就干脆自己写一个让自己满意的。</p><p>终于耗时几个世纪的夜晚，“<span style=\"color: rgb(225, 60, 57);\">拾壹博客</span>”终于问世。期间有各种bug，不过经过我的缝缝补补，总算可以完美运行。特此将项目进行开源，给大家使用。</p><h4 style=\"line-height: 2;\">项目框架</h4><p style=\"line-height: 2;\">前端使用了<span style=\"color: rgb(64, 169, 255);\">Vue+Elmentui</span>，能够更加容易得进行扩展</p><p style=\"line-height: 2;\">后端使用的<span style=\"color: rgb(64, 169, 255);\">Spring Boot+Mysql+Mybatis-Plus</span>框架</p><h4 style=\"line-height: 2;\">源码</h4><p style=\"line-height: 2;\">目前博客源码已经开源至 <a href=\"https://gitee.com/quequnlong/shiyi-blog\" target=\"_blank\">码云</a> ，感兴趣的小伙伴可以star fork关注一下下~</p><p style=\"line-height: 2;\">Gitee地址：<a href=\"https://gitee.com/quequnlong/shiyi-blog\" target=\"_blank\">[https://gitee.com/quequnlong/shiyi-blog]()</a></p><p style=\"line-height: 2;\"><br></p>', 0);
 
+-- ----------------------------
+-- Table structure for b_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `b_say`;
+CREATE TABLE `b_say` (
+     `id` varchar(100) NOT NULL COMMENT '主键id',
+     `user_id` varchar(100) NOT NULL COMMENT '用户id',
+     `img_url` mediumtext COMMENT '图片地址 逗号分隔  最多九张',
+     `content` mediumtext NOT NULL COMMENT '内容',
+     `address` varchar(255) DEFAULT NULL COMMENT '发表地址。可输入或者地图插件选择',
+     `is_public` int(11) DEFAULT NULL COMMENT '是否开放查看  0未开放 1开放',
+     `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '发表时间',
+     `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+        PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='说说表';
+
+DROP TABLE IF EXISTS `b_say_comment`;
+CREATE TABLE `b_say_comment` (
+     `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id ',
+     `say_id` varchar(255) NOT NULL COMMENT '说说id',
+     `user_id` varchar(255) NOT NULL COMMENT '用户id',
+     `reply_user_id` varchar(255) DEFAULT NULL COMMENT '回复用户id',
+     `content` varchar(500) NOT NULL COMMENT '内容',
+     `ip` varchar(200) DEFAULT NULL COMMENT 'ip地址',
+     `ip_address` varchar(255) DEFAULT NULL COMMENT 'ip来源',
+     `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+     PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='说说评论表';
+
 SET FOREIGN_KEY_CHECKS = 1;

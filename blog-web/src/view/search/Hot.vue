@@ -252,14 +252,14 @@ export default {
             /deep/ .el-input__inner {
                 border-radius: 0 !important;
                 background-color: var(--background-color);
-                border: 1px solid var(--hot-border-color);
+                border: 1px solid var(--border-line);
 
             }
 
             .siteBox {
                 display: inline-block;
                 height: calc(100% - 2px);
-                border: 1px solid var(--hot-border-color);
+                border: 1px solid var(--border-line);
 
                 line-height: 38px;
                 border-right: none;
@@ -290,7 +290,7 @@ export default {
                 display: inline-block;
                 height: calc(100% - 2px);
                 line-height: 36px;
-                border: 1px solid var(--hot-border-color);
+                border: 1px solid var(--border-line);
                 border-left: none;
                 padding-left: 20px;
                 padding-right: 20px;

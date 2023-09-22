@@ -2,6 +2,8 @@ package com.shiyi.service;
 
 import com.shiyi.entity.FriendLink;
 
+import javax.mail.MessagingException;
+
 public interface EmailService {
 
 
@@ -30,4 +32,11 @@ public interface EmailService {
      * @param friendLink 友链对象
      */
     void sendFriendEmail(FriendLink friendLink);
+
+    /**
+     * 发送邮箱验证码
+     * @param email
+     * @throws MessagingException
+     */
+    public void sendCode(String email) throws MessagingException;
 }

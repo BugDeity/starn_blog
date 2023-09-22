@@ -7,7 +7,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.shiyi.common.RedisConstants;
 import com.shiyi.common.ResponseResult;
+import com.shiyi.common.ResultCode;
 import com.shiyi.dto.EmailLoginDTO;
+import com.shiyi.dto.EmailRegisterDTO;
 import com.shiyi.dto.UserInfoDTO;
 import com.shiyi.entity.User;
 import com.shiyi.entity.UserInfo;
@@ -18,17 +20,19 @@ import com.shiyi.mapper.FollowedMapper;
 import com.shiyi.mapper.UserInfoMapper;
 import com.shiyi.mapper.UserMapper;
 import com.shiyi.service.ApiUserService;
+import com.shiyi.service.EmailService;
 import com.shiyi.service.RedisService;
 import com.shiyi.utils.*;
 import com.shiyi.vo.UserInfoVO;
-import com.shiyi.vo.WxUserInfoVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.zhyd.oauth.model.AuthResponse;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -50,6 +54,8 @@ public class ApiUserServiceImpl implements ApiUserService {
     private final UserInfoMapper userInfoMapper;
 
     private final FollowedMapper followedMapper;
+
+    private final EmailService emailService;
 
     private final String[] userAvatarList = {"http://img.shiyit.com/avatars/buxie.png","http://img.shiyit.com/avatars/daizhi.png",
             "http://img.shiyit.com/avatars/fennu.png","http://img.shiyit.com/avatars/jingxi.png","http://img.shiyit.com/avatars/kaixin.png",
@@ -200,13 +206,8 @@ public class ApiUserServiceImpl implements ApiUserService {
     @Override
     public ResponseResult selectUserInfoByToken(String token) {
         Object userId = StpUtil.getLoginIdByToken(token);
-        if (userId == null) {
-            throw new BusinessException("无效的token");
-        }
 
         UserInfoVO userInfoVO = userMapper.selectInfoByUserIdNew(userId);
-//        int  followedCount = followedMapper.countQiDay(userInfoVO.getId());
-//        userInfoVO.setQiDayFollowedCount(followedCount);
         return ResponseResult.success(userInfoVO);
     }
 
@@ -272,37 +273,45 @@ public class ApiUserServiceImpl implements ApiUserService {
         httpServletResponse.sendRedirect("http://www.shiyit.com/?token=" + StpUtil.getTokenValue());
     }
 
-    /**
-     * 检查是否是一次登录
-     *
-     * @param wxMaUserInfo
-     * @return
-     */
-    private UserInfoVO checkIsRegister(WxUserInfoVO.WxMaUserInfo wxMaUserInfo) {
-        String ip = IpUtil.getIp();
-        String ipSource = IpUtil.getIp2region(ip);
+    @Override
+    public ResponseResult sendEmailCode(String email) {
+        try {
+            emailService.sendCode(email);
+            return ResponseResult.success();
+        } catch (MessagingException e) {
+            throw new BusinessException("发送邮件失败");
+        }
+    }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult emailRegister(EmailRegisterDTO emailRegisterDTO) {
+        //校验邮箱验证码
+        boolean b = redisService.hasKey(RedisConstants.EMAIL_CODE + emailRegisterDTO.getEmail());
+        if (!b) {
+            throw new BusinessException(ResultCode.ERROR_EXCEPTION_MOBILE_CODE);
+        }
+        UserInfoVO userInfoVO = userMapper.selectByUserName(emailRegisterDTO.getEmail());
+        if (ObjectUtils.isNotEmpty(userInfoVO)) {
+            throw new BusinessException("该邮箱账号已经注册");
+        }
         // 保存用户信息
         UserInfo userInfo = UserInfo.builder()
-                .nickname(wxMaUserInfo.getNickName())
-                .avatar(wxMaUserInfo.getAvatarUrl())
+                .nickname(emailRegisterDTO.getNickname())
+                .email(emailRegisterDTO.getEmail())
                 .build();
         userInfoMapper.insert(userInfo);
         // 保存账号信息
         User user = User.builder()
                 .userInfoId(userInfo.getId())
-                .username(wxMaUserInfo.getOpenId())
-                .password(AesEncryptUtils.aesEncrypt(wxMaUserInfo.getOpenId()))
-                .loginType(LoginTypeEnum.WECHAT.getType())
-                .lastLoginTime(DateUtil.getNowDate())
-                .ipAddress(ip)
-                .ipSource(ipSource)
+                .username(emailRegisterDTO.getEmail())
+                .password(UUID.randomUUID().toString())
+                .loginType(LoginTypeEnum.getType("email"))
                 .roleId(2)
+                .status(UserStatusEnum.normal.getCode())
                 .build();
         userMapper.insert(user);
-        //组装返回信息
-        return UserInfoVO.builder().id(user.getId()).loginType(user.getLoginType())
-                .avatar(userInfo.getAvatar()).email(userInfo.getEmail()).nickname(userInfo.getNickname())
-                .intro(userInfo.getIntro()).webSite(userInfo.getWebSite()).build();
+        return ResponseResult.success();
     }
+
 }

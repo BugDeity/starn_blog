@@ -337,6 +337,7 @@ export default {
                     overflow: auto;
                     zoom: 1;
                     border-radius: 5px;
+                    margin-bottom: 10px;
 
                     /deep/ .el-textarea__inner {
                         background-color: var(--background-color) !important;
@@ -346,8 +347,8 @@ export default {
 
                     .bottom {
                         height: 50px;
-                        margin-top: 10px;
                         position: relative;
+                        margin-top: 15px;
 
                         .category {
                             font-size: 0.9rem;
@@ -368,7 +369,6 @@ export default {
                 }
 
                 .noteItem {
-                    margin-top: 20px;
 
                     ul {
 

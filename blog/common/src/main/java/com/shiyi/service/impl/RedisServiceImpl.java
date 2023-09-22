@@ -64,6 +64,12 @@ public class RedisServiceImpl implements RedisService {
         return redisTemplate.expire(key, timeout, unit);
     }
 
+    @Override
+    public Set<Object> getCacheSet(final String key)
+    {
+        return redisTemplate.boundSetOps(key).members();
+    }
+
     /**
      * 获得缓存的基本对象。
      *
@@ -187,6 +193,8 @@ public class RedisServiceImpl implements RedisService {
     {
         return redisTemplate.opsForHash().multiGet(key, hKeys);
     }
+
+
 
     /**
      * 获得缓存的基本对象列表

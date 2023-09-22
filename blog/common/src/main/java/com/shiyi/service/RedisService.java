@@ -37,6 +37,8 @@ public interface RedisService {
      */
     boolean expire(String key, long timeout, TimeUnit unit);
 
+    Set<Object> getCacheSet( String key);
+
     /**
      * 获得缓存的基本对象。
      *

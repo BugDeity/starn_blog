@@ -2,6 +2,7 @@ package com.shiyi.service;
 
 import com.shiyi.common.ResponseResult;
 import com.shiyi.dto.EmailLoginDTO;
+import com.shiyi.dto.EmailRegisterDTO;
 import com.shiyi.dto.UserInfoDTO;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.zhyd.oauth.model.AuthResponse;
@@ -69,4 +70,12 @@ public interface ApiUserService {
      */
     public void authLogin(AuthResponse response, String source, HttpServletResponse httpServletResponse) throws IOException;
 
+    /**
+     * 发送邮箱验证码
+     * @param email
+     * @return
+     */
+    ResponseResult sendEmailCode(String email);
+
+    ResponseResult emailRegister(EmailRegisterDTO emailRegisterDTO);
 }

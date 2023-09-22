@@ -7,10 +7,10 @@ import com.shiyi.config.properties.GithubConfigProperties;
 import com.shiyi.config.properties.QqConfigProperties;
 import com.shiyi.config.properties.WeiboConfigProperties;
 import com.shiyi.dto.EmailLoginDTO;
+import com.shiyi.dto.EmailRegisterDTO;
 import com.shiyi.service.ApiUserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.exception.AuthException;
 import me.zhyd.oauth.model.AuthCallback;
@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 
-@Slf4j
 @RestController
 @RequestMapping("/oauth")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -86,6 +85,19 @@ public class ApiJustAuthController {
     @RequestMapping("/wechatLoginCode")
     public ResponseResult getWechatLoginCode() {
         return userService.getWechatLoginCode();
+    }
+
+    @ApiOperation(value = "发送邮箱验证码", httpMethod = "GET", response = ResponseResult.class, notes = "发送邮箱验证码")
+    @RequestMapping("/sendEmailCode")
+    public ResponseResult sendEmailCode(String email) {
+        return userService.sendEmailCode(email);
+    }
+
+    @AccessLimit
+    @RequestMapping(value = "/emailRegister",method = RequestMethod.POST)
+    @ApiOperation(value = "邮箱注册", httpMethod = "POST", response = ResponseResult.class, notes = "邮箱注册")
+    public ResponseResult emailRegister(@Valid @RequestBody EmailRegisterDTO emailRegisterDTO){
+        return userService.emailRegister(emailRegisterDTO);
     }
 
     /**

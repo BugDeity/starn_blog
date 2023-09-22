@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-dialog :lock-scroll="false" class="dialog" title="账号密码登录" :visible.sync="dialogFormVisible">
+        <el-dialog :lock-scroll="false" class="dialog" center title="账号密码登录" :visible.sync="dialogFormVisible">
             <el-form :model="form" :rules="rules" ref="ruleForm">
                 <el-form-item label="账号" :label-width="formLabelWidth" prop="email">
                     <el-input placeholder="请输入账号" @keyup.enter.native="login" v-model="form.email"
@@ -12,6 +12,11 @@
                 </el-form-item>
             </el-form>
             <el-button type="success" class="loginBtn" @click="login" round>登录</el-button>
+
+            <div class="regitstBtn">
+                <span class="regist" @click="handleRegister(1)">账号注册</span>
+                <span class="forget" @click="handleRegister(2)">忘记密码</span>
+            </div>
 
             <div>
                 <div class="social-login-title">社交账号登录</div>
@@ -37,7 +42,8 @@
         </el-dialog>
 
         <!-- 微信登录 -->
-        <el-dialog :lock-scroll="false" class="dialog" title="微信扫码登录" :visible.sync="wechatLoginFlag" :before-close="close">
+        <el-dialog :lock-scroll="false" class="dialog" title="微信扫码登录" center :visible.sync="wechatLoginFlag"
+            :before-close="close">
             <el-image class="wxImg" src="http://img.shiyit.com/wechatQr.jpg">
                 <div slot="error" class="image-slot">
                     加载中<span class="dot">...</span>
@@ -57,11 +63,70 @@
                 <el-button @click="bacKLogin">返回登录</el-button>
             </div>
         </el-dialog>
+
+        <!-- 邮箱注册 -->
+        <el-dialog :lock-scroll="false" class="dialog " title="邮箱注册" center :visible.sync="emailRegistFlag">
+            <el-form :model="form" :rules="rules" ref="ruleForm" label-position="left">
+                <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
+                    <el-input class="input" placeholder="请输入邮箱" v-model="form.email" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="昵称" :label-width="formLabelWidth" prop="password">
+                    <el-input class="input" placeholder="请输入昵称" v-model="form.nickname" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
+                    <el-input class="input" placeholder="请输入密码" v-model="form.password" autocomplete="off"
+                        show-password></el-input>
+                </el-form-item>
+                <el-form-item label="验证码" :label-width="formLabelWidth" prop="code">
+                    <div style="display: flex;">
+                        <el-input class="input" placeholder="请输入验证码" v-model="form.code" autocomplete="off"></el-input>
+                        <a v-if="countdown" class="send">发送</a>
+                        <a v-else class="send">{{ countdown }}s</a>
+                    </div>
+                </el-form-item>
+            </el-form>
+
+            <el-button type="danger" class="loginBtn" @click="login" round>注册</el-button>
+
+            <div class="goLoginBtn">
+                已有账号，<a @click="bacKLogin">去登录</a>
+            </div>
+        </el-dialog>
+
+
+        <!-- 忘记密码 -->
+        <el-dialog :lock-scroll="false" class="dialog " title="忘记密码" center :visible.sync="forgetFlag">
+            <el-form :model="form" :rules="rules" ref="ruleForm" label-position="left">
+                <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
+                    <el-input class="input" placeholder="请输入邮箱" v-model="form.email" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="新密码" :label-width="formLabelWidth" prop="password">
+                    <el-input class="input" placeholder="请输入密码" v-model="form.password" autocomplete="off"
+                        show-password></el-input>
+                </el-form-item>
+                <el-form-item label="验证码" :label-width="formLabelWidth" prop="code">
+                    <div style="display: flex;">
+                        <el-input class="input" placeholder="请输入验证码" v-model="form.code" autocomplete="off"></el-input>
+                        <a v-if="countdown" class="send">发送</a>
+                        <a v-else class="send">{{ countdown }}s</a>
+                    </div>
+                </el-form-item>
+            </el-form>
+
+            <el-button type="primary" class="loginBtn" @click="login" round>修改</el-button>
+
+            <div class="goLoginBtn">
+                已有账号，<a @click="bacKLogin">去登录</a>
+            </div>
+        </el-dialog>
+
+
+
     </div>
 </template>
 
 <script>
-import { emailLogin, wxIsLogin, openAuthUrl, getWechatLoginCode } from "@/api";
+import { emailLogin, wxIsLogin, openAuthUrl, getWechatLoginCode, sendEmailCode, emailRegister } from "@/api";
 import { setUrl, setToken } from '@/utils/cookieUtil'
 
 export default {
@@ -74,6 +139,8 @@ export default {
             code: null,
             timer: null,
             wechatLoginFlag: false,
+            emailRegistFlag: false,
+            forgetFlag: false,
             formLabelWidth: '80px',
             wechatLoginCode: null,
             countdown: 60, // 倒计时初始值为 60 秒
@@ -99,6 +166,39 @@ export default {
         },
     },
     methods: {
+        handleSendEmailCode() {
+            if (this.form.email == null || this.form.email == '') {
+                this.$notify({
+                    title: '失败',
+                    message: '请输入邮箱',
+                    type: 'error'
+                });
+                return
+            }
+            sendEmailCode(this.form.email).then(res => {
+                this.timer = setInterval(() => {
+                    if (this.countdown > 0) {
+                        this.countdown--;
+                    } else {
+                        clearInterval(this.timer);
+                        this.timer = null;
+                    }
+                }, 1000);
+                this.$notify({
+                    title: '成功',
+                    message: '验证码发送成功',
+                    type: 'success'
+                });
+            })
+        },
+        handleRegister(type) {
+            this.$store.state.loginFlag = false;
+            if (type == 1) {
+                this.emailRegistFlag = true
+            } else {
+                this.forgetFlag = true
+            }
+        },
         close() {
             clearInterval(this.timer);
             this.$store.state.loginFlag = false;
@@ -153,6 +253,8 @@ export default {
             clearInterval(this.timer);
             this.$store.state.loginFlag = true
             this.wechatLoginFlag = false
+            this.forgetFlag = false
+            this.emailRegistFlag = false
         },
         isShow(type) {
             return this.$store.state.webSiteInfo.loginTypeList.indexOf(type) != -1
@@ -254,6 +356,49 @@ export default {
         width: 50%;
     }
 
+    .regitstBtn {
+
+        .regist,
+        .forget {
+            cursor: url(https://img.shiyit.com/link.cur), pointer;
+
+            &:hover {
+                color: var(--theme-color);
+            }
+        }
+
+        .forget {
+            float: right;
+        }
+    }
+
+    /deep/ .input input {
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+
+
+    }
+
+    .send {
+        width: 18%;
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 14px;
+
+        &:hover {
+            color: var(--theme-color)
+        }
+    }
+
+    .goLoginBtn {
+        margin-top: 20px;
+
+        a {
+            color: red;
+        }
+    }
+
     .social-login-title {
         margin-top: 1.5rem;
         color: #b5b5b5;
@@ -289,7 +434,6 @@ export default {
         a {
             text-decoration: none;
             margin-left: 20px;
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
 
             svg {
                 width: 30px;

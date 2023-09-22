@@ -92,4 +92,15 @@ public class RedisConstants {
      * 微信登录状态
      */
     public static final String WX_LOGIN_USER_STATUE = "wx_login_user_statue:";
+
+    /**
+     * 说说点赞key
+     */
+    public static final String SAY_LIKE_KEY = "say_like:";
+    /**
+     * 说说用户点赞key
+     */
+    public static final String SAY_LIKE_USER = "say_like_user:";
+
+
 }

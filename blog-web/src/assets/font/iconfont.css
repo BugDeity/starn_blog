@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1692319612496') format('truetype');
+  src: url('iconfont.ttf?t=1695351271939') format('truetype');
 }
 
 .iconfont {
@@ -87,15 +87,19 @@
   content: "\e619";
 }
 
-.icon-biji:before {
-  content: "\e696";
-}
-
 .icon-shouye:before {
   content: "\e604";
 }
 
+.icon-dianzan:before {
+  content: "\e617";
+}
+
 .icon-resou:before {
   content: "\e61a";
+}
+
+.icon-quxiaodianzan:before {
+  content: "\e777";
 }
 

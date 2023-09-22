@@ -344,10 +344,6 @@ export default {
                 });
             });
         },
-        uploadBefore: function () {
-
-        },
-
 
         //发送图片
         uploadSectionFile: function (param) {
@@ -590,12 +586,12 @@ export default {
         },
         //发送消息
         send(content, type) {
-            this.$notify({
-                title: '失败',
-                message: "功能暂时关闭",
-                type: 'error'
-            });
-            return
+            // this.$notify({
+            //     title: '失败',
+            //     message: "功能暂时关闭",
+            //     type: 'error'
+            // });
+            // return
             if (typeof (WebSocket) == "undefined") {
                 console.log("您的浏览器不支持WebSocket");
                 return;

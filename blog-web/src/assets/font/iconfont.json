@@ -125,39 +125,46 @@
       "unicode_decimal": 58952
     },
     {
-      "icon_id": "647460",
+      "icon_id": "124084126",
       "name": "图片",
       "font_class": "tupian",
       "unicode": "e658",
       "unicode_decimal": 58968
     },
     {
-      "icon_id": "1240779",
+      "icon_id": "124084127",
       "name": "归档",
       "font_class": "guidang",
       "unicode": "e619",
       "unicode_decimal": 58905
     },
     {
-      "icon_id": "5482996",
-      "name": "笔记",
-      "font_class": "biji",
-      "unicode": "e696",
-      "unicode_decimal": 59030
-    },
-    {
-      "icon_id": "9675266",
+      "icon_id": "124084128",
       "name": "首页",
       "font_class": "shouye",
       "unicode": "e604",
       "unicode_decimal": 58884
     },
     {
-      "icon_id": "11874502",
+      "icon_id": "124084129",
+      "name": "点赞",
+      "font_class": "dianzan",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "124084130",
       "name": "热搜",
       "font_class": "resou",
       "unicode": "e61a",
       "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "124084131",
+      "name": "取消点赞",
+      "font_class": "quxiaodianzan",
+      "unicode": "e777",
+      "unicode_decimal": 59255
     }
   ]
 }

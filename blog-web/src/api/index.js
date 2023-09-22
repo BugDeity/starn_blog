@@ -168,6 +168,22 @@ export function getWechatLoginCode() {
 
     })
 }
+export function sendEmailCode(email) {
+    return request({
+        url: '/oauth/sendEmailCode',
+        method: 'get',
+        params: {
+            email: email
+        }
+    })
+}
+export function emailRegister(data) {
+    return request({
+        url: '/oauth/emailRegister',
+        method: 'post',
+        data
+    })
+}
 export function updateUserInfo(data) {
     return request({
         url: '/v1/user/',

@@ -1,19 +1,19 @@
 <template>
     <div class="toolbar">
-        <a href="javascript:void(0)" @click="handleGoIm" class="toolbar_item chat active">
+        <a href="javascript:void(0)" @click="handleGoIm" class="toolbar_item chat ">
             <el-tooltip class="item" effect="dark" content="聊天室" placement="left">
                 <svg-icon icon-class="chat"></svg-icon>
             </el-tooltip>
         </a>
 
-        <a href="javascript:void(0)" class="toolbar_item theme active" @click="setSkin()">
+        <a href="javascript:void(0)" class="toolbar_item theme" @click="setSkin()">
             <el-tooltip class="item" effect="dark" content="切换主题" placement="left">
                 <svg-icon v-if="skin == 'deep'" icon-class="shallow"></svg-icon>
                 <svg-icon v-else icon-class="deep"></svg-icon>
             </el-tooltip>
         </a>
 
-        <a href="javascript:void(0)" title="回到顶部" class="toolbar_item back2top active" @click="backTop()" v-if="showBtn">
+        <a href="javascript:void(0)" title="回到顶部" class="toolbar_item back2top" @click="backTop()" v-if="showBtn">
             <el-tooltip class="item" effect="dark" content="回到顶部" placement="left">
                 <svg-icon icon-class="topBar"></svg-icon>
             </el-tooltip>
@@ -95,29 +95,13 @@ export default {
         position: relative;
     }
 
-    .active {
-        pointer-events: auto;
-        visibility: visible;
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        position: fixed;
-        bottom: 160px;
-        right: 30px;
-    }
-
-    .chat {
-        position: fixed;
-        bottom: 250px;
-        right: 0px;
-        margin-bottom: 10px;
-
-        svg {
-            width: 100px !important;
-            height: 100px !important;
-        }
-    }
 
     .toolbar_item {
+        pointer-events: auto;
+        visibility: visible;
+        position: fixed;
+        right: 30px;
+        margin-bottom: 10px;
 
         svg {
             position: absolute;
@@ -128,25 +112,34 @@ export default {
         }
     }
 
+    .theme {
+        bottom: 150px;
+    }
 
-    .back2top.active {
-        pointer-events: auto;
-        visibility: visible;
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        position: fixed;
-        bottom: 110px;
+    .chat {
+        bottom: 250px;
+        right: 0px;
+
+        svg {
+            width: 100px !important;
+            height: 100px !important;
+        }
+    }
+
+    .back2top {
+        bottom: 100px;
         right: 30px;
         animation: fade-in 0.3s linear 1;
     }
 
+
     @keyframes fade-in {
         0% {
-            transform: scale(0);
+            transform: translateX(48px)
         }
 
         100% {
-            transform: scale(1);
+            transform: translateX(0)
         }
     }
 }

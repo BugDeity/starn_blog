@@ -6,7 +6,7 @@
     --text-color: #909399;
     --site-color: #000;
     --site-text-color: #fff;
-    --border-line: #ebeef5;
+    --border-line: #e4e7ed;
     --header-back-color: hsla(0, 0%, 100%, .65);
     --header-text-color: #303133;
     --article-color: #303133;
@@ -37,7 +37,6 @@
     --home-user-back-color: #ccc;
     --notice-color: #000;
     --article-structure-backcolor: #ecf5ff;
-    --hot-border-color: #afb1b6;
     --article-sercet-backcolor: #dcdfe6;
     --menu-background-color: #b5d1ec;
     --friend-tip-color: #f5f5f5;

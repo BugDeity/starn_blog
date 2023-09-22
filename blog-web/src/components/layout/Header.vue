@@ -81,6 +81,14 @@
                     </span>
                 </li>
 
+                <li :class="path == '/say' ? 'active' : ''">
+                    <span>
+                        <router-link :to="'/say'">
+                            <svg-icon icon-class="say"></svg-icon> 说说
+                        </router-link>
+                    </span>
+                </li>
+
                 <li :class="path == '/note' ? 'active' : ''">
                     <span>
                         <router-link :to="'/note'">

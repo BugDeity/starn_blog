@@ -81,6 +81,13 @@ const routes = [
                 }
             },
             {
+                path: "/say",
+                component: resolve => require(["@/view/say/index"], resolve),
+                meta: {
+                    title: "说说"
+                }
+            },
+            {
                 path: "/sponsor",
                 component: resolve => require(["@/view/sponsor/index"], resolve),
                 meta: {

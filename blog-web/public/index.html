@@ -41,6 +41,10 @@
       color: var(--text-color) !important;
       border: 0 !important;
 
+      .popper__arrow::after {
+        border-bottom-color: var(--background-color) !important;
+      }
+
       .el-dropdown-menu__item {
         transition: transform .35s !important;
       }
@@ -99,7 +103,7 @@
 
     .el-input__inner {
       background-color: var(--background-color) !important;
-      border-color: var(--hot-border-color) !important;
+      border-color: var(--border-line) !important;
 
       &:focus {
         border-color: var(--theme-color) !important;

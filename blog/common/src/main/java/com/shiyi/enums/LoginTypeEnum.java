@@ -10,7 +10,7 @@ public enum LoginTypeEnum {
     /**
      * 邮箱登录
      */
-    EMAIL(1, "邮箱或账号登录"),
+    EMAIL(1, "email"),
     /**
      * QQ登录
      */
