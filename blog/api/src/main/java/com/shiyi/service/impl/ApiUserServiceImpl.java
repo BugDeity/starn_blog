@@ -192,7 +192,9 @@ public class ApiUserServiceImpl implements ApiUserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult updateUser(UserInfoDTO vo) {
+        User user = userMapper.selectById(vo.getId());
         UserInfo userInfo = BeanCopyUtils.copyObject(vo, UserInfo.class);
+        userInfo.setId(user.getUserInfoId());
         int update = userInfoMapper.updateById(userInfo);
         return ResponseResult.success("修改信息成功");
     }

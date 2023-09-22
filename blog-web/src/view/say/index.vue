@@ -13,13 +13,23 @@
                     <div class="rigthBox">
                         <div class="nickname">
                             {{ item.nickname }}
+                            <el-tooltip class="item" effect="dark" content="博主" placement="right">
+                                <svg-icon icon-class="bozhu"></svg-icon>
+                            </el-tooltip>
                         </div>
                         <p class="content" v-html="item.content"></p>
                         <div v-if="item.imgUrl" :class="ckeckImgClass(item.imgUrl)">
                             <img @click="handlePreviewImg(item.imgUrl, imgItem)" v-if="checkImg(item.imgUrl)"
                                 v-for="(imgItem, imgIndex) in splitImg(item.imgUrl)" :key="imgIndex" :src="imgItem" alt="">
                         </div>
+
+
                         <div class="bottomBox">
+                            <div v-if="item.address" class="address">
+                                <a>
+                                    <i class="el-icon-location-outline"></i> {{ item.address }}
+                                </a>
+                            </div>
                             <span class="time">
                                 <i class="el-icon-time"></i> {{ item.createTimeStr }}
                             </span>
@@ -47,9 +57,9 @@
                                     <span v-if="user_index < item.userLikeList.length - 1">，</span>
                                 </span>
                             </div>
-                            <div class="commentBox" v-if="item.sayCommentVOList.length">
+                            <div class="commentBox">
                                 <div class="commentItem " v-for="(comment, comment_index) in item.sayCommentVOList"
-                                    :key="comment_index">
+                                    :key="comment_index" v-if="item.sayCommentVOList.length">
                                     <div>
                                         <span class="username" v-if="!comment.replyUserId">
                                             {{ comment.nickname }}：
@@ -167,6 +177,7 @@ export default {
             })
         },
         handleShowCommentBox(comment, sayId, index) {
+            console.log(this.$refs.conetntInputBox)
             if (this.commentLastIndex != null && this.commentLastIndex != index) {
                 this.$refs.conetntInputBox[this.commentLastIndex].style.display = "none"
             }
@@ -287,7 +298,11 @@ export default {
             }
         },
         splitImg(img) {
-            return img.split(",");
+            let imgs = img.split(",")
+            var r = imgs.filter(function (s) {
+                return s && s.trim();
+            });
+            return r;
         },
     }
 }
@@ -364,6 +379,12 @@ export default {
 
                     .nickname {
                         color: var(--theme-color);
+
+                        svg {
+                            width: 18px;
+                            height: 18px;
+                            vertical-align: -3px;
+                        }
                     }
 
                     .content {
@@ -409,11 +430,20 @@ export default {
                         }
                     }
 
+
+
                     .bottomBox {
                         margin-top: 20px;
                         position: relative;
+                        color: var(--text-color);
 
-                        .time {
+                        .address {
+                            color: #5597bd;
+                            margin-bottom: 10px;
+                        }
+
+                        .time,
+                        .address {
                             font-size: 14px;
                         }
 
