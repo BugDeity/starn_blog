@@ -12,7 +12,7 @@ public class UserInfoDTO {
     /**
      * 用户信息id
      */
-    private Integer id;
+    private String id;
     /**
      * 昵称
      * */
