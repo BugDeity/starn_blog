@@ -5,6 +5,7 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
+import com.shiyi.entity.FeedBack;
 import com.shiyi.service.FeedBackService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +43,14 @@ public class FeedBackController {
     @OperationLogger(value = "删除反馈")
     public ResponseResult deleteBatch(@RequestBody List<Integer> ids) {
         return feedBackService.deleteBatch(ids);
+    }
+
+    @PutMapping(value = "/update")
+    @OperationLogger(value = "修改反馈")
+    @SaCheckPermission("/system/feedback/update")
+    @ApiOperation(value = "修改反馈", httpMethod = "PUT", response = ResponseResult.class, notes = "修改反馈")
+    public ResponseResult update(@RequestBody FeedBack feedBack) {
+        return feedBackService.updateFeedBack(feedBack);
     }
 }
 

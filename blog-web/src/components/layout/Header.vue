@@ -252,7 +252,7 @@ export default {
             path: null,
             isMobile: false,
             noneInput: false,
-            showUser: false,
+            showUser: true,
             windowWidth: 0,
             headerClass: "header",
             adminUrl: process.env.VUE_APP_ADMIN_API,

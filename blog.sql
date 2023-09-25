@@ -266,6 +266,7 @@ CREATE TABLE `b_feed_back`  (
   `img_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '图片地址',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '添加时间',
   `type` int(11) NOT NULL COMMENT '反馈类型 1:需求 2：缺陷',
+  `status` int(11) NOT NULL COMMENT '状态 0未解决 1解决',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
@@ -1381,7 +1382,7 @@ INSERT INTO `b_web_config` VALUES (1, 'http://img.shiyit.com/9cf1222617fd4fa1979
 
 -- ----------------------------
 -- Table structure for b_user_role
--- ----------------------------
+-- ----------------------------——
 DROP TABLE IF EXISTS `b_say`;
 CREATE TABLE `b_say` (
      `id` varchar(100) NOT NULL COMMENT '主键id',

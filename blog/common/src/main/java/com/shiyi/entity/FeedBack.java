@@ -51,5 +51,7 @@ public class FeedBack implements Serializable {
     @ApiModelProperty(value = "反馈类型 1:需求 2：缺陷")
     private Integer type;
 
+    @ApiModelProperty(value = "状态 0:未解决 1：解决")
+    private Integer status;
 
 }

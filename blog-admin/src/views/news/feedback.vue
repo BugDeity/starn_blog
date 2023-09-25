@@ -3,11 +3,10 @@
     <!-- 查询和其他操作 -->
     <el-form v-show="showSearch" :inline="true" ref="form" :model="params" label-width="68px">
       <el-form-item label="反馈类型">
-        <el-select  size="small" v-model="params.type" filterable clearable reserve-keyword
-                   @change='handleFind' placeholder="请选择反馈类型"
-        >
-          <el-option :key="1" label="需求" :value="1"/>
-          <el-option :key="2" label="反馈" :value="2"/>
+        <el-select size="small" v-model="params.type" filterable clearable reserve-keyword @change='handleFind'
+          placeholder="请选择反馈类型">
+          <el-option :key="1" label="需求" :value="1" />
+          <el-option :key="2" label="反馈" :value="2" />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -18,14 +17,8 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          v-if="canDelBatch"
-          :disabled="!multipleSelection.length"
-          type="danger"
-          icon="el-icon-delete"
-          size="small"
-          @click="handleDeleteBatch"
-        >批量删除
+        <el-button v-if="canDelBatch" :disabled="!multipleSelection.length" type="danger" icon="el-icon-delete"
+          size="small" @click="handleDeleteBatch">批量删除
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="fetchFeedback"></right-toolbar>
@@ -33,25 +26,36 @@
 
     <div style="margin-top: 5px">
       <el-table border :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" align="center"/>
-        <el-table-column prop="type" align="center"  label="反馈类型">
+        <el-table-column type="selection" align="center" />
+        <el-table-column prop="type" align="center" label="反馈类型">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.type === 1" type="success">需求</el-tag>
             <el-tag v-else type="danger">缺陷</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="email" align="center"  width="180" label="联系邮箱" />
         <el-table-column prop="title" align="center" width="250" label="需求标题" />
         <el-table-column prop="content" align="center" width="250" label="详细内容" />
-        <el-table-column prop="imgUrl" width="160" align="center"label="附加图片" />
-        <el-table-column prop="createTime" width="160" align="center"label="反馈时间" >
+        <el-table-column prop="imgUrl" width="160" align="center" label="附加图片" />
+        <el-table-column prop="status" align="center" label="状态">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.status === 1" type="success">解决</el-tag>
+            <el-tag v-else type="danger">未解决</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="createTime" width="160" align="center" label="反馈时间">
           <template slot-scope="scope">
             <span>{{ formatTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
         <el-table-column align="center" label="操作" class-name="small-padding fixed-width">
+
           <template slot-scope="scope">
-            <el-button v-if="canDelBatch" size="mini" type="danger" @click="handleDeleteBatch(scope.row.id)">删除</el-button>
+            <el-button v-if="scope.row.status == 0 && canUpdate" size="mini" type="success"
+              @click="handleSolve(scope.row.id)">解决
+            </el-button>
+
+            <el-button v-if="canDelBatch" size="mini" type="danger"
+              @click="handleDeleteBatch(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,17 +64,17 @@
     <!--分页区域-->
     <div class="pagination-container" style="float: right;margin-bottom: 1.25rem;margin-top: 1.25rem;">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                     :current-page="params.pageNo" :page-size="params.pageSize" :page-sizes="[10, 20, 30]"
-                     layout="total, sizes,prev, pager, next,jumper" :total="total">
+        :current-page="params.pageNo" :page-size="params.pageSize" :page-sizes="[10, 20, 30]"
+        layout="total, sizes,prev, pager, next,jumper" :total="total">
       </el-pagination>
     </div>
   </div>
 </template>
 <script>
-import {deleteBatchFeedback, fetchFeedback} from '@/api/feedback'
-import {parseTime} from '@/utils'
-import {mapGetters} from "vuex";
-import {hasAuth} from "@/utils/auth";
+import { deleteBatchFeedback, fetchFeedback, updateFeedBack } from '@/api/feedback'
+import { parseTime } from '@/utils'
+import { mapGetters } from "vuex";
+import { hasAuth } from "@/utils/auth";
 
 export default {
   data() {
@@ -84,7 +88,7 @@ export default {
       params: {
         pageNo: 1,
         pageSize: 10,
-        type:null
+        type: null
       }
     }
   },
@@ -99,6 +103,9 @@ export default {
     canDelBatch: function () {
       return hasAuth(this.pres, '/system/feedback/deleteBatch')
     },
+    canUpdate: function () {
+      return hasAuth(this.pres, '/system/feedback/update')
+    },
   },
   methods: {
     fetchFeedback: function () {
@@ -110,14 +117,26 @@ export default {
         console.log(err)
       })
     },
-    resetQuery : function (){
+    resetQuery: function () {
       this.params.pageNo = 1
       this.params.type = null
       this.fetchFeedback()
     },
-    handleFind : function (){
+    handleFind: function () {
       this.params.pageNo = 1
       this.fetchFeedback()
+    },
+    handleSolve: function (id) {
+      let feedback = {
+        id: id,
+        status: 1
+      }
+      updateFeedBack(feedback).then(res => {
+        this.$message.success("操作成功")
+        this.fetchFeedback()
+      }).catch(err => {
+        console.error(err)
+      })
     },
     handleDeleteBatch: function (id) {
       this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
@@ -125,11 +144,11 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let ids =[]
+        let ids = []
         if (id != null) {
           ids.push(id)
-        }else {
-          this.multipleSelection.forEach(item =>{
+        } else {
+          this.multipleSelection.forEach(item => {
             ids.push(item.id)
           })
         }

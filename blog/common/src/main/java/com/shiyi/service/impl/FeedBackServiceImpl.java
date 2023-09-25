@@ -50,4 +50,11 @@ public class FeedBackServiceImpl extends ServiceImpl<FeedBackMapper, FeedBack> i
         return rows > 0 ? ResponseResult.success(): ResponseResult.error("删除反馈失败");
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult updateFeedBack(FeedBack feedBack) {
+        baseMapper.updateById(feedBack);
+        return ResponseResult.success();
+    }
+
 }

@@ -349,12 +349,15 @@ export default {
         },
         start() {
             clearInterval(this.timer);
-            this.timer = setInterval(() => {
-                this.currentIndex++;
-                if (this.currentIndex > this.sayList.length - 1) {
-                    this.currentIndex = 0
-                }
-            }, 3500)
+            if (this.sayList.length > 1) {
+                this.timer = setInterval(() => {
+                    this.currentIndex++;
+                    if (this.currentIndex > this.sayList.length - 1) {
+                        this.currentIndex = 0
+                    }
+                }, 3500)
+            }
+
         },
         handleGetSayList() {
             let pageData = {
@@ -956,6 +959,7 @@ export default {
             width: 100%;
             margin-bottom: 15px;
             border-radius: 5px;
+            overflow: hidden;
 
             /deep/ a {
                 text-decoration: none;
@@ -971,11 +975,11 @@ export default {
 
                 @keyframes fade-in {
                     0% {
-                        transform: scale(0);
+                        transform: translateY(-30px);
                     }
 
                     100% {
-                        transform: scale(1);
+                        transform: translateY(0);
                     }
                 }
 

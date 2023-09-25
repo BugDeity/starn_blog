@@ -20,4 +20,5 @@ public interface FeedBackService extends IService<FeedBack> {
 
     ResponseResult deleteBatch(List<Integer> ids);
 
+    ResponseResult updateFeedBack(FeedBack feedBack);
 }
