@@ -425,11 +425,11 @@ export default {
         .contentBox {
             margin-top: 20px;
             width: 100%;
-
+            color: var(--text-color);
+            background-color: var(--background-color);
 
             .sayItem {
                 padding: 10px;
-                background-color: var(--background-color);
                 display: flex;
                 margin-bottom: 10px;
                 border-radius: 5px;
@@ -491,7 +491,7 @@ export default {
                     .bottomBox {
                         margin-top: 20px;
                         position: relative;
-                        color: var(--text-color);
+
 
                         .address {
                             color: #5597bd;
@@ -507,7 +507,7 @@ export default {
                             position: absolute;
                             right: 20px;
                             display: inline-block;
-                            background-color: #f7f7f7;
+                            background-color: var(--say-background);
                             padding: 0 5px;
                         }
 
@@ -556,7 +556,7 @@ export default {
                     }
 
                     .interaction {
-                        background-color: #f7f7f7;
+                        background-color: var(--say-background);
                         margin-top: 15px;
                         border-radius: 5px;
 

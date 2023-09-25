@@ -176,7 +176,7 @@ a {
         animation: 0.8s ease 0s 1 normal none running sidebarItem;
 
         .blogger-info {
-            padding: 26px 30px 0;
+            padding: 10px 30px 0;
             text-align: center;
             z-index: 99;
 
