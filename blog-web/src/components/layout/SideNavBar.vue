@@ -57,6 +57,11 @@
                     </a>
                 </div>
                 <div class="menus-item">
+                    <a @click="handleClike('/say')">
+                        <i class="iconfont icon-pinglun" /> 说说
+                    </a>
+                </div>
+                <div class="menus-item">
                     <a @click="handleClike('/links')">
                         <i class="el-icon-position" /> 友链
                     </a>

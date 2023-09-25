@@ -74,7 +74,10 @@
                             </div>
                             <div class="bottumItem">
                                 <div class="articleUser">
-                                    <el-avatar class="userAvatar" :src="item.userAvatar"></el-avatar>
+                                    <a @click="handleToUserMain(item.userId)">
+                                        <el-avatar class="userAvatar" :src="item.userAvatar"></el-avatar>
+                                    </a>
+
                                     <span>{{ item.username }}</span>
                                 </div>
 
@@ -338,6 +341,9 @@ export default {
         clearInterval(this.timer);
     },
     methods: {
+        handleToUserMain(userId) {
+            console.log(userId)
+        },
         stop() {
             clearInterval(this.timer);
         },

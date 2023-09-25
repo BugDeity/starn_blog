@@ -603,6 +603,20 @@ export default {
             }
         }
 
+        .backgroupImg img {
+            height: 200px;
+        }
+
+        .user-item .toolbar {
+            margin-left: 20px;
+            width: 100px;
+
+        }
+
+        .sign {
+            display: none;
+        }
+
         .user-warpper {
             width: 100%;
             margin-top: 80px;
@@ -625,6 +639,16 @@ export default {
                     width: 50%;
                 }
             }
+        }
+
+        .backgroupImg img {
+            height: 400px;
+        }
+
+        .user-item .toolbar {
+            margin-left: 50px;
+            width: 150px;
+
         }
 
         .user-warpper {
@@ -654,6 +678,39 @@ export default {
                 }
             }
         }
+
+        .sign {
+            position: absolute;
+            right: 50px;
+            padding: 5px;
+            border-radius: 5px;
+
+            .signBtn,
+            .disabledSignBtn {
+                border: none;
+                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                color: var(--text-color);
+                background-color: var(--background-color);
+            }
+
+            .signBtn {
+                &:hover {
+                    color: var(--theme-color);
+                }
+            }
+
+            .disabledSignBtn {
+                cursor: no-drop;
+
+            }
+
+            svg {
+                width: 20px;
+                height: 20px;
+                vertical-align: -4px;
+                margin-right: 5px;
+            }
+        }
     }
 
     .user-warpper {
@@ -671,7 +728,6 @@ export default {
 
             img {
                 width: 100%;
-                height: 400px;
                 border-top-left-radius: 10px;
                 border-top-right-radius: 10px;
 
@@ -749,9 +805,7 @@ export default {
                 padding: 5px;
                 background-color: var(--background-color);
                 border-radius: 5px;
-                width: 150px;
                 margin-top: -80px;
-                margin-left: 50px;
             }
 
             .cover {
@@ -792,39 +846,7 @@ export default {
                 }
             }
 
-            .sign {
-                position: absolute;
-                right: 50px;
-                padding: 5px;
-                border-radius: 5px;
 
-
-                .signBtn,
-                .disabledSignBtn {
-                    border: none;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
-                    color: var(--text-color);
-                    background-color: var(--background-color);
-                }
-
-                .signBtn {
-                    &:hover {
-                        color: var(--theme-color);
-                    }
-                }
-
-                .disabledSignBtn {
-                    cursor: no-drop;
-
-                }
-
-                svg {
-                    width: 20px;
-                    height: 20px;
-                    vertical-align: -4px;
-                    margin-right: 5px;
-                }
-            }
         }
 
     }

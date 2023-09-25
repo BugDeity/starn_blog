@@ -277,7 +277,7 @@ export default {
         // 监听页面宽度
         windowWidth(val) {
             this.isMobile = val < 1119
-            this.noneInput = val < 1410
+            this.noneInput = val < 1500
         }
     },
 
@@ -544,7 +544,7 @@ export default {
             .starlist {
                 display: block;
                 float: left;
-                margin-left: 50px;
+                margin-left: 30px;
                 overflow: hidden;
                 max-width: 1500px;
 

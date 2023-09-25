@@ -122,7 +122,7 @@
     </select>
 
     <select id="selectPublicArticleList" resultType="com.shiyi.vo.ApiArticleListVO">
-        select a.id, a.title, a.avatar,a.summary,a.quantity,a.is_stick,a.is_original,c.id as categoryId,c.name as categoryName,
+        select a.id, a.title, a.avatar,a.summary,a.quantity,a.is_stick,a.is_original,a.user_id,c.id as categoryId,c.name as categoryName,
                ui.nickname as username,
                ui.nickname,
                ui.avatar as userAvatar,

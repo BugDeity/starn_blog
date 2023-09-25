@@ -51,13 +51,13 @@
                         </div>
                         <div class="interaction">
                             <div v-if="item.userLikeList.length"
-                                :class="item.userLikeList.length ? 'like-container is_border' : 'like-container'">
+                                :class="item.userLikeList.length && item.sayCommentVOList.length ? 'like-container is_border' : 'like-container'">
                                 <span v-for="(user, user_index) in item.userLikeList" :key="user_index">
                                     <i class="iconfont icon-dianzan"></i> {{ user.nickname }}
                                     <span v-if="user_index < item.userLikeList.length - 1">，</span>
                                 </span>
                             </div>
-                            <div class="commentBox" v-if="item.sayCommentVOList.length">
+                            <div class="commentBox">
                                 <div class="commentItem " v-for="(comment, comment_index) in item.sayCommentVOList"
                                     :key="comment_index" v-if="item.sayCommentVOList.length">
                                     <div>
@@ -319,9 +319,16 @@ export default {
     justify-content: center;
 
     @media screen and (max-width: 1118px) {
+        padding: 0 5px;
+
         .containner {
             width: 100%;
             margin-top: 80px;
+
+
+            .cover {
+                height: 250px;
+            }
 
             .grid-1 {
 
@@ -358,6 +365,10 @@ export default {
             width: 60%;
             margin-top: 80px;
 
+            .cover {
+                height: 380px;
+            }
+
             .grid-1 {
 
                 img {
@@ -393,7 +404,7 @@ export default {
 
         .cover {
             width: 100%;
-            height: 380px;
+
             position: relative;
 
             img {
@@ -473,11 +484,9 @@ export default {
                             border-radius: 5px;
                             cursor: zoom-in;
                             margin-bottom: 10px;
-                            margin-right: 10px;
+                            margin-right: 5px;
                         }
                     }
-
-
 
                     .bottomBox {
                         margin-top: 20px;
@@ -569,10 +578,14 @@ export default {
                         }
 
                         .commentBox {
-                            padding: 10px;
 
                             .commentItem {
                                 margin-bottom: 5px;
+                                padding-left: 10px;
+
+                                &:first-child {
+                                    margin-top: 10px;
+                                }
 
                                 .username {
                                     color: #5597bd;
@@ -589,8 +602,7 @@ export default {
                             position: relative;
                             min-height: 100px;
                             display: none;
-
-                            .emoji-wrapper {}
+                            margin-left: 10px;
 
                             /deep/ textarea {
                                 border: none;
