@@ -130,7 +130,7 @@ export default {
                 -o-object-fit: cover;
                 object-fit: cover;
                 transition: transform .5s;
-                z-index: 99;
+                z-index: 20;
 
                 &:hover {
                     transform: rotate(360deg);
@@ -138,7 +138,7 @@ export default {
             }
 
             .guajian {
-                z-index: 98;
+                z-index: 10;
                 position: absolute;
                 top: -20px;
                 right: -3px;
