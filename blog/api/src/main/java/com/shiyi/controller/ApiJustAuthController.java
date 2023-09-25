@@ -6,6 +6,7 @@ import com.shiyi.config.properties.GiteeConfigProperties;
 import com.shiyi.config.properties.GithubConfigProperties;
 import com.shiyi.config.properties.QqConfigProperties;
 import com.shiyi.config.properties.WeiboConfigProperties;
+import com.shiyi.dto.EmailForgetPasswordDTO;
 import com.shiyi.dto.EmailLoginDTO;
 import com.shiyi.dto.EmailRegisterDTO;
 import com.shiyi.service.ApiUserService;
@@ -98,6 +99,13 @@ public class ApiJustAuthController {
     @ApiOperation(value = "邮箱注册", httpMethod = "POST", response = ResponseResult.class, notes = "邮箱注册")
     public ResponseResult emailRegister(@Valid @RequestBody EmailRegisterDTO emailRegisterDTO){
         return userService.emailRegister(emailRegisterDTO);
+    }
+
+    @AccessLimit
+    @RequestMapping(value = "/forgetPassword",method = RequestMethod.PUT)
+    @ApiOperation(value = "忘记密码", httpMethod = "PUT", response = ResponseResult.class, notes = "忘记密码")
+    public ResponseResult forgetPassword(@Valid @RequestBody EmailForgetPasswordDTO emailForgetPasswordDTO){
+        return userService.forgetPassword(emailForgetPasswordDTO);
     }
 
     /**

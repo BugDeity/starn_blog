@@ -41,7 +41,11 @@ public class ApiSayServiceImpl implements ApiSayService {
 
     @Override
     public ResponseResult selectSayList() {
-        Page<ApiSayVO>  sayPage = sayMapper.selectPublicSayList(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()));
+
+        //是否显示未公开的说说 登录用户id为1时显示所有说说
+        boolean showPrivate = StpUtil.isLogin()  && StpUtil.getLoginIdAsString().equals("1");
+
+        Page<ApiSayVO>  sayPage = sayMapper.selectPublicSayList(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),showPrivate);
         for (ApiSayVO item : sayPage.getRecords()) {
             //获取点赞用户信息
             Set<Object> userIdList = redisService.getCacheSet(RedisConstants.SAY_LIKE_KEY + item.getId());

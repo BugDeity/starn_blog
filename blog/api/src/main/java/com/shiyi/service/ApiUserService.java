@@ -1,6 +1,7 @@
 package com.shiyi.service;
 
 import com.shiyi.common.ResponseResult;
+import com.shiyi.dto.EmailForgetPasswordDTO;
 import com.shiyi.dto.EmailLoginDTO;
 import com.shiyi.dto.EmailRegisterDTO;
 import com.shiyi.dto.UserInfoDTO;
@@ -75,7 +76,20 @@ public interface ApiUserService {
      * @param email
      * @return
      */
-    ResponseResult sendEmailCode(String email);
+    public ResponseResult sendEmailCode(String email);
 
-    ResponseResult emailRegister(EmailRegisterDTO emailRegisterDTO);
+    /**
+     * 邮箱注册
+     * @param emailRegisterDTO
+     * @return
+     */
+    public ResponseResult emailRegister(EmailRegisterDTO emailRegisterDTO);
+
+    /**
+     * 忘记密码
+     * @param emailForgetPasswordDTO
+     * @return
+     */
+    public ResponseResult forgetPassword(EmailForgetPasswordDTO emailForgetPasswordDTO);
+
 }

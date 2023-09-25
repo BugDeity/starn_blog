@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.entity.Say;
 import com.shiyi.vo.ApiSayVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,5 +17,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SayMapper extends BaseMapper<Say> {
 
-    Page<ApiSayVO> selectPublicSayList(Page<Object> objectPage);
+    Page<ApiSayVO> selectPublicSayList(@Param("page") Page<Object> objectPage,@Param("showPrivate") boolean showPrivate);
 }

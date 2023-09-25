@@ -6,6 +6,9 @@
         select s.*,i.nickname,i.avatar from b_say s
             left join b_user u on s.user_id = u.id
             left join b_user_info i on u.user_info_id = i.id
+        <if test="!showPrivate">
+            where s.is_public = 1
+        </if>
         order by s.create_time desc
     </select>
 </mapper>

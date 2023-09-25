@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.shiyi.common.RedisConstants;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.common.ResultCode;
+import com.shiyi.dto.EmailForgetPasswordDTO;
 import com.shiyi.dto.EmailLoginDTO;
 import com.shiyi.dto.EmailRegisterDTO;
 import com.shiyi.dto.UserInfoDTO;
@@ -313,6 +314,19 @@ public class ApiUserServiceImpl implements ApiUserService {
                 .status(UserStatusEnum.normal.getCode())
                 .build();
         userMapper.insert(user);
+        return ResponseResult.success();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult forgetPassword(EmailForgetPasswordDTO emailForgetPasswordDTO) {
+        //校验邮箱验证码
+        boolean b = redisService.hasKey(RedisConstants.EMAIL_CODE + emailForgetPasswordDTO.getEmail());
+        if (!b) {
+            throw new BusinessException(ResultCode.ERROR_EXCEPTION_MOBILE_CODE);
+        }
+        User user = User.builder().password(AesEncryptUtils.aesEncrypt(emailForgetPasswordDTO.getPassword())).build();
+        userMapper.update(user,new LambdaQueryWrapper<User>().eq(User::getUsername,emailForgetPasswordDTO.getEmail()));
         return ResponseResult.success();
     }
 
