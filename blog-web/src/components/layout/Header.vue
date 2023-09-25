@@ -173,7 +173,7 @@
                 </el-button>
             </div> -->
 
-            <div class="noticeBtn">
+            <div class="noticeBtn" v-if="showUser">
                 <el-dropdown trigger="hover">
                     <div class="el-dropdown-link">
                         <!-- <i class="el-icon-bell"></i> -->
@@ -191,16 +191,13 @@
                 </el-dropdown>
             </div>
 
-            <div class="userInfo">
+            <div class="userInfo" v-if="showUser">
                 <el-dropdown trigger="hover">
                     <div class="el-dropdown-link">
                         <img v-if="!userInfo" src="http://img.shiyit.com/touristAvatar.png" alt="">
                         <img v-else :src="userInfo.avatar" alt="" />
                     </div>
                     <el-dropdown-menu slot="dropdown" v-if="userInfo">
-                        <!-- <a style="text-decoration: none;color: #71777c;" @click="openUserInfoDrawer">
-                            <el-dropdown-item>个人中心</el-dropdown-item>
-                        </a> -->
                         <router-link style="text-decoration: none;color: #71777c;" :to="'/user'">
                             <el-dropdown-item>
                                 个人中心
@@ -255,6 +252,7 @@ export default {
             path: null,
             isMobile: false,
             noneInput: false,
+            showUser: false,
             windowWidth: 0,
             headerClass: "header",
             adminUrl: process.env.VUE_APP_ADMIN_API,
@@ -278,6 +276,7 @@ export default {
         windowWidth(val) {
             this.isMobile = val < 1119
             this.noneInput = val < 1500
+            this.showUser = val > 1350
         }
     },
 
