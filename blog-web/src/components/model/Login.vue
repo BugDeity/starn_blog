@@ -80,7 +80,7 @@
                 <el-form-item label="验证码" :label-width="formLabelWidth" prop="code">
                     <div style="display: flex;">
                         <el-input class="input" placeholder="请输入验证码" v-model="form.code" autocomplete="off"></el-input>
-                        <a v-if="countdown" class="send">发送</a>
+                        <a v-if="showSendBtnFlag" class="send" @click="handleSendEmailCode">发送</a>
                         <a v-else class="send">{{ countdown }}s</a>
                     </div>
                 </el-form-item>
@@ -107,7 +107,7 @@
                 <el-form-item label="验证码" :label-width="formLabelWidth" prop="code">
                     <div style="display: flex;">
                         <el-input class="input" placeholder="请输入验证码" v-model="form.code" autocomplete="off"></el-input>
-                        <a v-if="countdown" class="send">发送</a>
+                        <a v-if="showSendBtnFlag" class="send" @click="handleSendEmailCode">发送</a>
                         <a v-else class="send">{{ countdown }}s</a>
                     </div>
                 </el-form-item>
@@ -140,6 +140,7 @@ export default {
             timer: null,
             wechatLoginFlag: false,
             emailRegistFlag: false,
+            showSendBtnFlag: true,
             forgetFlag: false,
             formLabelWidth: '80px',
             wechatLoginCode: null,
@@ -178,10 +179,13 @@ export default {
             sendEmailCode(this.form.email).then(res => {
                 this.timer = setInterval(() => {
                     if (this.countdown > 0) {
+                        this.showSendBtnFlag = false
                         this.countdown--;
                     } else {
+                        this.showSendBtnFlag = true
                         clearInterval(this.timer);
                         this.timer = null;
+                        this.countdown = 60
                     }
                 }, 1000);
                 this.$notify({
@@ -382,9 +386,10 @@ export default {
 
     .send {
         width: 18%;
-        text-decoration: none;
         color: var(--text-color);
         font-size: 14px;
+        border: none;
+        background-color: var(--background-color);
 
         &:hover {
             color: var(--theme-color)

@@ -57,7 +57,7 @@
                                     <span v-if="user_index < item.userLikeList.length - 1">，</span>
                                 </span>
                             </div>
-                            <div class="commentBox">
+                            <div class="commentBox" v-if="item.sayCommentVOList.length">
                                 <div class="commentItem " v-for="(comment, comment_index) in item.sayCommentVOList"
                                     :key="comment_index" v-if="item.sayCommentVOList.length">
                                     <div>
@@ -94,6 +94,8 @@
                         </div>
                     </div>
                 </div>
+                <!-- 分页按钮 -->
+                <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
             </div>
         </div>
 
@@ -284,6 +286,10 @@ export default {
                 this.pages = res.data.pages
             })
         },
+        handlePage(val) {
+            this.pageData.pageNo = val;
+            this.getSayList()
+        },
         checkImg(img) {
             return this.splitImg(img).length > 0
         },
@@ -316,6 +322,34 @@ export default {
         .containner {
             width: 100%;
             margin-top: 80px;
+
+            .grid-1 {
+
+                img {
+                    width: 200px;
+                    height: 200px;
+                }
+            }
+
+            .grid-2 {
+
+                img {
+                    width: 150px;
+                    height: 150px;
+                }
+            }
+
+            .grid-3 {
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+            }
+
+            .conetntInputBox {
+                width: 100%;
+            }
         }
     }
 
@@ -323,6 +357,34 @@ export default {
         .containner {
             width: 60%;
             margin-top: 80px;
+
+            .grid-1 {
+
+                img {
+                    width: 250px;
+                    height: 250px;
+                }
+            }
+
+            .grid-2 {
+
+                img {
+                    width: 250px;
+                    height: 250px;
+                }
+            }
+
+            .grid-3 {
+
+                img {
+                    width: 250px;
+                    height: 250px;
+                }
+            }
+
+            .conetntInputBox {
+                width: 50%;
+            }
         }
     }
 
@@ -393,29 +455,14 @@ export default {
 
                     .grid-1 {
                         grid-template-columns: repeat(1, 0fr);
-
-                        img {
-                            width: 300px;
-                            height: 250px;
-                        }
                     }
 
                     .grid-2 {
                         grid-template-columns: repeat(2, 0fr);
-
-                        img {
-                            width: 300px;
-                            height: 250px;
-                        }
                     }
 
                     .grid-3 {
                         grid-template-columns: repeat(3, 0fr);
-
-                        img {
-                            width: 180px;
-                            height: 180px;
-                        }
                     }
 
                     .contentImg {
@@ -537,7 +584,6 @@ export default {
 
                         .conetntInputBox {
                             border: 1px solid #67C23A;
-                            width: 50%;
                             border-radius: 5px;
                             background-color: var(--background-color);
                             position: relative;

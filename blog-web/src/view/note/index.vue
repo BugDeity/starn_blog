@@ -376,8 +376,8 @@ export default {
                             background-color: var(--background-color);
                             padding: 10px;
                             margin-bottom: 15px;
-                            transition: box-shadow .35s, transform .35s;
                             border-radius: 5px;
+                            transition: box-shadow .35s, transform .35s;
 
                             &:hover {
                                 box-shadow: 5px 8px 3px rgba(126, 35, 165, 0.4);
