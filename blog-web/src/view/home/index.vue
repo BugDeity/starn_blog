@@ -32,6 +32,17 @@
                 </el-tabs>
             </div>
 
+            <div class="sayBox">
+                <router-link :to="'/say'">
+                    <a class="say-item" @mouseleave="start" @mouseenter="stop" v-for="(item, index) in sayList" :key="index"
+                        v-show="index == currentIndex">
+                        <svg-icon icon-class="say"></svg-icon>
+                        <span class="say-content" v-html="item.content">
+                        </span>
+                    </a>
+                </router-link>
+
+            </div>
 
             <div class="content">
                 <!-- 左侧内容 -->
@@ -262,6 +273,7 @@
 
 <script>
 import { fetchArticleList, featchHomeData, featchCategory } from '@/api'
+import { getSayList } from '@/api/say'
 import Notcie from '@/components/notice/index.vue'
 import SiteInfo from '@/components/site/index.vue'
 export default {
@@ -308,7 +320,10 @@ export default {
             pages: 0,
             tagList: [],
             newArticleList: [],
-            tagStyle: ['', 'success', 'info', 'warning', 'danger']
+            tagStyle: ['', 'success', 'info', 'warning', 'danger'],
+            sayList: [],
+            currentIndex: 0,
+            timer: null,
 
         };
     },
@@ -317,8 +332,34 @@ export default {
         this.getHomeData()
         this.fetchCategoryList()
         this.insertWeather()
+        this.handleGetSayList()
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
     },
     methods: {
+        stop() {
+            clearInterval(this.timer);
+        },
+        start() {
+            clearInterval(this.timer);
+            this.timer = setInterval(() => {
+                this.currentIndex++;
+                if (this.currentIndex > this.sayList.length - 1) {
+                    this.currentIndex = 0
+                }
+            }, 3500)
+        },
+        handleGetSayList() {
+            let pageData = {
+                pageNo: 1,
+                pageSize: 5
+            };
+            getSayList(pageData).then(res => {
+                this.sayList = res.data.records
+                this.start()
+            })
+        },
         insertWeather() {
             window.WIDGET = {
                 "CONFIG": {
@@ -900,6 +941,63 @@ export default {
 
             /deep/ .el-tabs__item:hover span {
                 color: #409EFF;
+            }
+        }
+
+        .sayBox {
+
+            background-color: var(--background-color);
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 5px;
+
+            /deep/ a {
+                text-decoration: none;
+            }
+
+            .say-item {
+
+                display: flex;
+                padding: 10px;
+                color: var(--article-color);
+                animation: fade-in 0.45s linear 1;
+
+
+                @keyframes fade-in {
+                    0% {
+                        transform: scale(0);
+                    }
+
+                    100% {
+                        transform: scale(1);
+                    }
+                }
+
+                .say-content {
+                    display: inline-block;
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                svg {
+                    margin-right: 15px;
+                    width: 22px;
+                    height: 22px;
+                    vertical-align: -5px;
+                    animation: show 1s ease-in-out infinite alternate;
+                }
+
+                @keyframes show {
+                    0% {
+                        opacity: 1;
+                    }
+
+                    100% {
+                        opacity: 0.6;
+                    }
+                }
             }
         }
 
