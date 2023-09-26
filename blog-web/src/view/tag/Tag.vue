@@ -104,7 +104,7 @@ export default {
         load() {
 
             if (this.pageData.pageNo < this.pageTotal) {
-                this, this.pageData.pageNo++;
+                this.pageData.pageNo++;
                 this.fetchArticleList()
             }
         },

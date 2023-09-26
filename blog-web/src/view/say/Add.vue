@@ -22,17 +22,23 @@
 
                 </div>
                 <div class="say-right">
-                    <el-form-item label="关联地址" prop="address">
-                        <el-input v-model="form.address"></el-input>
-                    </el-form-item>
-                    <el-form-item label="开放查看" prop="isPublic">
-                        <el-radio v-model="form.isPublic" label="0">未开放</el-radio>
-                        <el-radio v-model="form.isPublic" label="1">开放</el-radio>
-                    </el-form-item>
-                    <div style="text-align: center;">
-                        <button v-if="$store.state.userInfo.id == 1" type="button" class="btn"
+                    <div class="top">
+                        <el-form-item label="关联地址" prop="address">
+                            <el-input v-model="form.address"></el-input>
+                        </el-form-item>
+                        <el-form-item label="开放查看" prop="isPublic">
+                            <el-radio v-model="form.isPublic" label="0">未开放</el-radio>
+                            <el-radio v-model="form.isPublic" label="1">开放</el-radio>
+                        </el-form-item>
+                    </div>
+
+                    <div class="bottom">
+                        <div class="btn-tips">Are you ready</div>
+                        <button v-if="$store.state.userInfo && $store.state.userInfo.id == 1" type="button" class="btn"
                             @click="submitForm">发布</button>
-                        <span v-else class="noBtn">暂无发布权限</span>
+                        <span v-else class="noBtn">
+                            暂无发布权限,请先<a @click="$store.state.loginFlag = true">登录</a>
+                        </span>
                     </div>
                 </div>
 
@@ -144,14 +150,14 @@ export default {
         }
 
         .say-left,
-        .say-right {
-            background-color: var(--background-color);
+        .say-right .top,
+        .bottom {
             border-radius: 5px;
             padding: 10px;
         }
 
         .say-left {
-
+            background-color: var(--background-color);
             margin-right: 20px;
             width: 100%;
 
@@ -168,19 +174,63 @@ export default {
         .say-right {
             width: 35%;
             height: 100%;
+            display: flex;
+            flex-direction: column;
 
-            .btn {
-                padding: 5px;
-                width: 50%;
-                border-radius: 50px;
-                background: linear-gradient(135deg, #59c3fb 10%, #268df7 100%);
-                border: none;
-                margin: 0 auto;
+            .top,
+            .bottom {
+                background-color: var(--background-color);
             }
 
-            .noBtn {
-                color: var(--text-color);
+            .bottom {
+                margin-top: 20px;
+                text-align: center;
+
+                .btn-tips {
+                    color: #b5b5b5;
+                    font-size: 0.75rem;
+                    margin-bottom: 1rem;
+
+                    &::before {
+                        content: "";
+                        display: inline-block;
+                        background-color: #d8d8d8;
+                        width: 60px;
+                        height: 1px;
+                        margin: 0 12px;
+                        vertical-align: middle;
+                    }
+
+                    &::after {
+                        content: "";
+                        display: inline-block;
+                        background-color: #d8d8d8;
+                        width: 60px;
+                        height: 1px;
+                        margin: 0 12px;
+                        vertical-align: middle;
+                    }
+                }
+
+                .btn {
+                    padding: 10px;
+                    width: 50%;
+                    border-radius: 5px;
+                    background: linear-gradient(135deg, #59c3fb 10%, #268df7 100%);
+                    border: none;
+                    margin: 0 auto;
+                    color: #fff;
+                }
+
+                .noBtn {
+                    color: var(--text-color);
+
+                    a {
+                        color: var(--theme-color);
+                    }
+                }
             }
+
         }
 
     }

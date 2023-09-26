@@ -186,7 +186,7 @@
                 <div class="copyrightItem" v-else>
                     <svg-icon icon-class="zzlink"></svg-icon>
                     <span class="text name">转载链接:</span>
-                    <a href="" class="text"> {{ article.originalUrl }}</a>
+                    <a :href="article.originalUrl" class="text"> {{ article.originalUrl }}</a>
                 </div>
                 <div class="copyrightItem">
                     <svg-icon icon-class="link"></svg-icon>

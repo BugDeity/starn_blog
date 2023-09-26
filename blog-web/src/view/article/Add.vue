@@ -34,27 +34,35 @@
                     </el-form-item>
                 </div>
                 <div class="article-right">
-                    <el-form-item label="文章标签" prop="tagList">
-                        <el-select v-model="article.tagList" :multiple-limit="3" multiple placeholder="请选择标签">
-                            <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="文章分类" prop="categoryId">
-                        <el-select v-model="article.categoryId" placeholder="请选择分类">
-                            <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="创作类型" prop="isOriginal">
-                        <el-radio v-model="article.isOriginal" :label="1">原创</el-radio>
-                        <el-radio v-model="article.isOriginal" :label="0">转载</el-radio>
-                    </el-form-item>
-                    <el-form-item v-if="article.isOriginal == 0" label="文章地址" prop="originalUrl">
-                        <el-input v-model="article.originalUrl"></el-input>
-                    </el-form-item>
-                    <div style="text-align: center;">
-                        <button type="button" class="btn" @click="submit">发布</button>
+                    <div class="top">
+                        <el-form-item label="文章标签" prop="tagList">
+                            <el-select v-model="article.tagList" :multiple-limit="3" multiple placeholder="请选择标签">
+                                <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="文章分类" prop="categoryId">
+                            <el-select v-model="article.categoryId" placeholder="请选择分类">
+                                <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="创作类型" prop="isOriginal">
+                            <el-radio v-model="article.isOriginal" :label="1">原创</el-radio>
+                            <el-radio v-model="article.isOriginal" :label="0">转载</el-radio>
+                        </el-form-item>
+                        <el-form-item v-if="article.isOriginal == 0" label="文章地址" prop="originalUrl">
+                            <el-input v-model="article.originalUrl"></el-input>
+                        </el-form-item>
+                    </div>
+
+                    <div class="bottom">
+                        <div class="btn-tips">Are you ready</div>
+                        <button v-if="$store.state.userInfo && $store.state.userInfo.id == 1" type="button" class="btn"
+                            @click="submit">提交审核</button>
+                        <span v-else class="noBtn">
+                            暂无发布权限,请先<a @click="$store.state.loginFlag = true">登录</a>
+                        </span>
                     </div>
                 </div>
             </el-form>
@@ -227,14 +235,14 @@ export default {
         }
 
         .article-left,
-        .article-right {
-            background-color: var(--background-color);
+        .article-right .top,
+        .bottom {
             border-radius: 5px;
             padding: 10px;
         }
 
         .article-left {
-
+            background-color: var(--background-color);
             margin-right: 20px;
             width: 100%;
 
@@ -251,15 +259,63 @@ export default {
         .article-right {
             width: 35%;
             height: 100%;
+            display: flex;
+            flex-direction: column;
 
-            .btn {
-                padding: 5px;
-                width: 50%;
-                border-radius: 50px;
-                background: linear-gradient(135deg, #59c3fb 10%, #268df7 100%);
-                border: none;
-                margin: 0 auto;
+            .top,
+            .bottom {
+                background-color: var(--background-color);
             }
+
+            .bottom {
+                margin-top: 20px;
+                text-align: center;
+
+                .btn-tips {
+                    color: #b5b5b5;
+                    font-size: 0.75rem;
+                    margin-bottom: 1rem;
+
+                    &::before {
+                        content: "";
+                        display: inline-block;
+                        background-color: #d8d8d8;
+                        width: 60px;
+                        height: 1px;
+                        margin: 0 12px;
+                        vertical-align: middle;
+                    }
+
+                    &::after {
+                        content: "";
+                        display: inline-block;
+                        background-color: #d8d8d8;
+                        width: 60px;
+                        height: 1px;
+                        margin: 0 12px;
+                        vertical-align: middle;
+                    }
+                }
+
+                .btn {
+                    padding: 10px;
+                    width: 50%;
+                    border-radius: 5px;
+                    background: linear-gradient(135deg, #59c3fb 10%, #268df7 100%);
+                    border: none;
+                    margin: 0 auto;
+                    color: #fff;
+                }
+
+                .noBtn {
+                    color: var(--text-color);
+
+                    a {
+                        color: var(--theme-color);
+                    }
+                }
+            }
+
         }
 
     }
