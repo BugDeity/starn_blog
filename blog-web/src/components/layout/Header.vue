@@ -6,7 +6,7 @@
                 <div class="logoBox">
                     <router-link :to="'/'">
                         <el-image class="img"
-                            style="width: 50px;border-radius: 50%; height: 45px;border: 1px solid var(--border-line);"
+                            style="width: 40px;border-radius: 50%; height: 40px;border: 1px solid var(--border-line);"
                             :src="$store.state.webSiteInfo.logo">
                         </el-image>
                         <span class="name">拾壹博客</span>
@@ -24,7 +24,7 @@
                 <span v-if="isMobile" style="position: absolute;right: 10px;">
                     <!-- <a @click="openSearch"><i class="iconfont iconsousuo" /></a> -->
                     <a @click="openSearchDrawer" style="font-size:20px">
-                        <i class="iconfont icon-search" style="font-size: 1.5rem;;" />
+                        <i class="iconfont icon-search" style="font-size: 1.5rem;" />
                     </a>
                 </span>
             </div>
@@ -773,7 +773,7 @@ export default {
 
                 .sendBtn {
                     display: inline-block;
-                    background: linear-gradient(135deg, #59c3fb 10%, #268df7 100%);
+                    background: linear-gradient(135deg, #60e464 10%, #5cb85b 100%);
                     border-radius: 50px;
                     padding: 5px 10px 5px 10px;
                     border: none;
