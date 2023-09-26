@@ -38,10 +38,10 @@ public class ApiNoteController {
     }
 
     @SaCheckLogin
-    @GetMapping(value = "/getMyNote")
-    @ApiOperation(value = "我的笔记列表", httpMethod = "GET", response = ResponseResult.class, notes = "我的笔记列表")
-    public ResponseResult selectMyNote() {
-        return apiNoteService.selectMyNote();
+    @GetMapping(value = "/selectNoteByUserId")
+    @ApiOperation(value = "根据用户id获取笔记", httpMethod = "GET", response = ResponseResult.class, notes = "根据用户id获取笔记")
+    public ResponseResult selectNoteByUserId(String userId,Integer status) {
+        return apiNoteService.selectNoteByUserId(userId,status);
     }
 
     @SaCheckLogin

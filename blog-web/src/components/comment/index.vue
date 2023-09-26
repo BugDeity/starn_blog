@@ -33,7 +33,7 @@
                     <div class="comment" @mouseenter="replyEnter(item.id, false)" @mouseleave="replyLeave(item.id)">
                         <div class="main">
                             <div class="profile">
-                                <a :href="item.webSite" target="_blank">
+                                <a @click="handleToUserMain(item.userId)" target="_blank">
                                     <img :src="item.avatar" alt="">
                                 </a>
                             </div>
@@ -92,7 +92,7 @@
                                     @mouseleave="replyLeave(childrenItem.id, true, index)">
                                     <div class="main">
                                         <div class="profile">
-                                            <a :href="childrenItem.webSite">
+                                            <a @click="handleToUserMain(childrenItem.userId)">
                                                 <img :src="childrenItem.avatar" alt="">
                                             </a>
                                         </div>
@@ -207,6 +207,9 @@ export default {
         })
     },
     methods: {
+        handleToUserMain(userId) {
+            this.$router.push({ path: "/user_main", query: { id: userId } })
+        },
         getCommens() {
             featchComments(this.pageData).then(res => {
                 this.commentList = res.data.records

@@ -2,6 +2,7 @@ package com.shiyi.service;
 
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Note;
+import io.swagger.models.auth.In;
 
 public interface ApiNoteService {
     /**
@@ -21,7 +22,8 @@ public interface ApiNoteService {
      * 获取我的笔记列表
      * @return
      */
-    ResponseResult selectMyNote();
+    ResponseResult selectNoteByUserId(String userId, Integer status);
+
 
     /**
      * 删除我的笔记
@@ -29,4 +31,5 @@ public interface ApiNoteService {
      * @return
      */
     ResponseResult deleteMyNote(Integer id);
+
 }

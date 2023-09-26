@@ -7,9 +7,9 @@ export function fetchArticleList(params) {
         params: params
     })
 }
-export function getMyArticle(params) {
+export function getArticleByUserId(params) {
     return request({
-        url: '/v1/article/selectMyArticle',
+        url: '/v1/article/selectArticleByUserId',
         method: 'get',
         params: params
     })
@@ -95,13 +95,6 @@ export function fetchTagList() {
         url: '/v1/tag/',
         method: 'get',
 
-    })
-}
-
-export function getMedal(medalId) {
-    return request({
-        url: '/v1/getMedal/' + medalId,
-        method: 'get',
     })
 }
 
@@ -191,10 +184,13 @@ export function updateUserInfo(data) {
         data
     })
 }
-export function getUserInfo() {
+export function getUserInfo(userId) {
     return request({
         url: '/v1/user/info',
-        method: 'get'
+        method: 'get',
+        params: {
+            userId: userId
+        }
     })
 }
 export function selectUserInfoByToken(token) {

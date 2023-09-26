@@ -222,8 +222,10 @@
             <div style="position: sticky;top:70px;">
                 <el-card class="box-card articleUser">
                     <div style="margin-bottom: 15px;margin-top: 10px;">
-                        <a href="javascript:;" style="display: flex;">
-                            <el-avatar style="border: 1px solid var(--border-line);" :src="userInfo.avatar"></el-avatar>
+                        <div style="display: flex;">
+                            <a @click="handleToUserMain(article.userId)">
+                                <el-avatar style="border: 1px solid var(--border-line);" :src="userInfo.avatar"></el-avatar>
+                            </a>
                             <div class="userInfo">
                                 <p class="nickname">
                                     {{ userInfo.nickname }}
@@ -234,7 +236,7 @@
                                 <p class="intor">{{ userInfo.intro ? userInfo.intro : '这个博主很懒，什么都没有留下' }}
                                 </p>
                             </div>
-                        </a>
+                        </div>
                     </div>
                     <div style="margin-bottom: 15px;margin-top: 30px;display: flex;">
                         <span class="myArticle">
@@ -457,6 +459,9 @@ export default {
 
     },
     methods: {
+        handleToUserMain(userId) {
+            this.$router.push({ path: "/user_main", query: { id: userId } })
+        },
         qqShare() {
             const url = `https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${window.location.href}&sharesource=qzone&title=${this.article.title}&summary=${this.article.title}`
             window.open(url, 'renren-share', 'width=490,height=700');

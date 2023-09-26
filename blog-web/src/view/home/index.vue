@@ -342,7 +342,7 @@ export default {
     },
     methods: {
         handleToUserMain(userId) {
-            console.log(userId)
+            this.$router.push({ path: "/user_main", query: { id: userId } })
         },
         stop() {
             clearInterval(this.timer);
@@ -357,7 +357,6 @@ export default {
                     }
                 }, 3500)
             }
-
         },
         handleGetSayList() {
             let pageData = {

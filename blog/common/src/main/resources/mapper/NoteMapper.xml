@@ -16,11 +16,15 @@
         order by n.create_time desc
     </select>
 
-    <select id="selectMyNoteList" resultType="com.shiyi.vo.ApiNoteListVO">
+    <select id="selectNoteByUserId" resultType="com.shiyi.vo.ApiNoteListVO">
         select n.content,n.id,n.user_id,n.create_time,ui.avatar,ui.nickname,c.name as categoryName from b_note n
         left join b_user u on n.user_id=u.id
         left join b_user_info ui on ui.id = u.user_info_id
-        left join b_category c on n.category_id = c.id where n.user_id = #{userId}
+        left join b_category c on n.category_id = c.id
+         where n.user_id = #{userId}
+        <if test="status != null">
+            and n.status = #{status}
+        </if>
         order by n.create_time desc
     </select>
 

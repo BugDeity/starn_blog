@@ -14,9 +14,9 @@ export function insertNote(data) {
         data
     })
 }
-export function getMyNote(params) {
+export function selectNoteByUserId(params) {
     return request({
-        url: '/v1/note/getMyNote',
+        url: '/v1/note/selectNoteByUserId',
         method: 'get',
         params: params
     })

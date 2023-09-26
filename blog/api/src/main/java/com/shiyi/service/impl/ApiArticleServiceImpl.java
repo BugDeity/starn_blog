@@ -28,6 +28,7 @@ import com.shiyi.vo.ApiArticleListVO;
 import com.shiyi.vo.UserInfoVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -273,18 +274,16 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         return ResponseResult.success();
     }
 
-    /**
-     * 查询我的文章
-     * @return
-     */
     @Override
-    public ResponseResult selectMyArticle(Integer type) {
-        Page<ApiArticleListVO> list = articleMapper.selectMyArticle(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),StpUtil.getLoginIdAsString(),type);
+    public ResponseResult selectArticleByUserId(String userId, Integer type) {
+        userId = StringUtils.isNotBlank(userId) ? userId : StpUtil.getLoginIdAsString();
+        Page<ApiArticleListVO> list = articleMapper.selectMyArticle(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),userId,type);
         list.getRecords().forEach(item ->{
             List<Tags> tags = tagsMapper.selectTagByArticleId(item.getId());
             item.setTagList(tags);
         });
         return ResponseResult.success(list);
+
     }
 
     /**

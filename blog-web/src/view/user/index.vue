@@ -263,12 +263,12 @@
    
 <script>
 import {
-    updateUserInfo, getUserInfo, upload, getMyArticle,
+    updateUserInfo, getUserInfo, upload, getArticleByUserId,
     deleteMyArticle, addFeedback
 } from '@/api'
 
 import { cancelCollect, getCollect } from '@/api/collect'
-import { getMyNote, deleteNote } from '@/api/note'
+import { selectNoteByUserId, deleteNote } from '@/api/note'
 import { sign, validateTodayIsSign } from '@/api/sign'
 export default {
     name: '',
@@ -501,7 +501,7 @@ export default {
             if (type) {
                 this.pageData.type = type
             }
-            getMyArticle(this.pageData).then(res => {
+            getArticleByUserId(this.pageData).then(res => {
                 this.dataList.push(...res.data.records);
                 this.pages = res.data.pages
 
@@ -516,7 +516,7 @@ export default {
             })
         },
         selectNoteList() {
-            getMyNote(this.pageData).then(res => {
+            selectNoteByUserId(this.pageData).then(res => {
                 this.dataList.push(...res.data.records);
                 this.pages = res.data.pages
             })

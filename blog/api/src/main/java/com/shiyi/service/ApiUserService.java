@@ -45,7 +45,7 @@ public interface ApiUserService {
      * 获取用户信息
      * @return
      */
-    public ResponseResult selectUserInfo();
+    public ResponseResult selectUserInfo(String userId);
 
     /**
      * 修改用户信息

@@ -58,7 +58,8 @@ public interface ApiArticleService {
      * 查询我的文章
      * @return
      */
-    public ResponseResult selectMyArticle(Integer type);
+    ResponseResult selectArticleByUserId(String userId, Integer type);
+
 
     /**
      * 删除我的文章
@@ -80,4 +81,5 @@ public interface ApiArticleService {
      * @return
      */
     public ResponseResult selectUserInfoByArticleId(Integer id);
+
 }

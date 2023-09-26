@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.zhyd.oauth.model.AuthResponse;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -179,8 +180,9 @@ public class ApiUserServiceImpl implements ApiUserService {
      * @return
      */
     @Override
-    public ResponseResult selectUserInfo() {
-        UserInfoVO userInfo = userInfoMapper.selectUserInfoByUserId(StpUtil.getLoginIdAsString());
+    public ResponseResult selectUserInfo(String userId) {
+        userId = StringUtils.isNotBlank(userId) ? userId : StpUtil.getLoginIdAsString();
+        UserInfoVO userInfo = userInfoMapper.selectUserInfoByUserId(userId);
         return ResponseResult.success(userInfo);
     }
 

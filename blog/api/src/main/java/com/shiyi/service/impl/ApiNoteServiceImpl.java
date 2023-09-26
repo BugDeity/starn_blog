@@ -55,9 +55,10 @@ public class ApiNoteServiceImpl implements ApiNoteService {
      * @return
      */
     @Override
-    public ResponseResult selectMyNote() {
-        Page<ApiNoteListVO> notePage = noteMapper.selectMyNoteList(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
-                StpUtil.getLoginIdAsString());
+    public ResponseResult selectNoteByUserId(String userId, Integer status) {
+        userId = StringUtils.isNotBlank(userId) ? userId : StpUtil.getLoginIdAsString();
+        Page<ApiNoteListVO> notePage = noteMapper.selectNoteByUserId(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
+                userId,status);
         return ResponseResult.success(notePage);
     }
 

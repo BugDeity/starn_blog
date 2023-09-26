@@ -25,8 +25,8 @@ public class ApiUserController {
     @SaCheckLogin
     @BusinessLogger(value = "个人中心模块-获取用户信息",type = "修改",desc = "获取用户信息")
     @RequestMapping(value = "/info",method = RequestMethod.GET)
-    public ResponseResult selectUserInfo(){
-        return userService.selectUserInfo();
+    public ResponseResult selectUserInfo(String userId){
+        return userService.selectUserInfo(userId);
     }
 
     @SaCheckLogin

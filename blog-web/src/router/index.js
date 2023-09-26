@@ -148,6 +148,13 @@ const routes = [
                     title: "拾壹博客-一个专注于技术分享的博客平台"
                 }
             },
+            {
+                path: "/user_main",
+                component: resolve => require(["@/view/user/UserMain.vue"], resolve),
+                meta: {
+                    title: "拾壹博客-一个专注于技术分享的博客平台"
+                }
+            },
 
         ],
     },

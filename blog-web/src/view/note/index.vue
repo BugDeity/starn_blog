@@ -55,7 +55,9 @@
                         <ul v-if="noteList.length > 0">
                             <li class="item" v-for="(item, index) in noteList" :key="index">
                                 <div class="userInfo">
-                                    <el-avatar class="avatar" :src="item.avatar"></el-avatar>
+                                    <a @click="handleToUserMain(item.userId)">
+                                        <el-avatar class="avatar" :src="item.avatar"></el-avatar>
+                                    </a>
                                     <span class="username">{{ item.nickname }}</span>
                                     <span class="time"> <i class="el-icon-time"></i> {{ item.createTimeStr }}</span>
                                     <span class="categoryItem" v-if="item.categoryName">
@@ -147,6 +149,9 @@ export default {
         this.getNoteList()
     },
     methods: {
+        handleToUserMain(userId) {
+            this.$router.push({ path: "/user_main", query: { id: userId } })
+        },
         handleDelete(id, index) {
             this.$confirm('此操作将永久删除该笔记, 是否继续?', '提示', {
                 confirmButtonText: '确定',

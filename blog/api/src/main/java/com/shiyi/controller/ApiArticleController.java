@@ -84,11 +84,11 @@ public class ApiArticleController {
     }
 
     @SaCheckLogin
-    @GetMapping(value = "/selectMyArticle")
-    @BusinessLogger(value = "查询我的文章",type = "查询",desc = "查询我的文章")
-    @ApiOperation(value = "查询我的文章", httpMethod = "GET", response = ResponseResult.class, notes = "查询我的文章")
-    public ResponseResult selectMyArticle(Integer type) {
-        return articleService.selectMyArticle(type);
+    @GetMapping(value = "/selectArticleByUserId")
+    @BusinessLogger(value = "根据用户id获取文章",type = "查询",desc = "根据用户id获取文章")
+    @ApiOperation(value = "根据用户id获取文章", httpMethod = "GET", response = ResponseResult.class, notes = "根据用户id获取文章")
+    public ResponseResult selectArticleByUserId(String userId,Integer type) {
+        return articleService.selectArticleByUserId(userId,type);
     }
 
     @SaCheckLogin
@@ -106,4 +106,5 @@ public class ApiArticleController {
     public ResponseResult selectMyArticleInfo(Long id) {
         return articleService.selectMyArticleInfo(id);
     }
+
 }
