@@ -385,7 +385,7 @@ export default {
                             transition: box-shadow .35s, transform .35s;
 
                             &:hover {
-                                box-shadow: 5px 8px 3px rgba(126, 35, 165, 0.4);
+                                box-shadow: 1px 1px 5px 5px rgba(49, 211, 162, 0.322);
                                 transform: translateY(-2px)
                             }
 

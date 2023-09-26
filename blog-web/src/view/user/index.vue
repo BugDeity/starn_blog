@@ -738,7 +738,7 @@ export default {
                 bottom: 10px;
                 cursor: url(https://img.shiyit.com/link.cur), pointer;
                 font-size: 20px;
-                background-color: #909399;
+                background-color: #90939987;
                 border-color: #909399;
                 border-radius: 50%;
                 width: 30px;
@@ -796,6 +796,8 @@ export default {
                 }
 
                 &:hover {
+                    background-color: #909399;
+
                     .menu {
                         display: block;
                     }
