@@ -2,7 +2,7 @@
     <header class="header">
         <div id="pre" :style="{ width: widthPre + '%' }"></div>
         <nav>
-            <div class="logo" style="cursor: url(https://img.shiyit.com/link.cur),pointer;">
+            <div class="logo">
                 <div class="logoBox">
                     <router-link :to="'/'">
                         <el-image class="img"
@@ -468,6 +468,7 @@ export default {
                 width: 100%;
                 position: relative;
                 display: flex;
+                color: var(--text-color);
 
                 .logoBox {
                     height: 60px;
@@ -689,6 +690,7 @@ export default {
                     line-height: 60px;
                     cursor: url(https://img.shiyit.com/link.cur), pointer;
                     text-align: right;
+                    color: var(--text-color);
 
                     .iconfont {
                         font-size: 20px;

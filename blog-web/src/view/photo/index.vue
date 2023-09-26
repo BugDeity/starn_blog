@@ -19,11 +19,9 @@
                     <span class="desc">
                         {{ item.info }}
                     </span>
-
                 </a>
             </div>
         </div>
-
     </div>
 </template>
 <script>
@@ -43,12 +41,12 @@ export default {
             photoAlbumList: [],
             pageData: {
                 pageNo: 1,
-                pageSize: 10,
+                pageSize: 30,
                 photoAlbumId: null
             },
             photoList: [],
             imgList: [],
-
+            pageTotal: 0,
         }
     },
     created() {
@@ -75,6 +73,7 @@ export default {
         getPhotoList() {
             featchPhoto(this.pageData).then(res => {
                 this.photoList = res.data.records
+                this.pageTotal = res.data.pages
                 for (var i = 0; i < this.photoList.length; i++) {
                     this.imgList.push(this.photoList[i].url);
                 }

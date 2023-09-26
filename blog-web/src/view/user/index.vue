@@ -24,7 +24,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <i class="el-icon-more-outline moreBtn"></i>
+                        <i class="el-icon-more-outline"></i>
                     </div>
 
                 </div>
@@ -736,9 +736,19 @@ export default {
                 position: absolute;
                 right: 20px;
                 bottom: 10px;
-                color: var(--theme-color);
                 cursor: url(https://img.shiyit.com/link.cur), pointer;
                 font-size: 20px;
+                background-color: #909399;
+                border-color: #909399;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+                color: #fff;
+
+                i {
+                    margin-top: 5px;
+                }
 
                 .menu {
                     background-color: var(--background-color);
@@ -749,7 +759,7 @@ export default {
                     text-align: center;
                     position: absolute;
                     right: -15px;
-                    bottom: 20px;
+                    bottom: 30px;
                     display: none;
                     animation: fade-in 0.3s linear 1;
                     width: 120px;

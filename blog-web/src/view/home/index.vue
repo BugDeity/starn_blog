@@ -917,6 +917,7 @@ export default {
 
                             &:hover {
                                 border-radius: 0;
+                                background-color: #000 !important;
                             }
                         }
                     }

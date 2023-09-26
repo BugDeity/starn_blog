@@ -450,6 +450,7 @@ export default {
 
             .condition-info {
                 margin-left: 30px;
+                color: var(--text-color);
 
                 div {
                     margin-top: 10px;

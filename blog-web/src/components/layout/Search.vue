@@ -16,7 +16,7 @@
                 <svg-icon icon-class="tag"></svg-icon>
                 <span>标签搜索</span>
                 <div class="tag">
-                    <span @click="handleClike(item)" :style="{ backgroundColor: `${randomColor()}` }" class="item"
+                    <span @click="handleClike(item.id)" :style="{ backgroundColor: `${randomColor()}` }" class="item"
                         v-for="(item, index) in tagCloudList" :key="index">
                         {{ item.name }}
                     </span>
@@ -55,8 +55,8 @@ export default {
         }
     },
     methods: {
-        handleClike(item) {
-            this.$router.push({ name: "/tags", query: { id: item.id, name: item.name } })
+        handleClike(id) {
+            this.$router.push({ path: "/tag", query: { id: id } })
             this.$store.state.searchDrawer = false
         },
         search() {
@@ -169,6 +169,7 @@ export default {
 
             i,
             span {
+                color: var(--text-color);
                 font-size: 1rem;
             }
 

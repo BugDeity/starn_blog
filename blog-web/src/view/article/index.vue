@@ -1118,7 +1118,6 @@ export default {
                 transition: box-shadow .35s, transform .35s;
                 cursor: url(https://img.shiyit.com/link.cur), pointer;
                 max-height: 500px;
-                width: 100%;
 
                 &:hover {
                     box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2);
