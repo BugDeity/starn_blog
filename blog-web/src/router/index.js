@@ -53,6 +53,10 @@ const routes = [
                 }
             },
             {
+                path: "/newposts",
+                component: resolve => require(["@/view/article/Add"], resolve),
+            },
+            {
                 path: "/archive",
                 component: resolve => require(["@/view/archive/index"], resolve),
                 meta: {
@@ -85,6 +89,13 @@ const routes = [
                 component: resolve => require(["@/view/say/index"], resolve),
                 meta: {
                     title: "说说"
+                }
+            },
+            {
+                path: "/add_say",
+                component: resolve => require(["@/view/say/Add"], resolve),
+                meta: {
+                    title: "添加说说"
                 }
             },
             {

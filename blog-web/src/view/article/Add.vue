@@ -1,68 +1,65 @@
 <template>
-    <el-dialog :lock-scroll="false" :fullscreen="true" title="发表文章" :visible.sync="drawer" :before-close="handleClose">
-        <el-form :model="article" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-row :gutter="20">
-                <el-col :span="8">
-                    <el-form-item label="文章标题" prop="title">
-                        <el-input v-model="article.title"></el-input>
+    <div class='article-add'>
+        <div class="containner">
+            <div class="title">
+                发布文章
+            </div>
+            <el-form style="display: flex;" :rules="rules" ref="ruleForm" label-position="left" label-width="80px"
+                :model="article">
+                <div class="article-left">
+                    <el-row :gutter="20">
+                        <el-col :span="16">
+                            <el-form-item label="文章标题" prop="title">
+                                <el-input v-model="article.title"></el-input>
+                            </el-form-item>
+                            <el-form-item label="文章简介" prop="summary">
+                                <el-input v-model="article.summary"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="封面图" prop="">
+                                <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
+                                    :action="uploadPictureHost" :before-upload="uploadBefore"
+                                    :http-request="uploadSectionFile" multiple>
+                                    <img v-if="article.avatar" style="width: 100%;height: 100%;" :src="article.avatar"
+                                        class="imgAvatar" />
+                                    <i v-else class="el-icon-plus avatar-img-icon"></i>
+                                </el-upload>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-form-item label="文章内容" prop="contentMd">
+                        <mavon-editor placeholder="输入文章内容..." style="height: 500px" ref=md v-model="article.contentMd"
+                            @imgDel="imgDel" @change="" @imgAdd="imgAdd" />
                     </el-form-item>
-                    <el-form-item label="文章简介" prop="summary">
-                        <el-input v-model="article.summary"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="封面图" prop="">
-                        <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
-                            :action="uploadPictureHost" :before-upload="uploadBefore" :http-request="uploadSectionFile"
-                            multiple>
-                            <img v-if="article.avatar" style="width: 100%;height: 100%;" :src="article.avatar"
-                                class="imgAvatar" />
-                            <i v-else class="el-icon-plus avatar-img-icon"></i>
-                        </el-upload>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row :gutter="20">
-                <el-col :span="8">
+                </div>
+                <div class="article-right">
                     <el-form-item label="文章标签" prop="tagList">
                         <el-select v-model="article.tagList" :multiple-limit="3" multiple placeholder="请选择标签">
                             <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
-                </el-col>
-                <el-col :span="8">
                     <el-form-item label="文章分类" prop="categoryId">
                         <el-select v-model="article.categoryId" placeholder="请选择分类">
                             <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
                             </el-option>
                         </el-select>
                     </el-form-item>
-                </el-col>
-                <el-col :span="8">
                     <el-form-item label="创作类型" prop="isOriginal">
-                        <el-radio v-model="article.isOriginal" border :label="1">原创</el-radio>
-                        <el-radio v-model="article.isOriginal" border :label="0">转载</el-radio>
+                        <el-radio v-model="article.isOriginal" :label="1">原创</el-radio>
+                        <el-radio v-model="article.isOriginal" :label="0">转载</el-radio>
                     </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row :gutter="20" v-if="article.isOriginal == 0">
-                <el-col :span="8">
-                    <el-form-item label="文章地址" prop="originalUrl">
+                    <el-form-item v-if="article.isOriginal == 0" label="文章地址" prop="originalUrl">
                         <el-input v-model="article.originalUrl"></el-input>
                     </el-form-item>
-                </el-col>
-            </el-row>
-            <el-form-item label="文章内容" prop="contentMd">
-                <mavon-editor placeholder="输入文章内容..." style="height: 500px" ref=md v-model="article.contentMd"
-                    @imgDel="imgDel" @change="" @imgAdd="imgAdd" />
-            </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="handleClose">取 消</el-button>
-            <el-button type="primary" @click="submit">提交审核</el-button>
-        </span>
-    </el-dialog>
+                    <div style="text-align: center;">
+                        <button type="button" class="btn" @click="submit">发布</button>
+                    </div>
+                </div>
+            </el-form>
+        </div>
+    </div>
 </template>
 <script>
 import { upload, featchCategory, insertArticle, getMyArticleInfo, fetchTagList } from '@/api'
@@ -72,9 +69,9 @@ export default {
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
             article: {},
             categoryList: [],
-            // 加载层信息
-
+            loading: [],
             img: process.env.VUE_APP_IMG_API,
+            articleId: this.$route.query.id,
             tagList: [],
             rules: {
                 title: [
@@ -104,33 +101,18 @@ export default {
             }
         };
     },
-    computed: {
-        drawer: {
-            set(value) {
-                this.$store.state.articleDrawer.flag = value;
-            },
-            get() {
-                if (this.$store.state.articleDrawer.flag) {
-                    this.article = {
-                        isOriginal: 1,
-                        avatar: null,
-                    }
-                    featchCategory().then(res => {
-                        this.categoryList = res.data
-                    })
-                    fetchTagList().then(res => {
-                        this.tagList = res.data
-                    })
-                    if (this.$store.state.articleDrawer.id) {
-
-                        getMyArticleInfo(this.$store.state.articleDrawer.id).then(res => {
-                            this.article = res.data
-                        })
-                    }
-                }
-                return this.$store.state.articleDrawer.flag;
-            }
-        },
+    created() {
+        if (this.articleId) {
+            getMyArticleInfo(this.articleId).then(res => {
+                this.article = res.data
+            })
+        }
+        featchCategory().then(res => {
+            this.categoryList = res.data
+        })
+        fetchTagList().then(res => {
+            this.tagList = res.data
+        })
     },
     methods: {
         imgAdd: function (pos, $file) {
@@ -163,7 +145,7 @@ export default {
                             message: '提交成功，请耐心等待审核',
                             type: 'success'
                         });
-                    }).catch(err => {
+                        this.$router.push({ path: "/user" })
                     })
                 } else {
                     console.log('error submit!!');
@@ -171,27 +153,7 @@ export default {
                 }
             });
         },
-        handleClose() {
-            this.$confirm('确认关闭吗？编写的文章不会保存哦', '提示', {
-                lockScroll: false,
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            })
-                .then(_ => {
-                    this.$store.state.articleDrawer.flag = false
-                })
-                .catch(_ => {
-                    this.$notify({
-                        title: '消息',
-                        message: '取消关闭',
-                        type: 'info'
-                    });
-                });
-        },
         handleUploadImage(event, insertImage, files) {
-            // 拿到 files 之后上传到文件服务器，然后向编辑框中插入对应的内容
-
             const file = files[0]
             // FormData 对象
             var formData = new FormData()
@@ -208,7 +170,7 @@ export default {
 
         },
         uploadBefore: function () {
-
+            this.openLoading()
         },
         uploadSectionFile: function (param) {
             this.files = param.file
@@ -219,13 +181,90 @@ export default {
             upload(formData).then(res => {
                 this.article.avatar = res.data
             })
-
+            this.loading.close()
+        },
+        // 打开加载层
+        openLoading: function () {
+            this.loading = this.$loading({
+                lock: true,
+                text: "正在加载中~",
+                spinner: "el-icon-loading",
+                background: "rgba(0, 0, 0, 0.7)"
+            });
         },
 
     }
 };
 </script>
 <style lang="scss" scoped>
+.article-add {
+    display: flex;
+    justify-content: center;
+
+    @media screen and (max-width: 1118px) {
+        padding: 0 5px;
+
+        .containner {
+            width: 100%;
+            margin-top: 80px;
+
+        }
+    }
+
+    @media screen and (min-width: 1119px) {
+        .containner {
+            width: 80%;
+            margin-top: 80px;
+        }
+    }
+
+    .containner {
+        padding: 10px;
+
+        .title {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .article-left,
+        .article-right {
+            background-color: var(--background-color);
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .article-left {
+
+            margin-right: 20px;
+            width: 100%;
+
+            .el-textarea {
+                width: 92%;
+            }
+
+            /deep/ .contentInput textarea {
+                resize: none;
+                background-color: var(--background-color);
+            }
+        }
+
+        .article-right {
+            width: 35%;
+            height: 100%;
+
+            .btn {
+                padding: 5px;
+                width: 50%;
+                border-radius: 50px;
+                background: linear-gradient(135deg, #59c3fb 10%, #268df7 100%);
+                border: none;
+                margin: 0 auto;
+            }
+        }
+
+    }
+}
+
 /deep/ .avatar-uploader {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;

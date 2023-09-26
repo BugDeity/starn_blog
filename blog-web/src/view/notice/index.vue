@@ -77,11 +77,11 @@
                             </div>
                         </div>
                     </div>
-
-
                     <!-- 分页按钮 -->
                     <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
                 </div>
+
+
                 <div class="empty-box" v-else>
                     <sy-empty message="暂未新通知哦" />
                 </div>

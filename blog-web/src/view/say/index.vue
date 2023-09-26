@@ -426,7 +426,6 @@ export default {
             margin-top: 20px;
             width: 100%;
             color: var(--text-color);
-            background-color: var(--background-color);
 
             .sayItem {
                 padding: 10px;
@@ -434,6 +433,7 @@ export default {
                 margin-bottom: 10px;
                 border-radius: 5px;
                 position: relative;
+                background-color: var(--background-color);
 
                 .avatar {
 

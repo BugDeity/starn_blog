@@ -12,10 +12,6 @@ export default new Vuex.Store({
     systemNotcie: {},
     userInfo: sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : null,
     isCommentFlag: false,
-    articleDrawer: {
-      flag: false,
-      id: null
-    },
     webSiteInfo: {
       loginTypeList: "",
       showList: "",

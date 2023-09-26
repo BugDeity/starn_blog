@@ -2,6 +2,7 @@ package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.shiyi.common.ResponseResult;
+import com.shiyi.entity.Say;
 import com.shiyi.entity.SayComment;
 import com.shiyi.service.ApiSayService;
 import io.swagger.annotations.Api;
@@ -38,6 +39,13 @@ public class ApiSayController {
     @ApiOperation(value = "评论说说", httpMethod = "POST", response = ResponseResult.class, notes = "评论说说")
     public ResponseResult comment(@RequestBody SayComment sayComment){
         return apiSayService.comment(sayComment);
+    }
+
+    @SaCheckLogin
+    @RequestMapping(value = "insertSay",method = RequestMethod.POST)
+    @ApiOperation(value = "添加说说说", httpMethod = "POST", response = ResponseResult.class, notes = "添加说说说")
+    public ResponseResult insertSay(@RequestBody Say say){
+        return apiSayService.insertSay(say);
     }
 
 }

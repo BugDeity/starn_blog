@@ -23,8 +23,6 @@
         <!-- 登录模态框 -->
         <Login></Login>
         <SearchModle></SearchModle>
-        <!-- 发表文章 -->
-        <ArticleModel></ArticleModel>
         <!-- 侧边栏 -->
         <Sidebar></Sidebar>
 
@@ -38,7 +36,6 @@ import Footer from '@/components/layout/Footer.vue'
 import Sidebar from '@/components/layout/Sidebar.vue'
 import Loading from '@/components/loading/loading.vue'
 import Login from '@/components/model/Login.vue'
-import ArticleModel from '@/view/article/Article.vue'
 import { selectUserInfoByToken, getWebSiteInfo } from '@/api'
 import { getNewSystemNotice } from '@/api/im'
 import { setToken, getToken } from '@/utils/cookieUtil'
@@ -51,7 +48,6 @@ export default {
         Login,
         SideNavBar,
         SearchModle,
-        ArticleModel,
         Loading,
         Notice
     },

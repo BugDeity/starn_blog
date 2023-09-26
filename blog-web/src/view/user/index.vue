@@ -390,8 +390,7 @@ export default {
             })
         },
         handleUpdateArticle(id) {
-            this.$store.state.articleDrawer.flag = true;
-            this.$store.state.articleDrawer.id = id;
+            this.$router.push({ path: "/newposts", query: { id: id } })
         },
         handleCanCollect(index, id) {
             this.$confirm('确认取消收藏该文章吗？', '提示', {

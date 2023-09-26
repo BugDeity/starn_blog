@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.RedisConstants;
 import com.shiyi.common.ResponseResult;
+import com.shiyi.common.ResultCode;
+import com.shiyi.entity.Say;
 import com.shiyi.entity.SayComment;
+import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.mapper.SayCommentMapper;
 import com.shiyi.mapper.SayMapper;
@@ -107,6 +110,18 @@ public class ApiSayServiceImpl implements ApiSayService {
         sayComment.setIp(IpUtil.getIp());
         sayComment.setIpAddress(IpUtil.getIp2region(sayComment.getIp()));
         sayCommentMapper.insert(sayComment);
+        return ResponseResult.success();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult insertSay(Say say) {
+        String userId = StpUtil.getLoginIdAsString();
+        if (!userId.equals("1")) {
+            throw new BusinessException(ResultCode.NO_PERMISSION);
+        }
+        say.setUserId(userId);
+        sayMapper.insert(say);
         return ResponseResult.success();
     }
 }

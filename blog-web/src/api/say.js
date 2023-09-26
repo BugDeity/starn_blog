@@ -26,3 +26,11 @@ export function sayComment(data) {
         data
     })
 }
+
+export function insertSay(data) {
+    return request({
+        url: '/v1/say/insertSay',
+        method: 'post',
+        data
+    })
+}

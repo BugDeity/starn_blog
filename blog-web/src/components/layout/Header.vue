@@ -149,29 +149,55 @@
 
             </ul>
 
+            <!-- 热搜框 -->
             <div class="searchBox" v-show="!noneInput">
                 <div class="search_bar search_open">
-                    <el-input @focus="focus" @blur="blur" type="text" v-model="keywords" placeholder="想搜点什么呢..."
-                        @keyup.enter.native="search" />
+                    <el-input v-if="showInput" @focus="focus" @blur="blur" type="text" v-model="keywords"
+                        placeholder="想搜点什么呢..." @keyup.enter.native="search" />
                     <p class="search_ico" @click="search">
                         <i class="iconfont icon-search"></i>
                     </p>
                 </div>
-                <!-- 热搜框 -->
                 <div class="hot_search_main" :style="style">
                     <router-link :to="'/article/' + item.id" v-for="(item, index) in $store.state.hotArticles" :key="index">
                         <span class="number">{{ index + 1 }}</span>
                         {{ item.title }}
                     </router-link>
-
                 </div>
             </div>
             <!-- 发布文章按钮 -->
-            <!-- <div class="articleBtn">
-                <el-button size="small" @click="addArticle" round type="primary">
-                    <i class="el-icon-edit-outline"></i> 发布
-                </el-button>
-            </div> -->
+            <div class="articleBtn" v-if="showUser">
+
+                <el-dropdown trigger="hover">
+                    <span class="el-dropdown-link">
+                        <button type="button" class="sendBtn">
+                            <i class="el-icon-edit-outline"></i> 发布
+                        </button>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+
+                        <router-link style="text-decoration: none;color: #71777c;" :to="'/newposts'">
+                            <el-dropdown-item>
+                                <svg-icon icon-class="article"
+                                    style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布文章
+                            </el-dropdown-item>
+                        </router-link>
+                        <router-link style="text-decoration: none;color: #71777c;" :to="'/add_say'">
+                            <el-dropdown-item>
+                                <svg-icon icon-class="say"
+                                    style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布说说
+                            </el-dropdown-item>
+                        </router-link>
+
+                        <router-link style="text-decoration: none;color: #71777c;" :to="'/'">
+                            <el-dropdown-item>
+                                <svg-icon icon-class="tiezi"
+                                    style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布帖子
+                            </el-dropdown-item>
+                        </router-link>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
 
             <div class="noticeBtn" v-if="showUser">
                 <el-dropdown trigger="hover">
@@ -252,6 +278,7 @@ export default {
             path: null,
             isMobile: false,
             noneInput: false,
+            showInput: false,
             showUser: true,
             windowWidth: 0,
             headerClass: "header",
@@ -282,7 +309,6 @@ export default {
 
     methods: {
         handleNotcieClose(val) {
-            console.log(val)
             this.noticeShow = val
         },
         handleClickNotice(index) {
@@ -325,14 +351,6 @@ export default {
                 this.search()
             }
         },
-        addArticle() {
-            if (!this.userInfo) {
-                this.handleLogin()
-                return;
-            }
-            this.$store.state.articleDrawer.flag = true;
-            this.$store.state.articleDrawer.id = null;
-        },
         openUserInfoDrawer() {
             this.$store.state.userInfoDrawer.flag = true;
             this.$store.state.userInfoDrawer.name = null;
@@ -346,7 +364,8 @@ export default {
         },
         search() {
             if (!this.keywords) {
-                return;
+                this.showInput = !this.showInput
+                return
             }
             this.$router.push({ path: '/search', query: { keyword: this.keywords.trim() } })
         },
@@ -636,7 +655,7 @@ export default {
 
             .searchBox {
                 position: absolute;
-                right: 220px;
+                right: 300px;
                 top: 0;
                 display: flex;
                 -ms-flex-direction: column;
@@ -747,8 +766,17 @@ export default {
 
             .articleBtn {
                 position: absolute;
-                right: 215px;
+                right: 220px;
                 top: 0;
+
+                .sendBtn {
+                    display: inline-block;
+                    background: linear-gradient(135deg, #59c3fb 10%, #268df7 100%);
+                    border-radius: 50px;
+                    padding: 5px 10px 5px 10px;
+                    border: none;
+                    color: #fff;
+                }
             }
 
             .noticeBtn {
