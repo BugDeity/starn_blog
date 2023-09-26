@@ -147,7 +147,6 @@ export default {
                         return;
                     }
                     insertArticle(this.article).then(res => {
-                        this.$store.state.articleDrawer.flag = false
                         this.$notify({
                             title: '成功',
                             message: '提交成功，请耐心等待审核',

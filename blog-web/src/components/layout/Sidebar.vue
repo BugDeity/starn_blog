@@ -56,17 +56,11 @@ export default {
             this.$setSkin()
         },
         toTop() {
-            let that = this;
             let scrollTop =
                 window.pageYOffset ||
                 document.documentElement.scrollTop ||
                 document.body.scrollTop;
-            that.scrollTop = scrollTop;
-            if (scrollTop > 200) {
-                this.showBtn = true;
-            } else {
-                this.showBtn = false;
-            }
+            this.showBtn = scrollTop > 200
         },
         backTop() {
             var timer = setInterval(function () {
