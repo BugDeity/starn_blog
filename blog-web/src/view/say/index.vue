@@ -323,6 +323,14 @@ export default {
             width: 100%;
             margin-top: 80px;
 
+            /deep/ video {
+                height: 200px;
+                width: 250px;
+            }
+
+            /deep/ pre {
+                max-width: 75%;
+            }
 
             .cover {
                 height: 250px;
@@ -362,6 +370,10 @@ export default {
         .say-containner {
             width: 60%;
             margin-top: 80px;
+
+            /deep/ video {
+                height: 500px;
+            }
 
             .cover {
                 height: 380px;
@@ -433,9 +445,7 @@ export default {
                 position: relative;
                 background-color: var(--background-color);
 
-                /deep/ video {
-                    height: 500px;
-                }
+
 
                 .avatar {
 
@@ -464,6 +474,7 @@ export default {
 
                     .content {
                         margin-top: 10px;
+
                     }
 
                     .grid-1 {
