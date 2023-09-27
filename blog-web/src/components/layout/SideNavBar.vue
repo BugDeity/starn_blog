@@ -1,14 +1,11 @@
 <template>
-    <div class="nav" v-show="drawer">
-        <!-- 遮罩层 -->
-        <div class=" mask" @click="close" @touchmove.stop.prevent></div>
+    <el-drawer class="nav" direction="ltr" :with-header="false" :visible.sync="drawer" :show-close="false">
         <!-- 内容 -->
-        <div class="warpper" :style="{ width: drawer ? '240px' : '0px' }">
+        <div class="warpper">
             <!-- 博主介绍 -->
             <div class="blogger-info">
                 <el-avatar :src="$store.state.webSiteInfo.authorAvatar"></el-avatar>
             </div>
-            <!-- 博客信息 -->
 
             <hr />
             <!-- 页面导航 -->
@@ -85,8 +82,7 @@
                 </div>
             </div>
         </div>
-
-    </div>
+    </el-drawer>
 </template>
 
 <script>
@@ -145,34 +141,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ {
+    .el-drawer {
+        width: 55% !important;
+    }
+}
+
 a {
     color: var(--text-color);
 }
 
 .nav {
-    height: 100%;
-
-    .mask {
-        background: rgba(101, 101, 101, 0.8); //设置透明度 ，改最后一个数值，0-1
-        width: 100%;
-        height: 100%;
-        z-index: 9;
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
-
     .warpper {
         font-weight: 700;
         font-size: 1.2rem;
         background-color: var(--background-color);
-        position: fixed;
-        top: 0;
-        z-index: 100;
-        height: 100vh;
-        animation: 0.8s ease 0s 1 normal none running sidebarItem;
+
 
         .blogger-info {
             padding: 10px 30px 0;

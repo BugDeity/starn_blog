@@ -287,7 +287,7 @@ export default {
         };
     },
 
-    mounted() {
+    created() {
         this.path = this.$route.path
         // <!--把window.onresize事件挂在到mounted函数上-->
         window.onresize = () => {
