@@ -196,6 +196,7 @@ export default {
             })
         },
         handleRegister(type) {
+            this.form = {}
             this.$store.state.loginFlag = false;
             if (type == 1) {
                 this.emailRegistFlag = true
@@ -255,6 +256,7 @@ export default {
         },
         bacKLogin() {
             clearInterval(this.timer);
+            this.form = {}
             this.$store.state.loginFlag = true
             this.wechatLoginFlag = false
             this.forgetFlag = false
