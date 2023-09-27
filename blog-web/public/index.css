@@ -123,3 +123,14 @@
      display: flex;
      justify-content: center;
  }
+
+ .xiahuaxian {
+     background: linear-gradient(to right, #9459c5, #4cbec2) no-repeat right bottom;
+     background-size: 0px 2px;
+     transition: background-size .35s;
+
+     &:hover {
+         background-size: 100% 2px;
+         background-position: left bottom;
+     }
+ }
