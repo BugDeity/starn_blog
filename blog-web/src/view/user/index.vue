@@ -363,28 +363,7 @@ export default {
             })
         },
         updateUserInfo() {
-            const obj = {
-                "id": "911",
-                "email": null,
-                "loginType": null,
-                "nickname": "bule",
-                "avatar": "https://foruda.gitee.com/avatar/1677050610632357168/5407895_quequnlong_1646130774.png",
-                "intro": "1",
-                "webSite": null,
-                "address": "中国-湖南省-长沙市",
-                "registerTime": "2023-06-08 16:03:15",
-                "lastLoginTime": "2023-09-27 07:12:15",
-                "articleCount": 0,
-                "collectCount": 0,
-                "noteCount": 0,
-                "commentCount": 0,
-                "fansCount": 0,
-                "watchCount": 0,
-                "qiDayFollowedCount": 0,
-                "bjCover": "http://img.shiyit.com/24f7b723309b46eba38cca127ea2bcc2jpg",
-                "token": null
-            }
-            updateUserInfo(obj).then(res => {
+            updateUserInfo(this.form).then(res => {
                 this.user = this.form
                 this.$notify({
                     title: '成功',
