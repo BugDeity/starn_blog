@@ -365,6 +365,13 @@ export default {
             };
             getSayList(pageData).then(res => {
                 this.sayList = res.data.records
+                for (var i = 0; i < this.sayList.length; i++) {
+                    //这里为过滤掉存在视频的说说
+                    if (this.sayList[i].content.indexOf('<video') > -1) {
+                        this.sayList.splice(i, 1);
+                        i = i - 1;
+                    }
+                }
                 this.start()
             })
         },

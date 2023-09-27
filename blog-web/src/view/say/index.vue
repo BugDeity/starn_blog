@@ -17,7 +17,7 @@
                                 <svg-icon icon-class="bozhu"></svg-icon>
                             </el-tooltip>
                         </div>
-                        <p class="content" v-html="item.content"></p>
+                        <p class="content" v-highlight v-html="item.content"></p>
                         <div v-if="item.imgUrl" :class="ckeckImgClass(item.imgUrl)">
                             <img @click="handlePreviewImg(item.imgUrl, imgItem)" v-if="checkImg(item.imgUrl)"
                                 v-for="(imgItem, imgIndex) in splitImg(item.imgUrl)" :key="imgIndex" :src="imgItem" alt="">

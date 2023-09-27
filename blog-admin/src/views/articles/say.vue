@@ -108,7 +108,7 @@ export default {
                             { text: 'CSS', value: 'css' },
                             { text: 'HTML', value: 'html' },
                             { text: 'XML', value: 'xml' },
-                            { text: 'Java', value: 'java' },
+                            { text: 'JAVA', value: 'java' },
                             // 其他
                         ]
                     }
