@@ -212,12 +212,18 @@ export default {
             margin-top: 70px;
 
             .links {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 width: 100%;
+
+                .avatarItem {
+                    display: none;
+                }
 
                 .item {
                     width: 100%;
                     height: auto;
+                    padding: 5px;
+
                 }
             }
         }
@@ -243,9 +249,29 @@ export default {
 
             }
 
+
+
             .links {
                 grid-template-columns: repeat(4, 1fr);
                 margin-left: 30px;
+
+                .avatarItem {
+                    height: 50px;
+                    width: 50px;
+                    margin: 0 10px;
+                    transition: width .35s !important;
+
+                    img {
+                        width: inherit;
+                        height: inherit;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        margin: 3px 0;
+                        margin-right: 8px;
+                        vertical-align: middle;
+                        transition: transform .35s;
+                    }
+                }
 
                 .item {
                     width: 85%;
@@ -359,23 +385,7 @@ export default {
                     display: flex;
                     align-items: center;
 
-                    .avatarItem {
-                        height: 50px;
-                        width: 50px;
-                        margin: 0 10px;
-                        transition: width .35s !important;
 
-                        img {
-                            width: inherit;
-                            height: inherit;
-                            border-radius: 50%;
-                            object-fit: cover;
-                            margin: 3px 0;
-                            margin-right: 8px;
-                            vertical-align: middle;
-                            transition: transform .35s;
-                        }
-                    }
 
 
                     .item-content {

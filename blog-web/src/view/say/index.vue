@@ -179,7 +179,6 @@ export default {
             })
         },
         handleShowCommentBox(comment, sayId, index) {
-            console.log(this.$refs.conetntInputBox)
             if (this.commentLastIndex != null && this.commentLastIndex != index) {
                 this.$refs.conetntInputBox[this.commentLastIndex].style.display = "none"
             }

@@ -332,7 +332,7 @@ export default {
 .dialog {
     @media screen and (max-width: 1118px) {
         /deep/ .el-dialog {
-            width: 100%;
+            width: 90%;
         }
     }
 

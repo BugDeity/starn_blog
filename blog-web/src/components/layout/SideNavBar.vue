@@ -91,7 +91,7 @@
 
 <script>
 import { logout } from '@/api'
-import { removeToken } from '@/utils/cookieUtil'
+import { removeToken, getToken } from '@/utils/cookieUtil'
 export default {
     data: function () {
         return {
@@ -108,8 +108,7 @@ export default {
             }
         },
         isLogin() {
-            let user = this.$store.state.userInfo
-            return user != null;
+            return getToken();
         }
     },
 
