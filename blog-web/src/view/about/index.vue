@@ -1,6 +1,6 @@
 <template>
-    <div class="about-box">
-        <el-card class="box1">
+    <div class="about-box container">
+        <el-card class="box1 box-shadow">
             <h1 class="title">关于本站</h1>
             <v-md-preview class="content" :text="$store.state.webSiteInfo.aboutMe" ref="preview" />
         </el-card>
@@ -30,8 +30,6 @@ export default {
 
 <style lang="scss" scoped>
 .about-box {
-    display: flex;
-    justify-content: center;
     position: relative;
     padding: 10px;
 
@@ -52,12 +50,6 @@ export default {
     .box1 {
         background-color: var(--background-color);
         height: 100%;
-
-
-        &:hover {
-            box-shadow: 5px 4px 8px 6px rgba(7, 17, 27, .06);
-            transition: all .3s;
-        }
 
         /deep/ .vuepress-markdown-body {
             background-color: var(--background-color);

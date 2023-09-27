@@ -1,6 +1,6 @@
 <template>
-    <div class="say-main">
-        <div class="containner">
+    <div class="say-main container">
+        <div class="say-containner">
             <div class="cover">
                 <img src="http://img.shiyit.com/72d9854940be46579f098b49f9d9035c.jpg" alt="">
                 <div class="info">说说</div>
@@ -314,13 +314,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .say-main {
-    display: flex;
-    justify-content: center;
+
 
     @media screen and (max-width: 1118px) {
         padding: 0 5px;
 
-        .containner {
+        .say-containner {
             width: 100%;
             margin-top: 80px;
 
@@ -360,7 +359,7 @@ export default {
     }
 
     @media screen and (min-width: 1119px) {
-        .containner {
+        .say-containner {
             width: 60%;
             margin-top: 80px;
 
@@ -398,7 +397,7 @@ export default {
         }
     }
 
-    .containner {
+    .say-containner {
         padding: 10px;
 
         .cover {

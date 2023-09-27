@@ -1,5 +1,5 @@
 <template>
-    <div class='note-wapper'>
+    <div class='note-wapper container'>
         <div class="main">
             <div class="note">
                 <div class="categoryBox">
@@ -53,7 +53,7 @@
 
                     <div class="noteItem">
                         <ul v-if="noteList.length > 0">
-                            <li class="item" v-for="(item, index) in noteList" :key="index">
+                            <li class="item box-shadow-top" v-for="(item, index) in noteList" :key="index">
                                 <div class="userInfo">
                                     <a @click="handleToUserMain(item.userId)">
                                         <el-avatar class="avatar" :src="item.avatar"></el-avatar>
@@ -249,8 +249,6 @@ export default {
 
 
 .note-wapper {
-    display: flex;
-    justify-content: center;
     position: relative;
 
     @media screen and (max-width: 1118px) {
@@ -382,12 +380,6 @@ export default {
                             padding: 10px;
                             margin-bottom: 15px;
                             border-radius: 5px;
-                            transition: box-shadow .35s, transform .35s;
-
-                            &:hover {
-                                box-shadow: 1px 1px 5px 5px rgba(49, 211, 162, 0.322);
-                                transform: translateY(-2px)
-                            }
 
                             .content {
                                 color: var(--article-color);

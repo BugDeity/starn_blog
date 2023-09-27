@@ -1,5 +1,5 @@
 <template>
-    <div class='sysnotice'>
+    <div class='sysnotice container'>
         <div class="notice-container">
             <div class="left-toolbar">
 
@@ -259,8 +259,6 @@ export default {
 }
 
 .sysnotice {
-    display: flex;
-    justify-content: center;
     position: relative;
 
     .notice-container {

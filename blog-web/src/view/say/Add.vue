@@ -1,6 +1,6 @@
 <template>
-    <div class='say-add'>
-        <div class="containner">
+    <div class='say-add container'>
+        <div class="say-add-containner">
             <div class="title">
                 发布说说
             </div>
@@ -121,8 +121,6 @@ export default {
    
 <style lang='scss' scoped>
 .say-add {
-    display: flex;
-    justify-content: center;
 
     @media screen and (max-width: 1118px) {
         padding: 0 5px;
@@ -135,13 +133,13 @@ export default {
     }
 
     @media screen and (min-width: 1119px) {
-        .containner {
+        .say-add-containner {
             width: 60%;
             margin-top: 80px;
         }
     }
 
-    .containner {
+    .say-add-containner {
         padding: 10px;
 
         .title {

@@ -1,5 +1,5 @@
 <template>
-    <el-card class="notice-main">
+    <el-card class="notice-main box-shadow">
         <div class="title">
             <i class="el-icon-bell"></i>
             <span class="titleName">公告信息</span>
@@ -24,11 +24,6 @@ export default {
 .notice-main {
     margin-top: 20px;
     background-color: var(--background-color);
-
-    &:hover {
-        box-shadow: 5px 4px 8px 6px rgba(7, 17, 27, .06);
-        transition: all .3s;
-    }
 
     .title {
         width: 300px;

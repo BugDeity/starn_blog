@@ -1,5 +1,5 @@
 <template>
-    <div class="artcile_main">
+    <div class="artcile_main container">
         <div class="box">
             <div class="title">
                 <span>
@@ -144,8 +144,6 @@ export default {
 <style lang="scss" scoped>
 .artcile_main {
     min-height: calc(100vh - 167px);
-    display: flex;
-    justify-content: center;
     position: relative;
 
     @media screen and (max-width: 1118px) {

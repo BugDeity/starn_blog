@@ -1,5 +1,5 @@
 <template>
-    <div class="tag-warpper">
+    <div class="tag-warpper container">
         <div class="main">
             <div class="header">
                 <span>目前共计{{ tagList.length }}个标签,继续加油</span>
@@ -141,8 +141,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .tag-warpper {
-    display: flex;
-    justify-content: center;
     position: relative;
 
     @media screen and (max-width: 1118px) {

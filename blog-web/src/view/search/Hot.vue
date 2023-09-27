@@ -1,5 +1,5 @@
 <template>
-    <div class="hotSearchMain">
+    <div class="hotSearchMain container">
         <div class="box">
             <div class="nav">
                 <div class="siteBox">
@@ -189,8 +189,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .hotSearchMain {
-    display: flex;
-    justify-content: center;
     position: relative;
 
     @media screen and (max-width: 1118px) {

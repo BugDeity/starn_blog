@@ -1,5 +1,5 @@
 <template>
-    <div class="category">
+    <div class="category container">
         <div class="main">
             <div class="header">
                 <span>目前共计{{ categoryList.length }}个分类,继续加油</span>
@@ -143,8 +143,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .category {
-    display: flex;
-    justify-content: center;
     position: relative;
 
     @media screen and (max-width: 1118px) {

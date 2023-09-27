@@ -1,5 +1,5 @@
 <template>
-    <div class="archive">
+    <div class="archive container">
         <!-- 归档列表 -->
         <el-card class="archive-container">
             <div class="num">目前共计{{ count }}篇文章，继续加油
@@ -93,8 +93,6 @@ export default {
 
 <style lang="scss" scoped>
 .archive {
-    display: flex;
-    justify-content: center;
     position: relative;
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="main-container">
+    <div class="main-container container">
         <div class="main">
             <div class="main-box">
                 <div class="bannerBox">
@@ -32,7 +32,7 @@
                 </el-tabs>
             </div>
 
-            <div class="sayBox">
+            <div class="sayBox box-shadow">
                 <router-link :to="'/say'">
                     <a class="say-item" @mouseleave="start" @mouseenter="stop" v-for="(item, index) in sayList" :key="index"
                         v-show="index == currentIndex">
@@ -48,7 +48,7 @@
                 <!-- 左侧内容 -->
                 <div style="width: 100%;">
                     <div class="articleBox" v-if="articleList.length > 0">
-                        <el-card class="articleItem" v-for="(item, index) in articleList" :key="item.id">
+                        <el-card class="articleItem box-shadow-top" v-for="(item, index) in articleList" :key="item.id">
                             <div class="articleInfo">
                                 <div class="articleInfo-item">
                                     <el-tooltip class="item" effect="dark" content="原创文章" placement="top">
@@ -138,11 +138,11 @@
 
                 <!-- 右侧内容 -->
                 <div class="rightBox">
-                    <el-card class="box-card">
+                    <el-card class="box-card box-shadow">
                         <img style="width: 100%;" src="https://img.shiyit.com/1.jpg" alt="">
                     </el-card>
                     <!-- 推荐文章 -->
-                    <el-card class="box-card recomArticle">
+                    <el-card class="box-card recomArticle box-shadow">
                         <div class="clearfix">
                             <svg-icon icon-class="tuijian"></svg-icon>
                             <span>推荐文章</span>
@@ -170,7 +170,7 @@
                     </el-card>
 
                     <!-- 关注我 -->
-                    <el-card class="box-card guanzhu">
+                    <el-card class="box-card guanzhu box-shadow">
                         <div class="clearfix">
                             <svg-icon icon-class="guanzhume" class="title-svg"></svg-icon>
                             <span>关注我</span>
@@ -245,7 +245,7 @@
                     </el-card>
 
                     <!-- 标签墙 -->
-                    <el-card class="box-card tag_container">
+                    <el-card class="box-card tag_container box-shadow">
                         <div class="clearfix">
                             <svg-icon icon-class="tag"></svg-icon>
                             <span> 标签墙</span>
@@ -260,7 +260,7 @@
                     </el-card>
 
                     <!-- 天气组件 -->
-                    <el-card class="box-card weather">
+                    <el-card class="box-card weather box-shadow">
                         <div class="clearfix">
                             <svg-icon icon-class="weather"></svg-icon>
                             <span> 今日天气</span>
@@ -542,8 +542,7 @@ export default {
 
 
 .main-container {
-    display: flex;
-    justify-content: center;
+
 
     @media screen and (max-width: 1118px) {
         padding-left: 10px;
@@ -1008,16 +1007,6 @@ export default {
                         opacity: 0.6;
                     }
                 }
-            }
-        }
-
-        .articleItem,
-        .sayBox {
-            transition: box-shadow .35s, transform .35s;
-
-            &:hover {
-                box-shadow: 1px 1px 5px 5px rgba(49, 211, 162, 0.322);
-                transform: translateY(-2px)
             }
         }
 

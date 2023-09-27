@@ -1,5 +1,5 @@
 <template>
-    <el-card class="box">
+    <el-card class="box box-shadow">
 
         <img src="http://img.shiyit.com/beijing.jpg" alt="">
         <div class="user">
@@ -81,11 +81,6 @@ export default {
     height: auto;
     background-color: var(--background-color);
     position: relative;
-
-    &:hover {
-        box-shadow: 5px 4px 8px 6px rgba(7, 17, 27, .06);
-        transition: all .3s;
-    }
 
     &::before {
         content: "";

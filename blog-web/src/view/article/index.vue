@@ -1,5 +1,5 @@
 <template>
-    <div class="article-container">
+    <div class="article-container container">
         <!-- 左侧点赞和打赏 -->
         <div class="left-sidbarnav">
             <el-tooltip class="item" effect="dark" content="点赞" placement="left">
@@ -666,8 +666,6 @@ export default {
 }
 
 .article-container {
-    display: flex;
-    justify-content: center;
     position: relative;
 
     @media screen and (max-width: 1118px) {

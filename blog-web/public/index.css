@@ -90,10 +90,7 @@
 
      .el-dialog__title {
          color: var(--article-color) !important;
-
      }
-
-
  }
 
  .el-input__inner {
@@ -103,4 +100,26 @@
      &:focus {
          border-color: var(--theme-color) !important;
      }
+ }
+
+ .box-shadow-top {
+     transition: box-shadow .35s, transform .35s !important;
+
+     &:hover {
+         box-shadow: 1px 1px 5px 5px rgba(49, 211, 162, 0.322) !important;
+         transform: translateY(-2px) !important;
+     }
+ }
+
+ .box-shadow {
+     transition: box-shadow .35s;
+
+     &:hover {
+         box-shadow: 1px 1px 5px 5px rgba(49, 211, 162, 0.322) !important;
+     }
+ }
+
+ .container {
+     display: flex;
+     justify-content: center;
  }

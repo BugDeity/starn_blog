@@ -1,5 +1,5 @@
 <template>
-    <div class='user-main'>
+    <div class='user-main container'>
         <div class="user-warpper">
             <div class="userBox">
                 <div class="backgroupImg">
@@ -209,8 +209,7 @@ export default {
 }
 
 .user-main {
-    display: flex;
-    justify-content: center;
+
 
     @media screen and (max-width: 1118px) {
         padding: 10px;

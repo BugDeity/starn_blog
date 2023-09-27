@@ -1,5 +1,5 @@
 <template>
-    <div class="im-main">
+    <div class="im-main container">
         <div id="im" class="im-warpper">
 
             <el-card class="itemBox">
@@ -786,8 +786,6 @@ export default {
 
 .im-main {
     min-height: calc(100vh - 167px);
-    display: flex;
-    justify-content: center;
     position: relative;
 
     @media screen and (max-width: 1118px) {

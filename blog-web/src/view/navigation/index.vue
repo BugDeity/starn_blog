@@ -1,7 +1,7 @@
 <template>
-    <div class='navigation-main'>
+    <div class='navigation-main container'>
         <div class="navigation-container">
-            <div class="site-container" v-for="(item, index) in navigationList" :key="index">
+            <div class="site-container  box-shadow" v-for="(item, index) in navigationList" :key="index">
                 <div class="title">
                     {{ item.siteClassName }}
                 </div>
@@ -55,8 +55,6 @@ export default {
 }
 
 .navigation-main {
-    display: flex;
-    justify-content: center;
     position: relative;
 
     @media screen and (max-width: 1118px) {
@@ -90,11 +88,6 @@ export default {
             background-color: var(--background-color);
             border-radius: 5px;
             margin-bottom: 25px;
-
-            &:hover {
-                box-shadow: 5px 4px 8px 6px rgba(7, 17, 27, .06);
-                transition: all .3s;
-            }
 
             .title {
                 background-color: #94ce6f61;

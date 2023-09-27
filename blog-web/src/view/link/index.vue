@@ -1,6 +1,6 @@
 <template>
-    <div class="link-main">
-        <el-card class="link-content">
+    <div class="link-main container">
+        <el-card class="link-content box-shadow">
             <h1>友情链接</h1>
             <h3 class="directory1">
                 友链列表
@@ -190,8 +190,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .link-main {
-    display: flex;
-    justify-content: center;
+
 
     @media screen and (max-width: 1118px) {
         padding-left: 10px;
@@ -295,10 +294,6 @@ export default {
         height: 100%;
         background-color: var(--background-color);
 
-        &:hover {
-            box-shadow: 5px 4px 8px 6px rgba(7, 17, 27, .06);
-            transition: all .3s;
-        }
 
         h1 {
 
