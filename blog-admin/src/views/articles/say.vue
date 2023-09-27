@@ -92,7 +92,28 @@ export default {
             formLabelWidth: '120px',
             editor: null,
             toolbarConfig: {},
-            editorConfig: { placeholder: '请输入内容...' },
+            editorConfig: {
+                placeholder: '请输入内容...',
+                MENU_CONF: {
+                    // 配置上传图片
+                    "uploadImage": {
+                        customUpload: this.contentUpload, // this.contentUpload 是 methods 中的一个普通方法
+                    },
+                    "uploadVideo": {
+                        customUpload: this.uploadVideo,
+                    },
+                    "codeSelectLang": {
+                        // 代码语言
+                        codeLangs: [
+                            { text: 'CSS', value: 'css' },
+                            { text: 'HTML', value: 'html' },
+                            { text: 'XML', value: 'xml' },
+                            { text: 'Java', value: 'java' },
+                            // 其他
+                        ]
+                    }
+                }
+            },
             mode: 'default', // or 'simple'
             tableData: [],
             multipleSelection: [],
@@ -141,6 +162,26 @@ export default {
         },
         uploadBefore: function () {
             this.openLoading()
+        },
+        uploadVideo: function (file, insertFn) {
+            this.files = file
+            //FormData 对象
+            var formData = new FormData()
+            // 文件对象
+            formData.append('multipartFile', this.files)
+            upload(formData).then(res => {
+                insertFn(res.data, "")
+            })
+        },
+        contentUpload: function (file, insertFn) {
+            this.files = file
+            // FormData 对象
+            var formData = new FormData()
+            // 文件对象
+            formData.append('multipartFile', this.files)
+            upload(formData).then(res => {
+                insertFn(res.data, "", res.data)
+            })
         },
         uploadSectionFile: function (param) {
             this.files = param.file

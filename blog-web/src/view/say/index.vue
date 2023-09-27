@@ -433,6 +433,10 @@ export default {
                 position: relative;
                 background-color: var(--background-color);
 
+                /deep/ video {
+                    height: 500px;
+                }
+
                 .avatar {
 
 

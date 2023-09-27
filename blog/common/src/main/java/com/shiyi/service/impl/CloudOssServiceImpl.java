@@ -46,8 +46,8 @@ public class CloudOssServiceImpl implements CloudOssService {
         }
         //获取文件后缀
         String suffix = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".") + 1);
-        if (!"jpg,jpeg,gif,png".toUpperCase().contains(suffix.toUpperCase())) {
-            return ResponseResult.error("请选择jpg,jpeg,gif,png格式的图片");
+        if (!"jpg,jpeg,gif,png,mp4".toUpperCase().contains(suffix.toUpperCase())) {
+            return ResponseResult.error("请选择jpg,jpeg,gif,png,mp4格式的图片");
         }
         getFileUploadWay();
         String key = fileUploadStrategyContext.executeFileUploadStrategy(strategy, file, suffix);
