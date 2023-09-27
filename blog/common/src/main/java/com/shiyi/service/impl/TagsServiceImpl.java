@@ -90,6 +90,7 @@ public class TagsServiceImpl extends ServiceImpl<TagsMapper, Tags> implements Ta
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult deleteById(Long id) {
+        validateTagIdIsExistArticle(id);
         baseMapper.deleteById(id);
         return ResponseResult.success();
     }
@@ -102,8 +103,18 @@ public class TagsServiceImpl extends ServiceImpl<TagsMapper, Tags> implements Ta
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult deleteBatch(List<Long> ids) {
+        for (Long id : ids) {
+            validateTagIdIsExistArticle(id);
+        }
         baseMapper.deleteBatchIds(ids);
         return ResponseResult.success();
+    }
+
+    private void validateTagIdIsExistArticle(Long id) {
+        int count = baseMapper.validateTagIdIsExistArticle(id);
+        if (count > 0){
+            throw new BusinessException("标签下有文章，无法删除");
+        }
     }
 
     /**

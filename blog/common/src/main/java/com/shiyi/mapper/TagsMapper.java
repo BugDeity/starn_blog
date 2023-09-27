@@ -61,4 +61,10 @@ public interface TagsMapper extends BaseMapper<Tags> {
      */
     List<Tags> selectTagByArticleId(Long articleId);
 
+    /**
+     * 校验此标签是否存在文章关联
+     * @param id
+     * @return
+     */
+    int validateTagIdIsExistArticle(Long id);
 }

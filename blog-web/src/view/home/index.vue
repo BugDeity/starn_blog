@@ -1011,6 +1011,16 @@ export default {
             }
         }
 
+        .articleItem,
+        .sayBox {
+            transition: box-shadow .35s, transform .35s;
+
+            &:hover {
+                box-shadow: 1px 1px 5px 5px rgba(49, 211, 162, 0.322);
+                transform: translateY(-2px)
+            }
+        }
+
         .content {
             display: flex;
 
@@ -1023,12 +1033,6 @@ export default {
                     padding: 10px 5px 10px 15px;
                     background-color: var(--background-color);
                     margin-bottom: 20px;
-                    transition: box-shadow .35s, transform .35s;
-
-                    &:hover {
-                        box-shadow: 1px 1px 5px 5px rgba(49, 211, 162, 0.322);
-                        transform: translateY(-2px)
-                    }
 
 
                     .articleInfo {
