@@ -59,7 +59,7 @@
 
                                     <span v-if="item.isStick" class="top">置顶</span>
                                     <router-link :to="'/article/' + item.id">
-                                        <h3>{{ item.title }}</h3>
+                                        <h3 class="xiahuaxian">{{ item.title }}</h3>
                                     </router-link>
                                     <p>
                                         {{ item.summary }}
@@ -1073,29 +1073,6 @@ export default {
                                 cursor: url(https://img.shiyit.com/link.cur), pointer;
                                 position: relative;
                                 display: inline-block;
-
-                                &::after {
-                                    content: "";
-                                    height: 2px;
-                                    overflow: hidden;
-                                    display: block;
-                                    left: 0;
-                                    bottom: -5px;
-                                    position: absolute;
-                                    width: 100%;
-                                    background: var(--theme-color);
-                                    transform: scaleX(0);
-                                    transition: all 0.5s;
-                                }
-
-                                &:hover {
-                                    &::after {
-                                        transform: scaleX(1);
-                                    }
-
-                                    color: var(--theme-color);
-                                }
-
                             }
 
                             p {

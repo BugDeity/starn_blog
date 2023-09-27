@@ -7,9 +7,9 @@
                 通知 :
             </span>
             <span class="content" v-html="notice.msg"></span>
-            <span class="closeBtn" @click="closeMsg">
+            <a class="closeBtn" @click="closeMsg">
                 关闭 <i class="el-icon-close"></i>
-            </span>
+            </a>
         </span>
     </div>
 </template>
@@ -113,7 +113,6 @@ export default {
         .closeBtn {
             margin-left: 15px;
             margin-right: 150px;
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
             float: right;
             font-weight: 400;
         }

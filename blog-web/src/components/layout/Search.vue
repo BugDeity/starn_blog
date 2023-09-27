@@ -16,10 +16,10 @@
                 <svg-icon icon-class="tag"></svg-icon>
                 <span>标签搜索</span>
                 <div class="tag">
-                    <span @click="handleClike(item.id)" :style="{ backgroundColor: `${randomColor()}` }" class="item"
+                    <a @click="handleClike(item.id)" :style="{ backgroundColor: `${randomColor()}` }" class="item"
                         v-for="(item, index) in tagCloudList" :key="index">
                         {{ item.name }}
-                    </span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -178,7 +178,7 @@ export default {
                 padding-left: 10px;
                 padding-bottom: 10px;
 
-                span {
+                a {
                     text-decoration: none;
                     margin-left: 10px;
                     padding: 5px;
@@ -186,7 +186,6 @@ export default {
                     margin-bottom: 10px;
                     border-radius: 8px;
                     color: #fff;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
                     transition: all .3s;
 
                     &:hover {

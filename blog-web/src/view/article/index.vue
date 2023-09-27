@@ -666,6 +666,7 @@ export default {
 }
 
 .article-container {
+
     position: relative;
 
     @media screen and (max-width: 1118px) {

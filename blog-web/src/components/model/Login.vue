@@ -14,8 +14,8 @@
             <el-button type="success" class="loginBtn" @click="login" round>登录</el-button>
 
             <div class="regitstBtn">
-                <span class="regist" @click="handleRegister(1)">账号注册</span>
-                <span class="forget" @click="handleRegister(2)">忘记密码</span>
+                <a class="regist" @click="handleRegister(1)">账号注册</a>
+                <a class="forget" @click="handleRegister(2)">忘记密码</a>
             </div>
 
             <div>
@@ -364,7 +364,7 @@ export default {
 
         .regist,
         .forget {
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
+
 
             &:hover {
                 color: var(--theme-color);
