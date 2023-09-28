@@ -13,7 +13,7 @@ const service = axios.create({
 service.interceptors.request.use(
 
     config => {
-        if (config.url != '/oauth/wechat/is_login' && config.url != '/v1/im/chat') {
+        if (config.url != '/oauth/wechat/is_login' && config.url != '/v1/im/chat' && config.url != '/v1/article/search') {
             window.vm.$bus.$emit('showLoading');
         }
         //do something before request is sent

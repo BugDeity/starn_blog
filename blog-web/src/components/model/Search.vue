@@ -3,6 +3,15 @@
         <div>
             <el-input v-model="pageData.keyword" @input="inputChage" placeholder="请输入内容"></el-input>
         </div>
+
+        <div class="tagBox" v-if="!list.length">
+            <div class="tag-title">标签搜索</div>
+            <div>
+                <a @click="handleToTag(tag.id)" :style="{ backgroundColor: `${randomColor()}` }" class="tag"
+                    v-for="(tag, index) in tagList" :key="index">{{ tag.name }}</a>
+            </div>
+        </div>
+
         <div class="search-article">
             <div class="item" v-for="(item, index) in list" :key="index">
                 <router-link :to="'/article/' + item.id">
@@ -18,7 +27,7 @@
 </template>
    
 <script>
-import { searchArticle } from '@/api'
+import { searchArticle, fetchTagList } from '@/api'
 export default {
     name: '',
     data() {
@@ -29,7 +38,8 @@ export default {
                 keyword: "",
             },
             pages: 0,
-            list: []
+            list: [],
+            tagList: []
         }
     },
     beforeDestroy() {
@@ -43,6 +53,9 @@ export default {
             get() {
                 this.pageData.keyword = ""
                 this.list = []
+                if (this.$store.state.searchDialogVisible) {
+                    this.getTagList()
+                }
                 return this.$store.state.searchDialogVisible;
             }
         },
@@ -51,6 +64,10 @@ export default {
         // console.log('------created--------');
     },
     methods: {
+        handleToTag(id) {
+            this.$store.state.searchDialogVisible = false
+            this.$router.push({ path: "/tag", query: { id: id } })
+        },
         inputChage(event) {
             this.pageData.keyword = event.replace(/\s/g, '')
             if (this.pageData.keyword == "") {
@@ -76,6 +93,21 @@ export default {
                 this.pages = res.data.pages
             })
         },
+        getTagList() {
+            fetchTagList().then(res => {
+                this.tagList = res.data
+            })
+        },
+        randomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            do {
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+            } while (color === '#FFFFFF' || color === '#000000');
+            return color;
+        },
     },
 }
 </script>
@@ -90,6 +122,29 @@ export default {
 
     @media screen and (min-width: 1119px) {
         width: 30%;
+    }
+}
+
+.tagBox {
+    margin-top: 15px;
+
+    .tag-title {
+        margin-bottom: 10px;
+    }
+
+    .tag {
+        display: inline-block;
+        border-radius: 5px;
+        padding: 5px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        color: #fff;
+        transition: all .3s;
+
+        &:hover {
+            border-radius: 0;
+            background-color: #000 !important;
+        }
     }
 }
 
