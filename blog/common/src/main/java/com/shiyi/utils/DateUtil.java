@@ -35,6 +35,7 @@ public class DateUtil {
     public final static String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
 
     public static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+    public static String YYYYMMDD = "yyyyMMdd";
 
     private static String[] parsePatterns = {
             "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",

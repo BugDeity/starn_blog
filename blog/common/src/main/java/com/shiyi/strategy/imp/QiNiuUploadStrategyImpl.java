@@ -17,6 +17,7 @@ import com.shiyi.enums.QiNiuAreaEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.service.SystemConfigService;
 import com.shiyi.strategy.FileUploadStrategy;
+import com.shiyi.utils.DateUtil;
 import com.shiyi.utils.UUIDUtils;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -89,7 +90,9 @@ public class QiNiuUploadStrategyImpl implements FileUploadStrategy {
         FileInputStream inputStream = null;
         try {
             inputStream = (FileInputStream) file.getInputStream();
-            Response response = uploadManager.put(inputStream, UUIDUtils.getUuid() + "." + suffix, upToken,null,null);
+            //使用当前时间年月日+当前时间戳作为key
+            String dateStr = DateUtil.dateTimeToStr(DateUtil.getNowDate(), DateUtil.YYYYMMDD) +"_"+ DateUtil.getNowDate().getTime();
+            Response response = uploadManager.put(inputStream, dateStr + "." + suffix, upToken,null,null);
             //解析上传成功的结果
             DefaultPutRet putRet = JSON.parseObject(response.bodyString(),DefaultPutRet.class);
             key =  qi_niu_url + putRet.key;
