@@ -243,6 +243,7 @@ export default {
             background-color: var(--background-color);
             margin-right: 20px;
             width: 100%;
+            max-width: 80%;
 
             .el-textarea {
                 width: 92%;
