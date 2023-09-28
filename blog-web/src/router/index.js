@@ -46,13 +46,6 @@ const routes = [
                 }
             },
             {
-                path: "/search",
-                component: resolve => require(["@/view/search"], resolve),
-                meta: {
-                    title: "搜索文章"
-                }
-            },
-            {
                 path: "/newposts",
                 component: resolve => require(["@/view/article/Add"], resolve),
             },

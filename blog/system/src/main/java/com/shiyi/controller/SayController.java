@@ -40,6 +40,7 @@ public class SayController {
     }
 
     @SaCheckLogin
+    @OperationLogger(value = "修改说说")
     @SaCheckPermission("/system/say/update")
     @RequestMapping(value = "/update",method = RequestMethod.PUT)
     @ApiOperation(value = "修改说说", httpMethod = "PUT", response = ResponseResult.class, notes = "修改说说")

@@ -7,6 +7,7 @@ export default new Vuex.Store({
     loginFlag: false,
     drawer: false,
     searchDrawer: false,
+    searchDialogVisible: false,
     siteAccess: 0,
     visitorAccess: 0,
     systemNotcie: {},

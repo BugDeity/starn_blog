@@ -2,6 +2,7 @@ package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Note;
 import com.shiyi.service.NoteService;
@@ -30,6 +31,7 @@ public class NoteController {
         return noteService.selectNoteList();
     }
 
+    @OperationLogger(value = "删除笔记")
     @SaCheckPermission("/system/note/delete")
     @RequestMapping(value="/delete",method = RequestMethod.DELETE)
     @ApiOperation(value = "删除笔记", httpMethod = "DELETE", response = ResponseResult.class, notes = "删除笔记")
@@ -37,6 +39,7 @@ public class NoteController {
         return noteService.deleteNoteByIds(ids);
     }
 
+    @OperationLogger(value = "修改笔记")
     @SaCheckPermission("/system/note/update")
     @RequestMapping(value="/update",method = RequestMethod.PUT)
     @ApiOperation(value = "修改笔记", httpMethod = "PUT", response = ResponseResult.class, notes = "修改笔记")

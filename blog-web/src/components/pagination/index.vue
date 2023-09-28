@@ -1,7 +1,7 @@
 <template>
     <div class=''>
         <!-- 分页按钮 -->
-        <div class="page" v-if="pageNoProp < pages" @click="handlePage">
+        <div class="page" v-if="currentPage < pages" @click="handlePage">
             加载更多
         </div>
         <div class="tips" v-else>
@@ -32,16 +32,24 @@ export default {
     name: '',
     data() {
         return {
-            pageNoProp: this.pageNo
+            currentPage: this.pageNo,
+        }
+    },
+    watch: {
+        pageNoProp(newValue, oldValue) {
+            console.log(newValue);
         }
     },
     created() {
-        // console.log('------created--------');
+        //console.log('------created--------');
     },
     methods: {
+        handlePageNo(val) {
+            this.currentPage = val
+        },
         handlePage() {
-            this.pageNoProp++;
-            this.$emit('changePage', this.pageNoProp);
+            this.currentPage++;
+            this.$emit('changePage', this.currentPage);
         },
     },
 }

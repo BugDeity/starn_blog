@@ -28,11 +28,11 @@
 <script>
 import Header from '@/components/layout/Header.vue'
 import SideNavBar from "@/components/layout/SideNavBar.vue";
-import SearchModle from "@/components/layout/Search.vue";
 import Footer from '@/components/layout/Footer.vue'
 import Sidebar from '@/components/layout/Sidebar.vue'
 import Loading from '@/components/loading/loading.vue'
 import Login from '@/components/model/Login.vue'
+import SearchModle from '@/components/model/Search.vue'
 import { selectUserInfoByToken, getWebSiteInfo } from '@/api'
 import { getNewSystemNotice } from '@/api/im'
 import { setToken, getToken } from '@/utils/cookieUtil'
@@ -46,7 +46,7 @@ export default {
         SideNavBar,
         SearchModle,
         Loading,
-        Notice
+        Notice,
     },
     data() {
         return {

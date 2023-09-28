@@ -23,7 +23,7 @@
                 <!-- 手机端搜索栏 -->
                 <span v-if="isMobile" style="position: absolute;right: 10px;">
                     <!-- <a @click="openSearch"><i class="iconfont iconsousuo" /></a> -->
-                    <a @click="openSearchDrawer" style="font-size:20px">
+                    <a @click="handleOpenSearchDialog" style="font-size:20px">
                         <i class="iconfont icon-search" style="font-size: 1.5rem;" />
                     </a>
                 </span>
@@ -150,20 +150,10 @@
             </ul>
 
             <!-- 热搜框 -->
-            <div class="searchBox" v-show="!noneInput">
-                <div class="search_bar search_open">
-                    <el-input v-if="showInput" @focus="focus" @blur="blur" type="text" v-model="keywords"
-                        placeholder="想搜点什么呢..." @keyup.enter.native="search" />
-                    <p class="search_ico" @click="search">
-                        <i class="iconfont icon-search"></i>
-                    </p>
-                </div>
-                <div class="hot_search_main" :style="style">
-                    <router-link :to="'/article/' + item.id" v-for="(item, index) in $store.state.hotArticles" :key="index">
-                        <span class="number">{{ index + 1 }}</span>
-                        {{ item.title }}
-                    </router-link>
-                </div>
+            <div class="searchBox" v-show="!showSearch">
+                <p class="search_ico" @click="handleOpenSearchDialog">
+                    <i class="iconfont icon-search"></i>
+                </p>
             </div>
             <!-- 发布文章按钮 -->
             <div class="articleBtn" v-if="showUser">
@@ -207,7 +197,7 @@
                         <span v-if="topBageShow()" class="notice-bage topBage"></span>
                     </div>
                     <el-dropdown-menu slot="dropdown">
-                        <span v-for="(item, index) in noticeList  " :key="index" @click="handleClickNotice(index)">
+                        <span v-for="(item, index) in noticeList" :key="index" @click="handleClickNotice(index)">
                             <el-dropdown-item>
                                 {{ item }}
                                 <span v-if="validata(index)" class="notice-bage"></span>
@@ -277,8 +267,7 @@ export default {
             style: null,
             path: null,
             isMobile: false,
-            noneInput: false,
-            showInput: false,
+            showSearch: false,
             showUser: true,
             windowWidth: 0,
             headerClass: "header",
@@ -302,12 +291,15 @@ export default {
         // 监听页面宽度
         windowWidth(val) {
             this.isMobile = val < 1119
-            this.noneInput = val < 1500
+            this.showSearch = val < 1500
             this.showUser = val > 1350
         }
     },
 
     methods: {
+        handleOpenSearchDialog() {
+            this.$store.state.searchDialogVisible = true
+        },
         handleNotcieClose(val) {
             this.noticeShow = val
         },
@@ -356,19 +348,6 @@ export default {
             this.$store.state.userInfoDrawer.name = null;
         },
 
-        focus() {
-            this.style = "transform:translate3d(0, 0, 0);opacity:1;visibility:visible;border: 1px solid var(--background-color)"
-        },
-        blur() {
-            this.style = "opacity:0;visibility:hidden"
-        },
-        search() {
-            if (!this.keywords) {
-                this.showInput = !this.showInput
-                return
-            }
-            this.$router.push({ path: '/search', query: { keyword: this.keywords.trim() } })
-        },
         scrollFn() {
             // if (this.$route.paht != '/message') {
             //     // 页面滚动距顶部距离
@@ -417,9 +396,6 @@ export default {
         openDrawer() {
             this.$store.commit("setDrawer", true);
         },
-        openSearchDrawer() {
-            this.$store.commit("setSearchDrawer", true);
-        }
     }
 }
 </script>
@@ -662,25 +638,6 @@ export default {
                 -ms-flex-direction: column;
                 flex-direction: column;
 
-                .search_open {
-                    width: 200px;
-                    display: inline-block;
-                    padding-left: 10px;
-                    height: 60px;
-
-                    /deep/ .el-input__inner {
-                        border: 1px solid var(--input-boder);
-                        background: var(--background-color);
-                        width: 210px;
-                        padding-left: 8px;
-                        height: 35px;
-                        border-radius: 20px;
-                        transition: all 2s;
-                    }
-
-
-                }
-
                 .search_ico {
                     position: absolute;
                     right: 5px;
@@ -698,72 +655,72 @@ export default {
                     }
                 }
 
-                .hot_search_main {
-                    background-color: var(--background-color);
-                    border-radius: 2px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
-                    position: absolute;
-                    z-index: 99;
-                    top: 60px;
-                    left: 10px;
-                    right: -10px;
-                    opacity: 0;
-                    visibility: hidden;
-                    transition: visibility .35s, opacity .35s, transform .35s;
-                    transform: translate3d(0, 15px, 0);
+                // .hot_search_main {
+                //     background-color: var(--background-color);
+                //     border-radius: 2px;
+                //     box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+                //     position: absolute;
+                //     z-index: 99;
+                //     top: 60px;
+                //     left: 10px;
+                //     right: -10px;
+                //     opacity: 0;
+                //     visibility: hidden;
+                //     transition: visibility .35s, opacity .35s, transform .35s;
+                //     transform: translate3d(0, 15px, 0);
 
-                    a {
-                        height: 30px;
-                        text-decoration: none;
-                        display: block;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        /* border-bottom: 1px solid #f2f6fc; */
-                        line-height: 30px;
-                        padding: 4px 5px;
-                        color: #606266;
-                        font-size: 12px;
+                //     a {
+                //         height: 30px;
+                //         text-decoration: none;
+                //         display: block;
+                //         overflow: hidden;
+                //         text-overflow: ellipsis;
+                //         white-space: nowrap;
+                //         /* border-bottom: 1px solid #f2f6fc; */
+                //         line-height: 30px;
+                //         padding: 4px 5px;
+                //         color: #606266;
+                //         font-size: 12px;
 
-                        &:first-child span {
-                            background-color: #FE2D46;
-                        }
+                //         &:first-child span {
+                //             background-color: #FE2D46;
+                //         }
 
-                        &:nth-child(2) span {
-                            background-color: #FF6600;
-                        }
+                //         &:nth-child(2) span {
+                //             background-color: #FF6600;
+                //         }
 
-                        &:nth-child(3) span {
-                            background-color: #FAA90E;
-                        }
+                //         &:nth-child(3) span {
+                //             background-color: #FAA90E;
+                //         }
 
-                        span {
-                            width: 20px;
-                            height: 20px;
-                            display: inline-block;
-                            line-height: 21px;
-                            text-align: center;
-                            border-radius: 3px;
-                            color: var(--background-color);
-                            background-color: #71777c;
+                //         span {
+                //             width: 20px;
+                //             height: 20px;
+                //             display: inline-block;
+                //             line-height: 21px;
+                //             text-align: center;
+                //             border-radius: 3px;
+                //             color: var(--background-color);
+                //             background-color: #71777c;
 
-                        }
+                //         }
 
-                        &:first-child {
-                            border-top-left-radius: 4px;
-                            border-top-right-radius: 4px;
-                        }
+                //         &:first-child {
+                //             border-top-left-radius: 4px;
+                //             border-top-right-radius: 4px;
+                //         }
 
-                        &:last-child {
-                            border-bottom-left-radius: 4px;
-                            border-bottom-right-radius: 4px;
-                        }
+                //         &:last-child {
+                //             border-bottom-left-radius: 4px;
+                //             border-bottom-right-radius: 4px;
+                //         }
 
-                        &:hover {
-                            background-color: rgb(235, 238, 245);
-                        }
-                    }
-                }
+                //         &:hover {
+                //             background-color: rgb(235, 238, 245);
+                //         }
+                //     }
+                // }
             }
 
             .articleBtn {
