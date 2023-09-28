@@ -65,7 +65,8 @@
         </el-dialog>
 
         <!-- 邮箱注册 -->
-        <el-dialog :lock-scroll="false" class="dialog " title="邮箱注册" center :visible.sync="emailRegistFlag">
+        <el-dialog :lock-scroll="false" class="dialog" :close-on-click-modal="false" title="邮箱注册" center
+            :visible.sync="emailRegistFlag">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-position="left">
                 <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
                     <el-input class="input" placeholder="请输入邮箱" v-model="form.email" autocomplete="off"></el-input>
@@ -95,7 +96,8 @@
 
 
         <!-- 忘记密码 -->
-        <el-dialog :lock-scroll="false" class="dialog " title="忘记密码" center :visible.sync="forgetFlag">
+        <el-dialog :lock-scroll="false" class="dialog" :close-on-click-modal="false" title="忘记密码" center
+            :visible.sync="forgetFlag">
             <el-form :model="form" :rules="rules" ref="ruleForm" label-position="left">
                 <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
                     <el-input class="input" placeholder="请输入邮箱" v-model="form.email" autocomplete="off"></el-input>
