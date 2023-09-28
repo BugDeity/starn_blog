@@ -33,6 +33,7 @@ import java.util.HashMap;
 
 import static com.shiyi.common.Constants.CURRENT_USER;
 import static com.shiyi.common.ResultCode.NOT_LOGIN;
+import static com.shiyi.common.ResultCode.NO_PERMISSION;
 
 /**
  * 日志切面
@@ -64,8 +65,8 @@ public class OperationLoggerAspect {
     @Around(value = "pointcut(operationLogger)")
     public Object doAround(ProceedingJoinPoint joinPoint, OperationLogger operationLogger) throws Throwable {
         //因给了演示账号所有权限以供用户观看，所以执行业务前需判断是否是管理员操作
-        if (!StpUtil.hasRole("admin") && !StpUtil.hasRole("user")) {
-            throw new BusinessException(NOT_LOGIN);
+        if (!StpUtil.hasRole("admin")) {
+            throw new BusinessException(NO_PERMISSION);
         }
 
         startTime = DateUtil.getNowDate();

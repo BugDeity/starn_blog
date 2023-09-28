@@ -23,4 +23,8 @@ public interface SayService extends IService<Say> {
     ResponseResult insertSay(Say say);
 
     ResponseResult deleteSay(List<String> ids);
+
+    ResponseResult selectSayById(String id);
+
+    ResponseResult updateSayById(Say say);
 }

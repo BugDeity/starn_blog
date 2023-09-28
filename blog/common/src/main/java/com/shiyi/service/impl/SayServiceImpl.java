@@ -1,6 +1,7 @@
 package com.shiyi.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.shiyi.common.ResponseResult;
@@ -31,7 +32,12 @@ public class SayServiceImpl extends ServiceImpl<SayMapper, Say> implements SaySe
 
     @Override
     public ResponseResult selectSayList(String keywords) {
-        Page<Say> sayPage = baseMapper.selectPage(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()), null);
+        LambdaQueryWrapper<Say> sayLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        if (!StpUtil.hasRole("admin")) {
+            sayLambdaQueryWrapper.eq(Say::getIsPublic,1);
+        }
+        sayLambdaQueryWrapper.orderByDesc(Say::getCreateTime);
+        Page<Say> sayPage = baseMapper.selectPage(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),sayLambdaQueryWrapper);
         return ResponseResult.success(sayPage);
     }
 
@@ -47,6 +53,19 @@ public class SayServiceImpl extends ServiceImpl<SayMapper, Say> implements SaySe
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult deleteSay(List<String> ids) {
         baseMapper.deleteBatchIds(ids);
+        return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult selectSayById(String id) {
+        Say say = baseMapper.selectById(id);
+        return ResponseResult.success(say);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult updateSayById(Say say) {
+        baseMapper.updateById(say);
         return ResponseResult.success();
     }
 }

@@ -32,6 +32,21 @@ public class SayController {
         return sayService.selectSayList(keywords);
     }
 
+    @SaCheckLogin
+    @RequestMapping(value = "/info",method = RequestMethod.GET)
+    @ApiOperation(value = "说说详情", httpMethod = "GET", response = ResponseResult.class, notes = "说说详情")
+    public ResponseResult info(String id){
+        return sayService.selectSayById(id);
+    }
+
+    @SaCheckLogin
+    @SaCheckPermission("/system/say/update")
+    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    @ApiOperation(value = "修改说说", httpMethod = "PUT", response = ResponseResult.class, notes = "修改说说")
+    public ResponseResult update(@RequestBody Say say){
+        return sayService.updateSayById(say);
+    }
+
     @OperationLogger(value = "发表说说")
     @SaCheckPermission("/system/say/")
     @RequestMapping(value = "/",method = RequestMethod.POST)

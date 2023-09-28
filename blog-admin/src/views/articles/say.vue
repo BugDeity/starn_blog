@@ -24,7 +24,8 @@
                 <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
                     <template slot-scope="scope">
 
-
+                        <el-button v-if="canUpdate" size="mini" type="primary"
+                            @click="handleUpdate(scope.row.id)">修改</el-button>
 
                         <el-button v-if="canDelBatch" size="mini" type="danger"
                             @click="handleDeleteBatch(scope.row.id)">删除</el-button>
@@ -43,14 +44,14 @@
 
 
         <!-- 添加或修改 -->
-        <el-dialog center title="添加说说" :visible.sync="dialogFormVisible">
+        <el-dialog center :title="isUpdate ? '修改说说' : '添加说说'" :visible.sync="dialogFormVisible">
             <el-form ref="dataForm" :model="form" label-position="left">
                 <el-form-item label="关联地址" prop="address" :label-width="formLabelWidth">
                     <el-input v-model="form.address"></el-input>
                 </el-form-item>
                 <el-form-item label="是否开放查看" prop="isPublic" :label-width="formLabelWidth">
-                    <el-radio v-model="form.isPublic" label="0">未开放</el-radio>
-                    <el-radio v-model="form.isPublic" label="1">开放</el-radio>
+                    <el-radio v-model="form.isPublic" :label="0">未开放</el-radio>
+                    <el-radio v-model="form.isPublic" :label="1">开放</el-radio>
                 </el-form-item>
                 <el-form-item label="图片(最多九张)" prop="sort" :label-width="formLabelWidth">
                     <el-upload :action="uploadPictureHost" :before-upload="uploadBefore" list-type="picture-card" :limit="9"
@@ -70,14 +71,15 @@
 
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="submit">确认</el-button>
+                <el-button type="primary" v-if="!isUpdate" @click="submit">确认</el-button>
+                <el-button type="primary" v-else @click="update">提交</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 <script>
 import { upload, delBatchFile } from '@/api/imgUpload'
-import { getSayList, insertSay, deleteSay } from '@/api/say'
+import { getSayList, insertSay, deleteSay, getSayInfo, updateSay } from '@/api/say'
 import { mapGetters } from "vuex";
 import { hasAuth } from "@/utils/auth";
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
@@ -120,6 +122,7 @@ export default {
             // 加载层信息
             loading: [],
             form: {},
+            isUpdate: false,
             total: 0,
             showSearch: true,
             dialogFormVisible: false,
@@ -146,8 +149,25 @@ export default {
         }
     },
     methods: {
+        update() {
+            updateSay(this.form).then(res => {
+                this.getSayList()
+                this.$message.success("修改成功")
+                this.dialogFormVisible = false
+            })
+        },
+        handleUpdate(id) {
+            getSayInfo(id).then(res => {
+                this.form = res.data
+                this.isUpdate = true
+                this.dialogFormVisible = true
+            })
+        },
         handleInserBefore() {
-            this.form = {}
+            this.form = {
+                isPublic: 1
+            }
+            this.isUpdate = false
             this.form.imgUrl = ""
             this.dialogFormVisible = true
         },

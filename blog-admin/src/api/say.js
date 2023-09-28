@@ -1,11 +1,27 @@
 import request from "@/utils/request";
 
-//留言管理
 export function getSayList(params) {
   return request({
     url: '/system/say/list',
     method: 'get',
     params: params
+  })
+}
+
+export function getSayInfo(id) {
+  return request({
+    url: '/system/say/info',
+    method: 'get',
+    params: {
+      id: id
+    }
+  })
+}
+export function updateSay(data) {
+  return request({
+    url: '/system/say/update',
+    method: 'put',
+    data
   })
 }
 export function insertSay(data) {
