@@ -9,10 +9,7 @@
 
         <!-- 内容 -->
         <transition name="moveCartoon" appear>
-            <div v-if="validate" style="min-height: calc(100vh - 167px);">
-                <router-view :key="$route.fullPath" />
-            </div>
-            <div v-else style="min-height:100vh">
+            <div style="min-height:100vh">
                 <router-view :key="$route.fullPath" />
             </div>
         </transition>
@@ -57,11 +54,7 @@ export default {
             timer: "",
         }
     },
-    methods: {
-        validate() {
-            return this.$route.path == '/search' || this.$route.path == '/category';
-        }
-    },
+
     created() {
         let flag = window.location.href.indexOf("token") != -1
         if (flag) {

@@ -19,10 +19,11 @@
                         </div>
                         <p class="content" v-highlight v-html="item.content"></p>
                         <div v-if="item.imgUrl" :class="ckeckImgClass(item.imgUrl)">
-                            <img @click="handlePreviewImg(item.imgUrl, imgItem)" v-if="checkImg(item.imgUrl)"
-                                v-for="(imgItem, imgIndex) in splitImg(item.imgUrl)" :key="imgIndex" :src="imgItem" alt="">
+                            <div class="imgBox" @click="handlePreviewImg(item.imgUrl, imgItem)" v-if="checkImg(item.imgUrl)"
+                                v-for="(imgItem, imgIndex) in splitImg(item.imgUrl)">
+                                <img :key="imgItem" v-lazy="imgItem" alt="">
+                            </div>
                         </div>
-
 
                         <div class="bottomBox">
                             <div v-if="item.address" class="address">
@@ -64,7 +65,6 @@
                                         <span class="username" v-if="!comment.replyUserId">
                                             {{ comment.nickname }}：
                                         </span>
-
 
                                         <span v-else>
                                             <span class="username">{{ comment.nickname }}</span>
@@ -336,9 +336,13 @@ export default {
                 height: 250px;
             }
 
+            .imgBox {
+                max-height: 200px;
+            }
+
             .grid-1 {
 
-                img {
+                .imgBox {
                     width: 200px;
                     height: 200px;
                 }
@@ -346,7 +350,7 @@ export default {
 
             .grid-2 {
 
-                img {
+                .imgBox {
                     width: 150px;
                     height: 150px;
                 }
@@ -354,7 +358,7 @@ export default {
 
             .grid-3 {
 
-                img {
+                .imgBox {
                     width: 100px;
                     height: 100px;
                 }
@@ -375,31 +379,33 @@ export default {
                 height: 500px;
             }
 
+            .imgBox {
+                max-height: 250px;
+            }
+
             .cover {
                 height: 380px;
             }
 
             .grid-1 {
 
-                img {
+                .imgBox {
                     width: 250px;
-                    height: 250px;
+
                 }
             }
 
             .grid-2 {
 
-                img {
+                .imgBox {
                     width: 250px;
-                    height: 250px;
                 }
             }
 
             .grid-3 {
 
-                img {
+                .imgBox {
                     width: 250px;
-                    height: 250px;
                 }
             }
 
@@ -493,11 +499,17 @@ export default {
                         display: grid;
                         margin-top: 10px;
 
-                        img {
-                            border-radius: 5px;
-                            cursor: zoom-in;
-                            margin-bottom: 10px;
+                        .imgBox {
+                            overflow: hidden;
                             margin-right: 5px;
+                            margin-bottom: 10px;
+                            border-radius: 5px;
+
+                        }
+
+                        img {
+                            max-width: 100%;
+                            cursor: zoom-in;
                         }
                     }
 
