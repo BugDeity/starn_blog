@@ -406,8 +406,6 @@ export default {
         border-top: none !important;
         border-left: none !important;
         border-right: none !important;
-
-
     }
 
     .send {

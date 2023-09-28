@@ -251,11 +251,11 @@
                             <span> 标签墙</span>
                             <a href="/tag" class="more">更多</a>
                         </div>
-                        <div class="tag">
-                            <span @click="handleClike(item.id, '/tag')" :style="{ backgroundColor: `${randomColor()}` }"
-                                class="item" v-for="(item, index) in tagList" :key="index">
+                        <div class="tagBox">
+                            <a @click="handleClike(item.id, '/tag')" :style="{ backgroundColor: `${randomColor()}` }"
+                                class="tag-item" v-for="(item, index) in tagList" :key="index">
                                 {{ item.name }}
-                            </span>
+                            </a>
                         </div>
                     </el-card>
 
@@ -956,28 +956,10 @@ export default {
                         }
                     }
 
-                    .tag {
-
+                    .tagBox {
                         padding-bottom: 10px;
                         height: auto;
                         margin-top: 10px;
-
-                        span {
-                            text-decoration: none;
-                            margin-right: 10px;
-                            padding: 5px;
-                            display: inline-block;
-                            margin-bottom: 10px;
-                            border-radius: 6px;
-                            color: #fff;
-                            cursor: url(https://img.shiyit.com/link.cur), pointer;
-                            transition: all .3s;
-
-                            &:hover {
-                                border-radius: 0;
-                                background-color: #000 !important;
-                            }
-                        }
                     }
 
                 }

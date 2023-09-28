@@ -82,12 +82,10 @@
                                 </div>
                             </router-link>
 
-
-
                             <div class="article-info">
                                 <div style="display: flex;position: relative;">
                                     <router-link :to="'/article/' + item.id">
-                                        <div class="article-title">
+                                        <div class="article-title xiahuaxian">
                                             {{ item.title }}
                                         </div>
                                     </router-link>
@@ -971,7 +969,6 @@ export default {
 
                         &:hover {
                             color: var(--theme-color);
-                            cursor: url(https://img.shiyit.com/link.cur), pointer;
                         }
                     }
 

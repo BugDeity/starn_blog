@@ -7,7 +7,7 @@
         <div class="tagBox" v-if="!list.length">
             <div class="tag-title">标签搜索</div>
             <div>
-                <a @click="handleToTag(tag.id)" :style="{ backgroundColor: `${randomColor()}` }" class="tag"
+                <a @click="handleToTag(tag.id)" :style="{ backgroundColor: `${randomColor()}` }" class="tag-item"
                     v-for="(tag, index) in tagList" :key="index">{{ tag.name }}</a>
             </div>
         </div>
@@ -130,20 +130,17 @@ export default {
 
     .tag-title {
         margin-bottom: 10px;
-    }
+        position: relative;
+        padding-left: 10px;
 
-    .tag {
-        display: inline-block;
-        border-radius: 5px;
-        padding: 5px;
-        margin-right: 5px;
-        margin-bottom: 5px;
-        color: #fff;
-        transition: all .3s;
-
-        &:hover {
-            border-radius: 0;
-            background-color: #000 !important;
+        &::before {
+            content: "";
+            width: 5px;
+            height: 100%;
+            background-color: #67c23a;
+            position: absolute;
+            left: 0;
+            bottom: 0;
         }
     }
 }

@@ -9,9 +9,11 @@ import com.shiyi.enums.NoteStatusEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.mapper.NoteMapper;
+import com.shiyi.mapper.UserMapper;
 import com.shiyi.service.ApiNoteService;
 import com.shiyi.utils.PageUtils;
 import com.shiyi.vo.ApiNoteListVO;
+import com.shiyi.vo.UserInfoVO;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -23,11 +25,16 @@ public class ApiNoteServiceImpl implements ApiNoteService {
 
     private final NoteMapper noteMapper;
 
+    private final UserMapper userMapper;
+
     @Override
     public ResponseResult selectNoteList(Integer categoryId) {
         Page<ApiNoteListVO> result =  noteMapper.selectPublicNoteList(new Page<ApiNoteListVO>(PageUtils.getPageNo(),PageUtils.getPageSize()),
-                categoryId,null);
+                categoryId);
         result.getRecords().forEach(item ->{
+            UserInfoVO userInfoVO = userMapper.selectInfoByUserIdTwo(item.getUserId());
+            item.setAvatar(userInfoVO.getAvatar());
+            item.setNickname(userInfoVO.getNickname());
             item.setCreateTimeStr(RelativeDateFormat.format(item.getCreateTime()));
         });
         return ResponseResult.success(result);

@@ -58,7 +58,12 @@
 
                     <div class="bottom">
                         <div class="btn-tips">Are you ready</div>
-                        <button v-if="$store.state.userInfo" type="button" class="btn" @click="submit">提交审核</button>
+                        <button v-if="$store.state.userInfo" type="button" class="btnDraft" @click="submit">
+                            <i class="el-icon-orange"></i> 保存草稿
+                        </button>
+                        <button v-if="$store.state.userInfo" type="button" class="btnSubmit" @click="submit">
+                            <i class="el-icon-circle-check"></i> 提交审核
+                        </button>
                         <span v-else class="noBtn">
                             暂无发布权限,请先<a @click="$store.state.loginFlag = true">登录</a>
                         </span>
@@ -229,6 +234,16 @@ export default {
     .containner {
         padding: 10px;
 
+        /deep/ .article-left input {
+            border-top: none !important;
+            border-left: none !important;
+            border-right: none !important;
+
+            &:hover {
+                border-color: var(--theme-color) !important;
+            }
+        }
+
         .title {
             margin-bottom: 15px;
             color: var(--text-color);
@@ -298,14 +313,30 @@ export default {
                     }
                 }
 
-                .btn {
+                .btnDraft,
+                .btnSubmit {
                     padding: 10px;
                     width: 50%;
-                    border-radius: 5px;
-                    background: linear-gradient(135deg, #59c3fb 10%, #268df7 100%);
                     border: none;
                     margin: 0 auto;
                     color: #fff;
+                    font-weight: 700;
+
+                    &:hover {
+                        color: var(--theme-color);
+                    }
+                }
+
+                .btnDraft {
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    background: linear-gradient(135deg, #60e464 10%, #5cb85b 100%);
+                }
+
+                .btnSubmit {
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    background: linear-gradient(135deg, #59c3fb 10%, #268df7 100%);
                 }
 
                 .noBtn {
