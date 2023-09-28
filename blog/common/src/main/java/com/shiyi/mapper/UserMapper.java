@@ -48,6 +48,14 @@ public interface UserMapper extends BaseMapper<User> {
      */
     UserInfoVO selectInfoByUserId(Object userId);
 
+
+    /**
+     * 根据用户id查询-2
+     * @param userId
+     * @return
+     */
+    UserInfoVO selectInfoByUserIdTwo(Object userId);
+
     UserInfoVO selectInfoByUserIdNew(Object userId);
 
 }

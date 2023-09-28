@@ -54,7 +54,7 @@ public class ApiSayServiceImpl implements ApiSayService {
             Set<Object> userIdList = redisService.getCacheSet(RedisConstants.SAY_LIKE_KEY + item.getId());
             List<UserInfoVO> likeUserList = new ArrayList<>();
             for (Object userId : userIdList) {
-                UserInfoVO userInfoVO = userMapper.selectInfoByUserId(userId);
+                UserInfoVO userInfoVO = userMapper.selectInfoByUserIdTwo(userId);
                 likeUserList.add(userInfoVO);
             }
             item.setCreateTimeStr(RelativeDateFormat.format(item.getCreateTime()));
@@ -65,11 +65,11 @@ public class ApiSayServiceImpl implements ApiSayService {
             List<SayComment> sayComments = sayCommentMapper.selectList(new LambdaQueryWrapper<SayComment>().eq(SayComment::getSayId, item.getId()));
             List<ApiSayCommentVO> sayCommentVOList = new ArrayList<>();
             for (SayComment sayComment : sayComments) {
-                UserInfoVO userInfoVO = userMapper.selectInfoByUserId(sayComment.getUserId());
+                UserInfoVO userInfoVO = userMapper.selectInfoByUserIdTwo(sayComment.getUserId());
                 ApiSayCommentVO apiSayCommentVO = ApiSayCommentVO.builder().userId(sayComment.getUserId()).nickname(userInfoVO.getNickname()).replyUserId(sayComment.getReplyUserId())
                         .content(sayComment.getContent()).ipAddress(sayComment.getIpAddress()).createTime(sayComment.getCreateTime()).build();
                 if (StringUtils.isNotBlank(sayComment.getReplyUserId())) {
-                    userInfoVO = userMapper.selectInfoByUserId(sayComment.getReplyUserId());
+                    userInfoVO = userMapper.selectInfoByUserIdTwo(sayComment.getReplyUserId());
                     apiSayCommentVO.setReplyUserNickname(userInfoVO.getNickname());
                 }
                 sayCommentVOList.add(apiSayCommentVO);
