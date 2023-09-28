@@ -86,8 +86,7 @@
                                 <svg-icon :icon-class="emoji"></svg-icon>
                             </span>
                             <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
-                                :action="uploadPictureHost" :before-upload="uploadBefore" :http-request="uploadSectionFile"
-                                multiple>
+                                :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
                                 <span class="item">
                                     <svg-icon icon-class="photo"></svg-icon>
                                 </span>
@@ -133,11 +132,6 @@
                             <i class="el-icon-caret-right" style=""></i>
 
                             <ul class="sousuomenu">
-                                <li @click="handleSearch(null)">
-                                    <div class="menuitem">
-                                        站内搜索
-                                    </div>
-                                </li>
                                 <li @click="handleSearch(0)">
                                     <div class="menuitem">
                                         百度搜索
@@ -295,13 +289,6 @@ export default {
             }
         },
         handleSearch(type) {
-            console.log(type)
-
-            if (type == null) {
-                this.$router.push({ path: '/search', query: { keyword: this.message.content.trim() } })
-                return;
-            }
-
             let url = this.searchUrl[type] + this.message.content.trim()
             window.open(url, '_blank')
         },

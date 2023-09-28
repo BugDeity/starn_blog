@@ -61,7 +61,7 @@ export default {
         },
     },
     created() {
-        // console.log('------created--------');
+
     },
     methods: {
         handleToTag(id) {
