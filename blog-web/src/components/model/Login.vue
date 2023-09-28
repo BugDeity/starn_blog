@@ -87,7 +87,7 @@
                 </el-form-item>
             </el-form>
 
-            <el-button type="danger" class="loginBtn" @click="login" round>注册</el-button>
+            <el-button type="danger" class="loginBtn" @click="register" round>注册</el-button>
 
             <div class="goLoginBtn">
                 已有账号，<a @click="bacKLogin">去登录</a>
@@ -115,7 +115,7 @@
                 </el-form-item>
             </el-form>
 
-            <el-button type="primary" class="loginBtn" @click="login" round>修改</el-button>
+            <el-button type="primary" class="loginBtn" round>修改</el-button>
 
             <div class="goLoginBtn">
                 已有账号，<a @click="bacKLogin">去登录</a>
@@ -154,6 +154,9 @@ export default {
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blur' },
                 ],
+                code: [
+                    { required: true, message: '请输入验证码', trigger: 'blur' },
+                ]
             }
         };
     },
@@ -169,6 +172,24 @@ export default {
         },
     },
     methods: {
+        register() {
+            this.$refs['ruleForm'].validate((valid) => {
+                if (valid) {
+                    emailRegister(this.form).then(res => {
+                        this.$notify({
+                            title: '成功',
+                            message: '注册成功',
+                            type: 'success'
+                        });
+                        this.$store.state.loginFlag = true;
+                        this.emailRegistFlag = false
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
         handleSendEmailCode() {
             if (this.form.email == null || this.form.email == '') {
                 this.$notify({

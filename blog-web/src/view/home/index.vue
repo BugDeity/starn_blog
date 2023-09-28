@@ -149,7 +149,7 @@
                         </div>
                         <ul class="recomArticleUl">
                             <li v-for="(item, index) in    newArticleList   ">
-                                <div class="article-item">
+                                <div :class="index == 0 ? 'article-item-top1' : 'article-item'">
                                     <div class="recomCover">
                                         <router-link :to="'/article/' + item.id">
                                             <div class="imgBox">
@@ -713,6 +713,75 @@ export default {
                                 }
                             }
 
+                            .article-item-top1,
+                            .article-item {
+                                .recomCover {
+                                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+
+                                    .imgBox {
+                                        margin-right: 10px;
+                                        border-radius: 5px;
+                                        overflow: hidden;
+                                        border: 1px solid var(--border-line);
+
+                                        img {
+                                            width: 100%;
+                                            height: 100%;
+                                            transition: all 0.5s;
+                                            margin-right: 10px;
+                                        }
+
+                                        &:hover img {
+                                            transform: scale(1.1);
+                                        }
+                                    }
+                                }
+
+                            }
+
+                            .article-item-top1 {
+                                position: relative;
+
+                                .recomCover {
+                                    //
+                                    width: 100%;
+
+                                    .imgBox {
+                                        width: 100%;
+                                        height: 150px;
+
+                                    }
+                                }
+
+                                .info {
+
+                                    .tuijian-title {
+                                        text-align: center;
+                                        width: 100%;
+                                        position: absolute;
+                                        bottom: 30px;
+                                        text-decoration: none;
+                                        color: #fff;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        display: -webkit-box;
+                                        -webkit-box-orient: vertical;
+                                        -webkit-line-clamp: 2;
+                                        background: rgba(0, 0, 0, 0.3);
+                                        padding: 5px 0;
+
+                                        &:hover {
+                                            color: var(--theme-color);
+                                        }
+                                    }
+
+
+                                    .time {
+                                        display: none;
+                                    }
+                                }
+                            }
+
                             .article-item {
                                 height: 100%;
                                 display: flex;
@@ -745,27 +814,10 @@ export default {
                                 }
 
                                 .recomCover {
-                                    //
-                                    cursor: url(https://img.shiyit.com/link.cur), pointer;
 
                                     .imgBox {
                                         width: 120px;
                                         height: 75px;
-                                        margin-right: 10px;
-                                        border-radius: 5px;
-                                        overflow: hidden;
-                                        border: 1px solid var(--border-line);
-
-                                        img {
-                                            width: 100%;
-                                            height: 100%;
-                                            transition: all 0.5s;
-                                            margin-right: 10px;
-                                        }
-
-                                        &:hover img {
-                                            transform: scale(1.1);
-                                        }
                                     }
                                 }
                             }
