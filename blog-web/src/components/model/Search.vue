@@ -5,9 +5,9 @@
         </div>
         <div class="search-article">
             <div class="item" v-for="(item, index) in list" :key="index">
-                <div class="titleBox">
+                <router-link :to="'/article/' + item.id">
                     <a class="xiahuaxian article-title" v-html="item.title"></a>
-                </div>
+                </router-link>
                 <p>{{ item.summary }}</p>
             </div>
             <!-- 分页按钮 -->
@@ -31,6 +31,9 @@ export default {
             pages: 0,
             list: []
         }
+    },
+    beforeDestroy() {
+        this.$store.state.searchDialogVisible = false
     },
     computed: {
         dialogVisible: {
@@ -96,6 +99,10 @@ export default {
     .item {
         margin-bottom: 20px;
 
+        a {
+            text-decoration: none;
+            color: var(--article-color);
+        }
     }
 
     .article-title {
