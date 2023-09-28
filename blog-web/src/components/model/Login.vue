@@ -1,6 +1,7 @@
 <template>
     <div>
-        <el-dialog :lock-scroll="false" class="dialog" center title="账号密码登录" :visible.sync="dialogFormVisible">
+        <el-dialog :lock-scroll="false" :close-on-click-modal="false" class="dialog" center title="账号密码登录"
+            :visible.sync="dialogFormVisible">
             <el-form :model="form" :rules="rules" ref="ruleForm">
                 <el-form-item label="账号" :label-width="formLabelWidth" prop="email">
                     <el-input placeholder="请输入账号" @keyup.enter.native="login" v-model="form.email"

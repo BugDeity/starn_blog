@@ -1,5 +1,6 @@
 package com.shiyi.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
@@ -28,17 +29,18 @@ public class UploadController {
         return cloudOssService.list(strategyModel,pageNo,pageSize);
     }
 
+    @SaCheckLogin
+    @OperationLogger("上传图片")
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    @SaCheckPermission("/file/upload")
     @ApiOperation(value = "上传图片",httpMethod = "POST", response = ResponseResult.class, notes = "上传图片")
     public ResponseResult upload(MultipartFile multipartFile){
         return cloudOssService.upload(multipartFile);
     }
 
-    @RequestMapping(value = "/delBatchFile",method = RequestMethod.POST)
-    @SaCheckPermission("/file/delBatchFile")
-    @ApiOperation(value = "批量删除文件",httpMethod = "POST", response = ResponseResult.class, notes = "批量删除文件")
     @OperationLogger("批量删除图片")
+    @SaCheckPermission("/file/delBatchFile")
+    @RequestMapping(value = "/delBatchFile",method = RequestMethod.POST)
+    @ApiOperation(value = "批量删除文件",httpMethod = "POST", response = ResponseResult.class, notes = "批量删除文件")
     public ResponseResult delBatchFile(String key){
         return cloudOssService.delBatchFile(key);
     }

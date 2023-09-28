@@ -103,8 +103,11 @@ export default {
             formData.append('multipartFile', this.files)
             upload(formData).then(res => {
                 this.form.imgUrl += res.data + ","
+                this.loading.close()
+
+            }).catch(error => {
+                this.loading.close()
             })
-            this.loading.close()
         },
         // 打开加载层
         openLoading: function () {

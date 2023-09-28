@@ -44,8 +44,6 @@ public class ApiArticleController {
         return articleService.selectUserInfoByArticleId(id);
     }
 
-    @AccessLimit
-    @BusinessLogger(value = "门户-用户搜索文章",type = "查询",desc = "用户搜索文章")
     @GetMapping(value = "/search")
     @ApiOperation(value = "用户搜索文章", httpMethod = "GET", response = ResponseResult.class, notes = "用户搜索文章")
     public ResponseResult searchArticle(String keyword) {

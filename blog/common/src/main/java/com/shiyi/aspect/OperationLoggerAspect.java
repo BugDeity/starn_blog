@@ -64,9 +64,16 @@ public class OperationLoggerAspect {
 
     @Around(value = "pointcut(operationLogger)")
     public Object doAround(ProceedingJoinPoint joinPoint, OperationLogger operationLogger) throws Throwable {
-        //因给了演示账号所有权限以供用户观看，所以执行业务前需判断是否是管理员操作
-        if (!StpUtil.hasRole("admin")) {
-            throw new BusinessException(NO_PERMISSION);
+        HttpServletRequest request = IpUtil.getRequest();
+        String url = request.getRequestURI();
+        //如果是上传图片的接口则需要登录
+        if (url.contains("/file/upload") && !StpUtil.isLogin()) {
+            throw new BusinessException(NOT_LOGIN);
+        }else {
+            //因给了演示账号所有权限以供用户观看，所以执行业务前需判断是否是管理员操作
+            if  (!StpUtil.hasRole("admin")) {
+                throw new BusinessException(NO_PERMISSION);
+            }
         }
 
         startTime = DateUtil.getNowDate();
@@ -75,7 +82,7 @@ public class OperationLoggerAspect {
         Object result = joinPoint.proceed();
         try {
             // 日志收集
-            handle(joinPoint, IpUtil.getRequest());
+            handle(joinPoint, request);
 
         } catch (Exception e) {
             logger.error("日志记录出错!", e);
