@@ -309,7 +309,7 @@ public class ApiUserServiceImpl implements ApiUserService {
         User user = User.builder()
                 .userInfoId(userInfo.getId())
                 .username(emailRegisterDTO.getEmail())
-                .password(UUID.randomUUID().toString())
+                .password(AesEncryptUtils.aesEncrypt(emailRegisterDTO.getPassword()))
                 .loginType(LoginTypeEnum.getType("email"))
                 .roleId(2)
                 .status(UserStatusEnum.normal.getCode())
