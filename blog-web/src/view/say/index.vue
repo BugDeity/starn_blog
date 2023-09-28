@@ -509,7 +509,10 @@ export default {
 
                         img {
                             max-width: 100%;
+                            // 这里的高度随便设置，反正父层盒子设置了超出隐藏
+                            min-height: 500px;
                             cursor: zoom-in;
+                            object-fit: cover;
                         }
                     }
 
