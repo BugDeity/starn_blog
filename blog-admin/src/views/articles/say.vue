@@ -16,7 +16,17 @@
                 <el-table-column type="selection" align="center" />
                 <el-table-column prop="userId" align="center" width="150" label="用户id" />
                 <el-table-column prop="address" align="center" width="200" label="关联地址" />
-                <el-table-column prop="imgUrl" align="center" width="200" label="关联图片" />
+                <el-table-column prop="imgUrl" align="center" width="200" label="关联图片">
+                  <template slot-scope="scope">
+                    <div>
+                      <div style="display: flex;flex-wrap: wrap;">
+                        <div style="display: flex;justify-content: center;margin: 2px 2px;" v-for="(item, index) in splitImg(scope.row.imgUrl)" :key="index">
+                          <el-image :src="item" :preview-src-list="[item]" class="imgBox"/>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="content" align="center" label="内容" />
                 <el-table-column prop="isPublic" width="200" align="center" label="是否开放查看" />
                 <el-table-column prop="createTime" width="200" align="center" label="发表时间" />
@@ -44,7 +54,7 @@
 
 
         <!-- 添加或修改 -->
-        <el-dialog center :title="isUpdate ? '修改说说' : '添加说说'" :visible.sync="dialogFormVisible">
+        <el-dialog center :title="isUpdate ? '修改说说' : '添加说说'" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
             <el-form ref="dataForm" :model="form" label-position="left">
                 <el-form-item label="关联地址" prop="address" :label-width="formLabelWidth">
                     <el-input v-model="form.address"></el-input>
@@ -283,3 +293,14 @@ export default {
 }
 </script>
 <style src="@wangeditor/editor/dist/css/style.css"></style>
+<style lang="scss" scoped>
+.imgBox {
+  border-radius: 5px;
+}
+::v-deep img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  cursor: zoom-in;
+}
+</style>
