@@ -2,8 +2,13 @@
      padding: 0;
      margin: 0;
      /* font-family: "Lucida Calligraphy", cursive, serif, sans-serif; */
-     font-family: "shajiati";
+     font-family: "font";
 
+ }
+
+ @font-face {
+     font-family: 'font';
+     src: url('./assets/font/2.woff2');
  }
 
  body {
@@ -15,10 +20,7 @@
      cursor: url(https://img.shiyit.com/link.cur), pointer !important
  }
 
- @font-face {
-     font-family: 'shajiati';
-     src: url('./assets/font/2.woff2');
- }
+
 
  .el-upload--picture-card {
      background-color: var(--background-color) !important;

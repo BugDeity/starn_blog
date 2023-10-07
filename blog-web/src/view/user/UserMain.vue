@@ -281,7 +281,6 @@ export default {
     }
 
     .userBox {
-        border-radius: 10px;
         background-color: var(--background-color);
 
         .backgroupImg {
@@ -290,9 +289,6 @@ export default {
 
             img {
                 width: 100%;
-                border-top-left-radius: 10px;
-                border-top-right-radius: 10px;
-
             }
         }
 

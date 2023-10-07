@@ -172,7 +172,8 @@
                                     style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布文章
                             </el-dropdown-item>
                         </router-link>
-                        <router-link style="text-decoration: none;color: #71777c;" :to="'/add_say'">
+                        <router-link v-if="$store.state.userInfo && $store.state.userInfo.id == 1"
+                            style="text-decoration: none;color: #71777c;" :to="'/add_say'">
                             <el-dropdown-item>
                                 <svg-icon icon-class="say"
                                     style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布说说
