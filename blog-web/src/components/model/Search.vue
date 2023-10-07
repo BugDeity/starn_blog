@@ -21,7 +21,7 @@
             </div>
             <!-- 分页按钮 -->
             <sy-pagination v-show="list.length" :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage"
-                ref="pagin" />
+                ref="page" />
         </div>
     </el-dialog>
 </template>
@@ -76,7 +76,7 @@ export default {
             }
             this.pageData.pageNo = 1
             //重新更新分页组件 不然分页组件存在问题
-            this.$refs.pagin.handlePageNo(1)
+            this.$refs.page.handlePageNo(1)
             searchArticle(this.pageData).then(res => {
                 this.list = res.data.records;
                 this.pages = res.data.pages

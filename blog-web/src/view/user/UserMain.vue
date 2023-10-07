@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <!-- 分页按钮 -->
-                    <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="onPage" />
+                    <sy-pagination ref="page" :pageNo="pageData.pageNo" :pages="pages" @changePage="onPage" />
                 </div>
                 <div v-else>
                     <sy-empty />
@@ -167,6 +167,8 @@ export default {
             this.dataList = []
             this.pageData.pageNo = 1
             this.pageData.index = index
+            //重新更新分页组件 不然分页组件存在问题
+            this.$refs.page.handlePageNo(1)
             this.before()
         },
         before() {

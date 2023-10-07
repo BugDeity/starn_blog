@@ -128,7 +128,7 @@
                         </el-card>
                         <!-- 分页按钮 -->
                         <div>
-                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
+                            <sy-pagination ref="page" :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
                         </div>
 
                     </div>
@@ -438,6 +438,8 @@ export default {
             this.pageData.pageNo = 1
             this.pageData.categoryId = item.id
             this.pageData.orderByDescColumn = item.desc
+            //重新更新分页组件 不然分页组件存在问题
+            this.$refs.page.handlePageNo(1)
             fetchArticleList(this.pageData).then(res => {
                 this.articleList = res.data.records;
                 this.pages = res.data.pages

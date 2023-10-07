@@ -35,11 +35,6 @@ export default {
             currentPage: this.pageNo,
         }
     },
-    watch: {
-        pageNoProp(newValue, oldValue) {
-            console.log(newValue);
-        }
-    },
     created() {
         //console.log('------created--------');
     },

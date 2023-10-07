@@ -83,7 +83,7 @@
                             </router-link>
 
                             <div class="article-info">
-                                <div style="display: flex;position: relative;">
+                                <div style="display: flex;">
                                     <router-link :to="'/article/' + item.id">
                                         <div class="article-title xiahuaxian">
                                             {{ item.title }}
@@ -167,7 +167,7 @@
                         </div>
                     </div>
                     <!-- 分页按钮 -->
-                    <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="onPage" />
+                    <sy-pagination ref="page" :pageNo="pageData.pageNo" :pages="pages" @changePage="onPage" />
                 </div>
                 <div v-else>
                     <sy-empty />
@@ -291,7 +291,6 @@ export default {
             editDialogTableVisible: false,
             feedbackDialogTableVisible: false,
             tagStyle: ["success", "warning", "danger", "info"],
-            btnList: ["文章", "收藏", "笔记"],
             btnList: [
                 {
                     icon: "el-icon-document",
@@ -365,6 +364,9 @@ export default {
                 });
             })
         },
+        after() {
+            this.$store.commit('setUserInfo', this.user)
+        },
         updateUserInfo() {
             updateUserInfo(this.form).then(res => {
                 this.user = this.form
@@ -373,6 +375,7 @@ export default {
                     message: "修改成功",
                     type: 'success'
                 });
+                this.after()
                 this.editDialogTableVisible = false
             })
         },
@@ -482,6 +485,8 @@ export default {
             this.dataList = []
             this.pageData.pageNo = 1
             this.pageData.index = index
+            //重新更新分页组件 不然分页组件存在问题
+            this.$refs.page.handlePageNo(1)
             this.before()
         },
         before() {
@@ -535,8 +540,9 @@ export default {
                     id: this.user.id,
                     bjCover: res.data
                 }
-                updateUserInfo(user).then(res => {
+                updateUserInfo(user).then(ress => {
                     this.user.bjCover = res.data
+                    this.after()
                     this.$notify({
                         title: '成功',
                         message: "修改成功",
@@ -923,6 +929,7 @@ export default {
             .articleItem {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
+
             }
 
             .article {
@@ -932,16 +939,18 @@ export default {
                 border-radius: 5px;
                 margin-left: 10px;
                 background-color: var(--background-color);
+                overflow: hidden;
 
                 .status {
-                    padding: 0 5px;
-                    border-radius: 5px;
+                    padding: 2px 30px;
+                    width: 80px;
                     position: absolute;
-                    right: -10px;
+                    right: -50px;
                     top: 5px;
                     opacity: 0.8;
                     transform: rotate(45deg);
-
+                    color: #fff;
+                    text-align: center;
                 }
 
                 .articleBtn {
@@ -949,8 +958,6 @@ export default {
                     right: 0;
                     display: none;
                 }
-
-
 
                 &:hover {
                     .articleBtn {
