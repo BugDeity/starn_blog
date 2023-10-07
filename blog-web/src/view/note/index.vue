@@ -76,7 +76,7 @@
                                 </div>
                             </li>
                             <!-- 分页按钮 -->
-                            <sy-pagination ref="page" :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
+                            <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
                         </ul>
                         <sy-empty v-else message="暂未发布笔记" />
                     </div>
@@ -193,8 +193,6 @@ export default {
 
             this.pageData.pageNo = 1
             this.pageData.categoryId = item.id
-            //重新更新分页组件 不然分页组件存在问题
-            this.$refs.page.handlePageNo(1)
             this.getNoteList()
         },
         handlePage(val) {
