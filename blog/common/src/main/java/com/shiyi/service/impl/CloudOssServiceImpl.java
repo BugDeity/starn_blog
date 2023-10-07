@@ -1,7 +1,9 @@
 package com.shiyi.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.enums.FileUploadModelEnum;
+import com.shiyi.exception.BusinessException;
 import com.shiyi.service.CloudOssService;
 import com.shiyi.service.SystemConfigService;
 import com.shiyi.strategy.context.FileUploadStrategyContext;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
+
+import static com.shiyi.common.ResultCode.NOT_LOGIN;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +45,10 @@ public class CloudOssServiceImpl implements CloudOssService {
      */
     @Override
     public ResponseResult upload(MultipartFile file) {
+        //需要登录
+        if (!StpUtil.isLogin()) {
+            throw new BusinessException(NOT_LOGIN);
+        }
         if (file.getSize() > 1024 * 1024 * 10) {
             return ResponseResult.error("文件大小不能大于10M");
         }

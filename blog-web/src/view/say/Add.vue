@@ -37,7 +37,7 @@
                         <button v-if="$store.state.userInfo && $store.state.userInfo.id == 1" type="button" class="btn"
                             @click="submitForm">发布</button>
                         <span v-else class="noBtn">
-                            暂无发布权限,请先<a @click="$store.state.loginFlag = true">登录</a>
+                            用户暂无发布权限或未登录,请先<a @click="$store.state.loginFlag = true">登录</a>
                         </span>
                     </div>
                 </div>
@@ -144,10 +144,22 @@ export default {
 
     .say-add-containner {
         padding: 10px;
+        color: var(--text-color);
 
         .title {
             margin-bottom: 15px;
-            color: var(--text-color);
+            position: relative;
+            padding-left: 10px;
+
+            &::before {
+                content: ' ';
+                width: 5px;
+                height: 100%;
+                background: linear-gradient(to right, #ff00ff, #c2553a);
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
         }
 
         .say-left,

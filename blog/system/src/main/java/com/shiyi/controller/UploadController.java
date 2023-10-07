@@ -30,7 +30,6 @@ public class UploadController {
     }
 
     @SaCheckLogin
-    @OperationLogger("上传图片")
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     @ApiOperation(value = "上传图片",httpMethod = "POST", response = ResponseResult.class, notes = "上传图片")
     public ResponseResult upload(MultipartFile multipartFile){

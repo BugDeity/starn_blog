@@ -19,8 +19,7 @@
                         <el-col :span="8">
                             <el-form-item label="封面图" prop="">
                                 <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
-                                    :action="uploadPictureHost" :before-upload="uploadBefore"
-                                    :http-request="uploadSectionFile" multiple>
+                                    :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
                                     <img v-if="article.avatar" style="width: 100%;height: 100%;" :src="article.avatar"
                                         class="imgAvatar" />
                                     <i v-else class="el-icon-plus avatar-img-icon"></i>
@@ -58,7 +57,7 @@
 
                     <div class="bottom">
                         <div class="btn-tips">Are you ready</div>
-                        <button v-if="$store.state.userInfo" type="button" class="btnDraft" @click="submit">
+                        <button v-if="$store.state.userInfo" type="button" class="btnDraft">
                             <i class="el-icon-orange"></i> 保存草稿
                         </button>
                         <button v-if="$store.state.userInfo" type="button" class="btnSubmit" @click="submit">
@@ -79,7 +78,9 @@ export default {
     data() {
         return {
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
-            article: {},
+            article: {
+                avatar: ""
+            },
             categoryList: [],
             loading: [],
             img: process.env.VUE_APP_IMG_API,
@@ -180,9 +181,6 @@ export default {
             })
 
         },
-        uploadBefore: function () {
-            this.openLoading()
-        },
         uploadSectionFile: function (param) {
             this.files = param.file
             // FormData 对象
@@ -191,21 +189,9 @@ export default {
             formData.append('multipartFile', this.files)
             upload(formData).then(res => {
                 this.article.avatar = res.data
-                this.loading.close()
-            }).catch(error => {
-                this.loading.close()
+                console.log(this.article.avatar)
             })
         },
-        // 打开加载层
-        openLoading: function () {
-            this.loading = this.$loading({
-                lock: true,
-                text: "正在加载中~",
-                spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)"
-            });
-        },
-
     }
 };
 </script>
@@ -233,6 +219,7 @@ export default {
 
     .containner {
         padding: 10px;
+        color: var(--text-color);
 
         /deep/ .article-left input {
             border-top: none !important;
@@ -246,7 +233,18 @@ export default {
 
         .title {
             margin-bottom: 15px;
-            color: var(--text-color);
+            position: relative;
+            padding-left: 10px;
+
+            &::before {
+                content: ' ';
+                width: 5px;
+                height: 100%;
+                background: linear-gradient(to right, #ff00ff, #c2553a);
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
         }
 
         .article-left,
@@ -321,10 +319,6 @@ export default {
                     margin: 0 auto;
                     color: #fff;
                     font-weight: 700;
-
-                    &:hover {
-                        color: var(--theme-color);
-                    }
                 }
 
                 .btnDraft {
@@ -359,7 +353,7 @@ export default {
     cursor: url(https://img.shiyit.com/link.cur), pointer;
     position: relative;
     overflow: hidden;
-    width: 200px;
+    max-width: 200px;
     height: 100px;
     text-align: center;
 }
