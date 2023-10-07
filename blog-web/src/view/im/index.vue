@@ -18,7 +18,7 @@
                     <div class="messageItem" v-for="(item, index) in  messageList " :key="index">
                         <!-- 左边消息框 别人发送的消息 -->
                         <div :class="item.isWithdraw ? 'withdraw' : 'left'" v-if="user && item.fromUserId != user.id">
-                            <img class="noSelect" :src="item.fromUserAvatar" :title="item.fromUserNickname">
+                            <img class="noSelect" :src="item.fromUserAvatar">
                             <div class="info">
                                 <div class="nickname noSelect userInfo">
                                     {{ item.fromUserNickname }}
@@ -502,7 +502,7 @@ export default {
             if (this.selectUserOnline) {
                 getUserImHistoryList(this.pageData).then(res => {
                     let arr = res.data.records
-                    for (let i = arr.length - 1; i >= 0; i--) {
+                    for (let i = 0; i < arr.length; i++) {
                         this.messageList.unshift(arr[i])
                     }
                     this.isLoding = false

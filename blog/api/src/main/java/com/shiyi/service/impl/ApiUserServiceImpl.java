@@ -92,7 +92,7 @@ public class ApiUserServiceImpl implements ApiUserService {
                 .id(user.getId())
                 .avatar(userInfo.getAvatar()).nickname(userInfo.getNickname())
                 .intro(userInfo.getIntro()).webSite(userInfo.getWebSite()).email(user.getUsername())
-                .loginType(user.getLoginType()).token(StpUtil.getTokenValue()).build();
+                .loginType(user.getLoginType()).bjCover(userInfo.getBjCover()).token(StpUtil.getTokenValue()).build();
 
         return ResponseResult.success(userInfoVO);
     }
@@ -210,7 +210,6 @@ public class ApiUserServiceImpl implements ApiUserService {
     @Override
     public ResponseResult selectUserInfoByToken(String token) {
         Object userId = StpUtil.getLoginIdByToken(token);
-
         UserInfoVO userInfoVO = userMapper.selectInfoByUserIdNew(userId);
         return ResponseResult.success(userInfoVO);
     }
