@@ -47,7 +47,7 @@
                     <div v-if="this.pageData.pageNo >= this.pageTotal" style="text-align: center;color: var(--text-color);">
                         我也是有底线的~~~</div>
                 </el-timeline>
-                <sy-empty v-else message="暂时没有该分类的文章" />
+                <sy-empty v-else message="暂时没有该标签的文章" />
 
             </div>
         </div>

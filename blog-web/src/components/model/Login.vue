@@ -350,6 +350,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-dialog__wrapper {
+    background-image: url(https://img.shiyit.com/20231007_1696659441438.jpg) !important;
+}
+
 .dialog {
     @media screen and (max-width: 1118px) {
         /deep/ .el-dialog {
