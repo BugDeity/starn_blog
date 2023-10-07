@@ -101,10 +101,8 @@ public class ApiHomeServiceImpl implements ApiHomeService {
         Object count = redisService.getCacheObject(RedisConstants.BLOG_VIEWS_COUNT);
         //获取访客量
         Long visitorAccess = redisService.getCacheSetKeyNumber(RedisConstants.UNIQUE_VISITOR);
-        //热门文章
-        List<ApiArticleListVO> hotArticles = articleMapper.selectHotArticleList();
         return ResponseResult.success(webConfig).putExtra("siteAccess", Optional.ofNullable(count).orElse(0))
-                .putExtra("visitorAccess",visitorAccess).putExtra("hotArticles",hotArticles);
+                .putExtra("visitorAccess",visitorAccess);
     }
 
     /**

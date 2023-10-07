@@ -89,6 +89,9 @@
                                             {{ item.title }}
                                         </div>
                                     </router-link>
+                                    <div class="status" :style="{ backgroundColor: statusStyle[item.isPublish] }">
+                                        {{ statusList[item.isPublish] }}
+                                    </div>
                                     <div class="articleBtn">
                                         <div v-if="pageData.index == 0">
                                             <el-tooltip class="item" effect="dark" content="修改文章" placement="top">
@@ -280,6 +283,8 @@ export default {
                 pageSize: 10,
                 index: 0
             },
+            statusList: ["下架", "上架", "待审核", "草稿"],
+            statusStyle: ["#F56C6C", "#67C23A", "#909399", "#E6A23C"],
             form: {},
             files: {},
             dialogTableVisible: false,
@@ -931,6 +936,17 @@ export default {
                 border-radius: 5px;
                 margin-left: 10px;
                 background-color: var(--background-color);
+
+                .status {
+                    padding: 0 5px;
+                    border-radius: 5px;
+                    position: absolute;
+                    right: -10px;
+                    top: 5px;
+                    opacity: 0.8;
+                    transform: rotate(45deg);
+
+                }
 
                 .articleBtn {
                     position: absolute;

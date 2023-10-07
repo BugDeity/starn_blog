@@ -50,7 +50,7 @@ export default {
     },
     data() {
         return {
-            userInfo: null,
+            userInfo: this.$store.state.userInfo,
             timer: "",
         }
     },
@@ -64,7 +64,7 @@ export default {
 
         // 从cookie中获取token
         let token = getToken()
-        if (token != null) {
+        if (token != null && this.userInfo == null) {
             selectUserInfoByToken(token).then(res => {
                 this.userInfo = res.data
                 this.$store.commit("setUserInfo", res.data)
@@ -72,7 +72,6 @@ export default {
         }
         getWebSiteInfo().then(res => {
             this.$store.commit("setWebSiteInfo", res.data)
-            this.$store.commit("setHotArticles", res.extra.hotArticles)
             this.$store.state.siteAccess = res.extra.siteAccess
             this.$store.state.visitorAccess = res.extra.visitorAccess
         })

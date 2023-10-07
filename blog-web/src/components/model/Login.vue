@@ -303,11 +303,6 @@ export default {
                         setToken(res.data.token)
                         this.$store.commit("setUserInfo", res.data)
                         this.close()
-                        this.$notify({
-                            title: '成功',
-                            message: '登录成功',
-                            type: 'success'
-                        });
                         location.reload()
                     })
                 } else {

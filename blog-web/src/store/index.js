@@ -17,7 +17,6 @@ export default new Vuex.Store({
       loginTypeList: "",
       showList: "",
     },
-    hotArticles: {},
   },
   mutations: {
     closeModel(state) {
@@ -28,9 +27,6 @@ export default new Vuex.Store({
     },
     setWebSiteInfo(state, newValue) {
       state.webSiteInfo = newValue
-    },
-    setHotArticles(state, newValue) {
-      state.hotArticles = newValue
     },
     setSkin(state, newValue) {
       state.skin = newValue

@@ -384,11 +384,6 @@ export default {
                 removeToken()
                 this.$store.commit("setUserInfo", null)
                 location.reload()
-                this.$notify({
-                    title: '成功',
-                    message: '注销成功',
-                    type: 'success'
-                });
             }).catch(err => {
                 console.log(err)
             });

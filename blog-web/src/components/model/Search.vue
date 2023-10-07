@@ -1,7 +1,7 @@
 <template>
     <el-dialog title="搜索文章" :visible.sync="dialogVisible" :close-on-click-modal="false">
         <div>
-            <el-input v-model="pageData.keyword" @input="inputChage" placeholder="请输入内容"></el-input>
+            <el-input v-model="pageData.keyword" @input="inputChage" placeholder="请输入要搜索的关键词"></el-input>
         </div>
 
         <div class="tagBox" v-if="!list.length">
