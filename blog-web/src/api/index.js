@@ -39,6 +39,13 @@ export function insertArticle(data) {
         data
     })
 }
+export function updateArticle(data) {
+    return request({
+        url: '/v1/article/',
+        method: 'put',
+        data
+    })
+}
 export function searchArticle(params) {
     return request({
         url: '/v1/article/search',

@@ -21,6 +21,9 @@ public class ArticleInsertDTO {
     @ApiModelProperty(name = "categoryId", value = "文章分类id")
     private Long categoryId;
 
+    @ApiModelProperty(value = "是否发布")
+    private Integer isPublish = 2;
+
     @ApiModelProperty(value = "是否原创 0：转载 1:原创")
     private Integer isOriginal;
 

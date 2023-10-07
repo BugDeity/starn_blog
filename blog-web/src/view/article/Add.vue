@@ -57,10 +57,10 @@
 
                     <div class="bottom">
                         <div class="btn-tips">Are you ready</div>
-                        <button v-if="$store.state.userInfo" type="button" class="btnDraft">
+                        <button v-if="$store.state.userInfo" type="button" class="btnDraft" @click="submit(3)">
                             <i class="el-icon-orange"></i> 保存草稿
                         </button>
-                        <button v-if="$store.state.userInfo" type="button" class="btnSubmit" @click="submit">
+                        <button v-if="$store.state.userInfo" type="button" class="btnSubmit" @click="submit(2)">
                             <i class="el-icon-circle-check"></i> 提交审核
                         </button>
                         <span v-else class="noBtn">
@@ -73,7 +73,7 @@
     </div>
 </template>
 <script>
-import { upload, featchCategory, insertArticle, getMyArticleInfo, fetchTagList } from '@/api'
+import { upload, featchCategory, insertArticle, updateArticle, getMyArticleInfo, fetchTagList } from '@/api'
 export default {
     data() {
         return {
@@ -140,7 +140,7 @@ export default {
         imgDel: function (filename) {
             delBatchFile(filename[0].split(this.img)[1])
         },
-        submit() {
+        submit(type) {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
                     if (!this.article.contentMd) {
@@ -151,14 +151,27 @@ export default {
                         });
                         return;
                     }
-                    insertArticle(this.article).then(res => {
-                        this.$notify({
-                            title: '成功',
-                            message: '提交成功，请耐心等待审核',
-                            type: 'success'
-                        });
-                        this.$router.push({ path: "/user" })
-                    })
+                    this.article.isPublish = type
+                    if (this.article.id) {
+                        updateArticle(this.article).then(res => {
+                            this.$notify({
+                                title: '成功',
+                                message: '修改成功，请耐心等待审核',
+                                type: 'success'
+                            });
+                            this.$router.push({ path: "/user" })
+                        })
+                    } else {
+                        insertArticle(this.article).then(res => {
+                            this.$notify({
+                                title: '成功',
+                                message: '提交成功，请耐心等待审核',
+                                type: 'success'
+                            });
+                            this.$router.push({ path: "/user" })
+                        })
+                    }
+
                 } else {
                     console.log('error submit!!');
                     return false;

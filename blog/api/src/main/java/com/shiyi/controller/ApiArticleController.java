@@ -82,6 +82,14 @@ public class ApiArticleController {
     }
 
     @SaCheckLogin
+    @PutMapping(value = "/")
+    @BusinessLogger(value = "修改我的文章",type = "修改",desc = "修改我的文章")
+    @ApiOperation(value = "修改我的文章", httpMethod = "PUT", response = ResponseResult.class, notes = "修改我的文章")
+    public ResponseResult updateMyArticle(@RequestBody ArticleInsertDTO dto) {
+        return articleService.updateMyArticle(dto);
+    }
+
+    @SaCheckLogin
     @GetMapping(value = "/selectArticleByUserId")
     @BusinessLogger(value = "根据用户id获取文章",type = "查询",desc = "根据用户id获取文章")
     @ApiOperation(value = "根据用户id获取文章", httpMethod = "GET", response = ResponseResult.class, notes = "根据用户id获取文章")

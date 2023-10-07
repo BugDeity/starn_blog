@@ -82,4 +82,10 @@ public interface ApiArticleService {
      */
     public ResponseResult selectUserInfoByArticleId(Integer id);
 
+    /**
+     * 修改我的文章
+     * @param dto
+     * @return
+     */
+    public ResponseResult updateMyArticle(ArticleInsertDTO dto);
 }

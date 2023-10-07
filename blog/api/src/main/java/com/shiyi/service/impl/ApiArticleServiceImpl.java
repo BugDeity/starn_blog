@@ -248,29 +248,32 @@ public class ApiArticleServiceImpl implements ApiArticleService {
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult insertArticle(ArticleInsertDTO dto) {
         Article article = BeanCopyUtils.copyObject(dto, Article.class);
-        article.setIsPublish(PublishEnum.AUDIO.code);
-        if (article.getId() != null) {
-            if (!article.getUserId().equals(StpUtil.getLoginIdAsString())) {
-                throw new BusinessException("只能修改自己的文章！");
-            }
-            articleMapper.updateById(article);
-
-            //先删出所有标签
-            tagsMapper.deleteByArticleIds(Collections.singletonList(article.getId()));
-            //然后新增标签
+        article.setUserId(StpUtil.getLoginIdAsString());
+        int insert = articleMapper.insert(article);
+        //添加标签
+        if (insert > 0){
             tagsMapper.saveArticleTags(article.getId(),dto.getTagList());
-        }else {
-            article.setUserId(StpUtil.getLoginIdAsString());
-            int insert = articleMapper.insert(article);
-            //添加标签
-            if (insert > 0){
-                tagsMapper.saveArticleTags(article.getId(),dto.getTagList());
-            }
-            // 发送系统通知
-            SystemNoticeHandle.sendNotice(StpUtil.getLoginIdAsString(),MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,
-                    null,null,"恭喜您发布了一篇文章");
         }
+        // 发送系统通知
+        SystemNoticeHandle.sendNotice(StpUtil.getLoginIdAsString(),MessageConstant.MESSAGE_SYSTEM_NOTICE,MessageConstant.SYSTEM_MESSAGE_CODE,
+                null,null,"恭喜您发布了一篇文章");
 
+        return ResponseResult.success();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult updateMyArticle(ArticleInsertDTO dto) {
+        Article article = BeanCopyUtils.copyObject(dto, Article.class);
+        if (!article.getUserId().equals(StpUtil.getLoginIdAsString())) {
+            throw new BusinessException("只能修改自己的文章！");
+        }
+        articleMapper.updateById(article);
+
+        //先删出所有标签
+        tagsMapper.deleteByArticleIds(Collections.singletonList(article.getId()));
+        //然后新增标签
+        tagsMapper.saveArticleTags(article.getId(),dto.getTagList());
         return ResponseResult.success();
     }
 
@@ -331,6 +334,8 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         UserInfoVO userInfoVO = userMapper.selectInfoByUserId(article.getUserId());
         return ResponseResult.success(userInfoVO);
     }
+
+
 
     /**
      *  校验文章验证码(验证码通过关注公众号获取)
