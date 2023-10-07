@@ -34,7 +34,7 @@
                         <div class="main">
                             <div class="profile">
                                 <a @click="handleToUserMain(item.userId)" target="_blank">
-                                    <img :src="item.avatar" alt="">
+                                    <el-avatar :src="item.avatar" size="medium"></el-avatar>
                                 </a>
                             </div>
                             <div class="commentinfo">
@@ -93,7 +93,7 @@
                                     <div class="main">
                                         <div class="profile">
                                             <a @click="handleToUserMain(childrenItem.userId)">
-                                                <img :src="childrenItem.avatar" alt="">
+                                                <el-avatar :src="childrenItem.avatar" size="medium"></el-avatar>
                                             </a>
                                         </div>
                                         <div class="commentinfo">
@@ -501,7 +501,6 @@ export default {
 
                         .profile {
                             float: left;
-                            margin-right: 10px;
                             margin-top: 6px;
 
                             a {
@@ -675,7 +674,6 @@ export default {
 
                                     .profile {
                                         float: left;
-                                        margin-right: 10px;
                                         margin-top: 6px;
 
                                         a {
