@@ -1,7 +1,7 @@
 <template>
     <div class="article-container container">
         <!-- 左侧点赞和打赏 -->
-        <div class="left-sidbarnav">
+        <div class="left-sidbarnav" :style="{ left: left }">
             <el-tooltip class="item" effect="dark" content="点赞" placement="left">
                 <div class="left-item" title="点赞" @click="like(article.id)">
                     <el-badge :value="article.likeCount" class="item">
@@ -62,7 +62,7 @@
         </div>
 
         <!-- 中间文章信息 -->
-        <el-card class="article">
+        <el-card class="article" id="articleBox">
             <el-tag @click="handleClike(article.category.id, '/categorys')" effect="dark" class="category">
                 {{ article.category.name }}
             </el-tag>
@@ -322,7 +322,6 @@
 <script>
 import { articleInfo, articleLike, checkCode, followedUser, deleteFollowedUser, selectUserInfoByArticleId } from '@/api'
 import { collect, cancelCollect } from '@/api/collect'
-import { featchComments } from '@/api/comment'
 import SiteInfo from '@/components/site/index.vue'
 import Comment from '@/components/comment/index.vue'
 export default {
@@ -373,10 +372,13 @@ export default {
             // 加载层信息
 
             serceShow: 0,
+            left: "0px"
         }
     },
 
     mounted() {
+        const element = document.getElementById("articleBox")
+        this.left = (element.offsetLeft - 55) + "px"
         window.setTimeout(() => {
             if (this.$refs.preview) {
                 //生成目录
@@ -410,6 +412,7 @@ export default {
         window.addEventListener('scroll', this.onScroll, false)
 
     },
+
     computed: {
         isCommentFlag() {
             return this.$store.state.isCommentFlag
@@ -421,10 +424,16 @@ export default {
             if (newVal) {
                 this.checkAfter()
             }
-        }
+        },
     },
 
     created() {
+        window.onresize = () => {
+            return (() => {
+                const element = document.getElementById("articleBox")
+                this.left = (element.offsetLeft - 55) + "px"
+            })()
+        }
         articleInfo(this.articleId).then(res => {
             this.article = res.data
             this.serceShow = this.article.activeReadType
@@ -444,9 +453,7 @@ export default {
                     type: 'warning'
                 });
             }
-        }).catch(err => {
-
-        });
+        })
 
     },
     methods: {
@@ -734,7 +741,6 @@ export default {
 
         .left-sidbarnav {
             position: fixed;
-            left: 120px;
             top: 150px;
             z-index: 999;
 
