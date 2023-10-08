@@ -4,6 +4,10 @@
             <el-input v-model="pageData.keyword" @input="inputChage" placeholder="请输入要搜索的关键词"></el-input>
         </div>
 
+        <div class="dividerBox">
+            <div class="divider"></div>
+        </div>
+
         <div class="tagBox" v-if="!list.length">
             <div class="tag-title">标签搜索</div>
             <div>
@@ -122,6 +126,16 @@ export default {
     }
 }
 
+.dividerBox {
+    margin-top: 15px;
+    margin-bottom: 20px;
+
+    .divider {
+        border: 2px dashed #d2ebfd;
+    }
+}
+
+
 .tagBox {
     margin-top: 15px;
 
@@ -144,6 +158,9 @@ export default {
 
 .search-article {
     margin-top: 20px;
+    max-height: 400px;
+    /* 垂直滚动 */
+    overflow-y: scroll;
 
     .item {
         margin-bottom: 20px;
@@ -164,7 +181,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        max-width: 100%;
+        max-width: 90%;
 
         &::before {
             content: "";

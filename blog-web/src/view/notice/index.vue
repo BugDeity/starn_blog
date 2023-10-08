@@ -65,14 +65,21 @@
                                     关注了你
                                 </div>
                                 <div v-if="item.noticeType == 3">
-                                    点赞了你的文章 <span class="title" @click="handleArticleClick(item.articleId)">" {{
-                                        item.articleTitle
-                                    }} "</span>
+                                    点赞了你的文章
+                                    <router-link :to="'/article/' + item.articleId">
+                                        <span class="title">" {{
+                                            item.articleTitle
+                                        }} "</span>
+                                    </router-link>
                                 </div>
                                 <div v-if="item.noticeType == 4">
-                                    收藏了你的文章 <span class="title" @click="handleArticleClick(item.articleId)">" {{
-                                        item.articleTitle
-                                    }} "</span>
+                                    收藏了你的文章
+                                    <router-link :to="'/article/' + item.articleId">
+                                        <span class="title">" {{
+                                            item.articleTitle
+                                        }} "
+                                        </span>
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
@@ -414,9 +421,8 @@ export default {
 
 
 
-                    /deep/ .imContentItem a {
+                    /deep/ a {
                         text-decoration: none;
-                        color: var(--text-color);
                     }
 
                 }

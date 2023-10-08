@@ -62,12 +62,11 @@ export default {
     color: var(--text-color);
     display: flex;
     align-items: center;
-    padding: 0 50px;
 
     .divider {
         display: inline-block;
         width: 100%;
-        background-color: #ccc;
+        background-color: var(--border-line);
         height: 1px;
     }
 
