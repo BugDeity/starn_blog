@@ -49,6 +49,9 @@ public class CloudOssServiceImpl implements CloudOssService {
         if (!StpUtil.isLogin()) {
             throw new BusinessException(NOT_LOGIN);
         }
+        if (StpUtil.hasRole("demonstrate")) {
+            throw new BusinessException("演示模式，不允许上传文件");
+        }
         if (file.getSize() > 1024 * 1024 * 10) {
             return ResponseResult.error("文件大小不能大于10M");
         }
