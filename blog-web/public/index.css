@@ -1,9 +1,15 @@
  * {
      padding: 0;
      margin: 0;
-     /* font-family: "Lucida Calligraphy", cursive, serif, sans-serif; */
      font-family: "font";
+ }
 
+ .el-tabs__nav-scroll {
+     overflow-x: scroll !important;
+
+     &::-webkit-scrollbar {
+         display: none !important;
+     }
  }
 
  @font-face {
