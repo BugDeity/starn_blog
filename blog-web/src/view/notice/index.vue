@@ -20,7 +20,7 @@
                     </span>
                 </div>
 
-                <div v-if="noticeList.length" class="box">
+                <div v-if="noticeList.length" class="box" :key="refreshkey">
                     <div>
                         <div class="rigth-bottom" v-for="(item, index) in noticeList" :key="index">
 
@@ -107,11 +107,11 @@ export default {
         return {
             pageData: {
                 pageNo: 1,
-                pageSize: 5,
+                pageSize: 10,
                 type: this.$route.query.type ? this.$route.query.type : 0,
             },
             pages: 0,
-
+            refreshkey: 0,
             leftIems: [
                 {
                     name: "系统通知",
@@ -195,6 +195,10 @@ export default {
             return address.split("|")[1]
         },
         handleClike(item, index) {
+            if (index == this.pageData.type) {
+                return;
+            }
+            this.refreshkey = new Date().getTime()
             this.$refs.leftIem[this.pageData.type].className = "left-item"
             this.$refs.leftIem[index].className += " active"
             this.title = item.name
@@ -362,6 +366,12 @@ export default {
             }
 
 
+            .box {
+                max-height: 700px;
+                overflow: hidden;
+                overflow-y: scroll;
+                padding-right: 15px;
+            }
 
             .rigth-bottom {
                 margin-top: 10px;
