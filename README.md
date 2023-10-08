@@ -2,7 +2,7 @@
 
 <p align=center>
   <a href="http://www.shiyit.com">
-    <img src="https://portrait.gitee.com/uploads/avatars/user/1802/5407895_quequnlong_1646130774.png!avatar200" alt="拾壹博客" style="border-radius: 50%">
+    <img src="https://img.shiyit.com/9cf1222617fd4fa197991476a53cc883.jpg" alt="拾壹博客" style="border-radius: 50%">
   </a>
 </p>
 
