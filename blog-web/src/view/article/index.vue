@@ -105,7 +105,8 @@
             </div>
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">
-                <v-md-preview v-highlight :style="style" class="content" :text="this.article.contentMd" ref="preview" />
+                <v-md-preview v-highlight :style="style" class="content" :text="this.article.contentMd" ref="preview"
+                    @copy-code-success="handleCopyCodeSuccess" />
                 <div v-if="article.readType != 0 && !serceShow" class="warpper">
                     <div class="item-title">
                         <i class="el-icon-lock"></i> 该文章部分内容已隐藏
@@ -403,16 +404,6 @@ export default {
                         that.previewImg(e.target.currentSrc);
                     });
                 }
-                //添加代码复制按钮复制成功提示
-                document.addEventListener("click", e => {
-                    if (e.target.className === "v-md-copy-code-btn") {
-                        this.$notify({
-                            title: '成功',
-                            message: '复制成功',
-                            type: 'success'
-                        });
-                    }
-                })
             }
         }, 500)
         // 监听滚动事件
@@ -459,6 +450,13 @@ export default {
 
     },
     methods: {
+        handleCopyCodeSuccess() {
+            this.$notify({
+                title: '成功',
+                message: '复制成功',
+                type: 'success'
+            });
+        },
         handleToUserMain(userId) {
             this.$router.push({ path: "/user_main", query: { id: userId } })
         },
@@ -1109,6 +1107,10 @@ export default {
 
         .content {
             color: var(--article-content-color);
+
+            /deep/ .line-numbers-wrapper {
+                line-height: 1.2;
+            }
 
             /deep/ .vuepress-markdown-body img {
 

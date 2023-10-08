@@ -68,7 +68,8 @@
 
                                 </div>
                                 <div class="content">
-                                    <v-md-preview v-highlight :text="item.content" ref="preview" />
+                                    <v-md-preview v-highlight :text="item.content" ref="preview"
+                                        @copy-code-success="handleCopyCodeSuccess" />
                                 </div>
                                 <div class="content-btn">
                                     <span v-if="$store.state.userInfo && $store.state.userInfo.id == item.userId"
@@ -128,13 +129,6 @@ export default {
             if (e.target.className != "iconfont icon-biaoqing") {
                 this.chooseEmoji = false
             }
-            if (e.target.className === "v-md-copy-code-btn") {
-                this.$notify({
-                    title: '成功',
-                    message: "复制成功",
-                    type: 'success'
-                });
-            }
         })
     },
     created() {
@@ -149,6 +143,13 @@ export default {
         this.getNoteList()
     },
     methods: {
+        handleCopyCodeSuccess() {
+            this.$notify({
+                title: '成功',
+                message: '复制成功',
+                type: 'success'
+            });
+        },
         handleToUserMain(userId) {
             this.$router.push({ path: "/user_main", query: { id: userId } })
         },

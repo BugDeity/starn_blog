@@ -179,7 +179,6 @@ export default {
         left: 0;
         right: 0;
         bottom: 0;
-        height: calc(100% -50px);
         width: 100%;
 
         .barrage-items {
