@@ -104,20 +104,10 @@
     <select id="selectSearchArticle" resultType="com.shiyi.vo.ApiArticleListVO">
         select a.id,
                a.title,
-               a.avatar,
                a.summary,
-               a.quantity,
                a.is_stick,
-               a.is_original,
-               ui.nickname as username,
-               ui.avatar as userAvatar,
-               c.id as categoryId,
-               c.name as categoryName,
                a.create_time
         from b_article a
-                 left join b_user b on a.user_id = b.id
-                 left join b_user_info ui on ui.id = b.user_info_id
-                 left join b_category c on a.category_id = c.id
         where LOWER(a.title) like concat('%', #{keywords}, '%') and a.is_publish = 1 order by a.create_time desc
     </select>
 

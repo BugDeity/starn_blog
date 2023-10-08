@@ -48,14 +48,12 @@
             ui.web_site,
             ui.bj_cover,
             count( DISTINCT a.id ) AS articleCount,
-            count( DISTINCT c.id ) AS commentCount,
             count( DISTINCT fans.id ) AS fansCount,
             count( DISTINCT watch.id ) AS watchCount
         FROM
             b_user u
                 LEFT JOIN b_user_info ui ON u.user_info_id = ui.id
                 LEFT JOIN b_article a ON u.id = a.user_id
-                LEFT JOIN b_comment c ON c.user_id = u.id
                 LEFT JOIN b_followed fans on fans.followed_user_id = u.id
                 LEFT JOIN b_followed watch on watch.user_id = u.id
         WHERE u.id = #{userId} group by u.id

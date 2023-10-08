@@ -169,17 +169,6 @@ public class ApiArticleServiceImpl implements ApiArticleService {
                 keywords);
         articlePage.getRecords().forEach(item -> {
             item.setTitle(item.getTitle().replaceAll("(?i)" + keywords, Constants.PRE_TAG + keywords + Constants.POST_TAG));
-            setCommentAndLike(item);
-
-            //获取收藏文章
-            int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId()));
-            item.setCollectCount(collectCount);
-            //判断当前登录用户是否收藏该文章 标记为收藏
-            if (StpUtil.getLoginIdDefaultNull() != null) {
-                collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId())
-                        .eq(Collect::getUserId,StpUtil.getLoginIdAsString()));
-                item.setIsCollect(collectCount > 0);
-            }
             //格式化时间为几秒前 几分钟前等
             item.setFormatCreateTime(RelativeDateFormat.format(item.getCreateTime()));
         });

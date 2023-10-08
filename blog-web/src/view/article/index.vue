@@ -239,8 +239,8 @@
                             </div>
                         </div>
                     </div>
-                    <div style="margin-bottom: 15px;margin-top: 30px;display: flex;">
-                        <span class="myArticle">
+                    <div class="authorInfo">
+                        <span class="user-item">
                             <div>
                                 {{ userInfo.articleCount }}
                             </div>
@@ -248,15 +248,7 @@
                                 文章
                             </div>
                         </span>
-                        <span class="myComment">
-                            <div>
-                                {{ userInfo.commentCount }}
-                            </div>
-                            <div class="name">
-                                评论
-                            </div>
-                        </span>
-                        <span class="myComment">
+                        <span class="user-item">
                             <div>
                                 {{ userInfo.fansCount }}
                             </div>
@@ -264,7 +256,7 @@
                                 粉丝
                             </div>
                         </span>
-                        <span class="myComment">
+                        <span class="user-item">
                             <div>
                                 {{ userInfo.watchCount }}
                             </div>
@@ -438,10 +430,13 @@ export default {
             this.article = res.data
             this.serceShow = this.article.activeReadType
             if (this.article.readType != 0 && !this.serceShow) {
-                this.style = "max-height: 1300px;overflow: hidden;"
+                this.style = "max-height: 1200px;overflow: hidden;"
             }
-            //修改标题
+            //修改标题和关键词
             document.title = this.article.title
+            if (this.article.keywords != null) {
+                document.querySelector('meta[name="keywords"]').setAttribute('content', this.article.keywords)
+            }
             //获取文章作者信息
             selectUserInfoByArticleId(this.articleId).then(res => {
                 this.userInfo = res.data
@@ -866,18 +861,24 @@ export default {
                     }
                 }
 
-                .myArticle,
-                .myComment {
-                    text-align: center;
-                    margin-left: 10px;
-                    margin-right: 20px;
-                    color: var(--text-color);
-                    width: 20%;
+                .authorInfo {
+                    margin-bottom: 15px;
+                    margin-top: 30px;
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
 
-                    .name {
-                        margin-top: 2px;
+                    .user-item {
+                        text-align: center;
+                        margin-left: 10px;
+                        margin-right: 20px;
+                        color: var(--text-color);
+
+                        .name {
+                            margin-top: 2px;
+                        }
                     }
                 }
+
 
                 .userBtn {
                     display: flex;

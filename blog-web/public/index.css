@@ -26,10 +26,6 @@
      background-color: var(--background-color) !important;
  }
 
- .el-tooltip__popper {
-     padding: 5px !important;
- }
-
  .el-dropdown-menu {
      background-color: var(--background-color) !important;
      color: var(--text-color) !important;
