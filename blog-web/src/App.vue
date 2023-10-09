@@ -1,29 +1,91 @@
 <template>
   <div id="app">
+    <!-- 头部 -->
+    <Header :userInfo=userInfo></Header>
+    <!-- 侧边导航栏 -->
+    <SideNavBar></SideNavBar>
+    <Loading></Loading>
+    <Notice></Notice>
     <router-view :key="$route.fullPath" />
+    
+    <!-- 登录模态框 -->
+    <Login></Login>
+    <SearchModle></SearchModle>
+    <!-- 侧边栏 -->
+    <Sidebar></Sidebar>
+
+    <!-- 底部 -->
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Header from '@/components/layout/Header.vue'
+import Footer from '@/components/layout/Footer.vue'
+import SideNavBar from "@/components/layout/SideNavBar.vue";
+import Sidebar from '@/components/layout/Sidebar.vue'
+import Loading from '@/components/loading/loading.vue'
+import Login from '@/components/model/Login.vue'
+import SearchModle from '@/components/model/Search.vue'
+import Notice from '@/components/notice/Notice.vue'
+import { report, getWebSiteInfo,selectUserInfoByToken } from '@/api'
+import { setSkin, getSkin,getToken,setToken } from '@/utils/cookieUtil'
 
-import { report, getWebSiteInfo } from '@/api'
-import { setSkin, getSkin } from '@/utils/cookieUtil'
 export default {
   name: 'App',
-
+  components: {
+        Header,
+        Footer,
+        Sidebar,
+        Login,
+        SideNavBar,
+        SearchModle,
+        Loading,
+        Notice,
+    },
+     data() {
+        return {
+            userInfo: this.$store.state.userInfo,
+        }
+    },
   created() {
-    getWebSiteInfo().then(res => {
-      this.$store.commit("setWebSiteInfo", res.data)
-      this.$store.state.siteAccess = res.extra.siteAccess
-      this.$store.state.visitorAccess = res.extra.visitorAccess
-    })
-    report().then(res => {
-      this.$notify({
-        title: '欢迎来自 ' + res.data.split("|")[2] + ' 的朋友',
-        message: "但愿本博客能够值得你喜欢以及常来",
-        type: 'success'
-      });
-    });
+    this.getUserInfo()
+    this.initWebSiteInfo()
+    this.report()
+  },
+  methods: {
+    initWebSiteInfo(){
+      getWebSiteInfo().then(res => {
+          this.$store.commit("setWebSiteInfo", res.data)
+          this.$store.state.siteAccess = res.extra.siteAccess
+          this.$store.state.visitorAccess = res.extra.visitorAccess
+        })
+    },
+    report(){
+      report().then(res => {
+          this.$notify({
+            title: '欢迎来自 ' + res.data.split("|")[2] + ' 的朋友',
+            message: "但愿本博客能够值得你喜欢以及常来",
+            type: 'success'
+          });
+        });
+    },
+    getUserInfo(){
+        let flag = window.location.href.indexOf("token") != -1
+        if (flag) {
+            let token = window.location.href.split("token=")[1]
+            setToken(token)
+        }
+
+        // 从cookie中获取token
+        let token = getToken()
+        if (token != null) {
+            selectUserInfoByToken(token).then(res => {
+                this.userInfo = res.data
+                this.$store.commit("setUserInfo", res.data)
+            })
+        }
+    },
   },
   beforeCreate() {
     if (getSkin() == null) {

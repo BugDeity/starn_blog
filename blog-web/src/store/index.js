@@ -45,11 +45,4 @@ export default new Vuex.Store({
       state.systemNotcie = newValue
     },
   },
-
-  // actions: {
-  //   setSkin(context, value) {
-  //     // 修改getskin的值
-  //     context.commit('getskin', value)
-  //   }
-  // },
 })

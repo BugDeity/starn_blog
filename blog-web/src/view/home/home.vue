@@ -1,11 +1,6 @@
 <template>
     <div>
-        <!-- 头部 -->
-        <Header :userInfo="userInfo"></Header>
-        <!-- 侧边导航栏 -->
-        <SideNavBar></SideNavBar>
-        <Loading></Loading>
-        <Notice></Notice>
+
 
         <!-- 内容 -->
         <transition name="moveCartoon" appear>
@@ -14,73 +9,19 @@
             </div>
         </transition>
 
-        <!-- 底部 -->
-        <Footer v-show="$route.path != '/message'"></Footer>
-
-        <!-- 登录模态框 -->
-        <Login></Login>
-        <SearchModle></SearchModle>
-        <!-- 侧边栏 -->
-        <Sidebar></Sidebar>
 
     </div>
 </template>
 <script>
-import Header from '@/components/layout/Header.vue'
-import SideNavBar from "@/components/layout/SideNavBar.vue";
-import Footer from '@/components/layout/Footer.vue'
-import Sidebar from '@/components/layout/Sidebar.vue'
-import Loading from '@/components/loading/loading.vue'
-import Login from '@/components/model/Login.vue'
-import SearchModle from '@/components/model/Search.vue'
-import { selectUserInfoByToken } from '@/api'
 import { getNewSystemNotice } from '@/api/im'
-import { setToken, getToken } from '@/utils/cookieUtil'
-import Notice from '@/components/notice/Notice.vue'
 export default {
-    components: {
-        Header,
-        Footer,
-        Sidebar,
-        Login,
-        SideNavBar,
-        SearchModle,
-        Loading,
-        Notice,
-    },
+
     data() {
         return {
-            userInfo: this.$store.state.userInfo,
-            timer: "",
         }
     },
 
     created() {
-        let flag = window.location.href.indexOf("token") != -1
-        if (flag) {
-            let token = this.$route.query.token
-            setToken(token)
-        }
-
-        // 从cookie中获取token
-        let token = getToken()
-        if (token != null && this.userInfo == null) {
-            selectUserInfoByToken(token).then(res => {
-                this.userInfo = res.data
-                this.$store.commit("setUserInfo", res.data)
-            })
-        }
-
-        if (this.$store.state.userInfo) {
-            if (getToken()) {
-                getNewSystemNotice().then(res => {
-                    this.$store.commit("setSystemNotice", res.data)
-                });
-
-            }
-        }
-
-
         // //跳回到原地址
         // if (flag) {
         //     // 跳转回原页面
