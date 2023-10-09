@@ -13,7 +13,7 @@ export default new Vuex.Store({
     systemNotcie: {},
     userInfo: sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : null,
     isCommentFlag: false,
-    webSiteInfo: sessionStorage.getItem("webSiteInfo") ? JSON.parse(sessionStorage.getItem("webSiteInfo")) : { "loginTypeList": [], "showList": [] },
+    webSiteInfo: { "loginTypeList": [], "showList": [] },
   },
   mutations: {
     closeModel(state) {
@@ -24,7 +24,6 @@ export default new Vuex.Store({
     },
     setWebSiteInfo(state, newValue) {
       state.webSiteInfo = newValue
-      sessionStorage.setItem("webSiteInfo", JSON.stringify(newValue))
     },
     setSkin(state, newValue) {
       state.skin = newValue

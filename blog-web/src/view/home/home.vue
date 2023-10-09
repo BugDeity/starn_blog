@@ -33,7 +33,7 @@ import Sidebar from '@/components/layout/Sidebar.vue'
 import Loading from '@/components/loading/loading.vue'
 import Login from '@/components/model/Login.vue'
 import SearchModle from '@/components/model/Search.vue'
-import { selectUserInfoByToken, getWebSiteInfo } from '@/api'
+import { selectUserInfoByToken } from '@/api'
 import { getNewSystemNotice } from '@/api/im'
 import { setToken, getToken } from '@/utils/cookieUtil'
 import Notice from '@/components/notice/Notice.vue'
@@ -68,13 +68,6 @@ export default {
             selectUserInfoByToken(token).then(res => {
                 this.userInfo = res.data
                 this.$store.commit("setUserInfo", res.data)
-            })
-        }
-        if (this.$store.state.webSiteInfo.id == null) {
-            getWebSiteInfo().then(res => {
-                this.$store.commit("setWebSiteInfo", res.data)
-                this.$store.state.siteAccess = res.extra.siteAccess
-                this.$store.state.visitorAccess = res.extra.visitorAccess
             })
         }
 
