@@ -41,7 +41,6 @@
                         </span>
                     </a>
                 </router-link>
-
             </div>
 
             <div class="content">

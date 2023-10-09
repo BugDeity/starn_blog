@@ -280,7 +280,7 @@
                             <span>目录</span>
                         </div>
 
-                        <ul>
+                        <ul class="structureBox">
                             <li :class="active == index ? 'structure active' : 'structure'"
                                 v-for="(anchor, index) in titles" @click="handleAnchorClick(anchor)" :key="index">
                                 {{ anchor.title }}
@@ -911,6 +911,10 @@ export default {
                         margin-top: 8px;
                         list-style: none;
                         padding: 0 10px;
+                        max-height: 500px;
+                        overflow: hidden;
+                        overflow-y: scroll;
+
                     }
 
                     /deep/ .el-card__header {

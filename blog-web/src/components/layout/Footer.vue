@@ -1,5 +1,5 @@
 <template>
-    <div class="footer_container">
+    <div v-if="path != '/message'" class="footer_container">
         <div class="content">
             <div class="site">
                 <p class="run_time">
@@ -35,15 +35,6 @@
                         {{ this.$store.state.visitorAccess }}
                     </em>
                 </span>
-
-
-                <!-- <span class="online_user">
-                    <i class="iconfont icon-zaixian"></i>
-                    在线人数
-                    <em class="online_num">
-                        1234
-                    </em>
-                </span> -->
             </div>
         </div>
     </div>
@@ -52,11 +43,18 @@
 export default {
     data() {
         return {
+            path:null,
             day: "",
             hours: "",
             minute: "",
             second: "",
             url: "https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2020%2F0601%2Fba14f84ep00qb7neh000xd200jx00bog00gn009q.png&thumbnail=650x2147483647&quality=80&type=jpg"
+        }
+    },
+       watch: {
+      
+        $route(newVal,old) {
+            this.path = newVal.fullPath
         }
     },
     created() {

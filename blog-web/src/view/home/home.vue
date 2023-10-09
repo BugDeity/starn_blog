@@ -1,19 +1,16 @@
 <template>
     <div>
-
-
         <!-- 内容 -->
         <transition name="moveCartoon" appear>
             <div style="min-height:100vh">
                 <router-view :key="$route.fullPath" />
             </div>
         </transition>
-
-
     </div>
 </template>
 <script>
 import { getNewSystemNotice } from '@/api/im'
+import { getToken } from '@/utils/cookieUtil'
 export default {
 
     data() {
@@ -22,6 +19,13 @@ export default {
     },
 
     created() {
+        if (this.$store.state.userInfo) {
+            if (getToken()) {
+                getNewSystemNotice().then(res => {
+                    this.$store.commit("setSystemNotice", res.data)
+                });
+            }
+        }
         // //跳回到原地址
         // if (flag) {
         //     // 跳转回原页面

@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <header :class="headerClass">
         <div id="pre" :style="{ width: widthPre + '%' }"></div>
         <nav>
             <div class="logo">
@@ -278,8 +278,6 @@ export default {
     },
 
     created() {
-        //this.path = this.$route.path
-        // <!--把window.onresize事件挂在到mounted函数上-->
         window.onresize = () => {
             return (() => {
                 this.windowWidth = window.innerWidth // 宽
@@ -295,7 +293,7 @@ export default {
             this.showSearch = val < 1500
             this.showUser = val > 1350
         },
-        $route(newVal,old) {
+        $route(newVal, old) {
             this.path = newVal.fullPath
         }
     },
@@ -304,10 +302,8 @@ export default {
         handleOpenSearchDialog() {
             this.$store.state.searchDialogVisible = true
         },
-        handleNotcieClose(val) {
-            this.noticeShow = val
-        },
         handleClickNotice(index) {
+            console.log(this.user)
             if (!this.user) {
                 this.$store.commit("setLoginFlag", true)
                 return;
@@ -341,39 +337,26 @@ export default {
                     return false;
             }
         },
-        //Enter事件
-        handkeyEnter(event) {
-            if (event.keyCode == 13) {
-                this.search()
-            }
-        },
-        openUserInfoDrawer() {
-            this.$store.state.userInfoDrawer.flag = true;
-            this.$store.state.userInfoDrawer.name = null;
-        },
 
         scrollFn() {
-            // if (this.$route.paht != '/message') {
-            //     // 页面滚动距顶部距离
-            //     let scrollTop =
-            //         window.pageYOffset ||
-            //         document.documentElement.scrollTop ||
-            //         document.body.scrollTop;
-            //     let scroll = scrollTop - this.i;
-            //     this.i = scrollTop;
+            // 页面滚动距顶部距离
+            let scrollTop =
+                window.pageYOffset ||
+                document.documentElement.scrollTop ||
+                document.body.scrollTop;
+            let scroll = scrollTop - this.i;
+            this.i = scrollTop;
 
-            //     // 鼠标向上滚动
-            //     if (scroll < 0) {
-            //         this.headerClass = "header slideDown"
-            //     } else {
-            //         this.headerClass = "header slideUp"
-            //     }
-            // }
+            // 鼠标向上滚动
+            if (scroll < 0) {
+                this.headerClass = "header slideDown"
+            } else {
+                this.headerClass = "header slideUp"
+            }
             let page = document.body.scrollHeight
             let client = document.documentElement.clientHeight
             let comend = page - client
             let scrTop = document.documentElement.scrollTop
-            // console.log()
             this.widthPre = Math.round(scrTop / comend * 10000) / 100
         },
         handleLogin() {
