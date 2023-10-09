@@ -591,7 +591,11 @@ export default {
                     index: imgs.indexOf(e.target.currentSrc)
                 });
             }
-            this.emojiShow = false
+            if (e.target.className != "el-radio-button__orig-radio" && e.target.className != "el-radio-button__inner"
+                && e.target.className != "el-upload__input" && e.target.className != "el-icon-plus avatar-uploader-icon") {
+                this.emojiShow = false
+            }
+
         },
         //添加表情
         handleChooseEmoji(value) {
@@ -1159,7 +1163,7 @@ export default {
                 .emoji-wrapper {
 
                     position: absolute;
-                    top: -160px;
+                    top: -200px;
                     left: 10px;
                 }
 

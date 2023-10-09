@@ -58,7 +58,8 @@ export default {
     },
     mounted() {
         document.addEventListener("click", e => {
-            if (e.target.className != "iconfont icon-biaoqing") {
+            if (e.target.className != "el-radio-button__orig-radio" && e.target.className != "el-radio-button__inner"
+                && e.target.className != "el-upload__input" && e.target.className != "el-icon-plus avatar-uploader-icon") {
                 this.chooseEmoji = false
             }
         })
@@ -313,7 +314,7 @@ export default {
 
                 .emoji-wrapper {
                     position: absolute;
-                    top: -5px;
+                    top: -50px;
                 }
             }
         }
