@@ -8,7 +8,8 @@
                 </div>
                 <div class="ml-3">
                     <div data-v-0089e256="" class="comment-input">
-                        <textarea placeholder="留下点什么吧..." v-model="commentContent" class="comment-textarea"></textarea>
+                        <div id="textarea" ref="textareaRef" contenteditable="true" @input="onInput"
+                            @paste="optimizePasteEvent" data-placeholder="说点什么呢" class="comment-textarea"></div>
                     </div>
                     <div class="comment-btn">
                         <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn" @mouseenter="handleEmojiMouseEnter"
@@ -28,7 +29,7 @@
 
         <ul class="commentwrap">
             <div class="comment-wrp">
-                <li class="ul-item" ref="commentBoxref" v-for="(item, index) in commentList" :key="index">
+                <li class="ul-item" ref="commentBoxref" v-for="(item, index) in  commentList " :key="index">
                     <!-- 评论内容 -->
                     <div class="comment" @mouseenter="replyEnter(item.id, false)" @mouseleave="replyLeave(item.id)">
                         <div class="main">
@@ -72,8 +73,8 @@
                                 </section>
                                 <div class="body markdown-body">
                                     <div class="markdown-content">
-                                        <p>
-                                            {{ item.content }}
+                                        <p v-html="item.content">
+
                                         </p>
                                     </div>
                                 </div>
@@ -85,7 +86,7 @@
                     </div>
                     <ul class="children">
                         <div class="comment-wrp">
-                            <li class="ul-item" v-for="(childrenItem, childerenIndex) in item.children"
+                            <li class="ul-item" v-for="( childrenItem, childerenIndex ) in  item.children "
                                 :key="childerenIndex">
                                 <!-- 评论内容 -->
                                 <div class="comment" @mouseenter="replyEnter(childrenItem.id, true)"
@@ -138,9 +139,8 @@
                                                     <p>
                                                         <a href="javascript:;"
                                                             style="color: #99CE00;text-decoration: none;">@{{
-                                                                childrenItem.replyNickname }}</a>
-
-                                                        {{ childrenItem.content }}
+                                                                childrenItem.replyNickname }} </a>
+                                                        <span v-html="childrenItem.content"></span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -196,6 +196,7 @@ export default {
             },
             commentList: [],
             pages: 0,
+            lastEditRange: null,
         }
     },
     mounted() {
@@ -205,6 +206,15 @@ export default {
                 this.chooseEmoji = false
             }
         })
+        this.$refs['textareaRef'].onclick = () => {
+            // 获取选定对象
+            let selection = window.getSelection()
+            // 设置最后光标对象
+            if (selection.rangeCount > 0) {
+                // 记录光标最后点击可编辑div中所选择的位置
+                this.lastEditRange = selection.getRangeAt(0);
+            }
+        }
     },
     methods: {
         handleToUserMain(userId) {
@@ -223,7 +233,40 @@ export default {
             this.emoji = "emoji1"
         },
         handleChooseEmoji(value) {
-            this.commentContent += value
+            // 创建一个img标签（表情）
+            let img = document.createElement('img');
+            img.src = value;
+            img.style.verticalAlign = 'middle';
+            img.style.marginLeft = "2px"
+            img.style.marginRight = "2px"
+
+            let edit = this.$refs['textareaRef']
+            edit.focus()
+            let selection = window.getSelection()
+            // 如果存在最后的光标对象
+            if (this.lastEditRange) {
+                // 选区对象清除所有光标
+                selection.removeAllRanges();
+                // 并添加最后记录的光标，以还原之前的状态
+                selection.addRange(this.lastEditRange);
+                // 获取到最后选择的位置
+                var range = selection.getRangeAt(0);
+                // 在此位置插入表情图
+                range.insertNode(img)
+                // false，表示将Range对象所代表的区域的起点移动到终点处
+                range.collapse(false)
+
+                // 记录最后的位置
+                this.lastEditRange = selection.getRangeAt(0);
+            } else {
+                // 将表情添加到可编辑的div中，作为可编辑div的子节点
+                edit.appendChild(img)
+                // 使用选取对象，选取可编辑div中的所有子节点
+                selection.selectAllChildren(edit)
+                // 合并到最后面，即实现了添加一个表情后，把光标移到最后面
+                selection.collapseToEnd()
+            }
+            this.chooseEmoji = false
         },
         replyLeave(index, isChilderen) {
             if (isChilderen) {
@@ -275,12 +318,32 @@ export default {
                 this.commentList = res.data.records
             })
         },
+        optimizePasteEvent(e) {
+            // 监听粘贴内容到输入框事件，对内容进行处理 处理掉复制的样式标签，只拿取文本部分
+            e.stopPropagation()
+            e.preventDefault()
+            let text = '', event = (e.originalEvent || e)
+            if (event.clipboardData && event.clipboardData.getData) {
+                text = event.clipboardData.getData('text/plain')
+            } else if (window.clipboardData && window.clipboardData.getData) {
+                text = window.clipboardData.getData('text')
+            }
+            if (document.queryCommandSupported('insertText')) {
+                document.execCommand('insertText', false, text)
+            } else {
+                document.execCommand('paste', false, text)
+            }
+        },
+        onInput(e) {
+            let selection = window.getSelection()
+            this.lastEditRange = selection.getRangeAt(0);
+        },
         addComment() {
             if (this.user == null) {
                 this.$store.commit("setLoginFlag", true)
                 return
             }
-            if (!this.commentContent) {
+            if (!this.$refs.textareaRef.innerHTML) {
                 this.$notify({
                     title: '失败',
                     message: '评论不能为空',
@@ -291,8 +354,7 @@ export default {
             let browser = browserMatch()
             let comment = {
                 articleId: this.articleId,
-                avatar: "https://sdn.geekzu.org/avatar/eeb4fe09a1aaad7964b055f331f72608?s=256&d=monsterid",
-                content: this.commentContent,
+                content: this.$refs.textareaRef.innerHTML,
                 browser: browser.browser.toLowerCase(),
                 browserVersion: browser.browser + " " + browser.version,
             }
@@ -305,7 +367,7 @@ export default {
                     type: 'success'
                 });
                 this.$store.commit("isCommentFlag", true)
-                this.commentContent = ""
+                this.$refs.textareaRef.innerHTML = ""
             })
         },
         moreComment(val) {
@@ -369,6 +431,11 @@ export default {
 
                         &:focus {
                             background-position-y: 150px;
+                        }
+
+                        &:empty:before {
+                            content: attr(data-placeholder);
+                            color: #666;
                         }
                     }
                 }
@@ -443,7 +510,7 @@ export default {
 
                 .emoji-wrapper {
                     position: absolute;
-                    top: 0px;
+                    top: -5px;
                 }
             }
         }

@@ -18,8 +18,7 @@ public class HTMLUtils {
         // 敏感词过滤
         source = SensitiveUtils.filter(source);
         // 保留图片标签
-        source = source.replaceAll("(?!<(img).*?>)<.*?>", "")
-                .replaceAll("(on[^\"]+)", "");
+        source = source.replaceAll("(?!<(img).*?>)<.*?>", "");
         return deleteHMTLTag(source);
     }
 

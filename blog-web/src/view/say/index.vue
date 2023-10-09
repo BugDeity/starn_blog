@@ -79,8 +79,9 @@
 
                                 <div class="conetntInputBox" ref="conetntInputBox">
                                     <div class="">
-                                        <el-input type="textarea" :placeholder="placeholder" v-model="comment.content">
-                                        </el-input>
+                                        <div id="textarea" ref="textareaRef" contenteditable="true" @input="onInput"
+                                            @paste="optimizePasteEvent" :data-placeholder="placeholder"
+                                            class="comment-textarea"></div>
 
                                         <a @click="showEmoji = !showEmoji"> <svg-icon icon-class="emoji1"></svg-icon></a>
                                         <a class="sendBtn" @click="sayComment">发送</a>
@@ -139,19 +140,47 @@ export default {
             },
             commentIndex: null,
             commentLastIndex: null,
+            lastEditRange: null,
         }
     },
     mounted() {
-        // window.setTimeout(() => {
-        //     document.addEventListener("click", this.handleClose)
-        // }, 500)
+        // this.$refs['textareaRef'].onclick = () => {
+        //     // 获取选定对象
+        //     let selection = window.getSelection()
+        //     // 设置最后光标对象
+        //     if (selection.rangeCount > 0) {
+        //         // 记录光标最后点击可编辑div中所选择的位置
+        //         this.lastEditRange = selection.getRangeAt(0);
+        //     }
+        // }
     },
     created() {
         this.getSayList()
     },
     methods: {
+        onInput(e) {
+            let selection = window.getSelection()
+            this.lastEditRange = selection.getRangeAt(0);
+        },
+        optimizePasteEvent(e) {
+            // 监听粘贴内容到输入框事件，对内容进行处理 处理掉复制的样式标签，只拿取文本部分
+            e.stopPropagation()
+            e.preventDefault()
+            let text = '', event = (e.originalEvent || e)
+            if (event.clipboardData && event.clipboardData.getData) {
+                text = event.clipboardData.getData('text/plain')
+            } else if (window.clipboardData && window.clipboardData.getData) {
+                text = window.clipboardData.getData('text')
+            }
+            if (document.queryCommandSupported('insertText')) {
+                document.execCommand('insertText', false, text)
+            } else {
+                document.execCommand('paste', false, text)
+            }
+        },
         sayComment() {
-            if (!this.comment.content) {
+            let el = document.getElementById("textarea")
+            if (!el.innerHTML) {
                 this.$notify({
                     title: '警告',
                     message: "请输入评论内容",
@@ -159,6 +188,7 @@ export default {
                 });
                 return
             }
+            this.comment.content = el.innerHTML
             sayComment(this.comment).then(res => {
                 this.$refs.conetntInputBox[this.commentLastIndex].style.display = "none"
                 this.showCommentBox = false
@@ -209,7 +239,39 @@ export default {
         },
         //添加表情
         handleChooseEmoji(value) {
-            this.comment.content += value
+            // 创建一个img标签（表情）
+            let img = document.createElement('img');
+            img.src = value;
+            img.style.verticalAlign = 'middle';
+            img.style.marginLeft = "2px"
+            img.style.marginRight = "2px"
+
+            let edit = document.getElementById("textarea")
+            edit.focus()
+            let selection = window.getSelection()
+            // 如果存在最后的光标对象
+            if (this.lastEditRange) {
+                // 选区对象清除所有光标
+                selection.removeAllRanges();
+                // 并添加最后记录的光标，以还原之前的状态
+                selection.addRange(this.lastEditRange);
+                // 获取到最后选择的位置
+                var range = selection.getRangeAt(0);
+                // 在此位置插入表情图
+                range.insertNode(img)
+                // false，表示将Range对象所代表的区域的起点移动到终点处
+                range.collapse(false)
+
+                // 记录最后的位置
+                this.lastEditRange = selection.getRangeAt(0);
+            } else {
+                // 将表情添加到可编辑的div中，作为可编辑div的子节点
+                edit.appendChild(img)
+                // 使用选取对象，选取可编辑div中的所有子节点
+                selection.selectAllChildren(edit)
+                // 合并到最后面，即实现了添加一个表情后，把光标移到最后面
+                selection.collapseToEnd()
+            }
             this.showEmoji = false
         },
         //关闭操作框
@@ -450,8 +512,7 @@ export default {
                 border-radius: 5px;
                 position: relative;
                 background-color: var(--background-color);
-
-
+                overflow: hidden;
 
                 .avatar {
 
@@ -632,11 +693,18 @@ export default {
                             display: none;
                             margin-left: 10px;
 
-                            /deep/ textarea {
-                                border: none;
-                                background-color: var(--background-color);
-                                resize: none;
+                            .comment-textarea {
+                                min-height: 100px;
+                                outline: none;
+                                padding-left: 10px;
+                                padding-top: 5px;
+
+                                &:empty:before {
+                                    content: attr(data-placeholder);
+                                    color: #666;
+                                }
                             }
+
 
                             svg {
                                 width: 20px;

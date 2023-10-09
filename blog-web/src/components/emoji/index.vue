@@ -1,9 +1,7 @@
 <template>
     <div class='emoji-container'>
-        <span class="emoji-item" v-for="(item, index) of emojiList" :key="index" @click="chooseEmoji(item)">
-            <span class="emoji" :title="item.description">
-                {{ item.emoji }}
-            </span>
+        <span class="emoji-item" v-for="(item, index) of 105" :key="index" @click="chooseEmoji(index)">
+            <img :src="`https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif`" class="emoji" />
         </span>
     </div>
 </template>
@@ -21,8 +19,8 @@ export default {
         this.emojiList = require('@/assets/emoji.json');
     },
     methods: {
-        chooseEmoji(obj) {
-            this.$emit('chooseEmoji', obj.emoji);
+        chooseEmoji(index) {
+            this.$emit('chooseEmoji', `https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif`);
         },
     },
 }
@@ -41,12 +39,10 @@ export default {
     .emoji-item {
         cursor: url(https://img.shiyit.com/link.cur), pointer;
         display: inline-block;
-        margin: 5px 0;
 
         .emoji {
-            font-size: 20px;
             padding: 3px;
-            border-radius: 10px;
+            border-radius: 5px;
 
             &:hover {
                 background-color: rgb(221, 221, 221)

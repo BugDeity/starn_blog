@@ -98,10 +98,9 @@
                         <Emoji @chooseEmoji="handleChooseEmoji" />
                     </div>
                     <!-- 输入内容 -->
-                    <!-- <textarea class="contentBox" placeholder="说点什么呢" v-model="text" @keydown="handkeyEnter"></textarea> -->
                     <div id="im-input-box" class="im-input-box" ref="inputRef" @input="updateContent" contenteditable="true"
-                        @keydown="handkeyEnter" data-placeholder="说点什么呢"></div>
-                    <el-button class="btn" @click="send($refs.inputRef.innerText, 1)">发送[Enter]</el-button>
+                        @paste="optimizePasteEvent" @keydown="handkeyEnter" data-placeholder="说点什么呢"></div>
+                    <el-button class="btn" @click="send($refs.inputRef.innerHTML, 1)">发送[Enter]</el-button>
                 </div>
 
                 <!-- 自定义右键功能 -->
@@ -237,14 +236,23 @@ export default {
             selectUserOnline: null,
             emoji: "emoji1",
             atMember: "",
-            searchUrl: ['https://www.baidu.com/s?&wd=', 'https://search.gitee.com/?skin=rec&type=repository&q=', 'https://github.com/search?q=']
+            searchUrl: ['https://www.baidu.com/s?&wd=', 'https://search.gitee.com/?skin=rec&type=repository&q=', 'https://github.com/search?q='],
+            lastEditRange: null
         }
     },
 
     mounted() {
         document.addEventListener("click", this.handleClose)
         document.getElementById("im").oncontextmenu = new Function("event.returnValue=false");
-
+        this.$refs['inputRef'].onclick = () => {
+            // 获取选定对象
+            let selection = window.getSelection()
+            // 设置最后光标对象
+            if (selection.rangeCount > 0) {
+                // 记录光标最后点击可编辑div中所选择的位置
+                this.lastEditRange = selection.getRangeAt(0);
+            }
+        }
     },
     watch: {
         //   监听属性对象，newValue为新的值，也就是改变后的值
@@ -281,11 +289,29 @@ export default {
     },
     methods: {
         updateContent(event) {
+            let selection = window.getSelection()
+            this.lastEditRange = selection.getRangeAt(0);
             if (event.target.innerText.indexOf("img") != -1) {
                 this.textImg = event.target.innerText
                 event.target.innerText = null
                 this.imgDialogVisible = true
                 return;
+            }
+        },
+        optimizePasteEvent(e) {
+            // 监听粘贴内容到输入框事件，对内容进行处理 处理掉复制的样式标签，只拿取文本部分
+            e.stopPropagation()
+            e.preventDefault()
+            let text = '', event = (e.originalEvent || e)
+            if (event.clipboardData && event.clipboardData.getData) {
+                text = event.clipboardData.getData('text/plain')
+            } else if (window.clipboardData && window.clipboardData.getData) {
+                text = window.clipboardData.getData('text')
+            }
+            if (document.queryCommandSupported('insertText')) {
+                document.execCommand('insertText', false, text)
+            } else {
+                document.execCommand('paste', false, text)
             }
         },
         handleSearch(type) {
@@ -549,7 +575,7 @@ export default {
             if (event.keyCode == 13) {
                 // 阻止默认的换行行为
                 event.preventDefault();
-                this.send(this.$refs.inputRef.innerText)
+                this.send(this.$refs.inputRef.innerHTML)
             }
         },
         //打开表情框
@@ -569,7 +595,42 @@ export default {
         },
         //添加表情
         handleChooseEmoji(value) {
-            this.$refs.inputRef.innerText += value
+            // 创建一个img标签（表情）
+            let img = document.createElement('img');
+            img.src = value;
+            img.style.verticalAlign = 'middle';
+            img.style.marginLeft = "2px"
+            img.style.marginRight = "2px"
+            img.style.width = "25px"
+            img.style.height = "25px"
+
+            let edit = this.$refs['inputRef']
+            edit.focus()
+            let selection = window.getSelection()
+            // 如果存在最后的光标对象
+            if (this.lastEditRange) {
+                // 选区对象清除所有光标
+                selection.removeAllRanges();
+                // 并添加最后记录的光标，以还原之前的状态
+                selection.addRange(this.lastEditRange);
+                // 获取到最后选择的位置
+                var range = selection.getRangeAt(0);
+                // 在此位置插入表情图
+                range.insertNode(img)
+                // false，表示将Range对象所代表的区域的起点移动到终点处
+                range.collapse(false)
+
+                // 记录最后的位置
+                this.lastEditRange = selection.getRangeAt(0);
+            } else {
+                // 将表情添加到可编辑的div中，作为可编辑div的子节点
+                edit.appendChild(img)
+                // 使用选取对象，选取可编辑div中的所有子节点
+                selection.selectAllChildren(edit)
+                // 合并到最后面，即实现了添加一个表情后，把光标移到最后面
+                selection.collapseToEnd()
+                return
+            }
         },
         //发送消息
         send(content, type) {
@@ -1098,7 +1159,7 @@ export default {
                 .emoji-wrapper {
 
                     position: absolute;
-                    top: -150px;
+                    top: -160px;
                     left: 10px;
                 }
 
