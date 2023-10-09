@@ -72,7 +72,7 @@
             </h1>
             <div class="article-desc">
                 <div class="article-item">
-                    <img :src="userInfo.avatar" @error="img" alt="">
+                    <img v-lazy="userInfo.avatar" :key="userInfo.avatar" alt="">
                     <div class="meta">
                         <div class="author">
                             <a class="link" href="#">{{ userInfo.nickname }}</a>
@@ -349,7 +349,6 @@ export default {
             dialogVisible: false,
             active: 0,
             fontNumber: 0,
-            img: "https://foruda.gitee.com/avatar/1677050610632357168/5407895_quequnlong_1646130774.png",
             locationUrl: window.location.href,
             commentList: [],
             tempList: null,
@@ -371,35 +370,6 @@ export default {
     mounted() {
         const element = document.getElementById("articleBox")
         this.left = (element.offsetLeft - 55) + "px"
-        window.setTimeout(() => {
-            if (this.$refs.preview) {
-                //生成目录
-                const anchors = this.$refs.preview.$el.querySelectorAll('h1,h2,h3,h4,h5,h6');
-                if (anchors) {
-                    const titles = Array.from(anchors).filter((title) => !!title.innerText.trim());
-                    if (!this.titles.length) {
-                        this.titles = [];
-                    }
-                    const hTags = Array.from(new Set(titles.map((title) => title.tagName))).sort();
-                    this.titles = titles.map((el) => ({
-                        title: el.innerText,
-                        lineIndex: el.getAttribute('data-v-md-line'),
-                        indent: hTags.indexOf(el.tagName),
-                    }));
-                    this.tempList = anchors
-                }
-
-                // 添加图片预览功能
-                const imgList = this.$refs.preview.$el.getElementsByTagName("img");
-                let that = this
-                for (var i = 0; i < imgList.length; i++) {
-                    that.imgList.push(imgList[i].src);
-                    imgList[i].addEventListener("click", function (e) {
-                        that.previewImg(e.target.currentSrc);
-                    });
-                }
-            }
-        }, 500)
         // 监听滚动事件
         window.addEventListener('scroll', this.onScroll, false)
 
@@ -432,6 +402,10 @@ export default {
             if (this.article.readType != 0 && !this.serceShow) {
                 this.style = "max-height: 1200px;overflow: hidden;"
             }
+            //处理目录和图片预览
+            this.$nextTick(() => {
+                this.initDirectoryAndImg()
+            })
             //修改标题和关键词
             document.title = this.article.title
             if (this.article.keywords != null) {
@@ -448,10 +422,40 @@ export default {
                     type: 'warning'
                 });
             }
+
         })
 
     },
     methods: {
+        initDirectoryAndImg() {
+            if (this.$refs.preview) {
+                //生成目录
+                const anchors = this.$refs.preview.$el.querySelectorAll('h1,h2,h3,h4,h5,h6');
+                if (anchors) {
+                    const titles = Array.from(anchors).filter((title) => !!title.innerText.trim());
+                    if (!this.titles.length) {
+                        this.titles = [];
+                    }
+                    const hTags = Array.from(new Set(titles.map((title) => title.tagName))).sort();
+                    this.titles = titles.map((el) => ({
+                        title: el.innerText,
+                        lineIndex: el.getAttribute('data-v-md-line'),
+                        indent: hTags.indexOf(el.tagName),
+                    }));
+                    this.tempList = anchors
+                }
+
+                // 添加图片预览功能
+                const imgList = this.$refs.preview.$el.getElementsByTagName("img");
+                let that = this
+                for (var i = 0; i < imgList.length; i++) {
+                    that.imgList.push(imgList[i].src);
+                    imgList[i].addEventListener("click", function (e) {
+                        that.previewImg(e.target.currentSrc);
+                    });
+                }
+            }
+        },
         handleCopyCodeSuccess() {
             this.$notify({
                 title: '成功',
@@ -666,7 +670,7 @@ export default {
 }
 
 .article-container {
-
+    padding: 10px;
     position: relative;
 
     @media screen and (max-width: 1118px) {

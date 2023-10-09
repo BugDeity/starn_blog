@@ -106,11 +106,11 @@ export default {
 <style scoped>
 /* 类名要对应回 name 的属性值 */
 .moveCartoon-enter-active {
-    animation: move .3s;
+    animation: move .2s;
 }
 
 .moveCartoon-leave-active {
-    animation: move .3s reverse;
+    animation: move .2s reverse;
 }
 
 @keyframes move {
