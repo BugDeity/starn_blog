@@ -278,7 +278,7 @@ export default {
     },
 
     created() {
-        this.path = this.$route.path
+        //this.path = this.$route.path
         // <!--把window.onresize事件挂在到mounted函数上-->
         window.onresize = () => {
             return (() => {
@@ -294,6 +294,9 @@ export default {
             this.isMobile = val < 1119
             this.showSearch = val < 1500
             this.showUser = val > 1350
+        },
+        $route(newVal,old) {
+            this.path = newVal.fullPath
         }
     },
 

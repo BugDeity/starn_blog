@@ -11,7 +11,7 @@ export default new Vuex.Store({
     siteAccess: 0,
     visitorAccess: 0,
     systemNotcie: {},
-    userInfo: sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : null,
+    userInfo: null,
     isCommentFlag: false,
     webSiteInfo: { "loginTypeList": [], "showList": [] },
   },
@@ -39,7 +39,6 @@ export default new Vuex.Store({
     },
     setUserInfo(state, newValue) {
       state.userInfo = newValue
-      sessionStorage.setItem("user", JSON.stringify(newValue))
     },
     setSystemNotice(state, newValue) {
       state.systemNotcie = newValue

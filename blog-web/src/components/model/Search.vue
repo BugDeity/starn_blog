@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="search-article">
+        <div class="search-article" :key=refKey>
             <div class="item" v-for="(item, index) in list" :key="index">
                 <router-link :to="'/article/' + item.id">
                     <a class="xiahuaxian article-title" v-html="item.title"></a>
@@ -42,7 +42,8 @@ export default {
             },
             pages: 0,
             list: [],
-            tagList: []
+            tagList: [],
+            refKey:0
         }
     },
     beforeDestroy() {
@@ -77,6 +78,7 @@ export default {
                 this.list = []
                 return
             }
+            this.refKey = new Date().getTime()
             this.pageData.pageNo = 1
             searchArticle(this.pageData).then(res => {
                 this.list = res.data.records;
