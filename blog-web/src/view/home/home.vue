@@ -70,11 +70,14 @@ export default {
                 this.$store.commit("setUserInfo", res.data)
             })
         }
-        getWebSiteInfo().then(res => {
-            this.$store.commit("setWebSiteInfo", res.data)
-            this.$store.state.siteAccess = res.extra.siteAccess
-            this.$store.state.visitorAccess = res.extra.visitorAccess
-        })
+        if (this.$store.state.webSiteInfo.id == null) {
+            getWebSiteInfo().then(res => {
+                this.$store.commit("setWebSiteInfo", res.data)
+                this.$store.state.siteAccess = res.extra.siteAccess
+                this.$store.state.visitorAccess = res.extra.visitorAccess
+            })
+        }
+
         if (this.$store.state.userInfo) {
             if (getToken()) {
                 getNewSystemNotice().then(res => {
