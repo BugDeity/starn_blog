@@ -2,9 +2,7 @@
     <div>
         <!-- 内容 -->
         <transition name="moveCartoon" appear>
-            <div style="min-height:100vh">
-                <router-view :key="$route.fullPath" />
-            </div>
+            <router-view :key="$route.fullPath" />
         </transition>
     </div>
 </template>

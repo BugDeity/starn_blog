@@ -11,12 +11,12 @@
         <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="content_md" jdbcType="INTEGER" property="contentMd"/>
         <result column="is_original" jdbcType="INTEGER" property="isOriginal"/>
-        <result column="original_url" jdbcType="INTEGER" property="originalUrl"/>
+        <result column="original_url" jdbcType="VARCHAR" property="originalUrl"/>
+        <result column="keywords" jdbcType="VARCHAR" property="keywords"/>
         <result column="is_publish" jdbcType="INTEGER" property="isPublish"/>
         <result column="quantity" jdbcType="INTEGER" property="quantity"/>
         <result column="create_time" jdbcType="DATE" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
-        <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="read_type" jdbcType="INTEGER" property="readType"/>
         <association property="category" javaType="com.shiyi.entity.Category">
             <id property="id" column="cid" jdbcType="BIGINT"></id>
@@ -71,6 +71,7 @@
                a.create_time,
                b.name as categoryName,
                a.is_carousel,
+               a.keywords,
                a.is_recommend
         from b_article a
                  LEFT JOIN (SELECT id, name from b_category) b on a.category_id = b.id
@@ -159,6 +160,7 @@
                a.is_original,
                a.original_url,
                a.is_publish,
+               a.keywords,
                c.id   as cid,
                c.name as cname
         from b_article a

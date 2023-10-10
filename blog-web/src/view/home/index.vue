@@ -18,7 +18,7 @@
                     <SiteInfo />
                     <el-card class="soft box-shadow">
                         <a href="https://www.zhisu1.com" target="_blank">
-                            <img src="https://www.zhisu1.com/logo/logo-tm-bt-hs.png" alt="">
+                            <img src="https://img.shiyit.com/20231010_1696930367538.jpg" alt="">
                             <div class="soft-title">
                                 高效便宜可靠的服务器厂商知速云
                             </div>
@@ -461,9 +461,13 @@ export default {
             this.fetchArticleList()
         },
         fetchArticleList() {
+            this.$bus.$emit('showLoading');
             fetchArticleList(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
                 this.pages = res.data.pages
+                this.$bus.$emit('hideLoading')
+            }).catch(err => {
+                this.$bus.$emit('hideLoading')
             })
         },
         fetchCategoryList() {

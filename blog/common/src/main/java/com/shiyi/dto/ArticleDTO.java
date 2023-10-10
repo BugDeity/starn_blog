@@ -26,6 +26,7 @@ public class ArticleDTO {
     private String content;
     private String contentMd;
 
+    private String keywords;
     @ApiModelProperty(value = "阅读方式 0无需验证 1：评论阅读 2：点赞阅读 3：扫码阅读")
     private Integer readType;
     private Integer isStick;

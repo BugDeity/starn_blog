@@ -69,6 +69,9 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "转发地址")
     private String originalUrl;
 
+    @ApiModelProperty(value = "关键词")
+    private String keywords;
+
     @ApiModelProperty(value = "文章阅读量")
     private Integer quantity;
 

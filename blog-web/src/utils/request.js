@@ -13,9 +13,9 @@ const service = axios.create({
 service.interceptors.request.use(
 
     config => {
-        if (config.url != '/oauth/wechat/is_login' && config.url != '/v1/im/chat' && config.url != '/v1/article/search' && config.url != '/v1/tag/') {
-            window.vm.$bus.$emit('showLoading');
-        }
+        // if (config.url != '/oauth/wechat/is_login' && config.url != '/v1/im/chat' && config.url != '/v1/article/search' && config.url != '/v1/tag/') {
+        //     window.vm.$bus.$emit('showLoading');
+        // }
         //do something before request is sent
         let token = getToken()
         if (token != null) {
@@ -47,7 +47,7 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     response => {
-        window.vm.$bus.$emit('hideLoading');
+        // window.vm.$bus.$emit('hideLoading');
         const res = response.data
         // store.commit('SET_LOADING',false);
         // if the custom code is not 20000, it is judged as an error.

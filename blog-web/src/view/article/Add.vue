@@ -19,7 +19,8 @@
                         <el-col :span="8">
                             <el-form-item label="封面图" prop="">
                                 <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
-                                    :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
+                                    :action="uploadPictureHost" :http-request="uploadSectionFile"
+                                    :before-upload="handleUploadBefore" multiple>
                                     <img v-if="article.avatar" style="width: 100%;height: 100%;" :src="article.avatar"
                                         class="imgAvatar" />
                                     <i v-else class="el-icon-plus avatar-img-icon"></i>
@@ -52,6 +53,9 @@
                         </el-form-item>
                         <el-form-item v-if="article.isOriginal == 0" label="文章地址" prop="originalUrl">
                             <el-input v-model="article.originalUrl"></el-input>
+                        </el-form-item>
+                        <el-form-item label="关键词">
+                            <el-input v-model="article.keywords"></el-input>
                         </el-form-item>
                     </div>
 
@@ -194,6 +198,9 @@ export default {
             })
 
         },
+        handleUploadBefore() {
+            this.$bus.$emit('showLoading');
+        },
         uploadSectionFile: function (param) {
             this.files = param.file
             // FormData 对象
@@ -202,7 +209,9 @@ export default {
             formData.append('multipartFile', this.files)
             upload(formData).then(res => {
                 this.article.avatar = res.data
-                console.log(this.article.avatar)
+                this.$bus.$emit('hideLoading')
+            }).catch(err => {
+                this.$bus.$emit('hideLoading')
             })
         },
     }

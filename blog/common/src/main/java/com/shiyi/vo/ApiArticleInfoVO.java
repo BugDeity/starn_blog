@@ -49,6 +49,9 @@ public class ApiArticleInfoVO {
     @ApiModelProperty(value = "转载地址")
     private String originalUrl;
 
+    @ApiModelProperty(value = "关键词")
+    private String keywords;
+
     @ApiModelProperty(value = "阅读方式 0无需验证 1：评论阅读 2：点赞阅读 3：扫码阅读")
     private Integer readType;
 

@@ -397,6 +397,7 @@ export default {
                 this.left = (element.offsetLeft - 55) + "px"
             }
         }, true)
+        this.$bus.$emit('showLoading');
         articleInfo(this.articleId).then(res => {
             this.article = res.data
             this.serceShow = this.article.activeReadType
@@ -423,9 +424,10 @@ export default {
                     type: 'warning'
                 });
             }
-
+            this.$bus.$emit('hideLoading')
+        }).catch(err => {
+            this.$bus.$emit('hideLoading')
         })
-
     },
     methods: {
         initDirectoryAndImg() {

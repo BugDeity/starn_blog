@@ -229,9 +229,13 @@ export default {
             })
         },
         getNoteList() {
+            this.$bus.$emit('showLoading');
             getNote(this.pageData).then(res => {
                 this.noteList = res.data.records
                 this.pages = res.data.pages
+                this.$bus.$emit('hideLoading')
+            }).catch(err => {
+                this.$bus.$emit('hideLoading')
             })
         },
 

@@ -260,6 +260,7 @@
                 <el-input v-model="article.originalUrl"></el-input>
               </el-form-item>
             </el-col>
+
             <el-col :span="5">
               <el-form-item :label-width="formLabelWidth" label="是否推荐" prop="isRecommend">
                 <el-radio-group v-model="article.isRecommend" size="small">
@@ -272,6 +273,11 @@
                 <el-radio-group v-model="article.isCarousel" size="small">
                   <el-radio v-for="(  item, index  ) in   yesOrNoList  " :label="index" border>{{ item }}</el-radio>
                 </el-radio-group>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item :label-width="formLabelWidth" label="SEO关键词">
+                <el-input v-model="article.keywords"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -578,7 +584,7 @@ export default {
       })
     },
     onClick: function (row) {
-    
+
       window.open(this.BLOG_WEB_URL + "article/" + row.id);
     },
     handleSelectionChange: function (val) {

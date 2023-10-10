@@ -336,9 +336,13 @@ export default {
             });
         },
         getSayList() {
+            this.$bus.$emit('showLoading');
             getSayList(this.pageData).then(res => {
                 this.sayList.push(...res.data.records)
                 this.pages = res.data.pages
+                this.$bus.$emit('hideLoading')
+            }).catch(err => {
+                this.$bus.$emit('hideLoading')
             })
         },
         handlePage(val) {

@@ -183,19 +183,24 @@ export default {
             }
         },
         selectAricleList(type) {
+            this.$bus.$emit('showLoading');
             getArticleByUserId(this.pageData).then(res => {
                 this.dataList.push(...res.data.records);
                 this.pages = res.data.pages
-
+                this.$bus.$emit('hideLoading');
             }).catch(err => {
-                console.log(err)
+                this.$bus.$emit('hideLoading');
             })
         },
         selectNoteList() {
+            this.$bus.$emit('showLoading');
             this.pageData.status = 1
             selectNoteByUserId(this.pageData).then(res => {
                 this.dataList.push(...res.data.records);
                 this.pages = res.data.pages
+                this.$bus.$emit('hideLoading');
+            }).catch(err => {
+                this.$bus.$emit('hideLoading');
             })
         },
     },

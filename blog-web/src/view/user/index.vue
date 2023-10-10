@@ -15,7 +15,8 @@
                                 </li>
                                 <li>
                                     <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
-                                        :action="uploadPictureHost" :http-request="uploadBjCoverFile" multiple>
+                                        :action="uploadPictureHost" :http-request="uploadBjCoverFile"
+                                        :before-upload="handleUploadBefore" multiple>
                                         <svg-icon icon-class="photo"></svg-icon> 修改封面
                                     </el-upload>
                                 </li>
@@ -504,15 +505,16 @@ export default {
             }
         },
         selectAricleList(type) {
+            this.$bus.$emit('showLoading');
             if (type) {
                 this.pageData.type = type
             }
             getArticleByUserId(this.pageData).then(res => {
                 this.dataList.push(...res.data.records);
                 this.pages = res.data.pages
-
+                this.$bus.$emit('hideLoading');
             }).catch(err => {
-                console.log(err)
+                this.$bus.$emit('hideLoading');
             })
         },
         selectCollectionList() {
@@ -526,6 +528,9 @@ export default {
                 this.dataList.push(...res.data.records);
                 this.pages = res.data.pages
             })
+        },
+        handleUploadBefore() {
+            this.$bus.$emit('showLoading');
         },
         uploadBjCoverFile: function (param) {
             this.files = param.file
@@ -546,7 +551,12 @@ export default {
                         message: "修改成功",
                         type: 'success'
                     });
+                    this.$bus.$emit('hideLoading')
+                }).catch(err => {
+                    this.$bus.$emit('hideLoading')
                 })
+            }).catch(err => {
+                this.$bus.$emit('hideLoading')
             })
 
         },

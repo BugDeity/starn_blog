@@ -36,6 +36,9 @@ public class ArticleInsertDTO {
     @ApiModelProperty(value = "文章内容MD版")
     private String contentMd;
 
+    @ApiModelProperty(value = "关键词")
+    private String keywords;
+
     @ApiModelProperty(name = "userId", value = "用户id")
     private String userId;
 
