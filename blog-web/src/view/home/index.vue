@@ -14,9 +14,20 @@
                     </el-carousel>
                 </div>
 
-                <div class="tuijian">
+                <div class="top-right">
                     <SiteInfo />
-                    <Notcie />
+                    <el-card class="soft box-shadow">
+                        <a href="https://www.zhisu1.com" target="_blank">
+                            <img src="https://www.zhisu1.com/logo/logo-tm-bt-hs.png" alt="">
+                            <div class="soft-title">
+                                高效便宜可靠的服务器厂商知速云
+                            </div>
+                            <div class="soft-info">
+                                软件推荐
+                            </div>
+                            <div class="overlay"></div>
+                        </a>
+                    </el-card>
                 </div>
             </div>
 
@@ -276,11 +287,9 @@
 <script>
 import { fetchArticleList, featchHomeData, featchCategory } from '@/api'
 import { getSayList } from '@/api/say'
-import Notcie from '@/components/notice/index.vue'
 import SiteInfo from '@/components/site/index.vue'
 export default {
     components: {
-        Notcie,
         SiteInfo
     },
     name: 'Home',
@@ -554,7 +563,7 @@ export default {
         padding-left: 10px;
         padding-right: 10px;
 
-        .tuijian,
+        .top-right,
         .rightBox,
         .articleImg {
             display: none;
@@ -620,11 +629,72 @@ export default {
 
 
 
-            .tuijian {
+            .top-right {
                 display: inline-block;
                 width: 30%;
                 height: 420px;
                 margin-left: 20px;
+
+                .soft {
+                    margin-top: 20px;
+                    background-color: #007aff;
+                    overflow: hidden;
+                    height: 125px;
+                    position: relative;
+
+                    &:hover .overlay {
+                        opacity: 0;
+                    }
+
+                    .overlay {
+                        background: rgba(0, 0, 0, .3);
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        bottom: 0;
+                        left: 0;
+                        opacity: 1;
+                        width: 100%;
+                        height: 100%;
+                        transition: all 0.5s;
+                    }
+
+                    a {
+                        display: inline-block;
+                        width: 100%;
+                        text-decoration: none;
+                        overflow: hidden;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+
+                        .soft-title,
+                        .soft-info {
+                            display: block;
+                            padding: 5px;
+                            text-align: center;
+                            background: rgba(0, 0, 0, .7);
+                            color: #fff;
+                        }
+
+                        .soft-title {
+                            position: absolute;
+                            bottom: 0;
+                            width: 100%;
+                        }
+
+                        .soft-info {
+                            position: absolute;
+                            top: 5px;
+                            left: 5px;
+                            font-size: 0.8rem;
+                        }
+                    }
+                }
+
+
 
                 /deep/ .el-image {
                     width: 100%;

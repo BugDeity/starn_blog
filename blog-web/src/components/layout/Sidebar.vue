@@ -24,7 +24,6 @@
 export default {
     data() {
         return {
-            theme: true,
             showBtn: false, // 回到顶部，默认是false，就是隐藏起来
             theme: sessionStorage.getItem("theme"),
             show: false,

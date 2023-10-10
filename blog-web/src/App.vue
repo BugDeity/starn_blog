@@ -27,7 +27,7 @@ import Sidebar from '@/components/layout/Sidebar.vue'
 import Loading from '@/components/loading/loading.vue'
 import Login from '@/components/model/Login.vue'
 import SearchModle from '@/components/model/Search.vue'
-import Notice from '@/components/notice/Notice.vue'
+import Notice from '@/view/notice/topNotice.vue'
 import { report, getWebSiteInfo, selectUserInfoByToken } from '@/api'
 import { setSkin, getSkin, getToken, setToken } from '@/utils/cookieUtil'
 
