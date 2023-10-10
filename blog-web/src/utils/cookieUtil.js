@@ -9,12 +9,6 @@ export function getToken() {
 export function removeToken() {
     return Cookies.remove("token");
 }
-export function setSkin(value) {
-    return window.sessionStorage.setItem("skin", value)
-}
-export function getSkin() {
-    return window.sessionStorage.getItem("skin")
-}
 export function setUrl(value) {
     return window.sessionStorage.setItem("baseUrl", value)
 }

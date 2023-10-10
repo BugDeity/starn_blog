@@ -6,9 +6,9 @@
             </el-tooltip>
         </a>
 
-        <a href="javascript:void(0)" class="toolbar_item theme" @click="setSkin()">
+        <a href="javascript:void(0)" class="toolbar_item theme" @click="chageTheme">
             <el-tooltip class="item" effect="dark" content="切换主题" placement="left">
-                <svg-icon v-if="skin == 'deep'" icon-class="shallow"></svg-icon>
+                <svg-icon v-if="theme && theme == 'dark'" icon-class="shallow"></svg-icon>
                 <svg-icon v-else icon-class="deep"></svg-icon>
             </el-tooltip>
         </a>
@@ -21,13 +21,12 @@
     </div>
 </template>
 <script>
-import { setSkin, getSkin } from '@/utils/cookieUtil'
 export default {
     data() {
         return {
             theme: true,
             showBtn: false, // 回到顶部，默认是false，就是隐藏起来
-            skin: getSkin(),
+            theme: sessionStorage.getItem("theme"),
             show: false,
         }
     },
@@ -43,17 +42,17 @@ export default {
             }
             this.$router.push({ path: "/im" })
         },
-        setSkin() {
-            this.skin = getSkin()
+        chageTheme() {
+            this.theme = sessionStorage.getItem("theme")
             let val = ''
-            if (this.skin == 'shallow') { //浅色模式
-                val = 'deep'
+            if (this.theme && this.theme == 'light') { //浅色模式
+                val = 'dark'
             } else {
-                val = 'shallow'
+                val = 'light'
             }
-            setSkin(val)
-            this.skin = val
-            this.$setSkin()
+            this.theme = val
+            sessionStorage.setItem('theme', val)
+            document.documentElement.dataset.theme = val
         },
         toTop() {
             let scrollTop =

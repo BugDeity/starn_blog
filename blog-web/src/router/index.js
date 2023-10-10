@@ -1,4 +1,3 @@
-import { setSkin } from "@/utils/skin";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import home from '@/view/home/home'
@@ -183,7 +182,6 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = to.meta.title
     }
-    setSkin()
     next()
 })
 export default router;

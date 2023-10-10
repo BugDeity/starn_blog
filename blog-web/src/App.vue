@@ -87,15 +87,13 @@ export default {
       }
     },
   },
-  beforeCreate() {
-    if (getSkin() == null) {
-      setSkin("shallow")
-    } else {
-      setSkin(getSkin())
-    }
-  },
+
   mounted() {
-    this.$setSkin()
+    let theme = sessionStorage.getItem("theme")
+    if (theme == null) {
+      theme = "light"
+    }
+    document.documentElement.dataset.theme = theme
   },
 
 }

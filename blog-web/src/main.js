@@ -12,7 +12,6 @@ VMdPreview.use(createLineNumbertPlugin());
 
 import "../src/icons";
 import { vueBaberrage } from 'vue-baberrage'
-import { setSkin } from '@/utils/skin'
 import jsCookie from 'js-cookie'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -67,7 +66,6 @@ Vue.use(VMdPreview);
 Vue.use(VueImageSwipe);
 Vue.use(ElementUI);
 Vue.prototype.$cookie = jsCookie;  // 在页面里可直接用 this.$cookie 调用
-Vue.prototype.$setSkin = setSkin;
 Vue.use(vueBaberrage)
 
 import Empty from '@/components/empty/index.vue'
