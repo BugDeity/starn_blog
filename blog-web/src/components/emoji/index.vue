@@ -59,13 +59,6 @@ export default {
             emoji: {}
         }
     },
-    mounted() {
-
-    },
-    beforeDestroy() {
-        console.log(123)
-        this.visible = false
-    },
 
     created() {
         this.emojiList = require('@/assets/emoji.json');

@@ -22,7 +22,7 @@
             <div>
                 <div class="social-login-title">社交账号登录</div>
                 <div class="social-login-wrapper">
-                    <a v-show="isShow(2)" @click="qqLogin">
+                    <a v-show="isShow(2)" @click="openAuthLogin('qq')">
                         <svg-icon icon-class="qq" />
                     </a>
 
@@ -257,7 +257,7 @@ export default {
                             this.close()
                             if (res.data.email == null) {
                                 this.$notify({
-                                    title: '警告',
+                                    title: '提示',
                                     message: '请绑定邮箱以便及时收到回复',
                                     type: 'warning'
                                 });
@@ -312,30 +312,11 @@ export default {
             });
 
         },
-        qqLogin() {
-            //保留当前路径
-            this.settingUrl()
-            if (
-                navigator.userAgent.match(
-                    /(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i
-                )
-            ) {
-                // eslint-disable-next-line no-undef
-                QC.Login.showPopup({
-                    appId: this.config.QQ_CLIENT_ID,
-                    redirectURI: this.config.QQ_REDIRECT_URL
-                });
-            } else {
-                openAuthUrl("qq").then(res => {
-                    window.open(res.data);
-                });
-            }
-        },
         openAuthLogin(source) {
             //保留当前路径
             this.settingUrl()
             openAuthUrl(source).then(res => {
-                window.open(res.data);
+                window.open(res.data, "_self");
             });
         },
         settingUrl() {

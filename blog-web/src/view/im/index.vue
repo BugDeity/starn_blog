@@ -105,9 +105,9 @@
 
                 <!-- 自定义右键功能 -->
                 <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
-                    <li @click="atUser" class="atUser">
+                    <li @click="collectEmoji" class="" v-show="validateContainsImg(this.message)">
                         <div class="menuitem">
-                            <i class="iconfont icon-at"></i>艾特Ta
+                            <i class="el-icon-star-off"></i>收藏表情
                         </div>
                     </li>
                     <li @click="clipboard" class="copyBtn">
@@ -194,6 +194,7 @@
 <script>
 let socket;
 import { upload } from '@/api'
+import { addEmoji } from '@/api/emoji';
 import { getImHistory, getUserImHistoryList, send, withdraw, getRoomList, addRoom, read, deleteRoom } from '@/api/im'
 import Emoji from '@/components/emoji'
 export default {
@@ -237,7 +238,8 @@ export default {
             emoji: "emoji1",
             atMember: "",
             searchUrl: ['https://www.baidu.com/s?&wd=', 'https://search.gitee.com/?skin=rec&type=repository&q=', 'https://github.com/search?q='],
-            lastEditRange: null
+            lastEditRange: null,
+            RegEx: /(?<=(img src="))[^"]*?(?=")/gims
         }
     },
 
@@ -451,26 +453,7 @@ export default {
             this.message = item
             this.message.index = index
         },
-        atUser() {
-            this.$notify({
-                title: '消息',
-                message: "待开发",
-                type: 'info'
-            });
-            return;
-            if (this.atMember.indexOf(this.message.fromUserId) != -1) {
-                return;
-            }
-            if (this.atMember) {
-                this.atMember += "," + this.message.fromUserId
-            } else {
-                this.atMember += this.message.fromUserId
-            }
 
-            let at = "<button class='at_member' contenteditable='false'>@" + this.message.fromUserNickname + "</button>&nbsp;&nbsp;"
-            this.$refs.inputRef.innerText += at
-
-        },
         //撤回
         withdraw() {
             let message = {
@@ -493,6 +476,26 @@ export default {
         //翻译
         translate() {
             window.open("https://fanyi.baidu.com/?aldtype=16047#zh/en/" + this.message.content, '_blank')
+        },
+        //收藏表情
+        collectEmoji() {
+
+            if (this.validateContainsImg(this.message)) {
+                let emoji = {
+                    url: this.message.content.match(this.RegEx)[0]
+                }
+                addEmoji(emoji).then(res => {
+                    this.$notify({
+                        title: '成功',
+                        message: "收藏表情成功",
+                        type: 'success'
+                    });
+                })
+            }
+
+        },
+        validateContainsImg(html) {
+            return html && html.content.match(this.RegEx) && html.content.match(this.RegEx).length > 0
         },
         //复制
         clipboard() {

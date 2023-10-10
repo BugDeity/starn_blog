@@ -28,6 +28,11 @@ public class ApiEmojiService implements com.shiyi.service.ApiEmojiService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult addEmoji(Emoji emoji) {
+        int count = emojiMapper.selectCount(new LambdaQueryWrapper<Emoji>().eq(Emoji::getUserId, StpUtil.getLoginIdAsString())
+                .eq(Emoji::getUrl, emoji.getUrl()));
+        if (count > 0) {
+            throw new BusinessException("该表情已存在");
+        }
         emoji.setUserId(StpUtil.getLoginIdAsString());
         emojiMapper.insert(emoji);
         return ResponseResult.success();

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import config from "./assets/js/config";
 import './assets/font/iconfont.css'
 import './assets/font/iconfont.js'
 import store from './store'
@@ -70,8 +69,7 @@ Vue.use(ElementUI);
 Vue.prototype.$cookie = jsCookie;  // 在页面里可直接用 this.$cookie 调用
 Vue.prototype.$setSkin = setSkin;
 Vue.use(vueBaberrage)
-Vue.config.productionTip = false
-Vue.prototype.config = config;
+
 import Empty from '@/components/empty/index.vue'
 Vue.component("sy-empty", Empty);
 import pagination from '@/components/pagination/index.vue'
