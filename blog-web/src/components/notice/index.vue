@@ -49,7 +49,7 @@ export default {
         }
 
         .titleName {
-            color: var(--box-title_color);
+            color: var(--text-color);
             line-height: 45px;
             font-size: 16px;
             padding-left: 10px;
@@ -59,7 +59,7 @@ export default {
     .info {
 
         border-top: 1px solid var(--border-line);
-        background: var(--notice-background);
+        background: var(--background-color);
         animation: light 2s ease-in-out infinite alternate;
         min-height: 70px;
         padding: 5px;

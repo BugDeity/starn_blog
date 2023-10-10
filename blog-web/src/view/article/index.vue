@@ -1122,7 +1122,7 @@ export default {
         }
 
         .content {
-            color: var(--article-content-color);
+            color: var(--article-color);
 
             /deep/ .line-numbers-wrapper {
                 line-height: 1.2;
@@ -1247,7 +1247,7 @@ export default {
         }
 
         .copyright {
-            background-color: var(--article-copyr--color);
+            background-color: var(----text-color3);
             border-radius: 5px;
             width: 100%;
             min-height: 130px;

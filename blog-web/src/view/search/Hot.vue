@@ -381,7 +381,7 @@ export default {
                         }
 
                         &:hover {
-                            background-color: var(--ul-hover-color);
+                            background-color: var(--hover-color);
                             border-radius: 3px;
                         }
 

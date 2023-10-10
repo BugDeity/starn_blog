@@ -252,7 +252,7 @@ export default {
                     padding: 5px;
                     transform: translateX(150px);
                     text-align: center;
-                    color: var(--baise);
+                    color: #fff;
                     transition: transform .35s ease-in-out;
                 }
 

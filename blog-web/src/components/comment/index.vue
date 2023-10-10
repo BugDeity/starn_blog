@@ -422,7 +422,7 @@ export default {
 
                     .comment-textarea {
                         font-size: .875rem;
-                        color: var(--article-content-color) !important;
+                        color: var(--article-color) !important;
                         outline: none;
                         padding: 10px 5px;
                         min-height: 122px;

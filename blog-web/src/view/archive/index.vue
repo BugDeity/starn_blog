@@ -200,7 +200,7 @@ export default {
                     color: var(--theme-color);
                     font-weight: 500;
                     margin-bottom: 16px;
-                    background-color: var(--archives-backgroud-color);
+                    background-color: var(--text-color3);
                     display: block;
                     height: 35px;
                     line-height: 35px;
@@ -213,7 +213,7 @@ export default {
                         height: 0;
                         border-width: 10px 10px 10px 0;
                         border-style: solid;
-                        border-color: transparent var(--archives-backgroud-color) transparent transparent;
+                        border-color: transparent var(--text-color3) transparent transparent;
                         /*透明 灰 透明 透明 */
                         position: relative;
                         display: inline-block;

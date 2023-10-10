@@ -327,7 +327,7 @@ export default {
 
                 .active {
                     background-color: var(--theme-color);
-                    color: var(--baise);
+                    color: #fff;
                 }
             }
 

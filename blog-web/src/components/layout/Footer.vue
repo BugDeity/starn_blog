@@ -43,7 +43,7 @@
 export default {
     data() {
         return {
-            path:null,
+            path: null,
             day: "",
             hours: "",
             minute: "",
@@ -51,9 +51,9 @@ export default {
             url: "https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2020%2F0601%2Fba14f84ep00qb7neh000xd200jx00bog00gn009q.png&thumbnail=650x2147483647&quality=80&type=jpg"
         }
     },
-       watch: {
-      
-        $route(newVal,old) {
+    watch: {
+
+        $route(newVal, old) {
             this.path = newVal.fullPath
         }
     },
@@ -117,7 +117,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--footer-back-color);
+    background: var(--background-color);
     background-position: 100% 0;
     animation: bgSize 5s infinite ease-in-out alternate;
     margin-top: 50px;
@@ -187,8 +187,8 @@ export default {
                 overflow: hidden;
                 font-size: 12px;
                 font-weight: 700;
-                color: var(--site-text-color);
-                background: var(--site-color);
+                color: var(--background-color);
+                background: var(--text-color1);
                 border-radius: 5px;
             }
 

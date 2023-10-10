@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ApiEmojiService implements com.shiyi.service.ApiEmojiService {
+public class ApiEmojiServiceImpl implements com.shiyi.service.ApiEmojiService {
 
     private final EmojiMapper emojiMapper;
 

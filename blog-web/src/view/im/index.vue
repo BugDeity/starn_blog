@@ -861,7 +861,7 @@ export default {
     }
 
     .im-warpper {
-        color: var(--im-text-color);
+        color: var(--text-color1);
         display: flex;
         border: 2px solid var(--border-line);
         height: 100%;

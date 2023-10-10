@@ -66,7 +66,7 @@ export default {
     position: relative;
     height: 30px;
     line-height: 30px;
-    color: var(--notice-color);
+    color: var(--text-color1);
     top: 60px;
     transition: all 0.5s linear;
 
