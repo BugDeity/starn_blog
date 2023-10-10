@@ -390,12 +390,13 @@ export default {
     },
 
     created() {
-        window.onresize = () => {
-            return (() => {
-                const element = document.getElementById("articleBox")
+
+        window.addEventListener('resize', () => {
+            const element = document.getElementById("articleBox")
+            if (element) {
                 this.left = (element.offsetLeft - 55) + "px"
-            })()
-        }
+            }
+        }, true)
         articleInfo(this.articleId).then(res => {
             this.article = res.data
             this.serceShow = this.article.activeReadType

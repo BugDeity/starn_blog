@@ -601,13 +601,18 @@ export default {
         handleChooseEmoji(value) {
             // 创建一个img标签（表情）
             let img = document.createElement('img');
-            img.src = value;
+            img.src = value.url;
             img.style.verticalAlign = 'middle';
             img.style.marginLeft = "2px"
             img.style.marginRight = "2px"
-            img.style.width = "25px"
-            img.style.height = "25px"
 
+            if (value.type == 1) {
+                img.style.maxHeight = "100px";
+                img.style.height = "100%"
+            } else {
+                img.style.width = "25px"
+                img.style.height = "25px"
+            }
             let edit = this.$refs['inputRef']
             edit.focus()
             let selection = window.getSelection()

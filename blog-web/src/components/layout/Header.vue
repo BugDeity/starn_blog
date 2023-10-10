@@ -278,11 +278,10 @@ export default {
     },
 
     created() {
-        window.onresize = () => {
-            return (() => {
-                this.windowWidth = window.innerWidth // 宽
-            })()
-        }
+
+        window.addEventListener('resize', () => {
+            this.windowWidth = window.innerWidth // 宽
+        }, true)
         window.addEventListener('scroll', this.scrollFn, false)
     },
 
@@ -303,7 +302,6 @@ export default {
             this.$store.state.searchDialogVisible = true
         },
         handleClickNotice(index) {
-            console.log(this.user)
             if (!this.user) {
                 this.$store.commit("setLoginFlag", true)
                 return;

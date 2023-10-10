@@ -144,15 +144,6 @@ export default {
         }
     },
     mounted() {
-        // this.$refs['textareaRef'].onclick = () => {
-        //     // 获取选定对象
-        //     let selection = window.getSelection()
-        //     // 设置最后光标对象
-        //     if (selection.rangeCount > 0) {
-        //         // 记录光标最后点击可编辑div中所选择的位置
-        //         this.lastEditRange = selection.getRangeAt(0);
-        //     }
-        // }
     },
     created() {
         this.getSayList()
@@ -241,11 +232,14 @@ export default {
         handleChooseEmoji(value) {
             // 创建一个img标签（表情）
             let img = document.createElement('img');
-            img.src = value;
+            img.src = value.url;
             img.style.verticalAlign = 'middle';
             img.style.marginLeft = "2px"
             img.style.marginRight = "2px"
-
+            if (value.type == 1) {
+                img.style.maxHeight = "100px";
+                img.style.height = "100%"
+            }
             let edit = document.getElementById("textarea")
             edit.focus()
             let selection = window.getSelection()

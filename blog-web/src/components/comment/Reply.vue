@@ -83,11 +83,14 @@ export default {
         handleChooseEmoji(value) {
             // 创建一个img标签（表情）
             let img = document.createElement('img');
-            img.src = value;
+            img.src = value.url;
             img.style.verticalAlign = 'middle';
             img.style.marginLeft = "2px"
             img.style.marginRight = "2px"
-
+            if (value.type == 1) {
+                img.style.maxHeight = "100px";
+                img.style.height = "100%"
+            }
             let edit = this.$refs['textareaRef']
             edit.focus()
             let selection = window.getSelection()

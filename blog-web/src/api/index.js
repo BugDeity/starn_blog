@@ -282,3 +282,4 @@ export function deleteFollowedUser(userId) {
         }
     })
 }
+

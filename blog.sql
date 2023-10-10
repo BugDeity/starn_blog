@@ -1409,4 +1409,14 @@ CREATE TABLE `b_say_comment` (
      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='说说评论表';
 
+DROP TABLE IF EXISTS `b_emoji`;
+CREATE TABLE `b_emoji` (
+   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+   `user_id` varchar(200) NOT NULL COMMENT '用户id',
+   `url` varchar(255) DEFAULT NULL COMMENT '表情url地址',
+   `create_time` datetime DEFAULT NULL COMMENT '添加时间',
+   `is_stick` int(11) DEFAULT NULL COMMENT '是否置顶',
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='表情表';
+
 SET FOREIGN_KEY_CHECKS = 1;
