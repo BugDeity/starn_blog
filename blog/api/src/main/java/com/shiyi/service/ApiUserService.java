@@ -92,4 +92,10 @@ public interface ApiUserService {
      */
     public ResponseResult forgetPassword(EmailForgetPasswordDTO emailForgetPasswordDTO);
 
+    /**
+     * 根据用户id统计用户文章、关注、粉丝等信息
+     * @param id
+     * @return
+     */
+    public ResponseResult getUserCount(String id);
 }

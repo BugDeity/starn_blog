@@ -4,11 +4,49 @@
             <div class="userBox">
                 <div class="backgroupImg">
                     <img v-lazy="user.bjCover" :key="user.bjCover">
+
+                    <el-row type="flex" class="row-bg top-btn">
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple">
+                                <a @click="btnClike(0)" class="topBtnItem">
+                                    <div>{{ count.article }}</div>
+                                    文章
+                                </a>
+                            </div>
+                        </el-col>
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple">
+                                <a @click="btnClike(1)" class="topBtnItem">
+                                    <div>{{ count.note }}</div>
+                                    笔记
+                                </a>
+                            </div>
+                        </el-col>
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple">
+                                <a class="topBtnItem">
+                                    <div>{{ count.followed }}</div>
+                                    关注
+                                </a>
+                            </div>
+                        </el-col>
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple">
+                                <a class="topBtnItem">
+                                    <div>0</div>
+                                    勋章
+                                </a>
+                            </div>
+                        </el-col>
+                    </el-row>
                 </div>
                 <div class="user-item">
                     <div class="toolbar">
                         <img class="cover" :src="user.avatar" alt="">
                     </div>
+
+
+
                     <div class="userInfo">
                         <div class="nickname">
                             昵称：<span>{{ user.nickname }}</span>
@@ -114,7 +152,7 @@
    
 <script>
 import {
-    getUserInfo, getArticleByUserId,
+    getUserInfo, getArticleByUserId, getUserCount
 } from '@/api'
 
 import { selectNoteByUserId } from '@/api/note'
@@ -143,6 +181,12 @@ export default {
                     name: "笔记"
                 },
             ],
+            count: {
+                article: 0,
+                collect: 0,
+                note: 0,
+                followed: 0,
+            }
         }
     },
     created() {
@@ -150,8 +194,20 @@ export default {
             this.user = res.data
         })
         this.selectAricleList()
+        this.getCount()
     },
     methods: {
+        getCount() {
+            getUserCount(this.pageData.userId).then(res => {
+                let count = {
+                    article: res.extra.articleCount,
+                    collect: res.extra.collectCount,
+                    note: res.extra.noteCount,
+                    followed: res.extra.followedCount,
+                }
+                this.count = count
+            })
+        },
         handleClike(id, path) {
             this.$router.push({ path: path, query: { id: id } })
         },
@@ -160,6 +216,9 @@ export default {
             this.before()
         },
         btnClike(index) {
+            if (this.pageData.index == index) {
+                return
+            }
             for (var i = 0; i < this.$refs.btn.length; i++) {
                 this.$refs.btn[i].className = ""
             }
@@ -291,6 +350,15 @@ export default {
         .backgroupImg {
             position: relative;
             width: 100%;
+
+            .top-btn {
+                width: 100%;
+                position: absolute;
+                top: 0;
+                display: flex;
+                background: linear-gradient(90deg, rgba(220, 233, 242, 0.5), rgba(255, 255, 255, 0.5), rgba(220, 233, 242, 0.4));
+                text-align: center;
+            }
 
             img {
                 width: 100%;

@@ -42,5 +42,11 @@ public class ApiUserController {
         return userService.selectUserInfoByToken(token);
     }
 
+    @RequestMapping(value = "getUserCount",method = RequestMethod.GET)
+    @ApiOperation(value = "根据用户id统计用户文章、关注、粉丝等信息", httpMethod = "GET", response = ResponseResult.class, notes = "根据用户id统计用户文章、关注、粉丝等信息")
+    public ResponseResult getUserCount(String id){
+        return userService.getUserCount(id);
+    }
+
 }
 

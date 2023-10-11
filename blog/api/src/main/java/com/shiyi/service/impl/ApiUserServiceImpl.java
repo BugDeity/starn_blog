@@ -12,14 +12,11 @@ import com.shiyi.dto.EmailForgetPasswordDTO;
 import com.shiyi.dto.EmailLoginDTO;
 import com.shiyi.dto.EmailRegisterDTO;
 import com.shiyi.dto.UserInfoDTO;
-import com.shiyi.entity.User;
-import com.shiyi.entity.UserInfo;
+import com.shiyi.entity.*;
 import com.shiyi.enums.LoginTypeEnum;
 import com.shiyi.enums.UserStatusEnum;
 import com.shiyi.exception.BusinessException;
-import com.shiyi.mapper.FollowedMapper;
-import com.shiyi.mapper.UserInfoMapper;
-import com.shiyi.mapper.UserMapper;
+import com.shiyi.mapper.*;
 import com.shiyi.service.ApiUserService;
 import com.shiyi.service.EmailService;
 import com.shiyi.service.RedisService;
@@ -50,6 +47,11 @@ import static com.shiyi.common.ResultCode.*;
 public class ApiUserServiceImpl implements ApiUserService {
 
     private final UserMapper userMapper;
+
+    private final ArticleMapper articleMapper;
+
+    private final CollectMapper collectMapper;
+    private final NoteMapper noteMapper;
 
     private final RedisService redisService;
 
@@ -332,6 +334,17 @@ public class ApiUserServiceImpl implements ApiUserService {
         User user = User.builder().password(AesEncryptUtils.aesEncrypt(emailForgetPasswordDTO.getPassword())).build();
         userMapper.update(user,new LambdaQueryWrapper<User>().eq(User::getUsername,emailForgetPasswordDTO.getEmail()));
         return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult getUserCount(String id) {
+        id = StringUtils.isBlank(id) ? StpUtil.getLoginIdAsString() : id;
+        Integer articleCount = articleMapper.selectCount(new LambdaQueryWrapper<Article>().eq(Article::getUserId, id));
+        Integer collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getUserId, id));
+        Integer noteCount = noteMapper.selectCount(new LambdaQueryWrapper<Note>().eq(Note::getUserId, id));
+        Integer followedCount = followedMapper.selectCount(new LambdaQueryWrapper<Followed>().eq(Followed::getUserId, id));
+        return ResponseResult.success().putExtra("articleCount", articleCount).putExtra("collectCount", collectCount)
+                .putExtra("noteCount", noteCount).putExtra("followedCount", followedCount);
     }
 
 }

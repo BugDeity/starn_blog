@@ -4,6 +4,50 @@
             <div class="userBox">
                 <div class="backgroupImg">
                     <img v-lazy="user.bjCover" :key="user.bjCover">
+
+                    <el-row type="flex" class="row-bg top-btn">
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple">
+                                <a @click="btnClike(0)" class="topBtnItem">
+                                    <div>{{ count.article }}</div>
+                                    文章
+                                </a>
+                            </div>
+                        </el-col>
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple-light">
+                                <a @click="btnClike(1)" class="topBtnItem">
+                                    <div>{{ count.collect }}</div>
+                                    收藏
+                                </a>
+                            </div>
+                        </el-col>
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple">
+                                <a @click="btnClike(2)" class="topBtnItem">
+                                    <div>{{ count.note }}</div>
+                                    笔记
+                                </a>
+                            </div>
+                        </el-col>
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple">
+                                <a class="topBtnItem">
+                                    <div>{{ count.followed }}</div>
+                                    关注
+                                </a>
+                            </div>
+                        </el-col>
+                        <el-col :span="18">
+                            <div class="grid-content bg-purple">
+                                <a class="topBtnItem">
+                                    <div>0</div>
+                                    勋章
+                                </a>
+                            </div>
+                        </el-col>
+                    </el-row>
+
                     <div class="more">
                         <div class="menu">
                             <ul>
@@ -267,7 +311,7 @@
 <script>
 import {
     updateUserInfo, getUserInfo, upload, getArticleByUserId,
-    deleteMyArticle, addFeedback
+    deleteMyArticle, addFeedback, getUserCount
 } from '@/api'
 
 import { cancelCollect, getCollect } from '@/api/collect'
@@ -321,6 +365,12 @@ export default {
                     { required: true, message: '请输入反馈详细内容', trigger: 'blur' },
                 ],
 
+            },
+            count: {
+                article: 0,
+                collect: 0,
+                note: 0,
+                followed: 0,
             }
 
         }
@@ -328,8 +378,20 @@ export default {
     created() {
         this.selectAricleList()
         this.validateTodayIsSign()
+        this.getCount()
     },
     methods: {
+        getCount() {
+            getUserCount().then(res => {
+                let count = {
+                    article: res.extra.articleCount,
+                    collect: res.extra.collectCount,
+                    note: res.extra.noteCount,
+                    followed: res.extra.followedCount,
+                }
+                this.count = count
+            })
+        },
         insertFeedback() {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
@@ -347,7 +409,6 @@ export default {
                     return false;
                 }
             });
-
         },
         validateTodayIsSign() {
             validateTodayIsSign().then(res => {
@@ -480,6 +541,9 @@ export default {
             this.before()
         },
         btnClike(index) {
+            if (this.pageData.index == index) {
+                return
+            }
             for (var i = 0; i < this.$refs.btn.length; i++) {
                 this.$refs.btn[i].className = ""
             }
@@ -742,6 +806,15 @@ export default {
         .backgroupImg {
             position: relative;
             width: 100%;
+
+            .top-btn {
+                width: 100%;
+                position: absolute;
+                top: 0;
+                display: flex;
+                background: linear-gradient(90deg, rgba(220, 233, 242, 0.5), rgba(255, 255, 255, 0.5), rgba(220, 233, 242, 0.4));
+                text-align: center;
+            }
 
             img {
                 width: 100%;

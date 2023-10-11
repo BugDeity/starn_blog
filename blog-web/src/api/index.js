@@ -216,6 +216,15 @@ export function selectUserInfoByToken(token) {
         }
     })
 }
+export function getUserCount(id) {
+    return request({
+        url: '/v1/user/getUserCount',
+        method: 'get',
+        params: {
+            id: id
+        }
+    })
+}
 export function upload(data) {
     return request({
         url: '/file/upload',
@@ -224,14 +233,6 @@ export function upload(data) {
         data
     })
 }
-export function updatePassword(data) {
-    return request({
-        url: '/system/user/updatePassword',
-        method: 'post',
-        data
-    })
-}
-
 export function featchCategory() {
     return request({
         url: '/v1/category/',
