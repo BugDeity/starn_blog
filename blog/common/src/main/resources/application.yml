@@ -139,4 +139,7 @@ github:
 baidu:
   url: http://data.zz.baidu.com/urls?site=www.shiyit.com&token=aw5iVpNEB9aQJOYZ
 file:
-  upload-folder: /usr/local/blog/file/
+  #服务器上传文件地址
+  #upload-folder: /usr/local/blog/file/
+  # 本地上传文件地址
+  upload-folder: F://one-project/

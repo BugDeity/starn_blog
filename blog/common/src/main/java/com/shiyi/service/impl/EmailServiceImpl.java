@@ -98,9 +98,9 @@ public class EmailServiceImpl implements EmailService {
     public void friendPassSendEmail(String email){
         String content = "<html>\n" +
                 "<body>\n" +
-                "    <p>您在"+"<a href='http://www.shiyit.com'>拾壹博客</a>"+"站点申请友链加入审核通过!!</span>\n" +
+                "    <p>您在"+"<a href='https://www.shiyit.com'>拾壹博客</a>"+"站点申请友链加入审核通过!!</span>\n" +
                 "<p style='padding: 20px;'>感谢您的选择，本站将会竭尽维护好站点稳定，分享高质量的文章，欢迎相互交流互访。</p>" +
-                "<p>可前往<a href='http://www.shiyit.com/links'>本站友链</a>查阅您的站点。</p></body>\n" +
+                "<p>可前往<a href='https://www.shiyit.com/links'>本站友链</a>查阅您的站点。</p></body>\n" +
                 "</html>";
         try {
             send(email,content);
@@ -118,9 +118,9 @@ public class EmailServiceImpl implements EmailService {
     public void friendFailedSendEmail(String email,String reason){
         String content = "<html>\n" +
                 "<body>\n" +
-                "    <p>您在"+"<a href='http://www.shiyit.com'>拾壹博客</a>"+"站点申请的友链加入审核未通过!具体原因为:"+ reason +"</span>\n" +
+                "    <p>您在"+"<a href='https://www.shiyit.com'>拾壹博客</a>"+"站点申请的友链加入审核未通过!具体原因为:"+ reason +"</span>\n" +
                 "<p style='padding: 20px;'>感谢您的选择，本站将会竭尽维护好站点稳定，分享高质量的文章，欢迎相互交流互访。</p>" +
-                "<p>可前往<a href='http://www.shiyit.com/links'>本站友链</a>查阅您的站点。</p></body>\n" +
+                "<p>可前往<a href='https://www.shiyit.com/links'>本站友链</a>查阅您的站点。</p></body>\n" +
                 "</html>";
         try {
             send(email,content);
@@ -146,7 +146,7 @@ public class EmailServiceImpl implements EmailService {
                 "          <tbody>\n" +
                 "            <tr style=\"background-color: #f8f8f8;\">\n" +
                 "              <td>\n" +
-                "                <img style=\"padding: 15px 0 15px 30px;width:50px\" src=\"http://img.shiyit.com/FjzfvfWYZVED7eXMS4EL8KNR949K\">" +
+                "                <img style=\"padding: 15px 0 15px 30px;width:50px\" src=\"https://img.shiyit.com/9cf1222617fd4fa197991476a53cc883.jpg\">" +
                 "                <span>拾壹博客. </span>\n" +
                 "              </td>\n" +
                 "            </tr>\n" +
@@ -170,7 +170,7 @@ public class EmailServiceImpl implements EmailService {
                 "            <tr>\n" +
                 "              <td class=\"p-intro\">\n" +
                 "                <hr>\n" +
-                "                <p style=\"text-align: center;line-height:1.75em;\">shiyi - 拾壹博客</p>\n" +
+                "                <p style=\"text-align: center;line-height:1.75em;\">shiyi - <a href='https://www.shiyit.com' style='text-decoration: none;color:#ff6574'>拾壹博客</a></p>\n" +
                 "              </td>\n" +
                 "            </tr>\n" +
                 "          </tbody>\n" +

@@ -5,7 +5,10 @@
         </div>
 
         <div class="dividerBox">
-            <div class="divider"></div>
+            <div class="divider">
+                <svg-icon icon-class="car"></svg-icon>
+
+            </div>
         </div>
 
         <div class="tagBox" v-if="!list.length">
@@ -43,7 +46,7 @@ export default {
             pages: 0,
             list: [],
             tagList: [],
-            refKey:0
+            refKey: 0
         }
     },
     beforeDestroy() {
@@ -133,8 +136,28 @@ export default {
     margin-bottom: 20px;
 
     .divider {
+        position: relative;
         border: 2px dashed #d2ebfd;
+
+        &:hover svg {
+            left: 90%;
+        }
+
+        svg {
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            top: -15px;
+            left: 5%;
+            transition: all 1s ease-in-out;
+
+            &:hover {
+                left: 90%;
+            }
+        }
     }
+
+
 }
 
 
