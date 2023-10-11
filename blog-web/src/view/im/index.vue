@@ -18,7 +18,8 @@
                     <div class="messageItem" v-for="(item, index) in  messageList " :key="index">
                         <!-- 左边消息框 别人发送的消息 -->
                         <div :class="item.isWithdraw ? 'withdraw' : 'left'" v-if="user && item.fromUserId != user.id">
-                            <img class="noSelect" :src="item.fromUserAvatar">
+                            <img class="noSelect" v-lazy="item.fromUserAvatar" :key="item.fromUserAvatar"
+                                @click="handleToUserMain(item.fromUserId)">
                             <div class="info">
                                 <div class="nickname noSelect userInfo">
                                     {{ item.fromUserNickname }}
@@ -46,7 +47,8 @@
                         <div :class="item.isWithdraw ? 'withdraw' : 'right'" v-else>
                             <div class="info">
                                 <div>
-                                    <img class="noSelect" :src="item.fromUserAvatar">
+                                    <img class="noSelect" v-lazy="item.fromUserAvatar" :key="item.fromUserAvatar"
+                                        @click="handleToUserMain(item.fromUserId)">
                                 </div>
                                 <div class="nickname">
                                     <div class="userInfo">
@@ -290,6 +292,9 @@ export default {
         this.init()
     },
     methods: {
+        handleToUserMain(userId) {
+            this.$router.push({ path: "/user_main", query: { id: userId } })
+        },
         updateContent(event) {
             let selection = window.getSelection()
             this.lastEditRange = selection.getRangeAt(0);

@@ -218,7 +218,8 @@
             <el-form label-position="left" label-width="60px" :model="form">
                 <el-form-item label="头像：">
                     <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
-                        :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
+                        :action="uploadPictureHost" :http-request="uploadSectionFile" :before-upload="handleUploadBefore"
+                        multiple>
                         <img v-if="form.avatar" style="width: 50%;height: 50%;" :src="form.avatar" class="imgAvatar">
                         <i v-else class="el-icon-plus avatar-img-icon"></i>
                     </el-upload>
@@ -568,6 +569,9 @@ export default {
             formData.append('multipartFile', this.files)
             upload(formData).then(res => {
                 this.form.avatar = res.data
+                this.$bus.$emit('hideLoading')
+            }).catch(err => {
+                this.$bus.$emit('hideLoading')
             })
 
         },

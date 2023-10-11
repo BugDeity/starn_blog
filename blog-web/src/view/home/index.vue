@@ -18,7 +18,8 @@
                     <SiteInfo />
                     <el-card class="soft box-shadow">
                         <a href="https://www.zhisu1.com" target="_blank">
-                            <img src="https://img.shiyit.com/20231010_1696930367538.jpg" alt="">
+                            <img v-lazy="'https://img.shiyit.com/20231010_1696930367538.jpg'"
+                                :key="'https://img.shiyit.com/20231010_1696930367538.jpg'" alt="">
                             <div class="soft-title">
                                 高效便宜可靠的服务器厂商知速云
                             </div>
