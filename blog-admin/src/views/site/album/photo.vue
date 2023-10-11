@@ -3,23 +3,17 @@
     <el-card class="main-card">
       <!-- 相册信息 -->
       <div class="album-info">
-        <el-image fit="cover" class="album-cover" :src="albumInfo.cover"/>
+        <el-image fit="cover" class="album-cover" :src="albumInfo.cover" />
         <div class="album-detail">
           <div style="margin-bottom:0.6rem">
             <span class="album-name">{{ albumInfo.name }}</span>
             <span class="photo-count">{{ albumInfo.photoCount }}张</span>
           </div>
           <div>
-          <span v-if="albumInfo.info" class="album-desc">
-            {{ albumInfo.info }}
-          </span>
-            <el-button
-              v-if="canAdd"
-              icon="el-icon-picture"
-              type="primary"
-              size="small"
-              @click="handleAdd"
-            >
+            <span v-if="albumInfo.info" class="album-desc">
+              {{ albumInfo.info }}
+            </span>
+            <el-button v-if="canAdd" icon="el-icon-picture" type="primary" size="small" @click="handleAdd">
               添加照片
             </el-button>
           </div>
@@ -27,33 +21,17 @@
         <!-- 相册操作 -->
         <div class="operation">
           <div class="all-check">
-            <el-checkbox
-              :indeterminate="isIndeterminate"
-              v-model="checkAll"
-              @change="handleCheckAllChange"
-            >
+            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
               全选
             </el-checkbox>
             <div class="check-count">已选择{{ selectPhotoIdList.length }}张</div>
           </div>
-          <el-button
-            v-if="canMove"
-            type="success"
-            @click="movePhoto = true"
-            :disabled="selectPhotoIdList.length === 0"
-            size="small"
-            icon="el-icon-deleteItem"
-          >
+          <el-button v-if="canMove" type="success" @click="movePhoto = true" :disabled="selectPhotoIdList.length === 0"
+            size="small" icon="el-icon-deleteItem">
             移动到
           </el-button>
-          <el-button
-            v-if="canDel"
-            type="danger"
-            @click="deletePhoto"
-            :disabled="selectPhotoIdList.length === 0"
-            size="small"
-            icon="el-icon-deleteItem"
-          >
+          <el-button v-if="canDel" type="danger" @click="deletePhoto" :disabled="selectPhotoIdList.length === 0"
+            size="small" icon="el-icon-deleteItem">
             批量删除
           </el-button>
         </div>
@@ -61,34 +39,26 @@
       <!-- 照片列表 -->
       <el-row class="photo-container" :gutter="10" v-loading="loading">
         <!-- 空状态 -->
-        <el-empty v-if="photoList.length === 0" description="暂无照片"/>
-        <el-checkbox-group
-          v-model="selectPhotoIdList"
-          @change="handleCheckedPhotoChange"
-        >
+        <el-empty v-if="photoList.length === 0" description="暂无照片" />
+        <el-checkbox-group v-model="selectPhotoIdList" @change="handleCheckedPhotoChange">
           <el-col :md="4" v-for="item of photoList" :key="item.id">
             <el-checkbox :label="item.id">
               <div class="photo-item">
                 <!-- 照片操作 -->
                 <div class="photo-opreation">
                   <el-dropdown @command="handleCommand">
-                    <i class="el-icon-more" style="color:#fff"/>
+                    <i class="el-icon-more" style="color:#fff" />
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item v-if="canUpdate" :command="'update' + item.id">
-                        <i class="el-icon-edit"/>编辑
+                        <i class="el-icon-edit" />编辑
                       </el-dropdown-item>
                       <el-dropdown-item v-if="canDel" :command="'delete' + item.id">
-                        <i class="el-icon-delete"/>删除
+                        <i class="el-icon-delete" />删除
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </div>
-                <el-image
-                  fit="cover"
-                  class="photo-img"
-                  :src="item.url"
-                  :preview-photoSrc-list="photoList"
-                />
+                <el-image fit="cover" class="photo-img" :src="item.url" :preview-photoSrc-list="photoList" />
                 <div class="photo-name">{{ item.name }}</div>
               </div>
             </el-checkbox>
@@ -96,47 +66,27 @@
         </el-checkbox-group>
       </el-row>
       <!-- 分页 -->
-      <el-pagination
-        :hide-on-single-page="true"
-        class="pagination-container"
-        @size-change="sizeChange"
-        @current-change="currentChange"
-        :current-page="params.pageNo"
-        :page-size="params.pageSize"
-        :total="total"
-        layout="prev, pager, next"
-      />
+      <el-pagination :hide-on-single-page="true" class="pagination-container" @size-change="sizeChange"
+        @current-change="currentChange" :current-page="params.pageNo" :page-size="params.pageSize" :total="total"
+        layout="prev, pager, next" />
 
       <!-- 新增编辑对话框 -->
       <el-dialog center :title="title" :visible.sync="dialogVisible" width="35%">
         <el-form :rules="rules" ref="dataForm" label-width="80px" size="medium" :model="photoForm">
           <el-form-item label="照片名称" prop="name">
-            <el-input style="width:220px" v-model="photoForm.name"/>
+            <el-input style="width:220px" v-model="photoForm.name" />
           </el-form-item>
           <el-form-item label="照片描述" prop="info">
-            <el-input style="width:220px" v-model="photoForm.info"/>
+            <el-input style="width:220px" v-model="photoForm.info" />
           </el-form-item>
           <el-form-item label="照片" prop="url">
-            <el-upload
-              v-loading="imgLoading"
-              class="upload-cover"
-              drag
-              :show-file-list="false"
-              multiple
-              :action="uploadPictureHost"
-              :before-upload="beforeUpload"
-              :http-request="uploadSectionFile"
-            >
-              <i class="el-icon-upload" v-if="photoForm.url === ''"/>
+            <el-upload v-loading="imgLoading" class="upload-cover" drag :show-file-list="false" multiple
+              :action="uploadPictureHost" :before-upload="beforeUpload" :http-request="uploadSectionFile">
+              <i class="el-icon-upload" v-if="photoForm.url === ''" />
               <div class="el-upload__text" v-if="photoForm.url === ''">
                 将文件拖到此处，或<em>点击上传</em>
               </div>
-              <img
-                v-else
-                :src="photoForm.url"
-                width="360px"
-                height="180px"
-              />
+              <img v-else :src="photoForm.url" width="360px" height="180px" />
             </el-upload>
           </el-form-item>
         </el-form>
@@ -151,23 +101,14 @@
         <div class="dialog-title-container" slot="title">
           移动照片
         </div>
-        <el-empty v-if="albumList.length < 2" description="暂无其他相册"/>
+        <el-empty v-if="albumList.length < 2" description="暂无其他相册" />
         <el-form v-else label-width="80px" size="medium" :model="photoForm">
           <el-radio-group v-model="albumId">
             <div class="album-check-item">
               <template v-for="item of albumList">
-                <el-radio
-                  v-if="item.id !== albumInfo.id"
-                  :key="item.id"
-                  :label="item.id"
-                  style="margin-bottom:1rem"
-                >
+                <el-radio v-if="item.id !== albumInfo.id" :key="item.id" :label="item.id" style="margin-bottom:1rem">
                   <div class="album-check">
-                    <el-image
-                      fit="cover"
-                      class="album-check-cover"
-                      :src="item.cover"
-                    />
+                    <el-image fit="cover" class="album-check-cover" :src="item.cover" />
                     <div style="margin-left:0.5rem">{{ item.name }}</div>
                   </div>
                 </el-radio>
@@ -177,11 +118,7 @@
         </el-form>
         <div slot="footer">
           <el-button @click="movePhoto = false">取 消</el-button>
-          <el-button
-            :disabled="albumId == null"
-            type="primary"
-            @click="updatePhotoAlbum"
-          >
+          <el-button :disabled="albumId == null" type="primary" @click="updatePhotoAlbum">
             确 定
           </el-button>
         </div>
@@ -191,11 +128,11 @@
 </template>
 
 <script>
-import {fetchPhoto, deleteBatch, addPhoto, updatePhoto, infoPhoto,movePhoto} from '@/api/photo'
-import {fetchAlbum, info} from '@/api/photoAlbum'
-import {upload} from "@/api/imgUpload";
-import {mapGetters} from "vuex";
-import {hasAuth} from "@/utils/auth";
+import { fetchPhoto, deleteBatch, addPhoto, updatePhoto, infoPhoto, movePhoto } from '@/api/photo'
+import { fetchAlbum, info } from '@/api/photoAlbum'
+import { upload } from "@/api/imgUpload";
+import { mapGetters } from "vuex";
+import { hasAuth } from "@/utils/auth";
 
 export default {
   created() {
@@ -210,7 +147,6 @@ export default {
       isIndeterminate: false,
       imgLoading: false,
       uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
-      img: process.env.VUE_APP_IMG_API,
       dialogVisible: false,
       isEditForm: false,
       title: null,
@@ -239,13 +175,13 @@ export default {
         albumId: this.$route.query.albumId,
       },
       rules: {
-        'name': [{required: true, message: '必填字段', trigger: 'blur'}],
-        'info': [{required: true, message: '必填字段', trigger: 'blur'}],
-        'url': [{required: true, message: '必填字段', trigger: 'change'}],
+        'name': [{ required: true, message: '必填字段', trigger: 'blur' }],
+        'info': [{ required: true, message: '必填字段', trigger: 'blur' }],
+        'url': [{ required: true, message: '必填字段', trigger: 'change' }],
       }
     };
   },
-  computed:{
+  computed: {
     ...mapGetters([
       'pres'
     ]),
@@ -269,7 +205,7 @@ export default {
       });
     },
     listAlbums: function () {
-      fetchAlbum({pageNo: 1, pageSize: 100}).then(res => {
+      fetchAlbum({ pageNo: 1, pageSize: 100 }).then(res => {
         this.albumList = res.data.records;
       });
     },
@@ -318,12 +254,12 @@ export default {
       this.dialogVisible = true;
     },
     updatePhotoAlbum: function () {
-      movePhoto({albumId: this.albumId, ids: this.selectPhotoIdList}).then(res => {
+      movePhoto({ albumId: this.albumId, ids: this.selectPhotoIdList }).then(res => {
         this.$message.success("移动照片成功")
         this.getAlbumInfo();
         this.listPhotos();
         this.movePhoto = false;
-      }).catch(err =>{
+      }).catch(err => {
         console.log(err)
       });
     },
@@ -337,7 +273,7 @@ export default {
       // 文件对象
       formData.append('multipartFile', this.files)
       upload(formData).then(res => {
-        this.photoForm.url =  res.data
+        this.photoForm.url = res.data
         this.imgLoading = false
       })
     },

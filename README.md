@@ -26,7 +26,9 @@
 
 **项目链接：** [拾壹博客](http://www.shiyit.com)
 
-**后台链接：** [拾壹博客后台管理系统](http://www.shiyit.com/admin)
+## 站点演示地址
+首先感谢群里小伙伴 @**消失的北极光** 对拾壹博客提供服务器支持。所以就刚好以此用来做拾壹博客的演示站点，
+**后台链接：** [拾壹博客后台管理系统](http://demo.shiyit.com/admin/#/login?redirect=%2Fdashboard)
 
 账号:test 密码:123456
 

@@ -138,7 +138,6 @@ export default {
     return {
       formLabelWidth: '120px',
       icon: false, //控制删除图标的显示
-      img: process.env.VUE_APP_IMG_API,
       uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
       isEditForm: 0,
       sexColor: ['success', 'warning'],

@@ -260,7 +260,6 @@ export default {
       loginTypeLists: [],
       showList: [],
       loading: [],
-      img: process.env.VUE_APP_IMG_API,
       form: {
         name: "",
         aboutMe: "",

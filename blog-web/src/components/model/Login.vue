@@ -4,7 +4,7 @@
             :visible.sync="dialogFormVisible">
             <el-form :model="form" :rules="rules" ref="ruleForm">
                 <el-form-item label="账号" :label-width="formLabelWidth" prop="email">
-                    <el-input placeholder="请输入账号" @keyup.enter.native="login" v-model="form.email"
+                    <el-input placeholder="请输入账号/邮箱" @keyup.enter.native="login" v-model="form.email"
                         autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
@@ -116,7 +116,7 @@
                 </el-form-item>
             </el-form>
 
-            <el-button type="primary" class="loginBtn" round>修改</el-button>
+            <el-button type="primary" class="loginBtn" @click="forgetPassword" round>修改</el-button>
 
             <div class="goLoginBtn">
                 已有账号，<a @click="bacKLogin">去登录</a>
@@ -129,7 +129,7 @@
 </template>
 
 <script>
-import { emailLogin, wxIsLogin, openAuthUrl, getWechatLoginCode, sendEmailCode, emailRegister } from "@/api";
+import { emailLogin, wxIsLogin, openAuthUrl, getWechatLoginCode, sendEmailCode, emailRegister, forgetPassword } from "@/api";
 import { setUrl, setToken } from '@/utils/cookieUtil'
 
 export default {
@@ -173,6 +173,23 @@ export default {
         },
     },
     methods: {
+        forgetPassword() {
+            this.$refs['ruleForm'].validate((valid) => {
+                if (valid) {
+                    forgetPassword(this.form).then(res => {
+                        this.$notify.success({
+                            title: '成功',
+                            message: '修改成功',
+                        });
+                        this.$store.state.loginFlag = true;
+                        this.forgetFlag = false
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
         register() {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {

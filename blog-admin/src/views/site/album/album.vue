@@ -94,7 +94,6 @@ export default {
     return {
       loading: true,
       imgLoading: false,
-      img: process.env.VUE_APP_IMG_API,
       uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
       isEditForm: false,
       dialogVisible: false,

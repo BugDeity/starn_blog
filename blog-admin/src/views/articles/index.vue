@@ -646,7 +646,6 @@ export default {
       this.fileList = []
       info(scope.row.id).then(res => {
         this.article = res.data
-        this.fileList.push({ name: this.article.avatar, url: this.img + this.article.avatar })
         this.beforeShow("修改文章", 1)
       })
     },

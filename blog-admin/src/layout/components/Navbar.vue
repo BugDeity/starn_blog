@@ -65,7 +65,6 @@ export default {
   data() {
     return {
       title: "更新日志",
-      img: process.env.VUE_APP_IMG_API,
       activeName: "1"
     };
   },

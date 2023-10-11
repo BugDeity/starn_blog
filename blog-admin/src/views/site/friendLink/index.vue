@@ -147,7 +147,6 @@ export default {
       formLabelWidth: '120px',
       dialogFormVisible: false,
       title: null,
-      img: process.env.VUE_APP_IMG_API,
       tableData: [],
       total: null,
       showSearch: true,
