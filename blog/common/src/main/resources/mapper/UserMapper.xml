@@ -76,7 +76,7 @@
     <select id="selectInfoByUserIdNew" resultType="com.shiyi.vo.UserInfoVO">
         SELECT
             u.id,
-            ui.user_info_id,
+            u.user_info_id,
             ui.nickname,
             ui.avatar,
             ui.intro,
