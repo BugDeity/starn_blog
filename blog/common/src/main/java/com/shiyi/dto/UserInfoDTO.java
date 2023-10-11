@@ -1,5 +1,6 @@
 package com.shiyi.dto;
 
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 /**
@@ -10,9 +11,13 @@ import lombok.Data;
 @Data
 public class UserInfoDTO {
     /**
+     * 用户账号id
+     */
+    private String id;
+    /**
      * 用户信息id
      */
-    private Integer id;
+    private Integer userInfoId;
     /**
      * 昵称
      * */

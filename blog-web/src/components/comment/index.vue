@@ -51,8 +51,8 @@
                                             </a>
                                         </h4>
                                     </div>
-                                    <a href="javascript:;" :ref="'replyBtn' + item.id"
-                                        @click="replyComment(item, item.id, false)" class="comment-reply-link">回复</a>
+                                    <a :ref="'replyBtn' + item.id" @click="replyComment(item, item.id, false)"
+                                        class="comment-reply-link">回复</a>
                                     <div class="right">
                                         <div class="info">
                                             <time itemprop="datePublished" datetime="1680523318635" class="comment-time">发布于

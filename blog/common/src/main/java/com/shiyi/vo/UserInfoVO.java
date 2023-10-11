@@ -26,6 +26,11 @@ public class UserInfoVO {
     private String id;
 
     /**
+     * 用户信息id
+     */
+    private Integer userInfoId;
+
+    /**
      * 邮箱号
      */
     private String email;
