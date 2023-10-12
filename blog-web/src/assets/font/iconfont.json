@@ -172,6 +172,27 @@
       "font_class": "biaoqing",
       "unicode": "e60b",
       "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "5320519",
+      "name": "太阳",
+      "font_class": "taiyang",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "8431633",
+      "name": "上箭头",
+      "font_class": "shangjiantou",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "28193232",
+      "name": "月亮",
+      "font_class": "yueliang",
+      "unicode": "e627",
+      "unicode_decimal": 58919
     }
   ]
 }

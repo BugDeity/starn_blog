@@ -134,8 +134,8 @@
                 <div class="dianzan-item">
                     <div>
                         <span @click="like(article.id)">
-                            <svg-icon v-if="article.isLike" icon-class="sxdianzan"></svg-icon>
-                            <svg-icon v-else icon-class="dianzan"></svg-icon>
+                            <i v-if="article.isLike" class="iconfont icon-dianzan4"></i>
+                            <i v-else class="iconfont icon-dianzan1"></i>
                         </span>
                     </div>
 
@@ -175,7 +175,7 @@
             <!-- 版权 -->
             <div class="copyright">
                 <div class="copyrightItem">
-                    <svg-icon :icon-class="article.isOriginal ? 'yuanchuang' : 'zhuanzai'"></svg-icon>
+                    <svg-icon icon-class="yuanchuang"></svg-icon>
                     <span class="text name">创作类型:</span>
                     <span class="text"> {{ article.isOriginal ? '原创' : '转载' }}</span>
                 </div>
@@ -212,7 +212,7 @@
             <div class="comment-mian" id="comment">
                 <div class="title">
                     <!-- <i class="iconfont icon-pinglun"></i> -->
-                    <svg-icon icon-class="comment"></svg-icon>
+                    <svg-icon icon-class="message"></svg-icon>
                     评论 <span style="color: var(--text-color);font-size: 0.8rem;">发表评论,来抢沙发</span>
                 </div>
                 <Comment :articleUserId="article.userId" />
@@ -448,7 +448,6 @@ export default {
                         tagName: el.localName
                     }));
                     this.tempList = anchors
-                    console.log(this.tempList)
                 }
 
                 // 添加图片预览功能
@@ -716,6 +715,10 @@ export default {
                 margin-top: 15px;
 
                 .dianzan-item {
+                    i {
+                        font-size: 1.5rem;
+                    }
+
                     .likeCountItem {
                         color: var(--text-color);
                         font-size: 12px;

@@ -1,32 +1,33 @@
 <template>
-    <div class="toolbar">
-        <a href="javascript:void(0)" @click="handleGoIm" class="toolbar_item chat ">
-            <el-tooltip class="item" effect="dark" content="聊天室" placement="left">
-                <svg-icon icon-class="chat"></svg-icon>
-            </el-tooltip>
-        </a>
+    <div :class="className">
+        <el-tooltip class="item" effect="dark" content="聊天室" placement="left">
+            <a href="javascript:void(0)" @click="handleGoIm" class="toolbar_item chat ">
+                <i class="el-icon-chat-dot-square"></i>
+            </a>
+        </el-tooltip>
 
-        <a href="javascript:void(0)" class="toolbar_item theme" @click="chageTheme">
-            <el-tooltip class="item" effect="dark" content="切换主题" placement="left">
-                <svg-icon v-if="theme && theme == 'dark'" icon-class="shallow"></svg-icon>
-                <svg-icon v-else icon-class="deep"></svg-icon>
-            </el-tooltip>
-        </a>
+        <el-tooltip class="item" effect="dark" content="切换主题" placement="left">
+            <a href="javascript:void(0)" class="toolbar_item theme" @click="chageTheme">
+                <i class="iconfont icon-taiyang" v-if="theme && theme == 'dark'"></i>
+                <i class="iconfont icon-yueliang" v-else></i>
+            </a>
+        </el-tooltip>
 
-        <a href="javascript:void(0)" title="回到顶部" class="toolbar_item back2top" @click="backTop()" v-if="showBtn">
-            <el-tooltip class="item" effect="dark" content="回到顶部" placement="left">
-                <svg-icon icon-class="topBar"></svg-icon>
-            </el-tooltip>
-        </a>
+        <el-tooltip class="item" effect="dark" content="回到顶部" placement="left">
+            <a href="javascript:void(0)" title="回到顶部" class="toolbar_item back2top" @click="backTop()">
+                <i class="iconfont icon-shangjiantou"></i>
+            </a>
+        </el-tooltip>
+
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            showBtn: false, // 回到顶部，默认是false，就是隐藏起来
             theme: sessionStorage.getItem("theme"),
             show: false,
+            className: "toolbar1"
         }
     },
     mounted() {
@@ -58,7 +59,18 @@ export default {
                 window.pageYOffset ||
                 document.documentElement.scrollTop ||
                 document.body.scrollTop;
-            this.showBtn = scrollTop > 200
+
+            let scroll = scrollTop - this.i;
+            this.i = scrollTop;
+
+            if (scrollTop <= 200) {
+                this.className = "toolbar1 slideDown"
+            }
+
+            if (scroll > 0) {
+                this.className = "toolbar1 slideUp"
+            }
+
         },
         backTop() {
             var timer = setInterval(function () {
@@ -78,61 +90,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toolbar {
+.slideUp {
+    right: 20px;
+}
+
+.slideDown {
+    right: -80px;
+}
+
+.toolbar1 {
     position: fixed;
-
-    a {
-        display: block;
-        height: 50px;
-        position: relative;
-    }
-
+    bottom: 100px;
+    z-index: 99;
+    transition: all .8s;
 
     .toolbar_item {
-        pointer-events: auto;
-        visibility: visible;
-        position: fixed;
-        right: 30px;
+        width: 25px;
+        height: 25px;
+        text-align: center;
         margin-bottom: 10px;
-
-        svg {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            top: 9px;
-            right: 10px;
-        }
+        display: block;
+        font-size: 1.2rem;
+        text-decoration: none;
+        color: #fff;
+        background-color: var(--theme-color);
+        padding: 5px;
+        border-radius: 5px;
+        font-weight: 700;
     }
 
-    .theme {
-        bottom: 150px;
-    }
-
-    .chat {
-        bottom: 250px;
-        right: 0px;
-
-        svg {
-            width: 100px !important;
-            height: 100px !important;
-        }
-    }
-
-    .back2top {
-        bottom: 100px;
-        right: 30px;
-        animation: fade-in 0.3s linear 1;
-    }
-
-
-    @keyframes fade-in {
-        0% {
-            transform: translateX(48px)
-        }
-
-        100% {
-            transform: translateX(0)
-        }
-    }
 }
 </style>

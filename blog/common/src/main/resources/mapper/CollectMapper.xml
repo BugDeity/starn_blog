@@ -4,8 +4,8 @@
 
     <select id="selectCollectList" resultType="com.shiyi.vo.ApiArticleListVO">
         select c.create_time,a.*,ui.nickname as username,ui.avatar as userAvatar,   b.NAME AS categoryName,
-               b.id AS categoryId from b_collect c
-            left join b_article a on c.article_id = a.id
+               b.id AS categoryId from b_article a
+            left join b_collect c on c.article_id = a.id
             left JOIN b_category b ON a.category_id = b.id
             left join b_user u on a.user_id = u.id
             left join b_user_info ui on ui.id = u.user_info_id
