@@ -244,13 +244,6 @@ public class ApiUserServiceImpl implements ApiUserService {
                     .set(User::getIpAddress, ipAddress)
                     .set(User::getIpSource, ipSource)
                     .eq(User::getId, user.getId()));
-
-            //更新头像和昵称
-            userInfoMapper.update(new UserInfo(), new LambdaUpdateWrapper<UserInfo>()
-                    .set(UserInfo::getAvatar, jsonObject.get("avatar"))
-                    .set(UserInfo::getNickname, jsonObject.get("nickname"))
-                    .eq(UserInfo::getId, user.getUserInfoId()));
-
         } else {
             // 获取第三方用户信息，保存到数据库返回
             // 保存用户信息
