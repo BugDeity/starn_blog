@@ -46,9 +46,7 @@ public class CloudOssServiceImpl implements CloudOssService {
     @Override
     public ResponseResult upload(MultipartFile file) {
         //需要登录
-        if (!StpUtil.isLogin()) {
-            throw new BusinessException(NOT_LOGIN);
-        }
+      StpUtil.checkLogin();
         if (StpUtil.hasRole("demonstrate")) {
             throw new BusinessException("演示模式，不允许上传文件");
         }

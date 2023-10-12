@@ -117,7 +117,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--background-color);
+    background: var(--footer-background-color);
     background-position: 100% 0;
     animation: bgSize 5s infinite ease-in-out alternate;
     margin-top: 50px;

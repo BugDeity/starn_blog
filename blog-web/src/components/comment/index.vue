@@ -12,9 +12,8 @@
                             @paste="optimizePasteEvent" data-placeholder="说点什么呢" class="comment-textarea"></div>
                     </div>
                     <div class="comment-btn">
-                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn" @mouseenter="handleEmojiMouseEnter"
-                            @mouseleave="handleEmojiMouseLeave">
-                            <svg-icon :icon-class="emoji"></svg-icon>
+                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn">
+                            <i class="iconfont icon-biaoqing"></i>
                         </span>
                         <el-button @click="addComment" style="" class="upload-btn v-comment-btn">
                             提交
@@ -188,7 +187,6 @@ export default {
             user: this.$store.state.userInfo,
             articleId: this.$route.params.articleId,
             // 加载层信息
-            emoji: "emoji1",
             pageData: {
                 pageNo: 1,
                 pageSize: 5,
@@ -226,12 +224,6 @@ export default {
                 this.commentList = res.data.records
                 this.pages = res.data.pages;
             })
-        },
-        handleEmojiMouseEnter() {
-            this.emoji = "emoji2"
-        },
-        handleEmojiMouseLeave() {
-            this.emoji = "emoji1"
         },
         handleChooseEmoji(value) {
             // 创建一个img标签（表情）
@@ -450,9 +442,8 @@ export default {
                     margin: 10px 0;
 
                     .emoji-btn {
-                        svg {
-                            width: 20px;
-                            height: 20px;
+                        i {
+                            font-size: 1.3rem;
                             cursor: url(https://img.shiyit.com/link.cur), pointer
                         }
                     }

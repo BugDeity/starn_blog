@@ -65,7 +65,7 @@ public class OperationLoggerAspect {
     @Around(value = "pointcut(operationLogger)")
     public Object doAround(ProceedingJoinPoint joinPoint, OperationLogger operationLogger) throws Throwable {
         HttpServletRequest request = IpUtil.getRequest();
-
+        StpUtil.checkLogin();
         //因给了演示账号所有权限以供用户观看，所以执行业务前需判断是否是管理员操作
         if  (!StpUtil.hasRole("admin")) {
             throw new BusinessException(NO_PERMISSION);

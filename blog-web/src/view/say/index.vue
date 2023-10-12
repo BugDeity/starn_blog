@@ -83,7 +83,9 @@
                                             @paste="optimizePasteEvent" :data-placeholder="placeholder"
                                             class="comment-textarea"></div>
 
-                                        <a @click="showEmoji = !showEmoji"> <svg-icon icon-class="emoji1"></svg-icon></a>
+                                        <a @click="showEmoji = !showEmoji">
+                                            <i class="iconfont icon-biaoqing"></i>
+                                        </a>
                                         <a class="sendBtn" @click="sayComment">发送</a>
 
                                     </div>
@@ -704,9 +706,8 @@ export default {
                             }
 
 
-                            svg {
-                                width: 20px;
-                                height: 20px;
+                            i {
+                                font-size: 1.3rem;
                                 position: absolute;
                                 right: 80px;
                                 bottom: 20px;

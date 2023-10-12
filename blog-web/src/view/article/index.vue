@@ -282,7 +282,8 @@
 
                         <ul class="structureBox">
                             <li :class="active == index ? 'structure active' : 'structure'"
-                                v-for="(anchor, index) in titles" @click="handleAnchorClick(anchor)" :key="index">
+                                :style="{ marginLeft: initMarginLeft(anchor.tagName) }" v-for="(anchor, index) in titles"
+                                @click="handleAnchorClick(anchor)" :key="index">
                                 {{ anchor.title }}
                             </li>
                         </ul>
@@ -444,8 +445,10 @@ export default {
                         title: el.innerText,
                         lineIndex: el.getAttribute('data-v-md-line'),
                         indent: hTags.indexOf(el.tagName),
+                        tagName: el.localName
                     }));
                     this.tempList = anchors
+                    console.log(this.tempList)
                 }
 
                 // 添加图片预览功能
@@ -619,6 +622,23 @@ export default {
                 return `${month}/${date}`;
             }
             return `${year}-${month}-${date}`;
+        },
+        initMarginLeft(tag) {
+            console.log(tag)
+            switch (tag) {
+                case 'h2':
+                    return "10px";
+                case 'h3':
+                    return "20px";
+                case 'h4':
+                    return "30px";
+                case 'h5':
+                    return "40px";
+                case 'h6':
+                    return "50px";
+                default:
+                    return 0;
+            }
         },
         handleAnchorClick(anchor) {
             const { preview } = this.$refs;

@@ -165,6 +165,13 @@
       "font_class": "quxiaodianzan",
       "unicode": "e777",
       "unicode_decimal": 59255
+    },
+    {
+      "icon_id": "124698383",
+      "name": "表情",
+      "font_class": "biaoqing",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
     }
   ]
 }

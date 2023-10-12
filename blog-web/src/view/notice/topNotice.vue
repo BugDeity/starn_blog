@@ -6,7 +6,7 @@
             <span class="msg" ref="scrollMsg">
                 <span class="title">
                     <svg-icon icon-class="topNotice"></svg-icon>
-                    通知 :
+                    公告 :
                 </span>
                 <span class="content" v-html="notice.msg"></span>
                 <!-- <a class="closeBtn" @click="closeMsg">

@@ -12,9 +12,8 @@
                             @paste="optimizePasteEvent" data-placeholder="说点什么呢" class="comment-textarea"></div>
                     </div>
                     <div class="comment-btn">
-                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn" @mouseenter="handleEmojiMouseEnter"
-                            @mouseleave="handleEmojiMouseLeave">
-                            <svg-icon :icon-class="emoji"></svg-icon>
+                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn">
+                            <i class="iconfont icon-biaoqing"></i>
                         </span>
                         <div style="margin-left: auto;">
                             <el-button type="info" @click="handleCancle" class="cancle-btn v-comment-btn">
@@ -52,7 +51,6 @@ export default {
             replyUserId: null,
             showBox: false,
             user: this.$store.state.userInfo,
-            emoji: "emoji1",
             lastEditRange: null
         }
     },
@@ -74,12 +72,6 @@ export default {
         }
     },
     methods: {
-        handleEmojiMouseEnter() {
-            this.emoji = "emoji2"
-        },
-        handleEmojiMouseLeave() {
-            this.emoji = "emoji1"
-        },
         handleChooseEmoji(value) {
             // 创建一个img标签（表情）
             let img = document.createElement('img');
@@ -241,11 +233,9 @@ export default {
                     margin: 10px 0;
 
                     .emoji-btn {
-                        cursor: url(https://img.shiyit.com/link.cur), pointer;
-
-                        svg {
-                            width: 20px;
-                            height: 20px;
+                        i {
+                            font-size: 1.3rem;
+                            cursor: url(https://img.shiyit.com/link.cur), pointer
                         }
                     }
 
@@ -317,7 +307,7 @@ export default {
 
                 .emoji-wrapper {
                     position: absolute;
-                    top: -50px;
+                    top: -53px;
                 }
             }
         }

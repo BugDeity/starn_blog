@@ -82,10 +82,9 @@
                 <div class="bottom">
                     <!-- 输入选择 如表情、图片等 -->
                     <div class="toolbars">
-                        <span>
-                            <span class="item" @click.stop="handleOpen" @mouseenter="handleEmojiMouseEnter"
-                                @mouseleave="handleEmojiMouseLeave">
-                                <svg-icon :icon-class="emoji"></svg-icon>
+                        <div>
+                            <span class="item" @click.stop="handleOpen">
+                                <i class="iconfont icon-biaoqing"></i>
                             </span>
                             <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
                                 :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
@@ -93,7 +92,7 @@
                                     <svg-icon icon-class="photo"></svg-icon>
                                 </span>
                             </el-upload>
-                        </span>
+                        </div>
                     </div>
                     <!-- 表情框 -->
                     <div class="emoji-wrapper" v-show="emojiShow">
@@ -237,7 +236,6 @@ export default {
                 }
             ],
             selectUserOnline: null,
-            emoji: "emoji1",
             atMember: "",
             searchUrl: ['https://www.baidu.com/s?&wd=', 'https://search.gitee.com/?skin=rec&type=repository&q=', 'https://github.com/search?q='],
             lastEditRange: null,
@@ -325,12 +323,7 @@ export default {
             let url = this.searchUrl[type] + this.message.content.trim()
             window.open(url, '_blank')
         },
-        handleEmojiMouseEnter() {
-            this.emoji = "emoji2"
-        },
-        handleEmojiMouseLeave() {
-            this.emoji = "emoji1"
-        },
+
         closeRoom(id, index) {
             this.$confirm('此操作将把该聊天窗口删除, 是否继续?', '提示', {
                 confirmButtonText: '确定',
@@ -1160,6 +1153,11 @@ export default {
                         }
                     }
 
+                    i {
+                        color: #fff;
+                        font-size: 1.1rem;
+                    }
+
                     svg {
                         width: 20px;
                         height: 20px;
@@ -1176,7 +1174,7 @@ export default {
                 .emoji-wrapper {
 
                     position: absolute;
-                    top: -200px;
+                    top: -210px;
                     left: 10px;
                 }
 
