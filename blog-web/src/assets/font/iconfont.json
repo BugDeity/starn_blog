@@ -174,25 +174,39 @@
       "unicode_decimal": 58891
     },
     {
-      "icon_id": "5320519",
+      "icon_id": "124706460",
       "name": "太阳",
       "font_class": "taiyang",
-      "unicode": "e62e",
-      "unicode_decimal": 58926
+      "unicode": "e62f",
+      "unicode_decimal": 58927
     },
     {
-      "icon_id": "8431633",
+      "icon_id": "124706461",
       "name": "上箭头",
       "font_class": "shangjiantou",
       "unicode": "e63c",
       "unicode_decimal": 58940
     },
     {
-      "icon_id": "28193232",
+      "icon_id": "124706462",
       "name": "月亮",
       "font_class": "yueliang",
       "unicode": "e627",
       "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "124720205",
+      "name": "退出全屏",
+      "font_class": "tuichuquanping",
+      "unicode": "e71f",
+      "unicode_decimal": 59167
+    },
+    {
+      "icon_id": "124720206",
+      "name": "全屏",
+      "font_class": "quanping",
+      "unicode": "e769",
+      "unicode_decimal": 59241
     }
   ]
 }
