@@ -89,14 +89,6 @@
                     </span>
                 </li>
 
-                <li :class="path == '/note' ? 'active' : ''">
-                    <span>
-                        <router-link :to="'/note'">
-                            <svg-icon icon-class="note"></svg-icon> 笔记
-                        </router-link>
-                    </span>
-                </li>
-
                 <li :class="path == '/hot' ? 'active' : ''">
                     <span>
                         <router-link :to="'/hot'">

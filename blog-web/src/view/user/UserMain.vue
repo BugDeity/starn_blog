@@ -16,14 +16,6 @@
                         </el-col>
                         <el-col :span="18">
                             <div class="grid-content bg-purple">
-                                <a @click="btnClike(1)" class="topBtnItem">
-                                    <div>{{ count.note }}</div>
-                                    笔记
-                                </a>
-                            </div>
-                        </el-col>
-                        <el-col :span="18">
-                            <div class="grid-content bg-purple">
                                 <a class="topBtnItem">
                                     <div>{{ count.followed }}</div>
                                     关注
@@ -128,17 +120,6 @@
                         </div>
 
                     </div>
-                    <!-- 笔记列表 -->
-                    <div v-if="pageData.index == 1" class="note" v-for="(item, index) in dataList" :key="index">
-                        <div style="width: 100%;margin-bottom: 15px;">
-                            <span class="time">
-                                <i class="el-icon-time"></i> {{ item.createTime }}
-                            </span>
-                        </div>
-                        <div style="width: 100%;">
-                            <v-md-preview :text="item.content" ref="preview" v-highlight />
-                        </div>
-                    </div>
                     <!-- 分页按钮 -->
                     <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="onPage" />
                 </div>
@@ -155,7 +136,6 @@ import {
     getUserInfo, getArticleByUserId, getUserCount
 } from '@/api'
 
-import { selectNoteByUserId } from '@/api/note'
 export default {
     name: '',
     data() {
@@ -176,15 +156,10 @@ export default {
                     icon: "el-icon-document",
                     name: "文章"
                 },
-                {
-                    icon: "el-icon-reading",
-                    name: "笔记"
-                },
             ],
             count: {
                 article: 0,
                 collect: 0,
-                note: 0,
                 followed: 0,
             }
         }
@@ -202,7 +177,6 @@ export default {
                 let count = {
                     article: res.extra.articleCount,
                     collect: res.extra.collectCount,
-                    note: res.extra.noteCount,
                     followed: res.extra.followedCount,
                 }
                 this.count = count
@@ -233,9 +207,6 @@ export default {
                 case 0:
                     this.selectAricleList()
                     break;
-                case 1:
-                    this.selectNoteList()
-                    break;
                 default:
                     this.selectAricleList()
                     break;
@@ -251,27 +222,11 @@ export default {
                 this.$bus.$emit('hideLoading');
             })
         },
-        selectNoteList() {
-            this.$bus.$emit('showLoading');
-            this.pageData.status = 1
-            selectNoteByUserId(this.pageData).then(res => {
-                this.dataList.push(...res.data.records);
-                this.pages = res.data.pages
-                this.$bus.$emit('hideLoading');
-            }).catch(err => {
-                this.$bus.$emit('hideLoading');
-            })
-        },
     },
 }
 </script>
    
 <style lang='scss' scoped>
-/deep/ .vuepress-markdown-body {
-    background-color: var(--background-color);
-    color: var(--article-color);
-}
-
 .user-main {
 
 
@@ -565,16 +520,6 @@ export default {
                 }
 
 
-            }
-
-            .note {
-                margin-bottom: 20px;
-                margin-right: 10px;
-
-                .time {
-                    color: var(--text-color);
-                    margin-bottom: 20px;
-                }
             }
         }
     }

@@ -24,14 +24,6 @@
                         </el-col>
                         <el-col :span="18">
                             <div class="grid-content bg-purple">
-                                <a @click="btnClike(2)" class="topBtnItem">
-                                    <div>{{ count.note }}</div>
-                                    笔记
-                                </a>
-                            </div>
-                        </el-col>
-                        <el-col :span="18">
-                            <div class="grid-content bg-purple">
                                 <a class="topBtnItem">
                                     <div>{{ count.followed }}</div>
                                     关注
@@ -192,25 +184,6 @@
                         </div>
 
                     </div>
-                    <!-- 笔记列表 -->
-                    <div v-if="pageData.index == 2" class="note" v-for="(item, index) in dataList" :key="index">
-                        <div style="width: 100%;margin-bottom: 15px;">
-                            <span class="time">
-                                <i class="el-icon-time"></i> {{ item.createTime }}
-                            </span>
-                            <span style="float: right;">
-                                <el-tag style="margin-right: 10px;" size="small" v-if="item.categoryName">{{
-                                    item.categoryName }}</el-tag>
-                                <el-tooltip class="item" effect="dark" content="删除笔记" placement="top">
-                                    <el-button type="danger" size="mini" @click="handleDeleteNote(index, item.id)"
-                                        icon="el-icon-delete" circle></el-button>
-                                </el-tooltip>
-                            </span>
-                        </div>
-                        <div style="width: 100%;">
-                            <v-md-preview :text="item.content" ref="preview" v-highlight />
-                        </div>
-                    </div>
                     <!-- 分页按钮 -->
                     <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="onPage" />
                 </div>
@@ -313,9 +286,7 @@ import {
     updateUserInfo, getUserInfo, upload, getArticleByUserId,
     deleteMyArticle, addFeedback, getUserCount
 } from '@/api'
-
 import { cancelCollect, getCollect } from '@/api/collect'
-import { selectNoteByUserId, deleteNote } from '@/api/note'
 import { sign, validateTodayIsSign } from '@/api/sign'
 export default {
     name: '',
@@ -346,10 +317,6 @@ export default {
                     icon: "el-icon-star-off",
                     name: "收藏"
                 },
-                {
-                    icon: "el-icon-reading",
-                    name: "笔记"
-                },
             ],
             today: new Date().getFullYear() + '-' + (new Date().getMonth() + 1 < 10 ? ('0' + (new Date().getMonth() + 1)) : new Date().getMonth() + 1) + '-'
                 + (new Date().getDate() < 10 ? ('0' + new Date().getDate()) : new Date().getDate()),
@@ -369,7 +336,6 @@ export default {
             count: {
                 article: 0,
                 collect: 0,
-                note: 0,
                 followed: 0,
             }
 
@@ -386,7 +352,6 @@ export default {
                 let count = {
                     article: res.extra.articleCount,
                     collect: res.extra.collectCount,
-                    note: res.extra.noteCount,
                     followed: res.extra.followedCount,
                 }
                 this.count = count
@@ -511,31 +476,6 @@ export default {
                     });
                 });
         },
-        handleDeleteNote(index, id) {
-            this.$confirm('确认删除该笔记吗？', '提示', {
-                lockScroll: false,
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            })
-                .then(_ => {
-                    deleteNote(id).then(res => {
-                        this.dataList.splice(index, 1)
-                        this.$notify({
-                            title: '成功',
-                            message: "删除成功",
-                            type: 'success'
-                        });
-                    })
-                })
-                .catch(_ => {
-                    this.$notify({
-                        title: '提示',
-                        message: "取消关闭",
-                        type: 'info'
-                    });
-                });
-        },
         onPage() {
             this.pageData.pageNo++;
             this.before()
@@ -561,9 +501,6 @@ export default {
                 case 1:
                     this.selectCollectionList()
                     break;
-                case 2:
-                    this.selectNoteList()
-                    break;
                 default:
                     this.selectAricleList()
                     break;
@@ -584,12 +521,6 @@ export default {
         },
         selectCollectionList() {
             getCollect(this.pageData).then(res => {
-                this.dataList.push(...res.data.records);
-                this.pages = res.data.pages
-            })
-        },
-        selectNoteList() {
-            selectNoteByUserId(this.pageData).then(res => {
                 this.dataList.push(...res.data.records);
                 this.pages = res.data.pages
             })
@@ -644,11 +575,6 @@ export default {
 </script>
    
 <style lang='scss' scoped>
-/deep/ .vuepress-markdown-body {
-    background-color: var(--background-color);
-    color: var(--article-color);
-}
-
 /deep/ .el-dialog {
     .el-dialog__body {
         padding: 10px 20px;
@@ -1121,17 +1047,6 @@ export default {
                 }
 
 
-            }
-
-            .note {
-                margin-bottom: 20px;
-                border-bottom: 2px dashed var(--border-line);
-                margin-right: 10px;
-
-                .time {
-                    color: var(--text-color);
-                    margin-bottom: 20px;
-                }
             }
         }
     }

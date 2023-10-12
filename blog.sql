@@ -667,24 +667,6 @@ INSERT INTO `b_navigation` VALUES (27, 7, 'uni-app', 'https://uniapp.dcloud.net.
 INSERT INTO `b_navigation` VALUES (28, 9, 'Visual Studio Code', 'https://code.visualstudio.com/', 'https://pic2.zhimg.com/v2-225fbbe09689a4a3219ae1e00fe2280b_1440w.jpg?source=172ae18b', '前端人员热爱的轻量级开发工具', NULL, '2023-08-24 16:53:44');
 
 -- ----------------------------
--- Table structure for b_note
--- ----------------------------
-DROP TABLE IF EXISTS `b_note`;
-CREATE TABLE `b_note`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户id',
-  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
-  `status` int(11) NULL DEFAULT 0 COMMENT '状态 0：未通过 1：通过  2：待审核',
-  `category_id` int(11) NULL DEFAULT NULL COMMENT '分类id',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '笔记' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of b_note
--- ----------------------------
-
--- ----------------------------
 -- Table structure for b_photo
 -- ----------------------------
 DROP TABLE IF EXISTS `b_photo`;

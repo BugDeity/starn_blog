@@ -51,7 +51,6 @@ public class ApiUserServiceImpl implements ApiUserService {
     private final ArticleMapper articleMapper;
 
     private final CollectMapper collectMapper;
-    private final NoteMapper noteMapper;
 
     private final RedisService redisService;
 
@@ -330,10 +329,9 @@ public class ApiUserServiceImpl implements ApiUserService {
         id = StringUtils.isBlank(id) ? StpUtil.getLoginIdAsString() : id;
         Integer articleCount = articleMapper.selectCount(new LambdaQueryWrapper<Article>().eq(Article::getUserId, id));
         Integer collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getUserId, id));
-        Integer noteCount = noteMapper.selectCount(new LambdaQueryWrapper<Note>().eq(Note::getUserId, id));
         Integer followedCount = followedMapper.selectCount(new LambdaQueryWrapper<Followed>().eq(Followed::getUserId, id));
         return ResponseResult.success().putExtra("articleCount", articleCount).putExtra("collectCount", collectCount)
-                .putExtra("noteCount", noteCount).putExtra("followedCount", followedCount);
+                .putExtra("followedCount", followedCount);
     }
 
 }

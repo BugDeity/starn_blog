@@ -112,13 +112,6 @@ const routes = [
                 }
             },
             {
-                path: "/note",
-                component: resolve => require(["@/view/note/index.vue"], resolve),
-                meta: {
-                    title: "拾壹博客-一个专注于技术分享的博客平台"
-                }
-            },
-            {
                 name: "notice",
                 path: "/notice",
                 component: resolve => require(["@/view/notice/index.vue"], resolve),
