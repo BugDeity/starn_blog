@@ -100,7 +100,7 @@ export default {
 
 .toolbar1 {
     position: fixed;
-    bottom: 100px;
+    bottom: 130px;
     z-index: 99;
     transition: all .8s;
 
