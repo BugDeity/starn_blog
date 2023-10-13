@@ -156,6 +156,7 @@ export default {
                         return;
                     }
                     this.article.isPublish = type
+                    this.article.content = this.$refs.md.d_render
                     if (this.article.id) {
                         updateArticle(this.article).then(res => {
                             this.$notify({
