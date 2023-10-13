@@ -2,7 +2,7 @@
     <div class="about-box container">
         <el-card class="box1 box-shadow">
             <h1 class="title">关于本站</h1>
-            <v-md-preview class="content" :text="$store.state.webSiteInfo.aboutMe" ref="preview" />
+            <div class="content" v-html="$store.state.webSiteInfo.aboutMe" ref="preview" />
         </el-card>
 
     </div>
@@ -68,6 +68,7 @@ export default {
         }
 
         .content {
+            padding-left: 30px;
             color: var(--article-color);
         }
     }
