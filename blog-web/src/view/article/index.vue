@@ -106,8 +106,8 @@
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">
                 <!-- <v-md-preview v-highlight :style="style" class="content" :text="this.article.contentMd" ref="preview"
-                    @copy-code-success="handleCopyCodeSuccess" /> -->
-                <article class="content" ref="article" v-highlight v-html="this.article.content"></article>
+                    @copy-code-success=" handleCopyCodeSuccess" /> -->
+                <article class="content" :style="style" ref="article" v-highlight v-html="this.article.content"></article>
                 <div v-if="article.readType != 0 && !serceShow" class="warpper">
                     <div class="item-title">
                         <i class="el-icon-lock"></i> 该文章部分内容已隐藏
@@ -500,53 +500,38 @@ export default {
         },
         init() {
             clearInterval(this.timer);
+            let that = this
             this.codes.forEach((item, index) => {
-                // 取出 code 的父元素 pre（后面方便使用）
-                let pre = item.parentElement;
-
                 let icon =
                     `<div class="mac-icon">` +
                     `<span class="mac-icon-red"></span>` +
                     `<span class="mac-icon-yellow"></span>` +
                     `<span class="mac-icon-green"></span>` +
-                    `<a class="copy-button${index} el-icon-document-copy copy-button"></a>` +
+                    `<a class=" el-icon-document-copy copy-button"></a>` +
                     `</div>`;
 
                 item.insertAdjacentHTML("afterbegin", icon);
                 // 获取复制元素
                 let copyButton =
                     item.firstElementChild.getElementsByClassName("copy-button")[0];
-                const clipboard = new this.Clipboard(`.copy-button${index}`, {
-                    text: () => item.lastElementChild.innerText
-                })
-                clipboard.on('success', () => {
-                    this.$notify({
-                        title: '成功',
-                        message: "复制成功",
-                        type: 'success'
-                    });
-                    clipboard.destroy()
-                })
-                clipboard.on('error', () => {
-                    this.$notify({
-                        title: '失败',
-                        message: "复制失败",
-                        type: 'error'
-                    });
-                    clipboard.destroy()
-                })
-                // copyButton.onclick = function () {
-                //     const copyPromise = navigator.clipboard.writeText(
-                //         item.lastElementChild.innerText
-                //     );
-                //     copyPromise
-                //         .then(() => {
-                //             alert("复制成功")
-                //         })
-                //         .catch(() => {
-                //             alert("复制失败")
-                //         });
-                // };
+                copyButton.onclick = function () {
+                    const copyPromise = navigator.clipboard.writeText(
+                        item.lastElementChild.innerText
+                    );
+                    copyPromise
+                        .then(() => {
+                            that.$notify.success({
+                                title: '成功',
+                                message: "复制成功",
+                            });
+                        })
+                        .catch(() => {
+                            that.$notify.error({
+                                title: '成功',
+                                message: "复制成功",
+                            });
+                        });
+                };
 
             });
         },
@@ -1135,6 +1120,63 @@ export default {
             }
         }
 
+        .box-article {
+            .warpper {
+                background: var(--article-srect-background);
+                position: relative;
+                height: 210px;
+                padding: 5px;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: -80px;
+                    left: 0;
+                    width: 100%;
+                    height: 80px;
+                    z-index: 2;
+                    background: linear-gradient(180deg, rgba(55, 55, 55, 0), #ccc);
+                }
+
+                .item-title {
+                    color: #fff;
+                }
+
+                .item-box {
+                    border-radius: 10px;
+                    background-color: var(--background-color);
+                    height: 150px;
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    overflow: hidden;
+
+                    span {
+                        background: linear-gradient(135deg, #ff74cd 10%, #ec7d0b);
+                        border-top-left-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                        padding: 5px;
+                        font-size: 0.9rem;
+                        color: #fff;
+                    }
+
+                    .neirong {
+                        text-align: center;
+                        margin-top: 15px;
+                        color: var(--text-color);
+                        font-size: 0.9rem;
+                    }
+
+                    .btn {
+                        margin: 0 auto;
+                        display: block;
+                        margin-top: 20px;
+                    }
+                }
+            }
+        }
+
         /deep/ .content {
             color: var(--article-color);
             line-height: 30px;
@@ -1151,7 +1193,7 @@ export default {
             }
 
             img {
-                width: 100%;
+                max-width: 100%;
                 margin: 15px 0;
                 border-radius: 5px !important;
                 transition: box-shadow .35s, transform .35s;
