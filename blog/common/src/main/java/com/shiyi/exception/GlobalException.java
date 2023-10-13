@@ -70,6 +70,6 @@ public class GlobalException {
         if(StringUtils.isBlank(ex.getLocalizedMessage())){
             return ResponseResult.error(ERROR.getCode(),ERROR.getDesc());
         }
-        return ResponseResult.error(ex.getMessage());
+        return ResponseResult.error(ERROR_DEFAULT.getDesc());
     }
 }
