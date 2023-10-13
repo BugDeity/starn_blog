@@ -32,11 +32,6 @@
                         <i class="el-icon-discount" /> 标签
                     </a>
                 </div>
-                <div class="menus-item">
-                    <a @click="handleClike('/photo')">
-                        <i class="el-icon-picture" /> 画廊
-                    </a>
-                </div>
 
                 <div class="menus-item">
                     <a @click="handleClike('/navigation')">

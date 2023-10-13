@@ -25,7 +25,7 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="评论" placement="left">
-                <div class="left-item" title="评论" @click="handleGoPinglun">
+                <div class="left-item" title="评论" @click="handleNodeClick('comment')">
                     <el-badge :value="article.commentCount" class="item">
                         <span>
                             <i class="iconfont icon-pinglun"></i>
@@ -105,8 +105,9 @@
             </div>
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">
-                <v-md-preview v-highlight :style="style" class="content" :text="this.article.contentMd" ref="preview"
-                    @copy-code-success="handleCopyCodeSuccess" />
+                <!-- <v-md-preview v-highlight :style="style" class="content" :text="this.article.contentMd" ref="preview"
+                    @copy-code-success="handleCopyCodeSuccess" /> -->
+                <article class="content" ref="article" v-highlight v-html="this.article.content"></article>
                 <div v-if="article.readType != 0 && !serceShow" class="warpper">
                     <div class="item-title">
                         <i class="el-icon-lock"></i> 该文章部分内容已隐藏
@@ -274,17 +275,16 @@
                         <el-button type="primary" @click="handleGoIm"><i class="el-icon-chat-dot-round"></i> 私信</el-button>
                     </div>
                 </el-card>
-                <div class="directory" v-if="titles.length">
+                <div class="directory">
                     <el-card class="directory-item">
                         <div slot="header" class="title">
                             <span>目录</span>
                         </div>
-
                         <ul class="structureBox">
-                            <li :class="active == index ? 'structure active' : 'structure'"
-                                :style="{ marginLeft: initMarginLeft(anchor.tagName) }" v-for="(anchor, index) in titles"
-                                @click="handleAnchorClick(anchor)" :key="index">
-                                {{ anchor.title }}
+                            <li :style="{ paddingLeft: item.level * 10 + 'px' }"
+                                :class="active == index ? 'structure active' : 'structure'" v-for="(item, index) in titles"
+                                :key="index" @click="handleNodeClick(item.id)">
+                                {{ item.title }}
                             </li>
                         </ul>
                     </el-card>
@@ -333,7 +333,6 @@ export default {
     },
     data() {
         return {
-
             userInfo: {},
             article: {
                 category: {},
@@ -352,7 +351,6 @@ export default {
             fontNumber: 0,
             locationUrl: window.location.href,
             commentList: [],
-            tempList: null,
             articleId: this.$route.params.articleId,
             commentQuery: {
                 pageNo: 1,
@@ -361,16 +359,24 @@ export default {
             },
             commentPages: 0,
             user: {},
-            // 加载层信息
-
             serceShow: 0,
-            left: "0px"
+            left: "0px",
+            timer: null,
+            codes: []
+
         }
     },
 
     mounted() {
         const element = document.getElementById("articleBox")
-        this.left = (element.offsetLeft - 55) + "px"
+        this.left = (element.offsetLeft - 60) + "px"
+
+        let that = this
+
+        window.setTimeout(() => {
+            clearInterval(this.timer);
+
+        }, 500)
         // 监听滚动事件
         window.addEventListener('scroll', this.onScroll, false)
 
@@ -389,13 +395,17 @@ export default {
             }
         },
     },
-
+    beforeDestroy() {
+        window.removeEventListener('scroll', this.onScroll);
+    },
+    destroyed() {
+        clearInterval(this.timer);
+    },
     created() {
-
         window.addEventListener('resize', () => {
             const element = document.getElementById("articleBox")
             if (element) {
-                this.left = (element.offsetLeft - 55) + "px"
+                this.left = (element.offsetLeft - 60) + "px"
             }
         }, true)
         this.$bus.$emit('showLoading');
@@ -405,10 +415,39 @@ export default {
             if (this.article.readType != 0 && !this.serceShow) {
                 this.style = "max-height: 1200px;overflow: hidden;"
             }
+
+
+
             //处理目录和图片预览
             this.$nextTick(() => {
-                this.initDirectoryAndImg()
+                //添加图片预览功能
+                const imgList = this.$refs.article.getElementsByTagName("img");
+                let that = this
+                for (var i = 0; i < imgList.length; i++) {
+                    that.imgList.push(imgList[i].src);
+                    imgList[i].addEventListener("click", function (e) {
+                        that.previewImg(e.target.currentSrc);
+                    });
+                }
+                // 添加文章生成目录功能
+                let nodes = this.$refs.article.querySelectorAll("h1,h2,h3,h4,h5,h6");
+                for (let i = 0; i < nodes.length; i++) {
+                    let node = nodes[i];
+                    let reg = /^H[1-6]{1}$/;
+                    if (reg.exec(node.tagName)) {
+                        node.id = 'h' + parseInt(node.tagName.substring(1)) + i;
+                    }
+                    let toc = {
+                        id: node.id,
+                        title: node.innerText,
+                        level: parseInt(node.tagName.substring(1)),
+                    }
+                    this.titles.push(toc);
+                }
+                //修改代码样式和添加复制按钮
+                this.getCodes();
             })
+
             //修改标题和关键词
             document.title = this.article.title
             if (this.article.keywords != null) {
@@ -430,44 +469,88 @@ export default {
             this.$bus.$emit('hideLoading')
         })
     },
-    methods: {
-        initDirectoryAndImg() {
-            if (this.$refs.preview) {
-                //生成目录
-                const anchors = this.$refs.preview.$el.querySelectorAll('h1,h2,h3,h4,h5,h6');
-                if (anchors) {
-                    const titles = Array.from(anchors).filter((title) => !!title.innerText.trim());
-                    if (!this.titles.length) {
-                        this.titles = [];
-                    }
-                    const hTags = Array.from(new Set(titles.map((title) => title.tagName))).sort();
-                    this.titles = titles.map((el) => ({
-                        title: el.innerText,
-                        lineIndex: el.getAttribute('data-v-md-line'),
-                        indent: hTags.indexOf(el.tagName),
-                        tagName: el.localName
-                    }));
-                    this.tempList = anchors
-                }
 
-                // 添加图片预览功能
-                const imgList = this.$refs.preview.$el.getElementsByTagName("img");
-                let that = this
-                for (var i = 0; i < imgList.length; i++) {
-                    that.imgList.push(imgList[i].src);
-                    imgList[i].addEventListener("click", function (e) {
-                        that.previewImg(e.target.currentSrc);
-                    });
+    methods: {
+        handleNodeClick(data, event) {
+            console.log(data)
+            //  实现跳转锚点
+            document.getElementById(data).scrollIntoView({ behavior: 'smooth' })
+        },
+
+        getCodes() {
+            this.codes = document.querySelectorAll("pre");
+            if (this.codes.length > 0) {
+                for (let i = 0; i < this.codes.length; i++) {
+                    if (this.codes[i].offsetHeight != 0) {
+                        return this.init();
+                    } else {
+                        this.timer = setInterval(() => {
+                            for (let j = 0; j < this.codes.length; j++) {
+                                if (this.codes[j].offsetHeight != 0) {
+                                    clearInterval(this.timer);
+                                    return this.init();
+                                }
+                            }
+                        }, 500);
+                        return;
+                    }
                 }
+                return;
             }
         },
-        handleCopyCodeSuccess() {
-            this.$notify({
-                title: '成功',
-                message: '复制成功',
-                type: 'success'
+        init() {
+            clearInterval(this.timer);
+            this.codes.forEach((item, index) => {
+                // 取出 code 的父元素 pre（后面方便使用）
+                let pre = item.parentElement;
+
+                let icon =
+                    `<div class="mac-icon">` +
+                    `<span class="mac-icon-red"></span>` +
+                    `<span class="mac-icon-yellow"></span>` +
+                    `<span class="mac-icon-green"></span>` +
+                    `<a class="copy-button${index} el-icon-document-copy copy-button"></a>` +
+                    `</div>`;
+
+                item.insertAdjacentHTML("afterbegin", icon);
+                // 获取复制元素
+                let copyButton =
+                    item.firstElementChild.getElementsByClassName("copy-button")[0];
+                const clipboard = new this.Clipboard(`.copy-button${index}`, {
+                    text: () => item.lastElementChild.innerText
+                })
+                clipboard.on('success', () => {
+                    this.$notify({
+                        title: '成功',
+                        message: "复制成功",
+                        type: 'success'
+                    });
+                    clipboard.destroy()
+                })
+                clipboard.on('error', () => {
+                    this.$notify({
+                        title: '失败',
+                        message: "复制失败",
+                        type: 'error'
+                    });
+                    clipboard.destroy()
+                })
+                // copyButton.onclick = function () {
+                //     const copyPromise = navigator.clipboard.writeText(
+                //         item.lastElementChild.innerText
+                //     );
+                //     copyPromise
+                //         .then(() => {
+                //             alert("复制成功")
+                //         })
+                //         .catch(() => {
+                //             alert("复制失败")
+                //         });
+                // };
+
             });
         },
+
         handleToUserMain(userId) {
             this.$router.push({ path: "/user_main", query: { id: userId } })
         },
@@ -505,7 +588,6 @@ export default {
             });
         },
         handleDeleteFollowedUser() {
-
             deleteFollowedUser(this.article.userId).then(res => {
                 this.article.isFollowed = 0
                 this.$notify({
@@ -558,29 +640,18 @@ export default {
             });
         },
         onScroll() {
-            // 所有锚点元素的 offsetTop
-            const offsetTopArr = []
-            if (this.tempList) {
-                this.tempList.forEach(item => {
-                    offsetTopArr.push(item.offsetTop)
-                })
-                // 获取当前文档流的 scrollTop
-                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-                // 定义当前点亮的导航下标
-                let navIndex = 0
-                for (let n = 0; n < offsetTopArr.length; n++) {
-                    // 如果 scrollTop 大于等于第n个元素的 offsetTop 则说明 n-1 的内容已经完全不可见
-                    // 那么此时导航索引就应该是n了
-                    if (scrollTop >= offsetTopArr[n]) {
-                        navIndex = n
-                    }
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+            for (let i = 0; i < this.titles.length; i++) {
+                //获取小标题距离屏幕顶端的距离
+                var offsetTop = document.getElementById(this.titles[i].id).offsetTop;
+                //根据条件做出判断，我这里是当小标题和屏幕顶端的距离小于300且没有被标明在读时，就将其背景颜色改变。
+                if ((offsetTop - scrollTop) < 300 && (offsetTop - scrollTop) > 0) {
+                    this.active = i
                 }
-                this.active = navIndex
             }
         },
 
         handleCollect() {
-
             let id = this.article.id;
             if (this.article.isCollect) {
                 cancelCollect(id).then(res => {
@@ -605,9 +676,6 @@ export default {
                 })
             }
         },
-        handleGoPinglun() {
-            document.getElementById("comment").scrollIntoView({ behavior: 'smooth' })
-        },
         handleClike(id, path) {
             this.$router.push({ path: path, query: { id: id } })
         },
@@ -622,39 +690,7 @@ export default {
             }
             return `${year}-${month}-${date}`;
         },
-        initMarginLeft(tag) {
-            console.log(tag)
-            switch (tag) {
-                case 'h2':
-                    return "10px";
-                case 'h3':
-                    return "20px";
-                case 'h4':
-                    return "30px";
-                case 'h5':
-                    return "40px";
-                case 'h6':
-                    return "50px";
-                default:
-                    return 0;
-            }
-        },
-        handleAnchorClick(anchor) {
-            const { preview } = this.$refs;
-            const { lineIndex } = anchor;
-            const heading = preview.$el.querySelector(`[data-v-md-line="${lineIndex}"]`);
-
-            if (heading) {
-                preview.scrollToTarget({
-                    target: heading,
-                    scrollContainer: window,
-                    top: 60,
-                });
-            }
-        },
         like(articleId) {
-            //  
-
             articleLike(articleId).then(res => {
                 if (this.article.isLike) {
                     this.article.likeCount--;
@@ -686,11 +722,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-/deep/ .vuepress-markdown-body {
-    background-color: var(--background-color);
-    color: var(--article-color);
-}
-
 .article-container {
     padding: 10px;
     position: relative;
@@ -933,6 +964,7 @@ export default {
                 .directory-item {
                     background-color: var(--background-color);
 
+
                     ul {
                         margin-top: 8px;
                         list-style: none;
@@ -940,6 +972,10 @@ export default {
                         max-height: 500px;
                         overflow: hidden;
                         overflow-y: scroll;
+
+                        &::-webkit-scrollbar {
+                            display: none;
+                        }
 
                     }
 
@@ -962,6 +998,16 @@ export default {
                         padding-left: 20px;
                         margin-bottom: 10px;
                         border-radius: 5px;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 2;
+                        overflow: hidden;
+
+                    }
+
+                    .active {
+                        font-size: 1.2rem;
                     }
 
                     .active,
@@ -1089,74 +1135,25 @@ export default {
             }
         }
 
-        .box-article {
-            .warpper {
-                background: var(--article-srect-background);
-                position: relative;
-                height: 210px;
-                padding: 5px;
-
-                &::before {
-                    content: "";
-                    position: absolute;
-                    top: -80px;
-                    left: 0;
-                    width: 100%;
-                    height: 80px;
-                    z-index: 2;
-                    background: linear-gradient(180deg, rgba(55, 55, 55, 0), #ccc);
-                }
-
-                .item-title {
-                    color: #fff;
-                }
-
-                .item-box {
-                    border-radius: 10px;
-                    background-color: var(--background-color);
-                    height: 150px;
-                    margin-left: 10px;
-                    margin-right: 10px;
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                    overflow: hidden;
-
-                    span {
-                        background: linear-gradient(135deg, #ff74cd 10%, #ec7d0b);
-                        border-top-left-radius: 10px;
-                        border-bottom-right-radius: 10px;
-                        padding: 5px;
-                        font-size: 0.9rem;
-                        color: #fff;
-                    }
-
-                    .neirong {
-                        text-align: center;
-                        margin-top: 15px;
-                        color: var(--text-color);
-                        font-size: 0.9rem;
-                    }
-
-                    .btn {
-                        margin: 0 auto;
-                        display: block;
-                        margin-top: 20px;
-                    }
-                }
-            }
-        }
-
-        .content {
+        /deep/ .content {
             color: var(--article-color);
+            line-height: 30px;
+            margin-top: 10px;
+            padding: 10px;
 
-            /deep/ .line-numbers-wrapper {
-                line-height: 1.2;
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                margin: 10px 0;
             }
 
-            /deep/ .vuepress-markdown-body img {
-
+            img {
+                width: 100%;
+                margin: 15px 0;
                 border-radius: 5px !important;
-                margin-top: 10px;
                 transition: box-shadow .35s, transform .35s;
                 cursor: url(https://img.shiyit.com/link.cur), pointer;
                 max-height: 500px;
@@ -1166,6 +1163,11 @@ export default {
                     transform: translateY(-10px)
                 }
             }
+
+            ul {
+                margin-left: 20px;
+            }
+
         }
 
         .tag-share {
@@ -1272,7 +1274,7 @@ export default {
         }
 
         .copyright {
-            background-color: var(----text-color3);
+            background-color: var(--text-color3);
             border-radius: 5px;
             width: 100%;
             min-height: 130px;
@@ -1363,5 +1365,97 @@ export default {
     width: 50%;
     height: 50%;
     margin-bottom: 15px;
+}
+</style>
+
+<style>
+pre {
+    opacity: 1 !important;
+    border: 1px solid #272822 !important;
+    background-color: #272822 !important;
+    border-radius: 10px !important;
+    padding: 10px;
+    margin: 10px;
+    color: #f8f8f2 !important;
+}
+
+code {
+    line-height: 20px !important;
+    font-size: 16px !important;
+    vertical-align: top;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 10px !important;
+
+}
+
+code::-webkit-scrollbar {
+    height: 10px !important;
+    border-radius: 5px !important;
+    background-color: #1e1e1e !important;
+}
+
+code::-webkit-scrollbar-thumb {
+    /*滚动条里面小方块*/
+    border-radius: 5px !important;
+    background-color: #666 !important;
+}
+
+code::-webkit-scrollbar-button {
+    /*滚动条的轨道的两端按钮，允许通过点击微调小方块的位置*/
+    border-radius: 5px !important;
+    background-color: #1e1e1e !important;
+}
+
+.mac-icon {
+    height: 30px !important;
+    margin-bottom: 5px !important;
+    color: deeppink !important;
+}
+
+.mac-icon>span {
+    display: inline-block !important;
+    letter-spacing: 5px !important;
+    word-spacing: 5px !important;
+    width: 16px !important;
+    height: 16px !important;
+    border-radius: 8px !important;
+}
+
+.mac-icon-red {
+    background-color: red !important;
+}
+
+.mac-icon-yellow {
+    margin-left: 10px;
+    background-color: yellow !important;
+}
+
+.mac-icon-green {
+    margin-left: 10px;
+    background-color: green !important;
+}
+
+.mac-icon-lang {
+    width: 50px !important;
+    padding-left: 10px !important;
+    font-size: 16px !important;
+    vertical-align: top !important;
+}
+
+.copy-button {
+    border-radius: 3px;
+    padding: 5px 8px !important;
+    color: #ffffff !important;
+    margin-bottom: 5px !important;
+    font-size: 1rem;
+}
+
+.copy-button {
+    float: right !important;
+}
+
+.copy-button:hover {
+    background-color: black !important;
 }
 </style>

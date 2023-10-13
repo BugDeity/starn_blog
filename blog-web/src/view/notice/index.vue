@@ -6,7 +6,7 @@
                 <ul>
                     <li ref="leftIem" :class="pageData.type == index ? 'left-item active' : 'left-item'"
                         v-for="(item, index) in leftIems" :key="index" @click="handleClike(item, index)">
-                        <svg-icon :icon-class="item.icon"></svg-icon> {{ item.name }}
+                        <i :class="item.icon"></i> {{ item.name }}
                     </li>
                 </ul>
             </div>
@@ -115,23 +115,23 @@ export default {
             leftIems: [
                 {
                     name: "系统通知",
-                    icon: "notice"
+                    icon: "el-icon-message-solid"
                 },
                 {
                     name: "文章评论",
-                    icon: "comment"
+                    icon: "el-icon-chat-line-round"
                 },
                 {
                     name: "用户关注",
-                    icon: "watch"
+                    icon: "el-icon-user-solid"
                 },
                 {
                     name: "文章点赞",
-                    icon: "sxdianzan"
+                    icon: "iconfont icon-dianzan"
                 },
                 {
                     name: "文章收藏",
-                    icon: "collect"
+                    icon: "el-icon-star-on"
                 },
 
             ],

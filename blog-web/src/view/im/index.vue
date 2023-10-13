@@ -89,7 +89,7 @@
                             <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
                                 :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
                                 <span class="item">
-                                    <svg-icon icon-class="photo"></svg-icon>
+                                    <i class="el-icon-picture"></i>
                                 </span>
                             </el-upload>
                         </div>

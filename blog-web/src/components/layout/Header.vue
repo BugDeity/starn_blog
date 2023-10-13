@@ -73,14 +73,6 @@
                     </span>
                 </li>
 
-                <li :class="path == '/photo' ? 'active' : ''">
-                    <span>
-                        <router-link :to="'/photo'">
-                            <svg-icon icon-class="photo"></svg-icon> 画廊
-                        </router-link>
-                    </span>
-                </li>
-
                 <li :class="path == '/say' ? 'active' : ''">
                     <span>
                         <router-link :to="'/say'">
@@ -165,7 +157,7 @@
                             </el-dropdown-item>
                         </router-link>
                         <router-link v-if="$store.state.userInfo && $store.state.userInfo.id == 1"
-                            style="text-decoration: none;color: #71777c;" :to="'/add_say'">
+                            style="text-decoration: none;color: #71777c;" :to="'/newSays'">
                             <el-dropdown-item>
                                 <svg-icon icon-class="say"
                                     style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布说说

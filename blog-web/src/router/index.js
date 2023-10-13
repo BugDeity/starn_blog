@@ -70,13 +70,6 @@ const routes = [
                 }
             },
             {
-                path: "/photo",
-                component: resolve => require(["@/view/photo/index"], resolve),
-                meta: {
-                    title: "我的图库"
-                }
-            },
-            {
                 path: "/say",
                 component: resolve => require(["@/view/say/index"], resolve),
                 meta: {
@@ -84,7 +77,7 @@ const routes = [
                 }
             },
             {
-                path: "/add_say",
+                path: "/newSays",
                 component: resolve => require(["@/view/say/Add"], resolve),
                 meta: {
                     title: "添加说说"

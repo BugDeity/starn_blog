@@ -208,6 +208,10 @@ export default {
         min-width: 400px;
         overflow-y: scroll;
 
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
         .emoji-item {
             cursor: url(https://img.shiyit.com/link.cur), pointer;
             display: inline-block;

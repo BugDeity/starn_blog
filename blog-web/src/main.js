@@ -4,11 +4,6 @@ import './assets/font/iconfont.css'
 import './assets/font/iconfont.js'
 import store from './store'
 
-import VMdPreview from '@kangc/v-md-editor/lib/preview';
-import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
-import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
-import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index';
-VMdPreview.use(createLineNumbertPlugin());
 
 import "../src/icons";
 import { vueBaberrage } from 'vue-baberrage'
@@ -18,15 +13,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import VueImageSwipe from 'vue-image-swipe'
 import 'vue-image-swipe/dist/vue-image-swipe.css'
 
-import VueMarkdownEditor from '@kangc/v-md-editor';
-import '@kangc/v-md-editor/lib/style/base-editor.css';
-import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
-import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
-
 
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-import Prism from 'prismjs';
 import Clipboard from 'clipboard'
 import Loading from '@/components/loading/loading';
 
@@ -53,15 +42,7 @@ import MetaInfo from 'vue-meta-info';
 Vue.use(MetaInfo)
 Vue.use(mavonEditor)
 
-VueMarkdownEditor.use(vuepressTheme, {
-  Prism,
-});
-Vue.use(VueMarkdownEditor);
-VMdPreview.use(vuepressTheme, {
-  Prism
-});
-VMdPreview.use(createCopyCodePlugin())
-Vue.use(VMdPreview);
+
 
 Vue.use(VueImageSwipe);
 Vue.use(ElementUI);
