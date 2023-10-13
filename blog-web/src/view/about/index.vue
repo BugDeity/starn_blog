@@ -67,9 +67,14 @@ export default {
             font-weight: 500;
         }
 
-        .content {
-            padding-left: 30px;
+        /deep/ .content {
+            margin-top: 30px;
+            padding: 0 50px;
             color: var(--article-color);
+
+            imh {
+                width: 100%;
+            }
         }
     }
 
