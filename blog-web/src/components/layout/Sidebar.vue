@@ -1,19 +1,19 @@
 <template>
-    <div :class="className">
+    <div class="toolbar1" :style="{ right: right }">
         <el-tooltip class="item" effect="dark" content="聊天室" placement="left">
             <a href="javascript:void(0)" @click="handleGoIm" class="toolbar_item chat ">
                 <i class="el-icon-chat-dot-square"></i>
             </a>
         </el-tooltip>
 
-        <el-tooltip class="item" effect="dark" content="切换主题" placement="left">
+        <el-tooltip class="item" effect="dark" :content="theme && theme == 'dark' ? '切换浅色主题' : '切换深色主题'" placement="left">
             <a href="javascript:void(0)" class="toolbar_item theme" @click="chageTheme">
                 <i class="iconfont icon-taiyang" v-if="theme && theme == 'dark'"></i>
                 <i class="iconfont icon-yueliang" v-else></i>
             </a>
         </el-tooltip>
 
-        <el-tooltip class="item" effect="dark" content="全屏" placement="left">
+        <el-tooltip class="item" effect="dark" :content="isFullscreen ? '退出全屏' : '全屏'" placement="left">
             <a href="javascript:void(0)" title="全屏" class="toolbar_item back2top" @click="toFullOrExit">
                 <i class="iconfont icon-tuichuquanping" v-if="isFullscreen"></i>
                 <i class="iconfont icon-quanping" v-else></i>
@@ -35,7 +35,7 @@ export default {
             theme: sessionStorage.getItem("theme"),
             show: false,
             isFullscreen: false,
-            className: "toolbar1"
+            right: "-80px"
         }
     },
     mounted() {
@@ -100,12 +100,12 @@ export default {
             let scroll = scrollTop - this.i;
             this.i = scrollTop;
 
-            if (scrollTop <= 200) {
-                this.className = "toolbar1 slideDown"
+            if (scrollTop <= 150) {
+                this.right = "-80px"
             }
 
             if (scroll > 0) {
-                this.className = "toolbar1 slideUp"
+                this.right = "20px"
             }
 
         },
@@ -127,14 +127,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.slideUp {
-    right: 20px;
-}
-
-.slideDown {
-    right: -80px;
-}
-
 .toolbar1 {
     position: fixed;
     bottom: 130px;
