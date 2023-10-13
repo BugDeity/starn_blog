@@ -7,22 +7,27 @@
         </el-tooltip>
 
         <el-tooltip class="item" effect="dark" :content="theme && theme == 'dark' ? '切换浅色主题' : '切换深色主题'" placement="left">
-            <a href="javascript:void(0)" class="toolbar_item theme" @click="chageTheme">
-                <i class="iconfont icon-taiyang" v-if="theme && theme == 'dark'"></i>
-                <i class="iconfont icon-yueliang" v-else></i>
+            <a href="javascript:void(0)" class="toolbar_item " @click="chageTheme">
+                <i class="iconfont icon-taiyang theme" id="light"
+                    :style="!theme || theme == 'dark' ? '' : 'transform: translateX(30px)'"></i>
+                <i class="iconfont icon-yueliang theme" id="dark"
+                    :style="theme && theme == 'light' ? '' : 'transform: translateX(-30px)'"></i>
             </a>
         </el-tooltip>
 
         <el-tooltip class="item" effect="dark" :content="isFullscreen ? '退出全屏' : '全屏'" placement="left">
             <a href="javascript:void(0)" title="全屏" class="toolbar_item back2top" @click="toFullOrExit">
+
                 <i class="iconfont icon-tuichuquanping" v-if="isFullscreen"></i>
                 <i class="iconfont icon-quanping" v-else></i>
             </a>
         </el-tooltip>
 
         <el-tooltip class="item" effect="dark" content="回到顶部" placement="left">
-            <a href="javascript:void(0)" title="回到顶部" class="toolbar_item back2top" @click="backTop()">
-                <i class="iconfont icon-shangjiantou"></i>
+            <a href="javascript:void(0)" title="回到顶部" class="toolbar_item back2top" @click="backTop()"
+                @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+                <span style="font-size: 1rem;" v-if="percentage < 100 && showPercentage">{{ percentage + '%' }}</span>
+                <i v-else class="iconfont icon-shangjiantou"></i>
             </a>
         </el-tooltip>
 
@@ -35,7 +40,10 @@ export default {
             theme: sessionStorage.getItem("theme"),
             show: false,
             isFullscreen: false,
-            right: "-80px"
+            right: "-80px",
+            percentage: 0,
+            showPercentage: true,
+            style: sessionStorage.getItem("theme") ? "" : "transform: translateX(-30px)"
         }
     },
     mounted() {
@@ -84,18 +92,43 @@ export default {
             let val = ''
             if (this.theme && this.theme == 'light') { //浅色模式
                 val = 'dark'
+                document.getElementById("dark").style.transform = 'translateX(-30px)'
+                document.getElementById("light").style.transform = 'translateX(30px)'
+
             } else {
                 val = 'light'
+                document.getElementById("light").style.transform = 'translateX(30px)'
+                document.getElementById("dark").style.transform = 'translateX(-30px)'
             }
             this.theme = val
             sessionStorage.setItem('theme', val)
             document.documentElement.dataset.theme = val
         },
+        handleMouseEnter() {
+            this.showPercentage = false
+        },
+        handleMouseLeave() {
+            this.showPercentage = true
+        },
         toTop() {
             let scrollTop =
-                window.pageYOffset ||
-                document.documentElement.scrollTop ||
-                document.body.scrollTop;
+                document.documentElement.scrollTop
+            // let scrollHeight = document.documentElement.scrollHeight
+            // // 变量 windowHeight 是可视区的高度
+            // let windowHeight = document.documentElement.clientHeight || document.body.clientHeight
+            // // let scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop
+            // // 滚动条到底部得距离 = 滚动条的总高度 - 可视区的高度 - 当前页面的滚动条纵坐标位置
+            // var scrollBottom = scrollHeight - scrollTop
+            // console.log("windowHeight:" + windowHeight)
+            // let b = scrollTop > 0 ? scrollTop + windowHeight : scrollTop
+            // let a = (b / scrollHeight) * 100
+            // console.log('a', a)
+
+            var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            var totalHeight = document.documentElement.scrollHeight;
+            var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+            var percentage = (scrollPosition / (totalHeight - viewportHeight)) * 100;
+            this.percentage = Math.round(percentage)
 
             let scroll = scrollTop - this.i;
             this.i = scrollTop;
@@ -146,6 +179,17 @@ export default {
         padding: 5px;
         border-radius: 5px;
         font-weight: 700;
+        position: relative;
+        overflow: hidden;
+
+        .theme {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            transition: all .5s;
+        }
+
+
     }
 
 }
