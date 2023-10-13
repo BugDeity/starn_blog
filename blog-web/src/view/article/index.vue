@@ -361,7 +361,6 @@ export default {
             user: {},
             serceShow: 0,
             left: "0px",
-            timer: null,
             codes: []
 
         }
@@ -371,12 +370,6 @@ export default {
         const element = document.getElementById("articleBox")
         this.left = (element.offsetLeft - 60) + "px"
 
-        let that = this
-
-        window.setTimeout(() => {
-            clearInterval(this.timer);
-
-        }, 500)
         // 监听滚动事件
         window.addEventListener('scroll', this.onScroll, false)
 
@@ -398,9 +391,7 @@ export default {
     beforeDestroy() {
         window.removeEventListener('scroll', this.onScroll);
     },
-    destroyed() {
-        clearInterval(this.timer);
-    },
+
     created() {
         window.addEventListener('resize', () => {
             const element = document.getElementById("articleBox")
@@ -415,8 +406,6 @@ export default {
             if (this.article.readType != 0 && !this.serceShow) {
                 this.style = "max-height: 1200px;overflow: hidden;"
             }
-
-
 
             //处理目录和图片预览
             this.$nextTick(() => {
@@ -472,7 +461,6 @@ export default {
 
     methods: {
         handleNodeClick(data, event) {
-            console.log(data)
             //  实现跳转锚点
             document.getElementById(data).scrollIntoView({ behavior: 'smooth' })
         },
@@ -484,14 +472,11 @@ export default {
                     if (this.codes[i].offsetHeight != 0) {
                         return this.init();
                     } else {
-                        this.timer = setInterval(() => {
-                            for (let j = 0; j < this.codes.length; j++) {
-                                if (this.codes[j].offsetHeight != 0) {
-                                    clearInterval(this.timer);
-                                    return this.init();
-                                }
+                        for (let j = 0; j < this.codes.length; j++) {
+                            if (this.codes[j].offsetHeight != 0) {
+                                return this.init();
                             }
-                        }, 500);
+                        }
                         return;
                     }
                 }
@@ -499,7 +484,6 @@ export default {
             }
         },
         init() {
-            clearInterval(this.timer);
             let that = this
             this.codes.forEach((item, index) => {
                 let icon =
