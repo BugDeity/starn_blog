@@ -9,9 +9,9 @@
         <el-tooltip class="item" effect="dark" :content="theme && theme == 'dark' ? '切换浅色主题' : '切换深色主题'" placement="left">
             <a href="javascript:void(0)" class="toolbar_item " @click="chageTheme">
                 <i class="iconfont icon-taiyang theme" id="light"
-                    :style="!theme || theme == 'dark' ? '' : 'transform: translateX(30px)'"></i>
+                    :style="theme == 'dark' ? '' : 'transform: translateX(30px)'"></i>
                 <i class="iconfont icon-yueliang theme" id="dark"
-                    :style="theme && theme == 'light' ? '' : 'transform: translateX(-30px)'"></i>
+                    :style="!theme || theme == 'light' ? '' : 'transform: translateX(-30px)'"></i>
             </a>
         </el-tooltip>
 
@@ -90,14 +90,14 @@ export default {
         chageTheme() {
             this.theme = sessionStorage.getItem("theme")
             let val = ''
-            if (this.theme && this.theme == 'light') { //浅色模式
+            if (!this.theme || this.theme == 'light') { //浅色模式
                 val = 'dark'
-                document.getElementById("dark").style.transform = 'translateX(-30px)'
+                document.getElementById("dark").style.transform = 'translateX(0)'
                 document.getElementById("light").style.transform = 'translateX(30px)'
 
             } else {
                 val = 'light'
-                document.getElementById("light").style.transform = 'translateX(30px)'
+                document.getElementById("light").style.transform = 'translateX(0)'
                 document.getElementById("dark").style.transform = 'translateX(-30px)'
             }
             this.theme = val

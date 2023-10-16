@@ -35,7 +35,7 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="开启沉浸式阅读" placement="left">
-                <div class="left-item" title="开启沉浸式阅读" @click="rightShow = !rightShow">
+                <div class="left-item" title="开启沉浸式阅读" @click="handleImmerse">
                     <span>
                         <i class="iconfont icon-full-screen"></i>
                     </span>
@@ -105,8 +105,6 @@
             </div>
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">
-                <!-- <v-md-preview v-highlight :style="style" class="content" :text="this.article.contentMd" ref="preview"
-                    @copy-code-success=" handleCopyCodeSuccess" /> -->
                 <article class="content" :style="style" ref="article" v-highlight v-html="this.article.content"></article>
                 <div v-if="article.readType != 0 && !serceShow" class="warpper">
                     <div class="item-title">
@@ -619,7 +617,15 @@ export default {
                 }
             }
         },
+        handleImmerse() {
+            this.rightShow = !this.rightShow
+            window.setTimeout(() => {
+                const element = document.getElementById("articleBox")
+                this.left = (element.offsetLeft - 60) + "px"
+            }, 10)
 
+
+        },
         handleCollect() {
             let id = this.article.id;
             if (this.article.isCollect) {
@@ -1174,6 +1180,17 @@ export default {
             h5,
             h6 {
                 margin: 10px 0;
+            }
+
+
+
+            p a {
+                text-decoration: none;
+                color: #7bc549;
+
+                &::after {
+                    content: '🔗';
+                }
             }
 
             img {
