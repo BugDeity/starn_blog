@@ -84,10 +84,7 @@ export default {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
                     insertSay(this.form).then(res => {
-                        this.$notify.success({
-                            title: '通知',
-                            message: '添加说说成功',
-                        });
+                        this.$message.success('添加说说成功');
                         this.$router.push({ path: "/say" })
                     })
                 } else {

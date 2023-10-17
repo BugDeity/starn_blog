@@ -66,11 +66,7 @@ export default {
             window.location.href = val
         },
         handleCollect() {
-            this.$notify({
-                title: '成功',
-                message: '按CTRL+D 键将本页加入书签',
-                type: 'success'
-            });
+            this.$message.success('按CTRL+D 键将本页加入书签');
         }
     }
 }

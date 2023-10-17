@@ -1358,4 +1358,43 @@ CREATE TABLE `b_emoji` (
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='表情表';
 
+DROP TABLE IF EXISTS `b_forum`;
+CREATE TABLE `b_forum` (
+   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+   `user_id` varchar(250) NOT NULL COMMENT '用户id',
+   `talk_id` int(11) DEFAULT NULL COMMENT '话题id',
+   `content` mediumtext COMMENT '内容',
+   `site` json DEFAULT NULL COMMENT '关联网页信息',
+   `img_url` varchar(500) DEFAULT NULL COMMENT '关联图片地址',
+   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COMMENT='圈子话题表';
+
+DROP TABLE IF EXISTS `b_forum_comment`;
+CREATE TABLE `b_forum_comment` (
+   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+   `user_id` varchar(255) DEFAULT NULL COMMENT '评论用户id',
+   `reply_user_id` varchar(255) DEFAULT NULL COMMENT '回复用户id',
+   `forum_id` int(11) DEFAULT NULL COMMENT '话题id',
+   `address` varchar(200) DEFAULT NULL COMMENT 'ip归属地',
+   `ip` varchar(100) DEFAULT NULL COMMENT 'ip',
+   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+   `parent_id` int(11) DEFAULT NULL COMMENT '父id',
+   `content` varchar(255) DEFAULT NULL COMMENT '内容',
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='圈子评论表';
+
+DROP TABLE IF EXISTS `b_talk`;
+CREATE TABLE `b_talk` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(100) NOT NULL COMMENT '话题名',
+  `icon` varchar(100) DEFAULT NULL COMMENT '话题图标',
+  `status` int(11) DEFAULT NULL COMMENT '状态 0：正常  1：禁用',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='话题圈子表';
+
+
 SET FOREIGN_KEY_CHECKS = 1;
+
+

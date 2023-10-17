@@ -361,11 +361,8 @@ export default {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
                     addFeedback(this.form).then(res => {
-                        this.$notify({
-                            title: '成功通知',
-                            message: "反馈成功",
-                            type: 'success'
-                        });
+
+                        this.$message.success('反馈成功')
                         this.feedbackDialogTableVisible = false
                         this.form = {}
                     })
@@ -385,11 +382,8 @@ export default {
         handleSign() {
             sign(this.today).then(res => {
                 this.isTodaySign = true
-                this.$notify({
-                    title: '成功',
-                    message: "签到成功",
-                    type: 'success'
-                });
+
+                this.$message.success('签到成功')
             })
         },
         after() {
@@ -398,11 +392,8 @@ export default {
         updateUserInfo() {
             updateUserInfo(this.form).then(res => {
                 this.user = this.form
-                this.$notify({
-                    title: '成功',
-                    message: "修改成功",
-                    type: 'success'
-                });
+
+                this.$message.success('修改成功')
                 this.after()
                 this.editDialogTableVisible = false
             })
@@ -436,19 +427,13 @@ export default {
                 .then(_ => {
                     cancelCollect(id).then(res => {
                         this.dataList.splice(index, 1)
-                        this.$notify({
-                            title: '成功',
-                            message: "取消收藏成功",
-                            type: 'success'
-                        });
+
+                        this.$message.success('取消收藏成功')
                     })
                 })
                 .catch(_ => {
-                    this.$notify({
-                        title: '提示',
-                        message: "取消关闭",
-                        type: 'info'
-                    });
+
+                    this.$message.info('取消关闭')
                 });
         },
         handleDeleteArticle(index, id) {
@@ -461,19 +446,12 @@ export default {
                 .then(_ => {
                     deleteMyArticle(id).then(res => {
                         this.dataList.splice(index, 1)
-                        this.$notify({
-                            title: '成功',
-                            message: "删除成功",
-                            type: 'success'
-                        });
+
+                        this.$message.success('删除成功')
                     })
                 })
                 .catch(_ => {
-                    this.$notify({
-                        title: '提示',
-                        message: "取消关闭",
-                        type: 'info'
-                    });
+                    this.$message.info('取消关闭')
                 });
         },
         onPage() {
@@ -542,11 +520,8 @@ export default {
                 updateUserInfo(user).then(ress => {
                     this.user.bjCover = res.data
                     this.after()
-                    this.$notify({
-                        title: '成功',
-                        message: "修改成功",
-                        type: 'success'
-                    });
+
+                    this.$message.success('修改成功')
                     this.$bus.$emit('hideLoading')
                 }).catch(err => {
                     this.$bus.$emit('hideLoading')
@@ -667,7 +642,7 @@ export default {
         .article-cover {
             width: 160px;
             height: 150px;
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
+            cursor: pointer;
             overflow: hidden;
             border-radius: 5px;
 
@@ -696,7 +671,7 @@ export default {
             .signBtn,
             .disabledSignBtn {
                 border: none;
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
                 color: var(--text-color);
                 background-color: var(--background-color);
             }
@@ -750,7 +725,7 @@ export default {
                 position: absolute;
                 right: 20px;
                 bottom: 10px;
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
                 font-size: 20px;
                 background-color: #90939987;
                 border-color: #909399;
@@ -891,7 +866,7 @@ export default {
 
                 li {
                     margin-right: 20px;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
                     color: var(--text-color);
 
                     &:hover {
@@ -924,7 +899,7 @@ export default {
                 border-radius: 5px;
                 font-size: 0.9rem;
                 color: var(--text-color);
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
 
                 &:hover {
                     background-color: var(--theme-color);
@@ -1022,7 +997,7 @@ export default {
                     .article-tag {
                         .el-tag {
                             margin-right: 5px;
-                            cursor: url(https://img.shiyit.com/link.cur), pointer;
+                            cursor: pointer;
                         }
                     }
 

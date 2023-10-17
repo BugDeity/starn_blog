@@ -49,7 +49,7 @@ export default {
     border-radius: 50px;
     margin: 0 auto;
     margin-top: 20px;
-    cursor: url(https://img.shiyit.com/link.cur), pointer;
+    cursor: pointer;
     color: #fff;
 
     &:hover {

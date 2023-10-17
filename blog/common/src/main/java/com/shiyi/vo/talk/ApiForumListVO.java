@@ -1,0 +1,60 @@
+package com.shiyi.vo.talk;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.shiyi.utils.DateUtil;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.util.Date;
+
+/**
+ * @author: 拾壹
+ * @date: 2023/10/16
+ * @describe:
+ */
+@Data
+public class ApiForumListVO {
+    @ApiModelProperty(value = "主键id")
+    private Integer id;
+
+
+    @ApiModelProperty(value = "用户id")
+    private String userId;
+
+    @ApiModelProperty(value = "用户昵称")
+    private String nickname;
+
+    @ApiModelProperty(value = "用户头像")
+    private String avatar;
+
+    @ApiModelProperty(value = "用户简介")
+    private String intro;
+
+    @ApiModelProperty(value = "圈子名称")
+    private String talkName;
+
+    @ApiModelProperty(value = "圈子id")
+    private Integer talkId;
+
+    @ApiModelProperty(value = "内容")
+    private String content;
+
+    @ApiModelProperty(value = "关联网页信息")
+    private String site;
+
+    @ApiModelProperty(value = "关联图片地址")
+    private String imgUrl;
+
+    @ApiModelProperty(value = "时间字符串")
+    private String createTimeStr;
+
+    @ApiModelProperty(value = "点赞量")
+    private int likeCount;
+
+    @ApiModelProperty(value = "评论量")
+    private int commentCount;
+
+    @ApiModelProperty(value = "创建时间")
+    @JsonFormat(pattern = DateUtil.MM_DD,timezone="GMT+8")
+    private Date createTime;
+}

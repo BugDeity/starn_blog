@@ -2,7 +2,9 @@
     <div class='emoji-container'>
         <div class="emojiBox" v-if="!type">
             <span class="emoji-item" v-for="(item, index) of emojiList" :key="index" @click="chooseEmoji(item.url, 0)">
-                <img :src="item.url" class="emoji" :title="item.name" />
+                <el-tooltip class="item" effect="dark" :content="item.name" placement="top">
+                    <img :src="item.url" class="emoji" :title="item.name" />
+                </el-tooltip>
             </span>
         </div>
 
@@ -66,11 +68,7 @@ export default {
     methods: {
         handleStick() {
             stickEmoji(this.emoji.id).then(res => {
-                this.$notify({
-                    title: '成功',
-                    message: "置顶成功",
-                    type: "success"
-                });
+                this.$message.success('置顶成功');
                 this.visible = false
                 this.getEmojiList()
             })
@@ -82,11 +80,8 @@ export default {
                 type: 'warning'
             }).then(() => {
                 deleteEmoji(this.emoji.id).then(res => {
-                    this.$notify({
-                        title: '成功',
-                        message: "删除成功",
-                        type: "success"
-                    });
+
+                    this.$message.success('删除成功');
                     this.visible = false
                     this.getEmojiList()
                 })
@@ -213,7 +208,7 @@ export default {
         }
 
         .emoji-item {
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
+            cursor: pointer;
             display: inline-block;
 
             .emoji {
@@ -260,7 +255,7 @@ export default {
                 margin: 0;
                 padding: 5px;
                 width: 100px;
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
                 color: var(--text-color);
                 position: relative;
 

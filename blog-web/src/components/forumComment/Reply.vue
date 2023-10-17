@@ -33,8 +33,7 @@
     </div>
 </template>
 <script>
-import { postComment } from '@/api/comment'
-import { browserMatch } from '@/utils'
+import { addForumComment } from '@/api/talk'
 import Emoji from '@/components/emoji'
 export default {
     components: {
@@ -49,6 +48,7 @@ export default {
             index: null,
             commentContent: "",
             replyUserId: null,
+            forumId: null,
             showBox: false,
             user: this.$store.state.userInfo,
             lastEditRange: null
@@ -139,19 +139,15 @@ export default {
                 this.$message.error('评论不能为空')
                 return;
             }
-            let browser = browserMatch()
             let comment = {
-                articleId: this.$route.params.articleId,
+                forumId: this.forumId,
                 content: this.$refs.textareaRef.innerHTML,
                 replyUserId: this.replyUserId,
                 parentId: this.parentId,
-                browser: browser.browser.toLowerCase(),
-                browserVersion: browser.browser + " " + browser.version,
             }
-            postComment(comment).then(res => {
+            addForumComment(comment).then(res => {
                 this.$emit("reloadReply", this.index);
                 this.$message.success('评论成功')
-                this.$store.commit("isCommentFlag", true)
                 this.$refs.textareaRef.innerHTML = ""
                 this.showBox = false
             })

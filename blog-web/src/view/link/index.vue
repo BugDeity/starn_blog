@@ -170,11 +170,8 @@ export default {
                 if (valid) {
                     addLink(this.form).then(res => {
                         this.dialogFormVisible = false
-                        this.$notify({
-                            title: '成功',
-                            message: "提交成功，请等待审核",
-                            type: 'success'
-                        });
+
+                        this.$message.success('提交成功，请等待审核');
                     }).catch(err => {
                     })
                 } else {
@@ -473,7 +470,7 @@ export default {
                 position: absolute;
                 right: 0;
                 line-height: 24px;
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
 
                 svg {
                     width: 17px;

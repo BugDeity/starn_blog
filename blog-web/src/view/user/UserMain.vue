@@ -272,7 +272,7 @@ export default {
         .article-cover {
             width: 160px;
             height: 150px;
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
+            cursor: pointer;
             overflow: hidden;
             border-radius: 5px;
 
@@ -392,7 +392,7 @@ export default {
 
                 li {
                     margin-right: 20px;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
                     color: var(--text-color);
 
                     &:hover {
@@ -425,7 +425,7 @@ export default {
                 border-radius: 5px;
                 font-size: 0.9rem;
                 color: var(--text-color);
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
 
                 &:hover {
                     background-color: var(--theme-color);
@@ -495,7 +495,7 @@ export default {
                     .article-tag {
                         .el-tag {
                             margin-right: 5px;
-                            cursor: url(https://img.shiyit.com/link.cur), pointer;
+                            cursor: pointer;
                         }
                     }
 

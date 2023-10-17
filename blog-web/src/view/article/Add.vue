@@ -148,31 +148,22 @@ export default {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
                     if (!this.article.contentMd) {
-                        this.$notify({
-                            title: '失败',
-                            message: '请编写文章内容！',
-                            type: 'error'
-                        });
+
+                        this.$message.error('请编写文章内容！');
                         return;
                     }
                     this.article.isPublish = type
                     this.article.content = this.$refs.md.d_render
                     if (this.article.id) {
                         updateArticle(this.article).then(res => {
-                            this.$notify({
-                                title: '成功',
-                                message: '修改成功，请耐心等待审核',
-                                type: 'success'
-                            });
+
+                            this.$message.success('修改成功，请耐心等待审核');
                             this.$router.push({ path: "/user" })
                         })
                     } else {
                         insertArticle(this.article).then(res => {
-                            this.$notify({
-                                title: '成功',
-                                message: '提交成功，请耐心等待审核',
-                                type: 'success'
-                            });
+
+                            this.$message.success('提交成功，请耐心等待审核');
                             this.$router.push({ path: "/user" })
                         })
                     }
@@ -373,7 +364,7 @@ export default {
 /deep/ .avatar-uploader {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
-    cursor: url(https://img.shiyit.com/link.cur), pointer;
+    cursor: pointer;
     position: relative;
     overflow: hidden;
     max-width: 200px;

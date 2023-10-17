@@ -247,7 +247,7 @@ export default {
                     margin-left: 20px;
 
                     .el-tag {
-                        cursor: url(https://img.shiyit.com/link.cur), pointer;
+                        cursor: pointer;
                         margin-right: 5px;
                     }
                 }
@@ -268,7 +268,7 @@ export default {
             /*高度由内容决定*/
             position: relative;
             margin-bottom: 30px;
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
+            cursor: pointer;
 
             &::before {
                 content: "";

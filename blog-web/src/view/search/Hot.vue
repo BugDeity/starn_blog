@@ -165,11 +165,8 @@ export default {
         },
         handleCommit() {
             if (!this.text) {
-                this.$notify({
-                    title: '失败',
-                    message: "请输入搜索内容",
-                    type: 'warning'
-                });
+
+                this.$message.warning("请输入搜索内容");
                 return;
             }
             window.open(this.searchUrl[this.selectSite] + this.text, '_blank');
@@ -177,11 +174,8 @@ export default {
         handleClose() {
             this.dialogVisible = false
             this.selectSite = this.tabPosition
-            this.$notify({
-                title: '成功',
-                message: "切换成功",
-                type: 'success'
-            });
+
+            this.$message.success("切换成功");
         },
 
     }
@@ -272,7 +266,7 @@ export default {
 
                 i {
                     margin-left: 10px;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
                     font-size: 14px;
                 }
 
@@ -292,7 +286,7 @@ export default {
                 border-left: none;
                 padding-left: 20px;
                 padding-right: 20px;
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
             }
         }
 
@@ -362,7 +356,7 @@ export default {
 
                     li {
                         margin-bottom: 20px;
-                        cursor: url(https://img.shiyit.com/link.cur), pointer;
+                        cursor: pointer;
                         font-size: 13px;
                         height: 100%;
                         padding: 5px;

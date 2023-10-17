@@ -57,19 +57,13 @@ export default {
     methods: {
         addToList() {
             if (this.count) {
-                this.$notify({
-                    title: '失败',
-                    message: "30秒后才能再次留言",
-                    type: 'error'
-                });
+
+                this.$message.error("30秒后才能再次留言");
                 return false;
             }
             if (this.content.trim() === "") {
-                this.$notify({
-                    title: '失败',
-                    message: "留言不能为空",
-                    type: 'error'
-                });
+
+                this.$message.error("留言不能为空");
                 return false;
             }
             var message = {
@@ -84,11 +78,7 @@ export default {
             addMessage(message).then(res => {
                 this.barrageList.push(message);
 
-                this.$notify({
-                    title: '成功',
-                    message: "留言成功",
-                    type: 'success'
-                });
+                this.$message.success("留言成功");
             }).catch(err => {
             });
             const TIME_COUNT = 30;

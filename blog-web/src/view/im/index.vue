@@ -332,29 +332,17 @@ export default {
                 type: 'warning'
             }).then(() => {
                 if (!id) {
-                    this.$notify({
-                        title: '警告',
-                        message: "群聊不允许删除",
-                        type: 'warning'
-                    });
+
+                    this.$message.warning("群聊不允许删除");
                     return;
                 }
                 deleteRoom(id).then(res => {
                     this.$delete(this.roomList, index);
 
-                    this.$notify({
-                        title: '成功',
-                        message: "删除成功",
-                        type: 'success'
-                    });
+                    this.$message.success("删除成功");
                 })
             }).catch(() => {
-
-                this.$notify({
-                    title: '消息',
-                    message: "已取消删除",
-                    type: 'info'
-                });
+                this.$message.info("已取消删除");
             });
         },
 
@@ -483,11 +471,7 @@ export default {
                     url: this.message.content.match(this.RegEx)[0]
                 }
                 addEmoji(emoji).then(res => {
-                    this.$notify({
-                        title: '成功',
-                        message: "收藏表情成功",
-                        type: 'success'
-                    });
+                    this.$message.success("收藏表情成功");
                 })
             }
 
@@ -501,19 +485,11 @@ export default {
                 text: () => this.message.content
             })
             clipboard.on('success', () => {
-                this.$notify({
-                    title: '成功',
-                    message: "复制成功",
-                    type: 'success'
-                });
+                this.$message.success("复制成功");
                 clipboard.destroy()
             })
             clipboard.on('error', () => {
-                this.$notify({
-                    title: '失败',
-                    message: "复制失败",
-                    type: 'error'
-                });
+                this.$message.error("复制失败");
                 clipboard.destroy()
             })
         },
@@ -644,22 +620,13 @@ export default {
         },
         //发送消息
         send(content, type) {
-            // this.$notify({
-            //     title: '失败',
-            //     message: "功能暂时关闭",
-            //     type: 'error'
-            // });
-            // return
+
             if (typeof (WebSocket) == "undefined") {
                 console.log("您的浏览器不支持WebSocket");
                 return;
             }
             if (!this.user) {
-                this.$notify({
-                    title: '失败',
-                    message: "请先登录",
-                    type: 'error'
-                });
+                this.$message.error("请先登录");
                 this.$store.state.loginFlag = true
                 return;
             }
@@ -703,11 +670,8 @@ export default {
         init() {
             let _this = this;
             if (!_this.user) {
-                this.$notify({
-                    title: '失败',
-                    message: "登录才能进行群聊",
-                    type: 'error'
-                });
+
+                this.$message.error("登录才能进行群聊");
                 return;
             }
             if (typeof (WebSocket) == "undefined") {
@@ -886,7 +850,7 @@ export default {
                 list-style: none;
 
                 .onlineLi {
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
                     padding: 5px;
                     line-height: 30px;
                     border-radius: 5px;
@@ -1006,7 +970,7 @@ export default {
                 .more {
                     text-align: center;
                     margin-top: 10px;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
                     color: rgba(185, 183, 183, 0.898)
                 }
 
@@ -1142,7 +1106,7 @@ export default {
                     padding: 10px;
 
                     .item {
-                        cursor: url(https://img.shiyit.com/link.cur), pointer;
+                        cursor: pointer;
                         margin-left: 10px;
                         padding: 5px;
                         border-radius: 5px;
@@ -1247,7 +1211,7 @@ export default {
                     margin: 0;
                     padding: 5px;
                     width: 100px;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
                     color: #fff;
                     position: relative;
 

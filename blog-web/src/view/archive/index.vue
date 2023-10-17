@@ -185,7 +185,7 @@ export default {
                     margin-bottom: 16px;
                     color: var(--article-color);
                     font-weight: 500;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
                     margin-left: 20px;
                     display: block;
                     text-decoration: none;
@@ -205,7 +205,7 @@ export default {
                     height: 35px;
                     line-height: 35px;
                     border-radius: 5px;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
 
                     &::before {
                         content: "";

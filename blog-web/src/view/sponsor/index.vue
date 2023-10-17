@@ -142,7 +142,7 @@ export default {
                         color: #333;
                         padding: 7px;
                         border-radius: 25px;
-                        cursor: url(https://img.shiyit.com/link.cur), pointer;
+                        cursor: pointer;
                         line-height: 35px;
                     }
 
@@ -185,7 +185,7 @@ export default {
                                     line-height: 35px;
                                     border: 1px solid #1ccae5;
                                     color: #1ccae5;
-                                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                                    cursor: pointer;
 
                                     input {
                                         width: 100%;
@@ -310,7 +310,7 @@ export default {
                         color: #333;
                         padding: 7px;
                         border-radius: 25px;
-                        cursor: url(https://img.shiyit.com/link.cur), pointer;
+                        cursor: pointer;
                         line-height: 20px;
                         font-size: 0.8rem;
                     }
@@ -357,7 +357,7 @@ export default {
                                     line-height: 35px;
                                     border: 1px solid #1ccae5;
                                     color: #1ccae5;
-                                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                                    cursor: pointer;
 
                                     &:hover {
                                         background-color: var(--theme-color);
@@ -369,7 +369,7 @@ export default {
                                         height: 100%;
                                         border-radius: 5px;
                                         border: 0;
-                                        cursor: url(https://img.shiyit.com/link.cur), pointer;
+                                        cursor: pointer;
                                     }
                                 }
 

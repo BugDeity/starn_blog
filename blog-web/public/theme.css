@@ -4,6 +4,7 @@ html[data-theme='dark'] {
     --body-color: #2b2b2b;
     --text-color: #909399;
     --text-color1: #fff;
+    --text-color2: #c5bdbd;
     --border-line: #414243;
     --header-back-color: rgb(15, 15, 15);
     --article-color: rgb(153, 153, 153);
@@ -20,6 +21,7 @@ html[data-theme='dark'] {
     --article-srect-background: repeating-linear-gradient(145deg, #000, #000 15px, #303133 0, #303133 25px);
     --say-background: #303133;
     --footer-background-color: #232323e0;
+    --forum-background-color: #303133;
 }
 
 :root {
@@ -28,6 +30,7 @@ html[data-theme='dark'] {
     --body-color: linear-gradient(90deg, rgba(247, 149, 51, .1), rgba(243, 112, 85, .1) 15%, rgba(239, 78, 123, .1) 30%, rgba(161, 102, 171, .1) 44%, rgba(80, 115, 184, .1) 58%, rgba(16, 152, 173, .1) 72%, rgba(7, 179, 155, .1) 86%, rgba(109, 186, 130, .1));
     --text-color: #000;
     --text-color1: #272222;
+    --text-color2: #c5bdbd;
     --border-line: #e4e7ed;
     --header-back-color: hsla(0, 0%, 100%, .65);
     --article-color: #303133;
@@ -44,4 +47,5 @@ html[data-theme='dark'] {
     --article-srect-background: repeating-linear-gradient(145deg, #f2f6fc, #f2f6fc 15px, #fff 0, #fff 25px);
     --say-background: #f7f7f7;
     --footer-background-color: rgba(255, 255, 255, 0.8);
+    --forum-background-color: #f2f3f5;
 }

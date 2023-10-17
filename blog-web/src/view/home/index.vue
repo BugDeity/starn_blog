@@ -425,19 +425,13 @@ export default {
                 text: () => value
             })
             clipboard.on('success', () => {
-                this.$notify({
-                    title: '成功',
-                    message: "复制成功",
-                    type: 'success'
-                });
+
+                this.$message.success('复制成功')
                 clipboard.destroy()
             })
             clipboard.on('error', () => {
-                this.$notify({
-                    title: '失败',
-                    message: "复制失败",
-                    type: 'error'
-                });
+
+                this.$message.error('复制失败')
                 clipboard.destroy()
             })
         },
@@ -704,7 +698,7 @@ export default {
                 /deep/ .el-image {
                     width: 100%;
                     height: 47%;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
 
                     &:last-child {
                         margin-top: 20px;
@@ -790,7 +784,7 @@ export default {
                             .article-item-top1,
                             .article-item {
                                 .recomCover {
-                                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                                    cursor: pointer;
 
                                     .imgBox {
                                         margin-right: 10px;
@@ -933,7 +927,7 @@ export default {
                                 right: 0;
                                 width: 60px;
                                 text-align: center;
-                                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                                cursor: pointer;
                                 color: #fff;
                                 transition: width .35s;
                             }
@@ -1185,7 +1179,7 @@ export default {
                             }
 
                             h3 {
-                                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                                cursor: pointer;
                                 position: relative;
                                 display: inline-block;
                             }
@@ -1233,7 +1227,7 @@ export default {
 
                             .el-tag {
                                 margin-right: 8px;
-                                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                                cursor: pointer;
                             }
                         }
 

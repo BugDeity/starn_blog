@@ -174,22 +174,16 @@ export default {
         sayComment() {
             let el = document.getElementById("textarea")
             if (!el.innerHTML) {
-                this.$notify({
-                    title: '警告',
-                    message: "请输入评论内容",
-                    type: 'warning'
-                });
+
+                this.$message.warning('请输入评论内容');
                 return
             }
             this.comment.content = el.innerHTML
             sayComment(this.comment).then(res => {
                 this.$refs.conetntInputBox[this.commentLastIndex].style.display = "none"
                 this.showCommentBox = false
-                this.$notify({
-                    title: '成功',
-                    message: "评论成功",
-                    type: 'success'
-                });
+
+                this.$message.success('评论成功');
                 let comment = {
                     userId: this.$store.state.userInfo.id,
                     nickname: this.$store.state.userInfo.nickname,
@@ -309,11 +303,8 @@ export default {
                     this.$delete(say.userLikeList, index)
                 }
                 say.isLike = false
-                this.$notify({
-                    title: '成功',
-                    message: res.data,
-                    type: 'success'
-                });
+
+                this.$message.success(res.data);
             })
         },
         sayLike(say) {
@@ -323,11 +314,8 @@ export default {
                     nickname: this.$store.state.userInfo.nickname
                 })
                 say.isLike = true
-                this.$notify({
-                    title: '成功',
-                    message: res.data,
-                    type: 'success'
-                });
+
+                this.$message.success(res.data);
             })
         },
         handlePreviewImg(imgs, img) {

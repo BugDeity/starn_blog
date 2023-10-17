@@ -84,6 +84,10 @@ const routes = [
                 }
             },
             {
+                path: "/forum",
+                component: resolve => require(["@/view/forum/index"], resolve),
+            },
+            {
                 path: "/sponsor",
                 component: resolve => require(["@/view/sponsor/index"], resolve),
                 meta: {

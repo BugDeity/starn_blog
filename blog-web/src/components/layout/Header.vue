@@ -65,10 +65,10 @@
                     </el-dropdown>
                 </li>
 
-                <li :class="path == '/navigation' ? 'active' : ''">
+                <li :class="path == '/forum' ? 'active' : ''">
                     <span>
-                        <router-link :to="'/navigation'">
-                            <svg-icon icon-class="navication"></svg-icon> 网址导航
+                        <router-link :to="'/forum'">
+                            <svg-icon icon-class="talk"></svg-icon> 朋友圈
                         </router-link>
                     </span>
                 </li>
@@ -77,6 +77,14 @@
                     <span>
                         <router-link :to="'/say'">
                             <svg-icon icon-class="say"></svg-icon> 说说
+                        </router-link>
+                    </span>
+                </li>
+
+                <li :class="path == '/navigation' ? 'active' : ''">
+                    <span>
+                        <router-link :to="'/navigation'">
+                            <svg-icon icon-class="navication"></svg-icon> 网址导航
                         </router-link>
                     </span>
                 </li>
@@ -164,9 +172,9 @@
                             </el-dropdown-item>
                         </router-link>
 
-                        <router-link style="text-decoration: none;color: #71777c;" :to="'/'">
+                        <router-link style="text-decoration: none;color: #71777c;" :to="'/forum'">
                             <el-dropdown-item>
-                                <svg-icon icon-class="tiezi"
+                                <svg-icon icon-class="talk"
                                     style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布帖子
                             </el-dropdown-item>
                         </router-link>
@@ -508,7 +516,7 @@ export default {
                 max-width: 1500px;
 
                 .el-dropdown-link {
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
                 }
 
 
@@ -609,7 +617,7 @@ export default {
                     padding: 0;
                     margin: 0;
                     line-height: 60px;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
                     text-align: right;
                     color: var(--text-color);
 

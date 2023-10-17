@@ -177,10 +177,8 @@ export default {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
                     forgetPassword(this.form).then(res => {
-                        this.$notify.success({
-                            title: '成功',
-                            message: '修改成功',
-                        });
+
+                        this.$message.success('修改成功');
                         this.$store.state.loginFlag = true;
                         this.forgetFlag = false
                     })
@@ -194,11 +192,8 @@ export default {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
                     emailRegister(this.form).then(res => {
-                        this.$notify({
-                            title: '成功',
-                            message: '注册成功',
-                            type: 'success'
-                        });
+
+                        this.$message.success('注册成功');
                         this.$store.state.loginFlag = true;
                         this.emailRegistFlag = false
                     })
@@ -210,11 +205,8 @@ export default {
         },
         handleSendEmailCode() {
             if (this.form.email == null || this.form.email == '') {
-                this.$notify({
-                    title: '失败',
-                    message: '请输入邮箱',
-                    type: 'error'
-                });
+
+                this.$message.error('请输入邮箱');
                 return
             }
             sendEmailCode(this.form.email).then(res => {
@@ -229,11 +221,8 @@ export default {
                         this.countdown = 60
                     }
                 }, 1000);
-                this.$notify({
-                    title: '成功',
-                    message: '验证码发送成功',
-                    type: 'success'
-                });
+
+                this.$message.success('验证码发送成功');
             })
         },
         handleRegister(type) {
@@ -258,11 +247,8 @@ export default {
         getWecahtLoginCode() {
             getWechatLoginCode().then(res => {
                 this.wechatLoginCode = res.data
-                this.$notify({
-                    title: '成功',
-                    message: '验证码获取成功',
-                    type: 'success'
-                });
+
+                this.$message.success('验证码获取成功');
                 this.countdown = 60
                 this.timer = setInterval(() => {
                     if (this.countdown > 0) {
@@ -273,17 +259,11 @@ export default {
                             this.$store.commit("setUserInfo", res.data)
                             this.close()
                             if (res.data.email == null) {
-                                this.$notify({
-                                    title: '提示',
-                                    message: '请绑定邮箱以便及时收到回复',
-                                    type: 'warning'
-                                });
+
+                                this.$message.warning('请绑定邮箱以便及时收到回复');
                             } else {
-                                this.$notify({
-                                    title: '成功',
-                                    message: '登录成功',
-                                    type: 'success'
-                                });
+
+                                this.$message.success('登录成功');
                             }
                             location.reload()
                         })

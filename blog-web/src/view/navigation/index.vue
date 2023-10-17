@@ -56,6 +56,7 @@ export default {
 
 .navigation-main {
     position: relative;
+    min-height: calc(100vh - 207px);
 
     @media screen and (max-width: 1118px) {
         .navigation-container {
@@ -109,7 +110,7 @@ export default {
             li {
                 margin-bottom: 10px;
                 padding: 10px;
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
                 font-size: 15px;
 
 

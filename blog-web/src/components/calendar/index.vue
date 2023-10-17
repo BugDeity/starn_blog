@@ -88,21 +88,14 @@ export default {
         },
         handleClike(ite) {
             if (ite != null && ite.afterToday == "afterToday") {
-                this.$notify({
-                    title: '失败',
-                    message: "未到签到时间，请耐心等待！",
-                    type: 'error'
-                });
+                this.$message.error('未到签到时间，请耐心等待！')
                 return;
             }
             const time = ite ? ite.timeStr : this.today
             sign(time).then(res => {
                 this.signRecords.push(time)
-                this.$notify({
-                    title: '成功',
-                    message: "签到成功",
-                    type: 'success'
-                });
+
+                this.$message.success('签到成功')
             })
         },
         lastMonth() {
@@ -200,7 +193,7 @@ export default {
         }
 
         i {
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
+            cursor: pointer;
         }
 
         .disabled {
@@ -252,7 +245,7 @@ export default {
                 .calendar-item-number {
                     width: 100%;
                     height: 20px;
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
 
                     .icon {
                         position: absolute;
@@ -320,7 +313,7 @@ export default {
         }
 
         .btn {
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
+            cursor: pointer;
 
             /deep/ .el-button--primary {
                 background-color: #66b1ff;

@@ -444,13 +444,6 @@ export default {
             selectUserInfoByArticleId(this.articleId).then(res => {
                 this.userInfo = res.data
             })
-            if (this.article.isPublish == 2) {
-                this.$notify({
-                    title: '警告',
-                    message: '该文章未审核，仅供自己预览',
-                    type: 'warning'
-                });
-            }
             this.$bus.$emit('hideLoading')
         }).catch(err => {
             this.$bus.$emit('hideLoading')
@@ -543,11 +536,7 @@ export default {
         handleFollowedUser() {
             followedUser(this.article.userId).then(res => {
                 this.article.isFollowed = 1
-                this.$notify({
-                    title: '成功',
-                    message: '关注成功',
-                    type: 'success'
-                });
+                this.$message.success('关注成功')
                 this.userInfo.fansCount++
 
             }).catch(err => {
@@ -557,11 +546,8 @@ export default {
         handleDeleteFollowedUser() {
             deleteFollowedUser(this.article.userId).then(res => {
                 this.article.isFollowed = 0
-                this.$notify({
-                    title: '成功',
-                    message: '取消关注成功',
-                    type: 'success'
-                });
+
+                this.$message.success('取消关注成功')
                 this.userInfo.fansCount--
 
             }).catch(err => {
@@ -569,27 +555,18 @@ export default {
             });
         },
         checkLikeAndCoomment(desc) {
-            this.$notify({
-                title: '消息',
-                message: desc,
-                type: 'info'
-            });
+
+            this.$message.info(desc)
         },
         checkCode() {
             if (!this.code) {
-                this.$notify({
-                    title: '失败',
-                    message: "验证码不能为空！",
-                    type: 'error'
-                });
+
+                this.$message.error('验证码不能为空！')
                 return;
             }
             checkCode(this.code).then(res => {
-                this.$notify({
-                    title: '成功',
-                    message: "验证成功",
-                    type: 'success'
-                });
+
+                this.$message.success('验证成功')
                 this.checkAfter()
             }).catch(err => {
             })
@@ -632,22 +609,16 @@ export default {
                 cancelCollect(id).then(res => {
                     this.article.collectCount--
                     this.article.isCollect = 0
-                    this.$notify({
-                        title: '成功',
-                        message: "取消收藏成功",
-                        type: 'success'
-                    });
+
+                    this.$message.success('取消收藏成功')
 
                 })
             } else {
                 collect(id).then(res => {
                     this.article.collectCount++
                     this.article.isCollect = 1
-                    this.$notify({
-                        title: '成功',
-                        message: "收藏成功",
-                        type: 'success'
-                    });
+
+                    this.$message.success('收藏成功')
                 })
             }
         },
@@ -670,22 +641,16 @@ export default {
                 if (this.article.isLike) {
                     this.article.likeCount--;
                     this.article.isLike = false
-                    this.$notify({
-                        title: '成功',
-                        message: "取消点赞",
-                        type: 'success'
-                    });
+
+                    this.$message.success('取消点赞')
                 } else {
                     this.article.likeCount++;
                     this.article.isLike = true
                     if (this.article.readType == 2) {
                         this.checkAfter()
                     }
-                    this.$notify({
-                        title: '成功',
-                        message: "点赞成功",
-                        type: 'success'
-                    });
+
+                    this.$message.success('点赞成功')
                 }
 
             }).catch(err => {
@@ -783,7 +748,7 @@ export default {
                 text-align: center;
                 line-height: 50px;
                 background-color: var(--background-color);
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
                 position: relative;
                 color: var(--text-color);
 
@@ -967,7 +932,7 @@ export default {
                     }
 
                     .structure {
-                        cursor: url(https://img.shiyit.com/link.cur), pointer;
+                        cursor: pointer;
                         color: var(--article-color);
                         padding: 5px 0;
                         padding-left: 20px;
@@ -1004,7 +969,7 @@ export default {
 
         .category {
             border-radius: 3px;
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
+            cursor: pointer;
             transition: transform .35s;
             height: 30px;
             line-height: 30px;
@@ -1173,6 +1138,14 @@ export default {
             margin-top: 10px;
             padding: 10px;
 
+            blockquote {
+                position: relative;
+                padding: 0 10px;
+                color: #6a737d;
+                border-left: 0.25em solid #dfe2e5;
+
+            }
+
             h1,
             h2,
             h3,
@@ -1198,7 +1171,7 @@ export default {
                 margin: 15px 0;
                 border-radius: 5px !important;
                 transition: box-shadow .35s, transform .35s;
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
                 max-height: 500px;
 
                 &:hover {
@@ -1226,7 +1199,7 @@ export default {
             min-height: 30px;
 
             .tagBtn {
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
                 margin-right: 5px;
             }
 

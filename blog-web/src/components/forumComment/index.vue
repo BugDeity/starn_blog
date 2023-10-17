@@ -43,29 +43,22 @@
                                         <h4 class="author">
                                             <a :href="item.webSite" target="_blank" class="disabled">
                                                 {{ item.nickname }}
-                                                <el-tooltip effect="dark" content="作者" placement="top"
-                                                    v-if="item.userId == articleUserId">
+                                                <el-tooltip effect="dark" content="楼主" placement="top"
+                                                    v-if="item.userId == userId">
                                                     <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                                 </el-tooltip>
                                             </a>
                                         </h4>
                                     </div>
-                                    <a :ref="'replyBtn' + item.id" @click="replyComment(item, item.id, false)"
-                                        class="comment-reply-link">回复</a>
+                                    <a href="javascript:;" :ref="'replyBtn' + item.id"
+                                        @click="replyComment(item, item.id, false)" class="comment-reply-link">回复</a>
                                     <div class="right">
                                         <div class="info">
                                             <time itemprop="datePublished" datetime="1680523318635" class="comment-time">发布于
                                                 {{ item.createTimeStr }}
                                             </time>
-                                            <span class="useragent-info">（
-                                                <svg-icon :icon-class="item.browser" />
-                                                {{ item.browserVersion }} &nbsp;
-                                                <svg-icon :icon-class="item.system" />
-                                                {{ item.systemVersion }}
-                                                ）
-                                            </span>
                                             <span class="ipAddress">
-                                                IP属地:{{ splitIpAddress(item.ipAddress) }}
+                                                IP属地:{{ splitIpAddress(item.address) }}
                                             </span>
                                         </div>
                                     </div>
@@ -103,8 +96,8 @@
                                                         <a :href="childrenItem.webSite" target="_blank" class="disabled">
                                                             {{ childrenItem.nickname }}
 
-                                                            <el-tooltip effect="dark" content="作者" placement="top"
-                                                                v-if="childrenItem.userId == articleUserId">
+                                                            <el-tooltip effect="dark" content="楼主" placement="top"
+                                                                v-if="childrenItem.userId == userId">
                                                                 <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                                             </el-tooltip>
                                                         </a>
@@ -119,15 +112,8 @@
                                                             class="comment-time">发布于
                                                             {{ childrenItem.createTimeStr }}
                                                         </time>
-                                                        <span class="useragent-info">（
-                                                            <svg-icon :icon-class="childrenItem.browser" />
-                                                            {{ childrenItem.browserVersion }} &nbsp;
-                                                            <svg-icon :icon-class="childrenItem.system" />
-                                                            {{ childrenItem.systemVersion }}
-                                                            ）
-                                                        </span>
                                                         <span class="ipAddress">
-                                                            IP属地:{{ splitIpAddress(childrenItem.ipAddress) }}
+                                                            IP属地:{{ splitIpAddress(childrenItem.address) }}
                                                         </span>
                                                     </div>
 
@@ -163,8 +149,7 @@
     </div>
 </template>
 <script>
-import { postComment, featchComments } from '@/api/comment'
-import { browserMatch } from '@/utils/index'
+import { addForumComment, getForumCommentList } from '@/api/talk'
 import Reply from './Reply.vue'
 import Emoji from '@/components/emoji'
 export default {
@@ -173,9 +158,13 @@ export default {
         Emoji
     },
     props: {
-        articleUserId: {
+        userId: {
             type: String,
             default: "",
+        },
+        forumId: {
+            type: Number,
+            default: null,
         }
     },
     data() {
@@ -185,12 +174,11 @@ export default {
             opacity: 0,
             show: null,
             user: this.$store.state.userInfo,
-            articleId: this.$route.params.articleId,
             // 加载层信息
             pageData: {
                 pageNo: 1,
                 pageSize: 5,
-                articleId: this.$route.params.articleId
+                forumId: this.forumId
             },
             commentList: [],
             pages: 0,
@@ -198,7 +186,6 @@ export default {
         }
     },
     mounted() {
-        this.getCommens()
         document.addEventListener("click", e => {
             if (e.target.className != "el-radio-button__orig-radio" && e.target.className != "el-radio-button__inner"
                 && e.target.className != "el-upload__input" && e.target.className != "el-icon-plus avatar-uploader-icon") {
@@ -219,8 +206,11 @@ export default {
         handleToUserMain(userId) {
             this.$router.push({ path: "/user_main", query: { id: userId } })
         },
-        getCommens() {
-            featchComments(this.pageData).then(res => {
+        getCommens(forumId) {
+            if (forumId) {
+                this.pageData.forumId = forumId
+            }
+            getForumCommentList(this.pageData).then(res => {
                 this.commentList = res.data.records
                 this.pages = res.data.pages;
             })
@@ -292,6 +282,7 @@ export default {
                 this.$refs['replys' + item.id][0].nickname = item.nickname;
                 this.$refs['replys' + item.id][0].replyUserId = item.userId;
                 this.$refs['replys' + item.id][0].parentId = parentId;
+                this.$refs['replys' + item.id][0].forumId = this.forumId;
                 this.$refs['replys' + item.id][0].index = item.id;
             } else {
                 this.$refs['reply' + item.id][0].showBox = !this.$refs['reply' + item.id][0].showBox
@@ -300,6 +291,7 @@ export default {
                 this.$refs['reply' + item.id][0].nickname = item.nickname;
                 this.$refs['reply' + item.id][0].replyUserId = item.userId;
                 this.$refs['reply' + item.id][0].parentId = parentId;
+                this.$refs['reply' + item.id][0].forumId = this.forumId;
                 this.$refs['reply' + item.id][0].index = item.id;
             }
         },
@@ -307,10 +299,10 @@ export default {
             let query = {
                 pageNo: this.pageData.pageNo,
                 pageSize: 5,
-                articleId: this.articleId
+                forumId: this.forumId
             }
 
-            featchComments(query).then(res => {
+            getForumCommentList(query).then(res => {
                 this.commentList = res.data.records
             })
         },
@@ -343,18 +335,15 @@ export default {
                 this.$message.error('评论不能为空')
                 return;
             }
-            let browser = browserMatch()
             let comment = {
-                articleId: this.articleId,
+                forumId: this.forumId,
                 content: this.$refs.textareaRef.innerHTML,
-                browser: browser.browser.toLowerCase(),
-                browserVersion: browser.browser + " " + browser.version,
             }
-            postComment(comment).then(res => {
+
+            addForumComment(comment).then(res => {
                 this.pageData.pageNo = 1
                 this.getCommens()
                 this.$message.success('评论成功')
-                this.$store.commit("isCommentFlag", true)
                 this.$refs.textareaRef.innerHTML = ""
             })
         },
@@ -532,12 +521,8 @@ export default {
                 overflow: hidden;
                 list-style: none;
                 margin-bottom: 20px;
-                border-bottom: 1px solid var(--border-line);
 
-                &:last-child {
-                    border: 0;
-                    padding-bottom: 0;
-                }
+
 
                 .comment {
                     width: 100%;
@@ -642,17 +627,6 @@ export default {
                                             margin-top: 6px;
                                             font-size: 12px;
                                             color: #657786;
-                                        }
-
-                                        .useragent-info {
-                                            color: #657786;
-
-                                            svg {
-                                                vertical-align: -2px;
-                                                width: 13px;
-                                                height: 13px;
-                                            }
-
                                         }
 
                                         .ipAddress {
@@ -829,17 +803,6 @@ export default {
                                                         margin-top: 6px;
                                                         font-size: 12px;
                                                         color: #657786;
-                                                    }
-
-                                                    .useragent-info {
-                                                        color: #657786;
-
-                                                        svg {
-                                                            vertical-align: -2px;
-                                                            width: 13px;
-                                                            height: 13px;
-                                                        }
-
                                                     }
 
                                                     .ipAddress {

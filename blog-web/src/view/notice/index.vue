@@ -168,22 +168,13 @@ export default {
                     } else {
                         this.noticeList = []
                     }
-                    this.$notify({
-                        title: '成功',
-                        message: "删除成功",
-                        type: 'success'
-                    });
-
+                    this.$message.success('删除成功')
                 }).catch(err => {
 
                 })
             }).catch(() => {
 
-                this.$notify({
-                    title: '提示',
-                    message: "已取消删除",
-                    type: 'info'
-                });
+                this.$message.info('已取消删除')
             });
 
         },
@@ -297,7 +288,7 @@ export default {
             }
 
             .left-item {
-                cursor: url(https://img.shiyit.com/link.cur), pointer;
+                cursor: pointer;
                 border-radius: 5px;
                 position: relative;
                 margin-top: 10px;
@@ -341,7 +332,7 @@ export default {
 
         .clearAllbtn,
         .clearBtn {
-            cursor: url(https://img.shiyit.com/link.cur), pointer;
+            cursor: pointer;
             float: right;
         }
 
@@ -413,7 +404,7 @@ export default {
                 }
 
                 .title {
-                    cursor: url(https://img.shiyit.com/link.cur), pointer;
+                    cursor: pointer;
                     font-weight: 600;
                     font-style: italic;
 

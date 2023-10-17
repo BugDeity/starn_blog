@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiyi.mapper.ForumMapper">
+
+    <select id="selectForumListByTalkId" resultType="com.shiyi.vo.talk.ApiForumListVO">
+        select
+            forum.id,
+            forum.content,
+            forum.site,
+            forum.img_url,
+            forum.talk_id,
+            forum.user_id,
+            forum.create_time,
+            info.nickname,
+            info.avatar,
+            info.intro,
+            talk.name as talkName
+        from b_forum forum
+        left join b_user user on forum.user_id = user.id
+        left join b_user_info info on info.id = user.user_info_id
+        left join b_talk talk on forum.talk_id = talk.id
+        <if test="talkId != null">
+            where forum.talk_id = #{talkId}
+        </if>
+        order by forum.create_time desc
+    </select>
+</mapper>
