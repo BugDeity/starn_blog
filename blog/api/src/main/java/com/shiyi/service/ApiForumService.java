@@ -37,4 +37,18 @@ public interface ApiForumService {
      * @return
      */
     ResponseResult commentList(Integer forumId);
+
+    /**
+     * 内容点赞
+     * @param forumId
+     * @return
+     */
+    ResponseResult like(Integer forumId);
+
+    /**
+     * 内容点赞列表
+     * @param forumId
+     * @return
+     */
+    ResponseResult likeList(Integer forumId);
 }

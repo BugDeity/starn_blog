@@ -42,6 +42,10 @@
                                     <i class="el-icon-picture-outline"></i>
                                     图片
                                 </span>
+                                <span class="item" @click="dialogVisible = !dialogVisible">
+                                    <i class="iconfont icon-code"></i>
+                                    代码
+                                </span>
 
                                 <el-popover placement="bottom-start" width="400" trigger="click" v-model="visible">
                                     <el-form :model="siteInfo" ref="numberValidateForm" label-width="100px"
@@ -118,11 +122,11 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="content pd" v-html="item.content">
+                                <div class="content pd" v-highlight v-html="item.content">
                                 </div>
                                 <div class="imgages pading-50" v-if="item.imgUrl">
                                     <img v-for="(img, index) in splitImg(item.imgUrl)"
-                                        @click="handlePreviewImg(item.imgUrl, img)" :key="index" :src="img" alt="">
+                                        @click="handlePreviewImg(item.imgUrl, img)" :key="index" v-lazy="img" alt="">
                                 </div>
                                 <div class="site pading-50" v-if="item.site">
                                     <div class="siteItem">
@@ -140,24 +144,25 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="item-category pd" v-if="item.talkName">
-                                    <span class="talkName">{{ item.talkName }}</span>
-                                    <span class="likeInfo">
-                                        <img class="likeUserAvatar"
-                                            src="https://p3-passport.byteacctimg.com/img/user-avatar/c69c5527be2f735cae6e1745bf4f875f~50x50.awebp"
-                                            alt="">
-                                        <img class="likeUserAvatar"
-                                            src="https://p3-passport.byteacctimg.com/img/user-avatar/c69c5527be2f735cae6e1745bf4f875f~50x50.awebp"
-                                            alt="">
-                                        等人点赞
+                                <div class="item-category pd">
+                                    <span class="talkName" v-if="item.talkName">{{ item.talkName }}</span>
+                                    <span class="likeInfo" v-if="item.likeListVO.length" @click="handleLikeList(item.id)">
+                                        <img v-for="(lieList) in item.likeListVO" class="likeUserAvatar"
+                                            :src="lieList.avatar" alt="">
+                                        点赞
                                     </span>
                                 </div>
                                 <div class="bottomBtn">
                                     <div class="btn" @click="handleShowComment(item.id, index)">
                                         <i class="el-icon-chat-dot-round"></i> {{ item.commentCount }}
                                     </div>
-                                    <div class="btn">
-                                        <i class="iconfont icon-dianzan1"></i> 0
+                                    <div class="btn" @click="handleForumLike(item.id, index)">
+                                        <span>
+                                            <i style="color: var(--theme-color);" v-if="item.isLike"
+                                                class="iconfont icon-dianzan4"></i>
+                                            <i v-else class="iconfont icon-dianzan1"></i>
+                                        </span>
+                                        {{ item.likeCount }}
                                     </div>
                                 </div>
                                 <!-- 评论 -->
@@ -180,11 +185,46 @@
 
             </div>
         </div>
+
+        <!-- 代码弹出框 -->
+        <el-dialog title="添加代码块" center :visible.sync="dialogVisible" :close-on-click-modal="false" width="30%">
+            <el-input style="margin-top: 10px;" type="textarea" show-word-limit maxlength="1000"
+                :autosize="{ minRows: 20, maxRows: 100 }" placeholder="请在此输入你的代码" v-model="codeContent">
+            </el-input>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="handleClose">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <!-- 点赞列表弹出框 -->
+        <el-dialog title="点赞详情" center :visible.sync="likeDialogVisible" :close-on-click-modal="false" width="30%"
+            :before-close="handleBeforClose">
+            <div class="userItem" v-for="item in forumLikeList">
+                <el-avatar size="large" :src="item.avatar">
+                </el-avatar>
+                <div style="margin-left:15px">
+                    <div>
+                        {{ item.nickname }}
+                    </div>
+                    <div>
+                        {{ item.intro }}
+                    </div>
+                </div>
+                <div style="margin-left:auto">
+                    <el-button size="mini" type="primary">关 注</el-button>
+                </div>
+            </div>
+            <div>
+                <sy-pagination :pageNo="forumLikePageData.pageNo" :pages="forumLikePageData.pages"
+                    @changePage="handleLikePage" />
+            </div>
+        </el-dialog>
     </div>
 </template>
    
 <script>
-import { getTalkList, getForumList, addForum, analysis } from '@/api/talk'
+import { getTalkList, getForumList, addForum, analysis, forumLike, forumLikeList } from '@/api/talk'
 import { upload } from '@/api'
 import Emoji from '@/components/emoji'
 import Comment from '@/components/forumComment/index.vue'
@@ -199,9 +239,18 @@ export default {
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
             pageData: {
                 pageNo: 1,
-                pageSize: 8,
+                pageSize: 10,
                 talkId: null
             },
+            forumLikePageData: {
+                pageNo: 1,
+                pageSize: 10,
+                forumId: null,
+                pages: 0
+            },
+            user: this.$store.state.userInfo,
+            dialogVisible: false,
+            likeDialogVisible: false,
             pages: 0,
             chooseEmoji: false,
             showUploadImg: false,
@@ -246,10 +295,15 @@ export default {
             files: [],
             talkLastClikeIndex: 0,
             commentEmoji: false,
-            chooseCommentIndex: null
+            chooseCommentIndex: null,
+            codeContent: null,
+            codeHtmlContent: null,
+            forumLikeList: [],
         }
     },
+    mounted() {
 
+    },
     created() {
         getTalkList().then(respose => {
             this.talkList.push(...respose.data)
@@ -258,6 +312,17 @@ export default {
         })
     },
     methods: {
+        handleClose() {
+            let html = `<pre><code> ${this.codeContent}</code></pre>`
+            this.codeHtmlContent = html
+            this.dialogVisible = false
+        },
+        handleBeforClose() {
+            this.forumLikeList = []
+            this.forumLikePageData.pageNo = 1
+            this.forumLikePageData.pages = 0
+            this.likeDialogVisible = false
+        },
         onInput(e) {
             let selection = window.getSelection()
             this.lastEditRange = selection.getRangeAt(0);
@@ -292,6 +357,45 @@ export default {
 
             this.form.talkId = id
             this.talkVisible = false
+
+        },
+        handleLikeList(forumId) {
+            if (forumId) {
+                this.forumLikePageData.forumId = forumId
+            }
+
+            forumLikeList(this.forumLikePageData).then(res => {
+                this.forumLikeList.push(...res.data.records)
+                this.forumLikePageData.pages = res.data.pages
+                this.likeDialogVisible = true
+            })
+        },
+        handleForumLike(forumId, index) {
+            forumLike(forumId).then(res => {
+                this.$message.success(res.data)
+                var forum = this.forumList[index]
+                if (forum.isLike) {
+                    this.forumList[index].likeCount--
+                    this.forumList[index].isLike = false
+                    let j = null;
+                    for (var i = 0; i < forum.likeListVO.length; i++) {
+                        if (forum.likeListVO[i].userId == this.user.id) {
+                            j = i
+                        }
+                    }
+                    this.$delete(forum.likeListVO, j);
+                    return
+                }
+                if (forum.likeListVO.length > 2) {
+                    this.$delete(forum.likeListVO, 2);
+                }
+                forum.likeListVO.unshift({
+                    avatar: this.user.avatar,
+                    userId: this.user.id
+                })
+                this.forumList[index].likeCount++
+                this.forumList[index].isLike = true
+            })
 
         },
         handleShowComment(forumId, index) {
@@ -350,7 +454,7 @@ export default {
             if (this.talkLastClikeIndex == index) {
                 return
             }
-
+            this.chooseCommentIndex = null
             this.$refs.categoryRef[this.talkLastClikeIndex].className = "category_item"
             this.talkLastClikeIndex = index
             this.$refs.categoryRef[index].className = "active"
@@ -374,6 +478,10 @@ export default {
                 this.$message.error(err.message);
                 this.loading.close()
             })
+        },
+        handleLikePage() {
+            this.forumLikePageData.pageNo++
+            this.handleLikeList()
         },
         handlePreviewImg(imgs, img) {
             let imgList = this.splitImg(imgs)
@@ -469,6 +577,9 @@ export default {
         },
         addForum() {
             let content = this.$refs.textareaRef.innerHTML
+            if (this.codeHtmlContent) {
+                content += this.codeHtmlContent
+            }
             if (content == null || content == "") {
                 this.$message.error("内容不能为空！");
                 return;
@@ -480,6 +591,8 @@ export default {
             }
             addForum(this.form).then(res => {
                 this.$refs.textareaRef.innerHTML = ""
+                this.codeHtmlContent = ""
+                this.codeContent = ""
                 this.form = {
                     site: null,
                     imgUrl: ""
@@ -495,6 +608,7 @@ export default {
                 this.$message.error(err.message);
                 this.loading.close()
             })
+
         },
         getForumList() {
             this.openLoading()
@@ -542,6 +656,16 @@ export default {
 
 .pading-50 {
     padding-left: 50px;
+}
+
+.userItem {
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+
+    &:hover {
+        background-color: #f5f7fa;
+    }
 }
 
 .note-wapper {
@@ -782,6 +906,9 @@ export default {
 
                             .item-category {
                                 margin-top: 20px;
+                                display: flex;
+                                align-items: center;
+
 
                                 .talkName {
                                     padding: 2px 6px;
@@ -789,11 +916,11 @@ export default {
                                     font-size: 0.9rem;
                                     line-height: 20px;
                                     color: #1e80ff;
-
                                 }
 
                                 .likeInfo {
-                                    float: right;
+                                    margin-left: auto;
+                                    cursor: pointer;
 
                                     .likeUserAvatar {
                                         width: 20px;

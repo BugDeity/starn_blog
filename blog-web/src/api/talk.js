@@ -45,3 +45,19 @@ export function addForumComment(data) {
         data
     })
 }
+export function forumLike(forumId) {
+    return request({
+        url: '/v1/forum/like',
+        method: 'get',
+        params: {
+            forumId: forumId
+        }
+    })
+}
+export function forumLikeList(params) {
+    return request({
+        url: '/v1/forum/likeList',
+        method: 'get',
+        params: params
+    })
+}

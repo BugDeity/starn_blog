@@ -4,10 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
-import com.shiyi.entity.Comment;
-import com.shiyi.entity.Forum;
-import com.shiyi.entity.ForumComment;
-import com.shiyi.entity.UserInfo;
+import com.shiyi.entity.*;
 import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.mapper.ForumCommentMapper;
 import com.shiyi.mapper.ForumMapper;
@@ -15,8 +12,8 @@ import com.shiyi.mapper.UserInfoMapper;
 import com.shiyi.service.ApiForumService;
 import com.shiyi.utils.IpUtil;
 import com.shiyi.utils.PageUtils;
-import com.shiyi.vo.ApiCommentListVO;
 import com.shiyi.vo.talk.ApiForumCommentListVO;
+import com.shiyi.vo.talk.ApiForumLikeListVO;
 import com.shiyi.vo.talk.ApiForumListVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,6 +44,14 @@ public class ApiForumServiceImpl implements ApiForumService {
             String format = RelativeDateFormat.format(item.getCreateTime());
             Integer count = forumCommentMapper.selectCount(new LambdaQueryWrapper<ForumComment>().eq(ForumComment::getForumId, item.getId()));
             item.setCommentCount(count);
+            int likeCount = forumMapper.countForumLike(item.getId());
+            item.setLikeCount(likeCount);
+            if (StpUtil.getLoginIdDefaultNull() != null) {
+                int flag = forumMapper.selectForumUserIsLike(item.getId(), StpUtil.getLoginIdAsString());
+                item.setIsLike(flag);
+            }
+            Page<ApiForumLikeListVO> likePages = forumMapper.selectForumLikeList(new Page<>(1,3),item.getId());
+            item.setLikeListVO(likePages.getRecords());
             item.setCreateTimeStr(format);
         });
         return ResponseResult.success(page);
@@ -98,5 +103,24 @@ public class ApiForumServiceImpl implements ApiForumService {
             vo.setCreateTimeStr(RelativeDateFormat.format(vo.getCreateTime()));
         }
         return ResponseResult.success(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult like(Integer forumId) {
+        int count = forumMapper.selectForumUserIsLike(forumId, StpUtil.getLoginIdAsString());
+        if (count > 0) {
+            forumMapper.deleteForumLikeByUerIdAndForumId(forumId, StpUtil.getLoginIdAsString());
+            return ResponseResult.success("取消点赞");
+
+        }
+        forumMapper.insertForumLike(forumId, StpUtil.getLoginIdAsString());
+        return ResponseResult.success("点赞成功");
+    }
+
+    @Override
+    public ResponseResult likeList(Integer forumId) {
+        Page<ApiForumLikeListVO> likePages = forumMapper.selectForumLikeList(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),forumId);
+        return ResponseResult.success(likePages);
     }
 }

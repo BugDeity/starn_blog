@@ -1394,7 +1394,14 @@ CREATE TABLE `b_talk` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='话题圈子表';
 
-
+DROP TABLE IF EXISTS `b_forum_like`;
+CREATE TABLE `b_forum_like` (
+    `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `user_id` varchar(255) DEFAULT NULL COMMENT '用户id',
+    `forum_id` int DEFAULT NULL COMMENT '圈子内容id',
+    `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 comment '圈子内容点赞表';
 SET FOREIGN_KEY_CHECKS = 1;
 
 

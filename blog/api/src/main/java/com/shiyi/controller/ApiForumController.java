@@ -1,6 +1,7 @@
 package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import com.shiyi.annotation.AccessLimit;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Forum;
 import com.shiyi.entity.ForumComment;
@@ -48,6 +49,20 @@ public class ApiForumController {
     @ApiOperation(value = "圈子内容评论列表", httpMethod = "GET", response = ResponseResult.class, notes = "圈子内容评论列表")
     public ResponseResult commentList(Integer forumId){
         return apiForumService.commentList(forumId);
+    }
+
+    @AccessLimit
+    @SaCheckLogin
+    @GetMapping("like")
+    @ApiOperation(value = "圈子内容点赞", httpMethod = "GET", response = ResponseResult.class, notes = "圈子内容点赞")
+    public ResponseResult like(Integer forumId){
+        return apiForumService.like(forumId);
+    }
+
+    @GetMapping("likeList")
+    @ApiOperation(value = "圈子内容点赞列表", httpMethod = "GET", response = ResponseResult.class, notes = "圈子内容点赞列表")
+    public ResponseResult likeList(Integer forumId){
+        return apiForumService.likeList(forumId);
     }
 
 }

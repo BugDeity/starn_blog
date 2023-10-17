@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: 拾壹
@@ -50,6 +51,12 @@ public class ApiForumListVO {
 
     @ApiModelProperty(value = "点赞量")
     private int likeCount;
+
+    @ApiModelProperty(value = "用户是否点赞")
+    private int isLike;
+
+    @ApiModelProperty(value = "点赞列表")
+    private List<ApiForumLikeListVO> likeListVO;
 
     @ApiModelProperty(value = "评论量")
     private int commentCount;
