@@ -178,11 +178,11 @@ export default {
       this.multipleSelection = val;
     },
     handleSizeChange: function (val) {
-      this.params.size = val
+      this.params.pageSize = val
       this.fetchFeedback()
     },
     handleCurrentChange: function (val) {
-      this.params.page = val
+      this.params.pageNo = val
       this.fetchFeedback()
     },
     formatTime: function (time) {

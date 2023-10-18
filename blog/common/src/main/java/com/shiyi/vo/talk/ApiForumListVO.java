@@ -62,6 +62,6 @@ public class ApiForumListVO {
     private int commentCount;
 
     @ApiModelProperty(value = "创建时间")
-    @JsonFormat(pattern = DateUtil.MM_DD,timezone="GMT+8")
+    @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")
     private Date createTime;
 }

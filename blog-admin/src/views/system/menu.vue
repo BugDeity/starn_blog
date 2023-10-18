@@ -335,7 +335,8 @@ export default {
       this.dialogFormVisible = true
     },
     remove: function (scope) {
-      if (scope.row.level === 1 && scope.row.children) {
+      console.log(scope.row.children)
+      if (scope.row.level === 1 && scope.row.children.length) {
         this.$message.error('该菜单存在子菜单，请先删除子菜单')
         return;
       }

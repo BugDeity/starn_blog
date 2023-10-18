@@ -10,9 +10,9 @@ package com.shiyi.common;
  */
 public enum ResultCode {
     //成功
-    SUCCESS( 200, "SUCCESS" ),
+    SUCCESS( 200, "成功" ),
     //失败
-    FAILURE( 400, "FAILURE" ),
+    FAILURE( 400, "失败" ),
 
 
     // 系统级别错误码
