@@ -213,13 +213,13 @@ export default {
             }
         },
         selectAricleList(type) {
-            this.$bus.$emit('showLoading');
+            this.$bus.$emit('show');
             getArticleByUserId(this.pageData).then(res => {
                 this.dataList.push(...res.data.records);
                 this.pages = res.data.pages
-                this.$bus.$emit('hideLoading');
+                this.$bus.$emit('close');
             }).catch(err => {
-                this.$bus.$emit('hideLoading');
+                this.$bus.$emit('close');
             })
         },
     },

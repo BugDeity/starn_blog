@@ -362,7 +362,7 @@ export default {
                 if (valid) {
                     addFeedback(this.form).then(res => {
 
-                        this.$message.success('反馈成功')
+                        this.$toast.success('反馈成功')
                         this.feedbackDialogTableVisible = false
                         this.form = {}
                     })
@@ -383,7 +383,7 @@ export default {
             sign(this.today).then(res => {
                 this.isTodaySign = true
 
-                this.$message.success('签到成功')
+                this.$toast.success('签到成功')
             })
         },
         after() {
@@ -393,7 +393,7 @@ export default {
             updateUserInfo(this.form).then(res => {
                 this.user = this.form
 
-                this.$message.success('修改成功')
+                this.$toast.success('修改成功')
                 this.after()
                 this.editDialogTableVisible = false
             })
@@ -428,12 +428,12 @@ export default {
                     cancelCollect(id).then(res => {
                         this.dataList.splice(index, 1)
 
-                        this.$message.success('取消收藏成功')
+                        this.$toast.success('取消收藏成功')
                     })
                 })
                 .catch(_ => {
 
-                    this.$message.info('取消关闭')
+                    this.$toast.info('取消关闭')
                 });
         },
         handleDeleteArticle(index, id) {
@@ -447,11 +447,11 @@ export default {
                     deleteMyArticle(id).then(res => {
                         this.dataList.splice(index, 1)
 
-                        this.$message.success('删除成功')
+                        this.$toast.success('删除成功')
                     })
                 })
                 .catch(_ => {
-                    this.$message.info('取消关闭')
+                    this.$toast.info('取消关闭')
                 });
         },
         onPage() {
@@ -485,16 +485,16 @@ export default {
             }
         },
         selectAricleList(type) {
-            this.$bus.$emit('showLoading');
+            this.$bus.$emit('show');
             if (type) {
                 this.pageData.type = type
             }
             getArticleByUserId(this.pageData).then(res => {
                 this.dataList.push(...res.data.records);
                 this.pages = res.data.pages
-                this.$bus.$emit('hideLoading');
+                this.$bus.$emit('close');
             }).catch(err => {
-                this.$bus.$emit('hideLoading');
+                this.$bus.$emit('close');
             })
         },
         selectCollectionList() {
@@ -504,7 +504,7 @@ export default {
             })
         },
         handleUploadBefore() {
-            this.$bus.$emit('showLoading');
+            this.$bus.$emit('show');
         },
         uploadBjCoverFile: function (param) {
             this.files = param.file
@@ -521,13 +521,13 @@ export default {
                     this.user.bjCover = res.data
                     this.after()
 
-                    this.$message.success('修改成功')
-                    this.$bus.$emit('hideLoading')
+                    this.$toast.success('修改成功')
+                    this.$bus.$emit('close')
                 }).catch(err => {
-                    this.$bus.$emit('hideLoading')
+                    this.$bus.$emit('close')
                 })
             }).catch(err => {
-                this.$bus.$emit('hideLoading')
+                this.$bus.$emit('close')
             })
 
         },
@@ -539,9 +539,9 @@ export default {
             formData.append('multipartFile', this.files)
             upload(formData).then(res => {
                 this.form.avatar = res.data
-                this.$bus.$emit('hideLoading')
+                this.$bus.$emit('close')
             }).catch(err => {
-                this.$bus.$emit('hideLoading')
+                this.$bus.$emit('close')
             })
 
         },

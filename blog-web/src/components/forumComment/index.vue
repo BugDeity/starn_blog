@@ -332,7 +332,7 @@ export default {
                 return
             }
             if (!this.$refs.textareaRef.innerHTML) {
-                this.$message.error('评论不能为空')
+                this.$toast.error('评论不能为空')
                 return;
             }
             let comment = {
@@ -343,7 +343,7 @@ export default {
             addForumComment(comment).then(res => {
                 this.pageData.pageNo = 1
                 this.getCommens()
-                this.$message.success('评论成功')
+                this.$toast.success('评论成功')
                 this.$refs.textareaRef.innerHTML = ""
             })
         },

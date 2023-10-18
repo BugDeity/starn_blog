@@ -171,7 +171,7 @@ export default {
                     addLink(this.form).then(res => {
                         this.dialogFormVisible = false
 
-                        this.$message.success('提交成功，请等待审核');
+                        this.$toast.success('提交成功，请等待审核');
                     }).catch(err => {
                     })
                 } else {

@@ -136,7 +136,7 @@ export default {
         },
         addComment() {
             if (!this.$refs.textareaRef.innerHTML) {
-                this.$message.error('评论不能为空')
+                this.$toast.error('评论不能为空')
                 return;
             }
             let browser = browserMatch()
@@ -150,7 +150,7 @@ export default {
             }
             postComment(comment).then(res => {
                 this.$emit("reloadReply", this.index);
-                this.$message.success('评论成功')
+                this.$toast.success('评论成功')
                 this.$store.commit("isCommentFlag", true)
                 this.$refs.textareaRef.innerHTML = ""
                 this.showBox = false

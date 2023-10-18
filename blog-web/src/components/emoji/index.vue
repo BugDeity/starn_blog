@@ -68,7 +68,7 @@ export default {
     methods: {
         handleStick() {
             stickEmoji(this.emoji.id).then(res => {
-                this.$message.success('置顶成功');
+                this.$toast.success('置顶成功');
                 this.visible = false
                 this.getEmojiList()
             })
@@ -81,15 +81,12 @@ export default {
             }).then(() => {
                 deleteEmoji(this.emoji.id).then(res => {
 
-                    this.$message.success('删除成功');
+                    this.$toast.success('删除成功');
                     this.visible = false
                     this.getEmojiList()
                 })
             }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });
+                this.$toast.info("已取消删除");
             });
         },
         handleChage(value) {

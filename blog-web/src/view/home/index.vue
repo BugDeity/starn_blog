@@ -426,12 +426,12 @@ export default {
             })
             clipboard.on('success', () => {
 
-                this.$message.success('复制成功')
+                this.$toast.success('复制成功')
                 clipboard.destroy()
             })
             clipboard.on('error', () => {
 
-                this.$message.error('复制失败')
+                this.$toast.error('复制失败')
                 clipboard.destroy()
             })
         },
@@ -456,13 +456,13 @@ export default {
             this.fetchArticleList()
         },
         fetchArticleList() {
-            this.$bus.$emit('showLoading');
+            this.$bus.$emit('show');
             fetchArticleList(this.pageData).then(res => {
                 this.articleList.push(...res.data.records);
                 this.pages = res.data.pages
-                this.$bus.$emit('hideLoading')
+                this.$bus.$emit('close')
             }).catch(err => {
-                this.$bus.$emit('hideLoading')
+                this.$bus.$emit('close')
             })
         },
         fetchCategoryList() {

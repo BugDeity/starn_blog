@@ -159,7 +159,7 @@ export default {
                 if (valid) {
                     if (!this.article.contentMd) {
 
-                        this.$message.error('请编写文章内容！');
+                        this.$toast.error('请编写文章内容！');
                         return;
                     }
                     this.article.isPublish = type
@@ -167,13 +167,13 @@ export default {
                     if (this.article.id) {
                         updateArticle(this.article).then(res => {
 
-                            this.$message.success('修改成功，请耐心等待审核');
+                            this.$toast.success('修改成功，请耐心等待审核');
                             this.$router.push({ path: "/user" })
                         })
                     } else {
                         insertArticle(this.article).then(res => {
 
-                            this.$message.success('提交成功，请耐心等待审核');
+                            this.$toast.success('提交成功，请耐心等待审核');
                             this.$router.push({ path: "/user" })
                         })
                     }
@@ -201,7 +201,7 @@ export default {
 
         },
         handleUploadBefore() {
-            this.$bus.$emit('showLoading');
+            this.$bus.$emit('show');
         },
         uploadSectionFile: function (param) {
             this.files = param.file
@@ -211,9 +211,9 @@ export default {
             formData.append('multipartFile', this.files)
             upload(formData).then(res => {
                 this.article.avatar = res.data
-                this.$bus.$emit('hideLoading')
+                this.$bus.$emit('close')
             }).catch(err => {
-                this.$bus.$emit('hideLoading')
+                this.$bus.$emit('close')
             })
         },
     }

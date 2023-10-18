@@ -118,7 +118,7 @@ export default {
                 removeToken()
                 location.reload()
 
-                this.$message.success('注销成功')
+                this.$toast.success('注销成功')
             }).catch(err => {
                 console.log(err)
             });

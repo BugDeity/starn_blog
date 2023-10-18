@@ -340,7 +340,7 @@ export default {
                 return
             }
             if (!this.$refs.textareaRef.innerHTML) {
-                this.$message.error('评论不能为空')
+                this.$toast.error('评论不能为空')
                 return;
             }
             let browser = browserMatch()
@@ -353,7 +353,7 @@ export default {
             postComment(comment).then(res => {
                 this.pageData.pageNo = 1
                 this.getCommens()
-                this.$message.success('评论成功')
+                this.$toast.success('评论成功')
                 this.$store.commit("isCommentFlag", true)
                 this.$refs.textareaRef.innerHTML = ""
             })

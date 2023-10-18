@@ -397,7 +397,7 @@ export default {
                 this.left = (element.offsetLeft - 60) + "px"
             }
         }, true)
-        this.$bus.$emit('showLoading');
+        this.$bus.$emit('show');
         articleInfo(this.articleId).then(res => {
             this.article = res.data
             this.serceShow = this.article.activeReadType
@@ -444,9 +444,9 @@ export default {
             selectUserInfoByArticleId(this.articleId).then(res => {
                 this.userInfo = res.data
             })
-            this.$bus.$emit('hideLoading')
+            this.$bus.$emit('close')
         }).catch(err => {
-            this.$bus.$emit('hideLoading')
+            this.$bus.$emit('close')
         })
     },
 
@@ -495,16 +495,10 @@ export default {
                     );
                     copyPromise
                         .then(() => {
-                            that.$notify.success({
-                                title: '成功',
-                                message: "复制成功",
-                            });
+                            that.$toast.success("复制成功")
                         })
                         .catch(() => {
-                            that.$notify.error({
-                                title: '成功',
-                                message: "复制成功",
-                            });
+                            that.$toast.error("复制失败")
                         });
                 };
 
@@ -536,7 +530,7 @@ export default {
         handleFollowedUser() {
             followedUser(this.article.userId).then(res => {
                 this.article.isFollowed = 1
-                this.$message.success('关注成功')
+                this.$toast.success('关注成功')
                 this.userInfo.fansCount++
 
             }).catch(err => {
@@ -547,7 +541,7 @@ export default {
             deleteFollowedUser(this.article.userId).then(res => {
                 this.article.isFollowed = 0
 
-                this.$message.success('取消关注成功')
+                this.$toast.success('取消关注成功')
                 this.userInfo.fansCount--
 
             }).catch(err => {
@@ -556,17 +550,17 @@ export default {
         },
         checkLikeAndCoomment(desc) {
 
-            this.$message.info(desc)
+            this.$toast.info(desc)
         },
         checkCode() {
             if (!this.code) {
 
-                this.$message.error('验证码不能为空！')
+                this.$toast.error('验证码不能为空！')
                 return;
             }
             checkCode(this.code).then(res => {
 
-                this.$message.success('验证成功')
+                this.$toast.success('验证成功')
                 this.checkAfter()
             }).catch(err => {
             })
@@ -610,7 +604,7 @@ export default {
                     this.article.collectCount--
                     this.article.isCollect = 0
 
-                    this.$message.success('取消收藏成功')
+                    this.$toast.success('取消收藏成功')
 
                 })
             } else {
@@ -618,7 +612,7 @@ export default {
                     this.article.collectCount++
                     this.article.isCollect = 1
 
-                    this.$message.success('收藏成功')
+                    this.$toast.success('收藏成功')
                 })
             }
         },
@@ -642,7 +636,7 @@ export default {
                     this.article.likeCount--;
                     this.article.isLike = false
 
-                    this.$message.success('取消点赞')
+                    this.$toast.success('取消点赞')
                 } else {
                     this.article.likeCount++;
                     this.article.isLike = true
@@ -650,7 +644,7 @@ export default {
                         this.checkAfter()
                     }
 
-                    this.$message.success('点赞成功')
+                    this.$toast.success('点赞成功')
                 }
 
             }).catch(err => {

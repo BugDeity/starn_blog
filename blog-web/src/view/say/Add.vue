@@ -62,7 +62,6 @@ export default {
                 imgUrl: '',
                 isPublic: "1"
             },
-            loading: [],
             rules: {
                 content: [
                     { required: true, message: '请输入内容', trigger: 'blue' }
@@ -78,13 +77,13 @@ export default {
             this.form.imgUrl.replace(file.url, '')
         },
         uploadBefore: function () {
-            this.openLoading()
+            this.$bus.$emit('show');
         },
         submitForm() {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
                     insertSay(this.form).then(res => {
-                        this.$message.success('添加说说成功');
+                        this.$toast.success('添加说说成功');
                         this.$router.push({ path: "/say" })
                     })
                 } else {
@@ -100,20 +99,11 @@ export default {
             formData.append('multipartFile', this.files)
             upload(formData).then(res => {
                 this.form.imgUrl += res.data + ","
-                this.loading.close()
+                this.$bus.$emit('close');
 
             }).catch(error => {
-                this.loading.close()
+                this.$bus.$emit('close');
             })
-        },
-        // 打开加载层
-        openLoading: function () {
-            this.loading = this.$loading({
-                lock: true,
-                text: "正在加载中~",
-                spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)"
-            });
         },
     }
 }

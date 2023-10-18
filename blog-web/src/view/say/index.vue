@@ -175,7 +175,7 @@ export default {
             let el = document.getElementById("textarea")
             if (!el.innerHTML) {
 
-                this.$message.warning('请输入评论内容');
+                this.$toast.warning('请输入评论内容');
                 return
             }
             this.comment.content = el.innerHTML
@@ -183,7 +183,7 @@ export default {
                 this.$refs.conetntInputBox[this.commentLastIndex].style.display = "none"
                 this.showCommentBox = false
 
-                this.$message.success('评论成功');
+                this.$toast.success('评论成功');
                 let comment = {
                     userId: this.$store.state.userInfo.id,
                     nickname: this.$store.state.userInfo.nickname,
@@ -304,7 +304,7 @@ export default {
                 }
                 say.isLike = false
 
-                this.$message.success(res.data);
+                this.$toast.success(res.data);
             })
         },
         sayLike(say) {
@@ -315,7 +315,7 @@ export default {
                 })
                 say.isLike = true
 
-                this.$message.success(res.data);
+                this.$toast.success(res.data);
             })
         },
         handlePreviewImg(imgs, img) {
@@ -326,13 +326,13 @@ export default {
             });
         },
         getSayList() {
-            this.$bus.$emit('showLoading');
+            this.$bus.$emit('show');
             getSayList(this.pageData).then(res => {
                 this.sayList.push(...res.data.records)
                 this.pages = res.data.pages
-                this.$bus.$emit('hideLoading')
+                this.$bus.$emit('close')
             }).catch(err => {
-                this.$bus.$emit('hideLoading')
+                this.$bus.$emit('close')
             })
         },
         handlePage(val) {

@@ -58,12 +58,12 @@ export default {
         addToList() {
             if (this.count) {
 
-                this.$message.error("30秒后才能再次留言");
+                this.$toast.error("30秒后才能再次留言");
                 return false;
             }
             if (this.content.trim() === "") {
 
-                this.$message.error("留言不能为空");
+                this.$toast.error("留言不能为空");
                 return false;
             }
             var message = {
@@ -78,7 +78,7 @@ export default {
             addMessage(message).then(res => {
                 this.barrageList.push(message);
 
-                this.$message.success("留言成功");
+                this.$toast.success("留言成功");
             }).catch(err => {
             });
             const TIME_COUNT = 30;

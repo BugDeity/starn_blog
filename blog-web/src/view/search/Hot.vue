@@ -166,7 +166,7 @@ export default {
         handleCommit() {
             if (!this.text) {
 
-                this.$message.warning("请输入搜索内容");
+                this.$toast.warning("请输入搜索内容");
                 return;
             }
             window.open(this.searchUrl[this.selectSite] + this.text, '_blank');
@@ -175,7 +175,7 @@ export default {
             this.dialogVisible = false
             this.selectSite = this.tabPosition
 
-            this.$message.success("切换成功");
+            this.$toast.success("切换成功");
         },
 
     }

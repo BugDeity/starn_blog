@@ -375,7 +375,7 @@ export default {
         },
         handleForumLike(forumId, index) {
             forumLike(forumId).then(res => {
-                this.$message.success(res.data)
+                this.$toast.success(res.data)
                 var forum = this.forumList[index]
                 if (forum.isLike) {
                     this.forumList[index].likeCount--
@@ -432,7 +432,7 @@ export default {
 
         },
         uploadBefore: function () {
-            this.openLoading()
+            this.$bus.$emit('show');
         },
         uploadSectionFile: function (param) {
             this.files = param.file
@@ -443,7 +443,7 @@ export default {
             upload(formData).then(res => {
                 this.form.imgUrl += res.data + ","
             })
-            this.loading.close()
+            this.$bus.$emit('close');
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
@@ -472,14 +472,14 @@ export default {
         },
         handlePage() {
             this.pageData.pageNo++
-            this.openLoading()
+            this.$bus.$emit('show');
             getTalkList(this.pageData).then(res => {
                 this.forumList.push(...res.data.records)
                 this.pages = res.data.pages
-                this.loading.close()
+                this.$bus.$emit('close');
             }).catch(err => {
-                this.$message.error(err.message);
-                this.loading.close()
+                this.$toast.error(err.message);
+                this.$bus.$emit('close');
             })
         },
         handleLikePage() {
@@ -584,10 +584,10 @@ export default {
                 content += this.codeHtmlContent
             }
             if (content == null || content == "") {
-                this.$message.error("内容不能为空！");
+                this.$toast.error("内容不能为空！");
                 return;
             }
-            this.openLoading()
+            this.$bus.$emit('show');
             this.form.content = content
             if (this.form.site) {
                 this.form.site = JSON.stringify(this.form.site)
@@ -600,38 +600,29 @@ export default {
                     site: null,
                     imgUrl: ""
                 }
-                this.$message.success("发布成功");
+                this.$toast.success("发布成功");
                 this.talkName = "请选择圈子"
                 this.files = []
                 this.showUploadImg = false
                 this.pageData.pageNo = 1
                 this.getForumList()
-                this.loading.close()
+                this.$bus.$emit('close');
             }).catch(err => {
-                this.$message.error(err.message);
-                this.loading.close()
+                this.$toast.error(err.message);
+                this.$bus.$emit('close');
             })
 
         },
         getForumList() {
-            this.openLoading()
+            this.$bus.$emit('show');
             getForumList(this.pageData).then(res => {
                 this.forumList = res.data.records
                 this.pages = res.data.pages
-                this.loading.close()
+                this.$bus.$emit('close');
             }).catch(err => {
-                this.$message.error(err.message);
-                this.loading.close()
+                this.$toast.error(err.message);
+                this.$bus.$emit('close');
             })
-        },
-        // 打开加载层
-        openLoading: function () {
-            this.loading = this.$loading({
-                lock: true,
-                text: "正在加载中~",
-                spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)"
-            });
         },
     },
 }

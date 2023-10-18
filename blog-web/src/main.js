@@ -13,6 +13,17 @@ import 'element-ui/lib/theme-chalk/index.css';
 import VueImageSwipe from 'vue-image-swipe'
 import 'vue-image-swipe/dist/vue-image-swipe.css'
 
+import Toast from '@/components/toast/index.vue';
+
+const ToastPlugin = {
+  install(Vue) {
+    Vue.prototype.$toast = new Vue(Toast).$mount();
+    document.body.appendChild(Vue.prototype.$toast.$el);
+  },
+};
+
+Vue.use(ToastPlugin);
+
 
 import hljs from 'highlight.js';
 
@@ -28,9 +39,8 @@ Vue.directive('highlight', function (el) {
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import Clipboard from 'clipboard'
+
 import Loading from '@/components/loading/loading';
-
-
 // 注册全局组件
 Vue.component('loading', Loading);
 

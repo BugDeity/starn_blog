@@ -333,16 +333,16 @@ export default {
             }).then(() => {
                 if (!id) {
 
-                    this.$message.warning("群聊不允许删除");
+                    this.$toast.warning("群聊不允许删除");
                     return;
                 }
                 deleteRoom(id).then(res => {
                     this.$delete(this.roomList, index);
 
-                    this.$message.success("删除成功");
+                    this.$toast.success("删除成功");
                 })
             }).catch(() => {
-                this.$message.info("已取消删除");
+                this.$toast.info("已取消删除");
             });
         },
 
@@ -471,7 +471,7 @@ export default {
                     url: this.message.content.match(this.RegEx)[0]
                 }
                 addEmoji(emoji).then(res => {
-                    this.$message.success("收藏表情成功");
+                    this.$toast.success("收藏表情成功");
                 })
             }
 
@@ -485,11 +485,11 @@ export default {
                 text: () => this.message.content
             })
             clipboard.on('success', () => {
-                this.$message.success("复制成功");
+                this.$toast.success("复制成功");
                 clipboard.destroy()
             })
             clipboard.on('error', () => {
-                this.$message.error("复制失败");
+                this.$toast.error("复制失败");
                 clipboard.destroy()
             })
         },
@@ -626,7 +626,7 @@ export default {
                 return;
             }
             if (!this.user) {
-                this.$message.error("请先登录");
+                this.$toast.error("请先登录");
                 this.$store.state.loginFlag = true
                 return;
             }
@@ -671,7 +671,7 @@ export default {
             let _this = this;
             if (!_this.user) {
 
-                this.$message.error("登录才能进行群聊");
+                this.$toast.error("登录才能进行群聊");
                 return;
             }
             if (typeof (WebSocket) == "undefined") {

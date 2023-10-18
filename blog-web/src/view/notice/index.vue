@@ -168,13 +168,13 @@ export default {
                     } else {
                         this.noticeList = []
                     }
-                    this.$message.success('删除成功')
+                    this.$toast.success('删除成功')
                 }).catch(err => {
 
                 })
             }).catch(() => {
 
-                this.$message.info('已取消删除')
+                this.$toast.info('已取消删除')
             });
 
         },

@@ -178,7 +178,7 @@ export default {
                 if (valid) {
                     forgetPassword(this.form).then(res => {
 
-                        this.$message.success('修改成功');
+                        this.$toast.success('修改成功');
                         this.$store.state.loginFlag = true;
                         this.forgetFlag = false
                     })
@@ -193,7 +193,7 @@ export default {
                 if (valid) {
                     emailRegister(this.form).then(res => {
 
-                        this.$message.success('注册成功');
+                        this.$toast.success('注册成功');
                         this.$store.state.loginFlag = true;
                         this.emailRegistFlag = false
                     })
@@ -206,7 +206,7 @@ export default {
         handleSendEmailCode() {
             if (this.form.email == null || this.form.email == '') {
 
-                this.$message.error('请输入邮箱');
+                this.$toast.error('请输入邮箱');
                 return
             }
             sendEmailCode(this.form.email).then(res => {
@@ -222,7 +222,7 @@ export default {
                     }
                 }, 1000);
 
-                this.$message.success('验证码发送成功');
+                this.$toast.success('验证码发送成功');
             })
         },
         handleRegister(type) {
@@ -248,7 +248,7 @@ export default {
             getWechatLoginCode().then(res => {
                 this.wechatLoginCode = res.data
 
-                this.$message.success('验证码获取成功');
+                this.$toast.success('验证码获取成功');
                 this.countdown = 60
                 this.timer = setInterval(() => {
                     if (this.countdown > 0) {
@@ -260,10 +260,10 @@ export default {
                             this.close()
                             if (res.data.email == null) {
 
-                                this.$message.warning('请绑定邮箱以便及时收到回复');
+                                this.$toast.warning('请绑定邮箱以便及时收到回复');
                             } else {
 
-                                this.$message.success('登录成功');
+                                this.$toast.success('登录成功');
                             }
                             location.reload()
                         })

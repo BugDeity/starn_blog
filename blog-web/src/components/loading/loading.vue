@@ -1,7 +1,7 @@
 <template>
     <!-- 动画节点 -->
     <div id="loader-wrapper" v-if="isLoading">
-        <div id="loader"></div>
+        <div class="loader"></div>
         <div class="load_title">正在拼命加载中,请耐心等待....</div>
     </div>
 </template>
@@ -13,13 +13,13 @@ export default {
         };
     },
     mounted() {
-        this.$bus.$on('showLoading', () => {
+        this.$bus.$on('show', () => {
             this.isLoading = true;
             var mo = function (e) { e.preventDefault(); };
             document.body.style.overflow = 'hidden';
             document.addEventListener("touchmove", mo, false);//禁止页面滑动}, false)
         });
-        this.$bus.$on('hideLoading', () => {
+        this.$bus.$on('close', () => {
             this.isLoading = false;
             var mo = function (e) { e.preventDefault(); };
             document.body.style.overflow = '';//出现滚动条
@@ -27,12 +27,97 @@ export default {
         });
     },
     beforeDestroy() {
-        this.$bus.$off('showLoading');
-        this.$bus.$off('hideLoading');
+        this.$bus.$off('show');
+        this.$bus.$off('close');
     }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.loader {
+    animation: rotate 1s infinite;
+    height: 50px;
+    width: 50px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin: 0 0 0 -25px;
+}
+
+.loader:before,
+.loader:after {
+    border-radius: 50%;
+    content: '';
+    display: block;
+    height: 20px;
+    width: 20px;
+}
+
+.loader:before {
+    animation: ball1 1s infinite;
+    background-color: #cb2025;
+    box-shadow: 30px 0 0 #f8b334;
+    margin-bottom: 10px;
+}
+
+.loader:after {
+    animation: ball2 1s infinite;
+    background-color: #00a096;
+    box-shadow: 30px 0 0 #97bf0d;
+}
+
+@keyframes rotate {
+    0% {
+        -webkit-transform: rotate(0deg) scale(0.8);
+        -moz-transform: rotate(0deg) scale(0.8);
+    }
+
+    50% {
+        -webkit-transform: rotate(360deg) scale(1.2);
+        -moz-transform: rotate(360deg) scale(1.2);
+    }
+
+    100% {
+        -webkit-transform: rotate(720deg) scale(0.8);
+        -moz-transform: rotate(720deg) scale(0.8);
+    }
+}
+
+@keyframes ball1 {
+    0% {
+        box-shadow: 30px 0 0 #f8b334;
+    }
+
+    50% {
+        box-shadow: 0 0 0 #f8b334;
+        margin-bottom: 0;
+        -webkit-transform: translate(15px, 15px);
+        -moz-transform: translate(15px, 15px);
+    }
+
+    100% {
+        box-shadow: 30px 0 0 #f8b334;
+        margin-bottom: 10px;
+    }
+}
+
+@keyframes ball2 {
+    0% {
+        box-shadow: 30px 0 0 #97bf0d;
+    }
+
+    50% {
+        box-shadow: 0 0 0 #97bf0d;
+        margin-top: -20px;
+        -webkit-transform: translate(15px, 15px);
+        -moz-transform: translate(15px, 15px);
+    }
+
+    100% {
+        box-shadow: 30px 0 0 #97bf0d;
+        margin-top: 0;
+    }
+}
+
 #loader-wrapper {
     position: fixed;
     top: 0;
@@ -40,60 +125,7 @@ export default {
     width: 100%;
     height: 100%;
     z-index: 999999;
-    background-color: rgba(236, 227, 227, 0.8);
-
-    #loader {
-        display: block;
-        position: relative;
-        left: 50%;
-        top: 50%;
-        width: 100px;
-        height: 100px;
-        margin: -75px 0 0 -75px;
-        border-radius: 50%;
-        border: 3px solid transparent;
-        border-top-color: var(--theme-color);
-        -webkit-animation: spin 2s linear infinite;
-        -ms-animation: spin 2s linear infinite;
-        -moz-animation: spin 2s linear infinite;
-        -o-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-        z-index: 1001;
-
-        &:before {
-            content: "";
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            right: 5px;
-            bottom: 5px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top-color: var(--theme-color);
-            -webkit-animation: spin 3s linear infinite;
-            -moz-animation: spin 3s linear infinite;
-            -o-animation: spin 3s linear infinite;
-            -ms-animation: spin 3s linear infinite;
-            animation: spin 3s linear infinite;
-        }
-
-        &:after {
-            content: "";
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top-color: var(--theme-color);
-            -moz-animation: spin 1.5s linear infinite;
-            -o-animation: spin 1.5s linear infinite;
-            -ms-animation: spin 1.5s linear infinite;
-            -webkit-animation: spin 1.5s linear infinite;
-            animation: spin 1.5s linear infinite;
-        }
-    }
+    background-color: rgba(0, 0, 0, 0.7);
 
     .load_title {
         font-family: 'Open Sans';
@@ -106,34 +138,6 @@ export default {
         line-height: 30px;
     }
 
-}
-
-@-webkit-keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
 }
 </style>
 

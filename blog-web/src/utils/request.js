@@ -61,11 +61,7 @@ service.interceptors.response.use(
             }
             //如果是校验微信登录是否授权的接口 则不进行错误输出
             if (response.config.url !== "/oauth/wechat/is_login") {
-                Notification({
-                    title: '失败',
-                    message: res.message,
-                    type: 'error'
-                });
+                window.vm.$toast.error(res.message);
             }
 
             return Promise.reject(new Error(res.message || 'Error'))
