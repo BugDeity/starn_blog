@@ -905,6 +905,10 @@ export default {
                             .content {
                                 color: var(--article-color);
                                 padding-right: 10px;
+
+                                /deep/ pre {
+                                    margin-top: 10px;
+                                }
                             }
 
                             .imgages {

@@ -68,7 +68,7 @@
                 <li :class="path == '/forum' ? 'active' : ''">
                     <span>
                         <router-link :to="'/forum'">
-                            <svg-icon icon-class="talk"></svg-icon> 朋友圈
+                            <svg-icon icon-class="talk"></svg-icon> 瞬间
                         </router-link>
                     </span>
                 </li>
@@ -175,7 +175,7 @@
                         <router-link style="text-decoration: none;color: #71777c;" :to="'/forum'">
                             <el-dropdown-item>
                                 <svg-icon icon-class="talk"
-                                    style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布帖子
+                                    style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布瞬间
                             </el-dropdown-item>
                         </router-link>
                     </el-dropdown-menu>

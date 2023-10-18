@@ -66,7 +66,7 @@ export default {
             window.location.href = val
         },
         handleCollect() {
-            this.$toast.show('按CTRL+D 键将本页加入书签!');
+            this.$toast.show({ message: '按CTRL+ D 键将本页加入书签!' });
         }
     }
 }

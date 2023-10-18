@@ -52,7 +52,22 @@ export default {
     this.getUserInfo()
     this.initWebSiteInfo()
     this.report()
+    var that = this
+
+    //监听整个页面的 copy 事件
+    document.addEventListener('copy', function (e) {
+      let clipboardData = e.clipboardData || window.clipboardData;
+      if (!clipboardData) return;
+      let text = window.getSelection().toString();
+      if (text) {
+        e.preventDefault();
+        clipboardData.setData('text/plain', text)
+        that.$toast.success("复制成功,转载请务必保留原文链接!")
+      }
+    })
+
   },
+
   methods: {
     initWebSiteInfo() {
       getWebSiteInfo().then(res => {

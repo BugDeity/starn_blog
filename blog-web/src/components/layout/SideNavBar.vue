@@ -32,7 +32,11 @@
                         <i class="el-icon-discount" /> 标签
                     </a>
                 </div>
-
+                <div class="menus-item">
+                    <a @click="handleClike('/forum')">
+                        <i class="el-icon-s-promotion" /> 瞬间
+                    </a>
+                </div>
                 <div class="menus-item">
                     <a @click="handleClike('/navigation')">
                         <i class="el-icon-s-promotion" /> 网址导航

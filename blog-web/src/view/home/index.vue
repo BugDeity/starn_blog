@@ -426,11 +426,9 @@ export default {
             })
             clipboard.on('success', () => {
 
-                this.$toast.success('复制成功')
                 clipboard.destroy()
             })
             clipboard.on('error', () => {
-
                 this.$toast.error('复制失败')
                 clipboard.destroy()
             })

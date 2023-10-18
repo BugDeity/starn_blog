@@ -486,20 +486,28 @@ export default {
                     `</div>`;
 
                 item.insertAdjacentHTML("afterbegin", icon);
+                let value = item.lastElementChild.innerText
                 // 获取复制元素
                 let copyButton =
                     item.firstElementChild.getElementsByClassName("copy-button")[0];
                 copyButton.onclick = function () {
-                    const copyPromise = navigator.clipboard.writeText(
-                        item.lastElementChild.innerText
-                    );
-                    copyPromise
-                        .then(() => {
-                            that.$toast.success("复制成功")
-                        })
-                        .catch(() => {
-                            that.$toast.error("复制失败")
-                        });
+                    // const copyPromise = navigator.clipboard.writeText(
+                    //     item.lastElementChild.innerText
+                    // );
+                    // copyPromise.then(() => { })
+                    //     .catch(() => {
+                    //         that.$toast.error("复制失败")
+                    //     });
+                    const clipboard = new that.Clipboard('.copy-button', {
+                        text: () => value
+                    })
+                    clipboard.on('success', () => {
+                        clipboard.destroy()
+                    })
+                    clipboard.on('error', () => {
+                        that.$toast.error('复制失败')
+                        clipboard.destroy()
+                    })
                 };
 
             });
@@ -1379,9 +1387,8 @@ pre {
     opacity: 1 !important;
     border: 1px solid #272822 !important;
     background-color: #272822 !important;
-    border-radius: 10px !important;
     padding: 10px;
-    margin: 10px;
+    margin-top: 10px;
     color: #f8f8f2 !important;
 }
 
@@ -1395,23 +1402,6 @@ code {
 
 }
 
-code::-webkit-scrollbar {
-    height: 10px !important;
-    border-radius: 5px !important;
-    background-color: #1e1e1e !important;
-}
-
-code::-webkit-scrollbar-thumb {
-    /*滚动条里面小方块*/
-    border-radius: 5px !important;
-    background-color: #666 !important;
-}
-
-code::-webkit-scrollbar-button {
-    /*滚动条的轨道的两端按钮，允许通过点击微调小方块的位置*/
-    border-radius: 5px !important;
-    background-color: #1e1e1e !important;
-}
 
 .mac-icon {
     height: 30px !important;

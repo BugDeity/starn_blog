@@ -3,6 +3,7 @@
         <span class="toast" :style="{ backgroundColor: color, top: styleTop }">
             <i :class="icon" style="margin-right:5px"></i>
             {{ message }}
+            <i class="el-icon-close close" v-if="showCloseBtn" @click="close"></i>
         </span>
     </div>
 </template>
@@ -17,21 +18,26 @@ export default {
             type: "normal",
             color: "#49b1f5",
             styleTop: "-100px",
-            timer: null
+            timer: null,
+            showCloseBtn: false
         };
     },
 
     methods: {
+        close() {
+            this.styleTop = "-100px"
+            clearInterval(this.timer);
+        },
         after(message) {
             clearInterval(this.timer);
             this.message = message;
             this.styleTop = "30px"
             this.timer = setTimeout(() => {
                 this.styleTop = "-100px"
-            }, 2000);
+            }, 3000);
         },
-        show(message, type) {
-            switch (type) {
+        show(option) {
+            switch (option.type) {
                 case "error":
                     this.color = "#F56C6C";
                     this.icon = "iconfont icon-cuo";
@@ -49,7 +55,8 @@ export default {
                     this.color = "#49b1f5"
                     break;
             }
-            this.after(message)
+            this.showCloseBtn = option.showClose;
+            this.after(option.message)
         },
         success(message) {
             this.color = "#52C41A";
@@ -71,7 +78,7 @@ export default {
 };
 </script>
  
-<style scoped>
+<style lang="scss" scoped>
 .toast {
     position: fixed;
     left: 0;
@@ -85,7 +92,12 @@ export default {
     z-index: 99999;
     width: fit-content;
     height: fit-content;
-    transition: all 0.35s;
+    transition: all 0.4s;
+
+    .close {
+        margin-left: 30px;
+        cursor: pointer;
+    }
 
 }
 </style>

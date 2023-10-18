@@ -485,7 +485,6 @@ export default {
                 text: () => this.message.content
             })
             clipboard.on('success', () => {
-                this.$toast.success("复制成功");
                 clipboard.destroy()
             })
             clipboard.on('error', () => {
