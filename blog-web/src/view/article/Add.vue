@@ -118,6 +118,16 @@ export default {
             }
         };
     },
+    beforeRouteLeave(to, from, next) {
+        // 删除md编辑器的高亮样式 否则会跟文章详情代码块样式有冲突
+        let css = document.getElementsByTagName('link');
+        for (let i = 0; i < css.length; i++) {
+            if (css[i].href.includes("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/github.min.css")) {
+                css[i].parentNode.removeChild(css[i]);
+            }
+        }
+        next()
+    },
     created() {
         if (this.articleId) {
             getMyArticleInfo(this.articleId).then(res => {

@@ -122,11 +122,11 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="content pd" v-highlight v-html="item.content">
+                                <div class="content pd" id="forumContent" v-highlight v-html="item.content">
                                 </div>
                                 <div class="imgages pading-50" v-if="item.imgUrl">
                                     <img v-for="(img, index) in splitImg(item.imgUrl)"
-                                        @click="handlePreviewImg(item.imgUrl, img)" :key="index" v-lazy="img" alt="">
+                                        @click.stop="handlePreviewImg(item.imgUrl, img)" :key="index" v-lazy="img" alt="">
                                 </div>
                                 <div class="site pading-50" v-if="item.site">
                                     <div class="siteItem">
@@ -200,7 +200,7 @@
         <!-- 点赞列表弹出框 -->
         <el-dialog title="点赞详情" center :visible.sync="likeDialogVisible" :close-on-click-modal="false" width="30%"
             :before-close="handleBeforClose">
-            <div class="userItem" v-for="item in forumLikeList">
+            <div class="userItem" v-for="item in forumLikeList" @click="handleToUserMain(item.userId)">
                 <el-avatar size="large" :src="item.avatar">
                 </el-avatar>
                 <div style="margin-left:15px">
@@ -212,7 +212,7 @@
                     </div>
                 </div>
                 <div style="margin-left:auto">
-                    <el-button size="mini" type="primary">关 注</el-button>
+                    <el-button size="mini" @click.stop="" type="primary">关 注</el-button>
                 </div>
             </div>
             <div>
@@ -312,6 +312,9 @@ export default {
         })
     },
     methods: {
+        handleToUserMain(userId) {
+            this.$router.push({ path: "/user_main", query: { id: userId } })
+        },
         handleClose() {
             let html = `<pre><code> ${this.codeContent}</code></pre>`
             this.codeHtmlContent = html
@@ -662,6 +665,7 @@ export default {
     display: flex;
     align-items: center;
     padding: 15px 10px;
+    cursor: pointer;
 
     &:hover {
         background-color: #f5f7fa;
@@ -726,6 +730,7 @@ export default {
                 border-radius: 4px;
                 background-color: var(--forum-background-color);
                 transition: all .5s ease-in-out;
+                border: 1px solid var(--forum-background-color);
 
                 &:focus {
                     border: 1px solid var(--theme-color);
@@ -969,7 +974,7 @@ export default {
                             .bottomBtn {
                                 display: flex;
                                 width: 100%;
-                                justify-content: space-between;
+                                justify-content: space-around;
                                 border-top: 1px dashed var(--border-line);
                                 margin-top: 15px;
                                 padding: 10px 0;
@@ -977,8 +982,6 @@ export default {
 
                                 .btn {
                                     cursor: pointer;
-                                    width: 100%;
-                                    text-align: center;
                                 }
                             }
 

@@ -14,6 +14,17 @@ import VueImageSwipe from 'vue-image-swipe'
 import 'vue-image-swipe/dist/vue-image-swipe.css'
 
 
+import hljs from 'highlight.js';
+
+import 'highlight.js/styles/atom-one-dark-reasonable.css' //样式
+//创建v-highlight全局指令
+Vue.directive('highlight', function (el) {
+  let blocks = el.querySelectorAll('pre code');
+  blocks.forEach((block) => {
+    hljs.highlightBlock(block)
+  })
+})
+
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import Clipboard from 'clipboard'
@@ -27,16 +38,6 @@ Vue.component('loading', Loading);
 Vue.prototype.$bus = new Vue();
 Vue.prototype.Clipboard = Clipboard
 
-import hljs from 'highlight.js';
-
-import 'highlight.js/styles/atom-one-dark-reasonable.css' //样式
-//创建v-highlight全局指令
-Vue.directive('highlight', function (el) {
-  let blocks = el.querySelectorAll('pre code');
-  blocks.forEach((block) => {
-    hljs.highlightBlock(block)
-  })
-})
 import MetaInfo from 'vue-meta-info';
 
 Vue.use(MetaInfo)

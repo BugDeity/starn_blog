@@ -153,7 +153,7 @@
                 <el-dropdown trigger="hover">
                     <span class="el-dropdown-link">
                         <button type="button" class="sendBtn">
-                            <i class="el-icon-edit-outline"></i> 发布
+                            <i class="el-icon-edit-outline"></i> 创作
                         </button>
                     </span>
                     <el-dropdown-menu slot="dropdown">
