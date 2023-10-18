@@ -30,7 +30,6 @@ export default {
 
 <style lang="scss" scoped>
 .about-box {
-    position: relative;
     padding: 10px;
 
     @media screen and (max-width: 1118px) {

@@ -143,8 +143,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .category {
-    position: relative;
-
     @media screen and (max-width: 1118px) {
         .main {
             margin-top: 70px;

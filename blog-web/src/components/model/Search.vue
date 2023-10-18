@@ -122,10 +122,6 @@ export default {
 /deep/ .el-dialog {
     border-radius: 5px;
 
-    @media screen and (max-width: 1118px) {
-        width: 90%;
-    }
-
     @media screen and (min-width: 1119px) {
         width: 30%;
     }

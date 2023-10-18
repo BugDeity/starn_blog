@@ -93,7 +93,6 @@ export default {
 
 <style lang="scss" scoped>
 .archive {
-    position: relative;
 
 
     @media screen and (max-width: 1118px) {

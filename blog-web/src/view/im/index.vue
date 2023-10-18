@@ -808,7 +808,6 @@ export default {
 
 .im-main {
     min-height: calc(100vh - 167px);
-    position: relative;
 
     @media screen and (max-width: 1118px) {
         .im-warpper {

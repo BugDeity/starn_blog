@@ -333,11 +333,6 @@ export default {
 }
 
 .dialog {
-    @media screen and (max-width: 1118px) {
-        /deep/ .el-dialog {
-            width: 90%;
-        }
-    }
 
     @media screen and (min-width: 1119px) {
         /deep/ .el-dialog {

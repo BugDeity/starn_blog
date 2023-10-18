@@ -55,7 +55,6 @@ export default {
 }
 
 .navigation-main {
-    position: relative;
     min-height: calc(100vh - 207px);
 
     @media screen and (max-width: 1118px) {

@@ -1,7 +1,7 @@
 <template>
-    <div class='note-wapper'>
+    <div class='talk-wapper'>
         <div class="main">
-            <div class="note">
+            <div class="tailk">
                 <div class="categoryBox">
                     <ul>
                         <li ref="categoryRef" :class="index ? 'category_item' : 'active'" @click="handleClike(item, index)"
@@ -17,8 +17,7 @@
                             <div id="textarea" ref="textareaRef" contenteditable="true" @input="onInput"
                                 data-placeholder="快和圈友一起发布新鲜事" @paste="optimizePasteEvent" class="contentTextarea">
                             </div>
-                            <el-popover class="talkBtn" placement="bottom-start" width="400" trigger="click"
-                                v-model="talkVisible">
+                            <el-popover class="talkBtn" placement="bottom-start" trigger="click" v-model="talkVisible">
                                 <el-select v-model="form.talkId" placeholder="请选择" @change="handleSelectChage">
                                     <el-option v-for="(item, index) in talkSelectList" :key="index" :label="item.name"
                                         :value="item.id">
@@ -76,7 +75,7 @@
                             <div class="btn">
                                 <el-button type="primary" size="small" @click="addForum">发布</el-button>
                             </div>
-                            <div class="site pading-50" v-if="form.site">
+                            <div class="site m-l-50" v-if="form.site">
                                 <div class="siteItem">
                                     <div class="imgCover">
                                         <span>
@@ -96,7 +95,7 @@
                                     <i class="el-icon-close"></i>
                                 </div>
                             </div>
-                            <div class="upload pading-50" v-if="showUploadImg">
+                            <div class="upload m-l-50" v-if="showUploadImg">
                                 <el-upload class="avatar-uploader" :action="uploadPictureHost" :before-upload="uploadBefore"
                                     list-type="picture-card" :limit="9" :http-request="uploadSectionFile" multiple
                                     :on-remove="handleRemove">
@@ -122,13 +121,13 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="content pd" id="forumContent" v-highlight v-html="item.content">
+                                <div class="content m-l-50" id="forumContent" v-highlight v-html="item.content">
                                 </div>
-                                <div class="imgages pading-50" v-if="item.imgUrl">
+                                <div class="imgages m-l-50" v-if="item.imgUrl">
                                     <img v-for="(img, index) in splitImg(item.imgUrl)"
                                         @click.stop="handlePreviewImg(item.imgUrl, img)" :key="index" v-lazy="img" alt="">
                                 </div>
-                                <div class="site pading-50" v-if="item.site">
+                                <div class="site m-l-50" v-if="item.site">
                                     <div class="siteItem">
                                         <div class="imgCover">
                                             <span>
@@ -144,7 +143,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="item-category pd">
+                                <div class="item-category m-l-50">
                                     <span class="talkName" v-if="item.talkName">{{ item.talkName }}</span>
                                     <span class="likeInfo" v-if="item.likeListVO.length" @click="handleLikeList(item.id)">
                                         <img v-for="(lieList) in item.likeListVO" class="likeUserAvatar"
@@ -187,7 +186,7 @@
         </div>
 
         <!-- 代码弹出框 -->
-        <el-dialog title="添加代码块" center :visible.sync="dialogVisible" :close-on-click-modal="false" width="30%">
+        <el-dialog title="添加代码块" center :visible.sync="dialogVisible" :close-on-click-modal="false">
             <el-input style="margin-top: 10px;" type="textarea" show-word-limit maxlength="1000"
                 :autosize="{ minRows: 20, maxRows: 100 }" placeholder="请在此输入你的代码" v-model="codeContent">
             </el-input>
@@ -630,8 +629,6 @@ export default {
    
 <style lang="scss" scoped>
 /deep/ .avatar-uploader {
-
-
     .el-upload--picture-card {
         width: 80px !important;
         height: 80px !important;
@@ -648,10 +645,6 @@ export default {
     }
 }
 
-.pading-50 {
-    padding-left: 50px;
-}
-
 .userItem {
     display: flex;
     align-items: center;
@@ -663,21 +656,48 @@ export default {
     }
 }
 
-.note-wapper {
+.talk-wapper {
     display: flex;
     justify-content: center;
-    position: relative;
+    min-height: calc(100vh - 207px);
 
     .main {
-        margin-top: 80px;
-        width: 65%;
-        min-height: calc(100vh - 207px);
+        margin-top: 70px;
 
-        .note {
-            display: flex;
+        @media screen and (max-width: 1118px) {
+            width: 100%;
 
-            ul {
-                list-style: none;
+            .m-l-50 {
+                margin-left: 0;
+            }
+
+            .categoryBox {
+                display: none;
+            }
+
+            .imgages {
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+            }
+
+        }
+
+        @media screen and (min-width: 1119px) {
+            width: 65%;
+
+            .m-l-50 {
+                margin-left: 50px;
+            }
+
+            .imgages {
+
+                img {
+                    width: 170px;
+                    height: 170px;
+                }
             }
 
             .categoryBox {
@@ -710,6 +730,16 @@ export default {
                 }
 
             }
+        }
+
+        .tailk {
+            display: flex;
+
+            ul {
+                list-style: none;
+            }
+
+
 
             /deep/ .contentTextarea {
                 font-size: .875rem;
@@ -883,21 +913,12 @@ export default {
                                 flex-wrap: wrap;
                                 margin-top: 10px;
 
-
-
                                 img {
                                     margin-bottom: 5px;
                                     margin-right: 5px;
-                                    width: 170px;
-                                    height: 170px;
                                     flex-shrink: 0;
                                     cursor: pointer;
-
                                 }
-                            }
-
-                            .pd {
-                                margin-left: 50px;
                             }
 
                             .item-category {

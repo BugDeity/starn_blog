@@ -183,7 +183,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .hotSearchMain {
-    position: relative;
 
     @media screen and (max-width: 1118px) {
         .box {

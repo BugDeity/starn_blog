@@ -224,10 +224,6 @@ export default {
             }
         }
 
-        /deep/ .el-dialog {
-            width: 95%;
-            border-radius: 10px;
-        }
     }
 
     @media screen and (min-width: 1119px) {

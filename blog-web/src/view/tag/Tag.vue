@@ -141,7 +141,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .tag-warpper {
-    position: relative;
 
     @media screen and (max-width: 1118px) {
         .main {

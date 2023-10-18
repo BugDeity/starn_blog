@@ -661,10 +661,6 @@ export default {
     position: relative;
 
     @media screen and (max-width: 1118px) {
-        /deep/ .el-dialog {
-            width: 90%;
-            border-radius: 10px;
-        }
 
         .article {
             width: 100%;

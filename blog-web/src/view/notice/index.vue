@@ -261,7 +261,6 @@ export default {
 }
 
 .sysnotice {
-    position: relative;
 
     .notice-container {
         padding: 20px;

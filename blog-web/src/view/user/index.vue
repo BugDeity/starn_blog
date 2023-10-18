@@ -574,8 +574,6 @@ export default {
         padding: 10px;
 
         /deep/ .el-dialog {
-            width: 90%;
-            border-radius: 10px;
 
             .dialogItem {
                 display: flex;

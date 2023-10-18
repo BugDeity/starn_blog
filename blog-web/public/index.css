@@ -143,3 +143,9 @@
          background-color: #000 !important;
      }
  }
+
+ @media screen and (max-width: 1118px) {
+     .el-dialog {
+         width: 90% !important;
+     }
+ }
