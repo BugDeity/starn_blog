@@ -466,13 +466,12 @@ export default {
                 this.form.talkId = item.id
                 this.talkName = item.name
             }
-
             this.getForumList()
         },
         handlePage() {
             this.pageData.pageNo++
             this.$bus.$emit('show');
-            getTalkList(this.pageData).then(res => {
+            getForumList(this.pageData).then(res => {
                 this.forumList.push(...res.data.records)
                 this.pages = res.data.pages
                 this.$bus.$emit('close');

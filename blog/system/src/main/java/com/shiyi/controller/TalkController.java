@@ -1,6 +1,7 @@
 package com.shiyi.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.shiyi.annotation.OperationLogger;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Talk;
 import com.shiyi.service.TalkService;
@@ -38,6 +39,7 @@ public class TalkController {
     }
 
     @PostMapping("add")
+    @OperationLogger(value = "添加圈子")
     @SaCheckPermission("/system/talk/add")
     @ApiOperation(value = "添加圈子",httpMethod = "POST", response = ResponseResult.class, notes = "添加圈子")
     public ResponseResult addTalk(@RequestBody Talk talk){
@@ -45,6 +47,7 @@ public class TalkController {
     }
 
     @PutMapping("update")
+    @OperationLogger(value = "修改圈子")
     @SaCheckPermission("/system/talk/update")
     @ApiOperation(value = "修改圈子",httpMethod = "PUT", response = ResponseResult.class, notes = "修改圈子")
     public ResponseResult updateTalk(@RequestBody Talk talk){
@@ -52,6 +55,7 @@ public class TalkController {
     }
 
     @DeleteMapping("delete")
+    @OperationLogger(value = "删除圈子")
     @SaCheckPermission("/system/talk/delete")
     @ApiOperation(value = "删除圈子",httpMethod = "DELETE", response = ResponseResult.class, notes = "删除圈子")
     public ResponseResult deleteTalk(@RequestBody List<Integer> ids){
