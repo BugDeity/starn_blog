@@ -222,10 +222,9 @@ export default {
             img.style.verticalAlign = 'middle';
             img.style.marginLeft = "2px"
             img.style.marginRight = "2px"
-            if (value.type == 1) {
-                img.style.maxHeight = "100px";
-                img.style.height = "100%"
-            }
+            img.style.maxHeight = value.maxHeight;
+            img.style.height = value.height
+            img.style.width = value.width
             let edit = this.$refs['textareaRef']
             edit.focus()
             let selection = window.getSelection()

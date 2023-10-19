@@ -582,13 +582,9 @@ export default {
             img.style.marginLeft = "2px"
             img.style.marginRight = "2px"
 
-            if (value.type == 1) {
-                img.style.maxHeight = "100px";
-                img.style.height = "100%"
-            } else {
-                img.style.width = "25px"
-                img.style.height = "25px"
-            }
+            img.style.maxHeight = value.maxHeight;
+            img.style.height = value.width
+            img.style.width = value.width
             let edit = this.$refs['inputRef']
             edit.focus()
             let selection = window.getSelection()

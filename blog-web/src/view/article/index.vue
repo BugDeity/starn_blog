@@ -584,7 +584,7 @@ export default {
                 //获取小标题距离屏幕顶端的距离
                 var offsetTop = document.getElementById(this.titles[i].id).offsetTop;
                 //根据条件做出判断，我这里是当小标题和屏幕顶端的距离小于300且没有被标明在读时，就将其背景颜色改变。
-                if ((offsetTop - scrollTop) < 300 && (offsetTop - scrollTop) > 0) {
+                if ((offsetTop - scrollTop) < 80 && (offsetTop - scrollTop) > 0) {
                     this.active = i
                 }
             }
@@ -1392,12 +1392,14 @@ export default {
 <style>
 pre {
     opacity: 1 !important;
-    border: 1px solid #272822 !important;
-    background-color: #272822 !important;
-    padding: 10px;
     margin-top: 10px;
     color: #f8f8f2 !important;
-    border-radius: 5px;
+
+}
+
+.hljs {
+    border-bottom-left-radius: 3px !important;
+    border-bottom-right-radius: 3px !important;
 }
 
 code {
@@ -1406,17 +1408,22 @@ code {
     vertical-align: top;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
-    padding-left: 10px !important;
-
+    padding: 10px !important;
+    border-bottom-left-radius: 3px !important;
+    border-bottom-right-radius: 3px !important;
 }
 
 
 .mac-icon {
     height: 20px !important;
-    margin-bottom: 5px !important;
     color: deeppink !important;
     display: flex;
     align-items: center;
+    border: 1px solid #272822 !important;
+    background-color: #272822 !important;
+    padding: 8px !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
 }
 
 .mac-icon>span {
@@ -1451,7 +1458,7 @@ code {
 
 .copy-button {
     border-radius: 3px;
-    padding: 5px 8px !important;
+    padding: 5px !important;
     color: #ffffff !important;
     margin-bottom: 5px !important;
     font-size: 1rem;

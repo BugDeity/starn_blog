@@ -1,6 +1,6 @@
 <template>
     <div class='emoji-container'>
-        <div class="emojiBox" v-if="!type">
+        <div class="emojiBox" v-if="type == 0">
             <span class="emoji-item" v-for="(item, index) of emojiList" :key="index" @click="chooseEmoji(item.url, 0)">
                 <el-tooltip class="item" effect="dark" :content="item.name" placement="top">
                     <img :src="item.url" class="emoji" :title="item.name" />
@@ -8,14 +8,22 @@
             </span>
         </div>
 
-        <div class="emojiBox" v-else>
+        <div class="emojiBox" v-if="type == 1">
+            <span class="emoji-item" v-for="(item, index) of heoList" :key="index" @click="chooseEmoji(item.url, 1)">
+                <el-tooltip class="item" effect="dark" :content="item.name" placement="top">
+                    <img :src="item.url" class="heoImg" :title="item.name" />
+                </el-tooltip>
+            </span>
+        </div>
+
+        <div class="emojiBox" v-if="type == 2">
             <el-upload class="avatar-uploader" :action="uploadPictureHost" :http-request="uploadSectionFile"
                 :show-file-list="false" multiple>
                 <i class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
             <ul id="collectEmoji">
                 <li class="collect-emoji" v-for="(item, index) in myEmojiList" :key="index"
-                    @contextmenu.prevent="openMenu($event, item, index)" @click="chooseEmoji(item.url, 1)">
+                    @contextmenu.prevent="openMenu($event, item, index)" @click="chooseEmoji(item.url, 2)">
                     <img v-lazy="item.url" alt="">
                 </li>
             </ul>
@@ -37,7 +45,8 @@
         <div class="btnBox">
             <el-radio-group v-model="type" @input="handleChage">
                 <el-radio-button :label="0">表情</el-radio-button>
-                <el-radio-button :label="1">收藏</el-radio-button>
+                <el-radio-button :label="1">heo</el-radio-button>
+                <el-radio-button :label="2">收藏</el-radio-button>
             </el-radio-group>
         </div>
     </div>
@@ -51,7 +60,8 @@ export default {
     data() {
         return {
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
-            emojiList: null,
+            emojiList: [],
+            heoList: [],
             type: 0,
             myEmojiList: [],
             files: [],
@@ -91,11 +101,14 @@ export default {
         },
         handleChage(value) {
             this.visible = false
-            if (value == 1) {
+            if (value == 2) {
                 this.getEmojiList()
                 this.$nextTick(() => {
                     document.getElementById("collectEmoji").oncontextmenu = new Function("event.returnValue=false");
                 })
+            }
+            if (value == 1) {
+                this.heoList = require('@/assets/heo.json');
             }
         },
         getEmojiList() {
@@ -117,6 +130,20 @@ export default {
                 url: url,
                 type: type
             }
+
+            if (type == 1) {
+                emoji.width = "50px";
+                emoji.height = "100%"
+            }
+            if (type == 2) {
+                emoji.maxHeight = "100px";
+                emoji.height = "100%"
+            }
+            if (type == 0) {
+                emoji.width = "25px"
+                emoji.height = "25px"
+            }
+
             this.$emit('chooseEmoji', emoji);
         },
         //右击
@@ -215,6 +242,17 @@ export default {
 
                 &:hover {
                     background-color: rgb(221, 221, 221)
+                }
+            }
+
+            .heoImg {
+                width: 40px;
+                height: 40px;
+                transition: all 0.35s;
+                margin-left: 5px;
+
+                &:hover {
+                    transform: scale(1.2);
                 }
             }
         }
