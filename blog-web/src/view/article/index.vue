@@ -1398,8 +1398,8 @@ pre {
 }
 
 .hljs {
-    border-bottom-left-radius: 3px !important;
-    border-bottom-right-radius: 3px !important;
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
 }
 
 code {
@@ -1409,21 +1409,21 @@ code {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     padding: 10px !important;
-    border-bottom-left-radius: 3px !important;
-    border-bottom-right-radius: 3px !important;
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
 }
 
 
 .mac-icon {
     height: 20px !important;
-    color: deeppink !important;
     display: flex;
     align-items: center;
     border: 1px solid #272822 !important;
     background-color: #272822 !important;
     padding: 8px !important;
-    border-top-left-radius: 3px !important;
-    border-top-right-radius: 3px !important;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+
 }
 
 .mac-icon>span {

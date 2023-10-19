@@ -1,7 +1,7 @@
 <template>
     <div id="toast">
-        <span class="toast" :style="{ backgroundColor: color, top: styleTop }">
-            <i :class="icon" style="margin-right:5px"></i>
+        <span class="toast" @mouseleave="start" @mouseenter="stop" :style="{ backgroundColor: color, top: styleTop }">
+            <i :class="icon" style="vertical-align:-1px"></i>
             {{ message }}
             <i class="el-icon-close close" v-if="showCloseBtn" @click="close"></i>
         </span>
@@ -27,6 +27,14 @@ export default {
         close() {
             this.styleTop = "-100px"
             clearInterval(this.timer);
+        },
+        stop() {
+            clearInterval(this.timer);
+        },
+        start() {
+            this.timer = setTimeout(() => {
+                this.styleTop = "-100px"
+            }, 3000);
         },
         after(message) {
             clearInterval(this.timer);
