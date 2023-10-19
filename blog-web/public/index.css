@@ -53,8 +53,11 @@
 
  /* 修改滚动条颜色 */
  ::-webkit-scrollbar-thumb {
-     border-radius: 5px;
-     background-image: -webkit-linear-gradient(0deg, #3ca5f6 0, #a86af9 100%);
+     background-color: #30B07F;
+     background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .4) 100%, transparent 100%, transparent 50%, rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, .4) 75%, transparent 75%, transparent);
+     -webkit-border-radius: 2em;
+     -moz-border-radius: 2em;
+     border-radius: 2em;
  }
 
  /* 修改滚动条轨道颜色 */

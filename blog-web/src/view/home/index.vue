@@ -260,7 +260,9 @@
                         <div class="clearfix">
                             <svg-icon icon-class="tag"></svg-icon>
                             <span> 标签墙</span>
-                            <a href="/tag" class="more">更多</a>
+                            <router-link :to="'/tag'">
+                                <a class="more">更多</a>
+                            </router-link>
                         </div>
                         <div class="tagBox">
                             <a @click="handleClike(item.id, '/tag')" :style="{ backgroundColor: `${randomColor()}` }"

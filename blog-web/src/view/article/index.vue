@@ -491,13 +491,6 @@ export default {
                 let copyButton =
                     item.firstElementChild.getElementsByClassName("copy-button")[0];
                 copyButton.onclick = function () {
-                    // const copyPromise = navigator.clipboard.writeText(
-                    //     item.lastElementChild.innerText
-                    // );
-                    // copyPromise.then(() => { })
-                    //     .catch(() => {
-                    //         that.$toast.error("复制失败")
-                    //     });
                     const clipboard = new that.Clipboard('.copy-button', {
                         text: () => value
                     })
@@ -1136,6 +1129,7 @@ export default {
             margin-top: 10px;
             padding: 10px;
 
+
             blockquote {
                 position: relative;
                 padding: 0 10px;
@@ -1155,13 +1149,26 @@ export default {
 
 
 
-            p a {
-                text-decoration: none;
-                color: #7bc549;
+            p {
+                a {
+                    text-decoration: none;
+                    color: #7bc549;
 
-                &::after {
-                    content: '🔗';
+                    &::after {
+                        content: '🔗';
+                    }
                 }
+
+                code {
+                    vertical-align: middle;
+                    background-color: rgba(27, 31, 35, .05);
+                    border-radius: 3px !important;
+                    padding: 0 !important;
+                    padding-top: 0.2em !important;
+                    padding-bottom: 0.2em !important;
+                    margin: 0 !important;
+                }
+
             }
 
             img {
@@ -1390,6 +1397,7 @@ pre {
     padding: 10px;
     margin-top: 10px;
     color: #f8f8f2 !important;
+    border-radius: 5px;
 }
 
 code {
@@ -1404,17 +1412,19 @@ code {
 
 
 .mac-icon {
-    height: 30px !important;
+    height: 20px !important;
     margin-bottom: 5px !important;
     color: deeppink !important;
+    display: flex;
+    align-items: center;
 }
 
 .mac-icon>span {
     display: inline-block !important;
     letter-spacing: 5px !important;
     word-spacing: 5px !important;
-    width: 16px !important;
-    height: 16px !important;
+    width: 13px !important;
+    height: 13px !important;
     border-radius: 8px !important;
 }
 
@@ -1445,11 +1455,9 @@ code {
     color: #ffffff !important;
     margin-bottom: 5px !important;
     font-size: 1rem;
+    margin-left: auto;
 }
 
-.copy-button {
-    float: right !important;
-}
 
 .copy-button:hover {
     background-color: black !important;

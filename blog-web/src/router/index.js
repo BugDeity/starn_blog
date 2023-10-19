@@ -87,7 +87,7 @@ const routes = [
                 path: "/forum",
                 component: resolve => require(["@/view/forum/index"], resolve),
                 meta: {
-                    title: "朋友圈"
+                    title: "瞬间"
                 }
             },
             {

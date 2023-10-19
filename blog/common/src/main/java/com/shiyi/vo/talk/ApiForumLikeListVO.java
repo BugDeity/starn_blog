@@ -38,6 +38,9 @@ public class ApiForumLikeListVO {
     @ApiModelProperty(value = "话题id")
     private Integer forumId;
 
+    @ApiModelProperty(value = "当前用户是否关注")
+    private Integer isFollowed;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 }

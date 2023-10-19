@@ -8,10 +8,12 @@ import store from './store'
 import "../src/icons";
 import { vueBaberrage } from 'vue-baberrage'
 import jsCookie from 'js-cookie'
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 import VueImageSwipe from 'vue-image-swipe'
 import 'vue-image-swipe/dist/vue-image-swipe.css'
+
+import element from '@/element/index'
+Vue.use(element)
+
 
 import Toast from '@/components/toast/index.vue';
 
@@ -56,7 +58,6 @@ Vue.use(mavonEditor)
 
 
 Vue.use(VueImageSwipe);
-Vue.use(ElementUI);
 Vue.prototype.$cookie = jsCookie;  // 在页面里可直接用 this.$cookie 调用
 Vue.use(vueBaberrage)
 

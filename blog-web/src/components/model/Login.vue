@@ -332,6 +332,10 @@ export default {
     background-image: url(https://img.shiyit.com/20231007_1696659441438.jpg) !important;
 }
 
+a {
+    cursor: pointer;
+}
+
 .dialog {
 
     @media screen and (min-width: 1119px) {

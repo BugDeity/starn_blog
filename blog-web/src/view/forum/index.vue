@@ -211,7 +211,12 @@
                     </div>
                 </div>
                 <div style="margin-left:auto">
-                    <el-button size="mini" @click.stop="" type="primary">关 注</el-button>
+                    <el-button v-if="!item.isFollowed && user.id !== item.userId" size="mini"
+                        @click.stop="handleFlollowedUser(item)" type="primary">
+                        关 注
+                    </el-button>
+                    <el-button v-if="item.isFollowed" size="mini" @click.stop="handleCancelFlollowedUser(item)"
+                        type="info">取消关注</el-button>
                 </div>
             </div>
             <div>
@@ -224,6 +229,7 @@
    
 <script>
 import { getTalkList, getForumList, addForum, analysis, forumLike, forumLikeList } from '@/api/talk'
+import { followedUser, deleteFollowedUser } from '@/api'
 import { upload } from '@/api'
 import Emoji from '@/components/emoji'
 import Comment from '@/components/forumComment/index.vue'
@@ -478,6 +484,18 @@ export default {
             }).catch(err => {
                 this.$toast.error(err.message);
                 this.$bus.$emit('close');
+            })
+        },
+        handleFlollowedUser(item) {
+            followedUser(item.userId).then(res => {
+                this.$toast.success("关注成功")
+                item.isFollowed = true
+            })
+        },
+        handleCancelFlollowedUser(item) {
+            deleteFollowedUser(item.userId).then(res => {
+                this.$toast.success("取消关注")
+                item.isFollowed = false
             })
         },
         handleLikePage() {

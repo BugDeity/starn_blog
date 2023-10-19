@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.*;
 import com.shiyi.handle.RelativeDateFormat;
+import com.shiyi.mapper.FollowedMapper;
 import com.shiyi.mapper.ForumCommentMapper;
 import com.shiyi.mapper.ForumMapper;
 import com.shiyi.mapper.UserInfoMapper;
@@ -36,6 +37,7 @@ public class ApiForumServiceImpl implements ApiForumService {
 
     private final UserInfoMapper userInfoMapper;
 
+    private final FollowedMapper followedMapper;
 
     @Override
     public ResponseResult selectForumListByTalkId(Integer talkId) {
@@ -120,7 +122,14 @@ public class ApiForumServiceImpl implements ApiForumService {
 
     @Override
     public ResponseResult likeList(Integer forumId) {
+        Object userId = StpUtil.getLoginIdDefaultNull();
         Page<ApiForumLikeListVO> likePages = forumMapper.selectForumLikeList(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),forumId);
+        likePages.getRecords().forEach(item ->{
+            if (userId != null){
+                int count = followedMapper.selectCount(new LambdaQueryWrapper<Followed>().eq(Followed::getUserId,userId).eq(Followed::getFollowedUserId,item.getUserId()));
+                item.setIsFollowed(count);
+            }
+        });
         return ResponseResult.success(likePages);
     }
 }
