@@ -369,7 +369,7 @@ export default {
 
     mounted() {
         const element = document.getElementById("articleBox")
-        this.left = (element.offsetLeft - 60) + "px"
+        this.left = (element.offsetLeft - 100) + "px"
 
         // 监听滚动事件
         window.addEventListener('scroll', this.onScroll, false)
@@ -397,7 +397,7 @@ export default {
         window.addEventListener('resize', () => {
             const element = document.getElementById("articleBox")
             if (element) {
-                this.left = (element.offsetLeft - 60) + "px"
+                this.left = (element.offsetLeft - 100) + "px"
             }
         }, true)
         this.$bus.$emit('show');
@@ -592,7 +592,7 @@ export default {
             this.rightShow = !this.rightShow
             window.setTimeout(() => {
                 const element = document.getElementById("articleBox")
-                this.left = (element.offsetLeft - 60) + "px"
+                this.left = (element.offsetLeft - 100) + "px"
             }, 10)
 
 
@@ -658,7 +658,6 @@ export default {
 <style lang="scss" scoped>
 .article-container {
     padding: 10px;
-    position: relative;
 
     @media screen and (max-width: 1118px) {
 
