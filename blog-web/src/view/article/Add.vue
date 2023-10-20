@@ -229,7 +229,6 @@ export default {
 
         .containner {
             width: 100%;
-            margin-top: 80px;
 
         }
     }
@@ -237,11 +236,12 @@ export default {
     @media screen and (min-width: 1119px) {
         .containner {
             width: 80%;
-            margin-top: 80px;
         }
     }
 
     .containner {
+        margin-top: 70px;
+
         padding: 10px;
         color: var(--text-color);
 

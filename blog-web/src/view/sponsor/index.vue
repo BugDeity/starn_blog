@@ -150,7 +150,7 @@ export default {
 
     /deep/ .sponsor-warpper {
         position: relative;
-        margin-top: 80px;
+        margin-top: 70px;
         min-height: calc(100vh - 207px);
         background-color: var(--background-color);
         color: var(--text-color);

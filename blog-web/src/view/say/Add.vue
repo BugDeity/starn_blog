@@ -117,7 +117,6 @@ export default {
 
         .containner {
             width: 100%;
-            margin-top: 80px;
 
         }
     }
@@ -125,11 +124,12 @@ export default {
     @media screen and (min-width: 1119px) {
         .say-add-containner {
             width: 60%;
-            margin-top: 80px;
         }
     }
 
     .say-add-containner {
+        margin-top: 70px;
+
         padding: 10px;
         color: var(--text-color);
         min-height: calc(100vh - 207px);

@@ -373,7 +373,6 @@ export default {
 
         .say-containner {
             width: 100%;
-            margin-top: 80px;
 
             /deep/ video {
                 height: 200px;
@@ -425,7 +424,6 @@ export default {
     @media screen and (min-width: 1119px) {
         .say-containner {
             width: 60%;
-            margin-top: 80px;
 
             /deep/ video {
                 height: 500px;
@@ -469,6 +467,7 @@ export default {
 
     .say-containner {
         padding: 10px;
+        margin-top: 70px;
 
         .cover {
             width: 100%;

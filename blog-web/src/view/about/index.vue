@@ -35,18 +35,17 @@ export default {
     @media screen and (max-width: 1118px) {
         .box1 {
             width: 100%;
-            margin-top: 70px;
         }
     }
 
     @media screen and (min-width: 1119px) {
         .box1 {
             width: 65%;
-            margin-top: 80px;
         }
     }
 
     .box1 {
+        margin-top: 70px;
         background-color: var(--background-color);
         height: 100%;
 

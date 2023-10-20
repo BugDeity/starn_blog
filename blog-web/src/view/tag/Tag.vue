@@ -144,7 +144,6 @@ export default {
 
     @media screen and (max-width: 1118px) {
         .main {
-            margin-top: 70px;
             width: 100%;
 
             #time-line {
@@ -162,7 +161,6 @@ export default {
 
     @media screen and (min-width: 1119px) {
         .main {
-            margin-top: 80px;
             width: 65%;
 
             #time-line {
@@ -178,6 +176,7 @@ export default {
     }
 
     .main {
+        margin-top: 70px;
 
         .header {
             text-align: center;

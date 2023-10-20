@@ -600,7 +600,6 @@ export default {
 
         .user-warpper {
             width: 100%;
-            margin-top: 80px;
         }
 
         .article-cover {
@@ -634,7 +633,6 @@ export default {
 
         .user-warpper {
             width: 60%;
-            margin-top: 80px;
         }
 
         .article-cover {
@@ -697,6 +695,8 @@ export default {
     .user-warpper {
         display: flex;
         flex-direction: column;
+        margin-top: 70px;
+
     }
 
     .userBox {

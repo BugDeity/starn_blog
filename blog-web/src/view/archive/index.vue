@@ -100,19 +100,18 @@ export default {
         padding-right: 10px;
 
         .archive-container {
-            margin-top: 70px;
             width: 100%;
         }
     }
 
     @media screen and (min-width: 1119px) {
         .archive-container {
-            margin-top: 80px;
             width: 60%;
         }
     }
 
     .archive-container {
+        margin-top: 70px;
         height: 100%;
         text-align: center;
         background-color: var(--background-color);

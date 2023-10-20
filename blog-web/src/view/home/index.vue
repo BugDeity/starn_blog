@@ -570,7 +570,6 @@ export default {
 
         .main {
             width: 100%;
-            margin-top: 70px;
 
             .bannerBox {
                 width: 100%;
@@ -591,7 +590,6 @@ export default {
     @media screen and (min-width: 1119px) {
         .main {
             width: 65%;
-            margin-top: 80px;
 
             .bannerBox {
                 width: 70%;
@@ -1048,6 +1046,8 @@ export default {
     }
 
     .main {
+        margin-top: 70px;
+
         .main-box {
             width: 100%;
             display: flex;
