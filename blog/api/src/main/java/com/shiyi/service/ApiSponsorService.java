@@ -1,5 +1,7 @@
 package com.shiyi.service;
 
+import com.shiyi.common.ResponseResult;
+
 /**
  *  打赏服务类
  *
@@ -8,5 +10,12 @@ package com.shiyi.service;
  */
 public interface ApiSponsorService {
 
+
+    /**
+     * 添加记录
+     * @param payImage 支付截图
+     * @return
+     */
+    ResponseResult addSponsor(String payImage);
 
 }

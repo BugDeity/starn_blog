@@ -36,17 +36,14 @@ public class Sponsor implements Serializable {
     @ApiModelProperty(value = "用户id")
     private String userId;
 
-    @ApiModelProperty(value = "订单id")
-    private String orderId;
+    @ApiModelProperty(value = "支付截图")
+    private String payImg;
 
     @ApiModelProperty(value = "金额")
     private double price;
 
-    @ApiModelProperty(value = "是否支付")
-    private Integer isPay;
-
-    @ApiModelProperty(value = "支付方式")
-    private Integer payType;
+    @ApiModelProperty(value = "状态 0 审核  1 通过")
+    private Integer status;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)

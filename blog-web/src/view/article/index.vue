@@ -43,20 +43,13 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="打赏" placement="left">
-                <div class="left-item rewardMain" title="打赏">
-                    <span class="reward-btn">
-                        <i class="iconfont icon-dashang1"></i>
-                    </span>
-                    <!-- 二维码 -->
-                    <div class="rewardItem">
-                        <span>
-                            <img class="reward-img" :src="$store.state.webSiteInfo.aliPay" />
-                        </span>
-                        <span>
-                            <img class="reward-img" :src="$store.state.webSiteInfo.weixinPay" />
+                <router-link :to="'/sponsor'" style="text-decoration:none">
+                    <div class="left-item rewardMain" title="打赏">
+                        <span class="reward-btn">
+                            <i class="iconfont icon-dashang1"></i>
                         </span>
                     </div>
-                </div>
+                </router-link>
             </el-tooltip>
 
         </div>
@@ -768,47 +761,6 @@ export default {
                     background-color: var(--theme-color);
                     top: -8px;
 
-                }
-
-                .rewardItem {
-                    position: absolute;
-                    bottom: -150px;
-                    left: 52px;
-                    margin: 0;
-                    padding: 0 0 15px;
-                    width: 480px;
-                    background-color: #5956563e;
-                    height: 310px;
-                    border-radius: 5px;
-                    display: none;
-
-                    .reward-img {
-                        margin-left: 5px;
-                        margin-right: 5px;
-                        width: 220px;
-                        height: 300px;
-                        margin-top: 12px;
-                    }
-                }
-
-            }
-
-            .rewardMain {
-                &:hover {
-                    .rewardItem {
-                        display: block;
-                        animation: left-in 1s ease;
-
-                        @keyframes left-in {
-                            0% {
-                                transform: translateY(-50%);
-                            }
-
-                            100% {
-                                transform: translateX(0);
-                            }
-                        }
-                    }
                 }
             }
         }

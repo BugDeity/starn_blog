@@ -867,7 +867,6 @@ export default {
                     width: 90%;
                     line-height: 0;
                     position: relative;
-                    margin: 20px 0;
 
                     .delSiteBtn {
                         position: absolute;

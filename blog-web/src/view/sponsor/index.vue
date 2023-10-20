@@ -6,20 +6,27 @@
             </h2>
             <div class="sponsor-tips">
                 <div class="item">当前赞助用途</div>
-                <div class="item">1.维护网站：域名</div>
+                <div class="item">1.维护网站、域名</div>
                 <div class="item"> 2.为以后升级博客筹钱</div>
-                <div class="item"> 3.捐款</div>
-                <div class="item">4.满足…UP的小小愿望</div>
+                <div class="item">3.给博主的一点点幸苦费</div>
             </div>
             <div class="tips">
                 <div class="item">
                     请注意:
                 </div>
                 <div class="item">
-                    1.UP不会强迫任何人必须赞助！完全自愿。
+                    1.博主不会强迫任何人必须赞助！完全自愿。
                 </div>
                 <div class="item">
-                    2.在支付完后请点击此处来发送你的支付截图
+                    2.在支付完后请
+                    <span class="submitBtn">
+                        <el-upload style="display:inline-block" :show-file-list="false" ref="upload" name="filedatas"
+                            :action="uploadPictureHost" :http-request="uploadPayImage" :before-upload="handleUploadBefore"
+                            multiple>
+                            点击此处
+                        </el-upload>
+                    </span>
+                    来发送你的支付截图
                 </div>
             </div>
             <div class="sponsor">
@@ -33,32 +40,67 @@
                         目前仅支持右侧的三项支付方式
                     </div>
                     <div class="imgBox">
-                        <img v-if="!activeIndex"
-                            src="https://www.z4a.net/images/2022/12/22/6a63f6246b600c3387448165dc1f460fd9f9d72a0b58.jpg"
-                            alt="">
-                        <img v-if="activeIndex == 1" :src="$store.state.webSiteInfo.weixinPay" alt="">
-                        <img v-if="activeIndex == 2" :src="$store.state.webSiteInfo.aliPay" alt="">
+                        <img @click="handlePreview" v-if="activeIndex == index" v-for="(item, index) in payImages"
+                            :key="index" :src="item" alt="">
                     </div>
 
                 </div>
             </div>
         </el-card>
+        <image-preview :img="images"></image-preview>
     </div>
 </template>
 <script>
+import { upload } from '@/api'
+import { addSponsor } from '@/api/sponsor'
+import imagePreview from '@/components/imagePreview'
 export default {
+    components: {
+        imagePreview
+    },
     data() {
         return {
             btnList: ["确认", "微信", "支付宝"],
             activeIndex: 0,
+            uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
+            files: [],
+            images: {},
+            payImages: ["https://img.shiyit.com/20231020_1697773914361.jpg", this.$store.state.webSiteInfo.weixinPay, this.$store.state.webSiteInfo.aliPay],
         }
     },
 
     methods: {
+        handlePreview() {
+            let urls = this.payImages.join(",")
+            this.images = {
+                urls: urls,
+                time: new Date().getTime()
+            }
+        },
         handleClike(index) {
             this.$refs.button[this.activeIndex].className = "";
             this.$refs.button[index].className = "active";
             this.activeIndex = index;
+        },
+        handleUploadBefore() {
+            this.$bus.$emit('show');
+        },
+        uploadPayImage: function (param) {
+            this.files = param.file
+            // FormData 对象
+            var formData = new FormData()
+            // 文件对象
+            formData.append('multipartFile', this.files)
+            upload(formData).then(res => {
+                addSponsor(res.data).then(ress => {
+                    this.$toast.success('提交成功')
+                    this.$bus.$emit('close')
+                }).catch(err => {
+                    this.$bus.$emit('close')
+                })
+            }).catch(err => {
+                this.$bus.$emit('close')
+            })
         },
     }
 }
@@ -67,15 +109,38 @@ export default {
 .sponsor-main {
     display: flex;
     justify-content: center;
+    padding: 10px;
+
 
     /deep/ .sponsor-warpper {
         position: relative;
         margin-top: 80px;
-        width: 65%;
         min-height: calc(100vh - 207px);
-        padding: 30px 50px;
         background-color: var(--background-color);
         color: var(--text-color);
+
+        @media screen and (max-width: 1118px) {
+            width: 100%;
+            padding: 10px;
+
+            .imgBox {
+                width: 100%;
+                margin: 0 auto;
+
+
+            }
+        }
+
+        @media screen and (min-width: 1119px) {
+            width: 65%;
+            padding: 30px 50px;
+
+            .imgBox {
+                width: 500px;
+                margin: 0 auto;
+            }
+
+        }
 
         .item {
             margin-bottom: 10px;
@@ -88,7 +153,7 @@ export default {
             padding: 20px;
             width: auto;
             border-radius: 5px;
-
+            background-color: antiquewhite;
 
         }
 
@@ -96,6 +161,11 @@ export default {
             margin-top: 15px;
             background-color: var(--tips-backgroud-color);
             padding: 10px 20px;
+
+            .submitBtn {
+                color: var(--theme-color);
+                cursor: pointer;
+            }
 
         }
 
@@ -131,16 +201,11 @@ export default {
                     color: #6bcf84;
                 }
 
-                .imgBox {
-                    width: 500px;
-                    margin: 0 auto;
-
-                    img {
-                        width: 100%;
-                        text-align: center;
-
-                    }
+                img {
+                    width: 100%;
+                    text-align: center;
                 }
+
 
             }
         }

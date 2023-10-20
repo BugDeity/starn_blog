@@ -65,6 +65,14 @@
                     </el-dropdown>
                 </li>
 
+                <li>
+                    <span>
+                        <router-link :to="'/sponsor'" style="color:red;font-weight:700">
+                            <svg-icon icon-class="sponsor"></svg-icon> 赞助
+                        </router-link>
+                    </span>
+                </li>
+
                 <li :class="path == '/forum' ? 'active' : ''">
                     <span>
                         <router-link :to="'/forum'">

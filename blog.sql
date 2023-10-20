@@ -1076,16 +1076,15 @@ INSERT INTO `b_site_class` VALUES (9, '开发工具', 9, '2023-08-15 10:36:56', 
 -- Table structure for b_sponsor
 -- ----------------------------
 DROP TABLE IF EXISTS `b_sponsor`;
-CREATE TABLE `b_sponsor`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `user_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户id',
-  `order_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '翼支付订单id',
-  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '打赏金额',
-  `is_pay` int(11) NULL DEFAULT NULL COMMENT '是否支付',
-  `pay_type` int(11) NULL DEFAULT NULL COMMENT '支付方式',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+CREATE TABLE `b_sponsor` (
+     `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+     `user_id` varchar(100) DEFAULT NULL COMMENT '用户id',
+     `pay_img` varchar(200) DEFAULT NULL COMMENT '支付图片',
+     `price` decimal(10,2) DEFAULT NULL COMMENT '打赏金额',
+     `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+     `status` int(1) DEFAULT '0' COMMENT '状态 0 审核  1 通过 ',
+     PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 comment  '打赏记录';
 
 -- ----------------------------
 -- Records of b_sponsor

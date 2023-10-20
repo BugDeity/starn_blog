@@ -23,6 +23,7 @@ export default {
 
     watch: {
         img: function (newData, oldData) {
+            console.log(newData)
             this.newImages = newData.urls;
             let imgList = this.splitImg(this.newImages)
             this.newImages = []
