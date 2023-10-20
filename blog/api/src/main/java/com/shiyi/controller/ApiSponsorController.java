@@ -21,6 +21,12 @@ public class ApiSponsorController {
 
     private final ApiSponsorService sponsorService;
 
+    @GetMapping( "list")
+    @ApiOperation(value = "打赏记录列表", httpMethod = "GET", response = ResponseResult.class, notes = "打赏记录列表")
+    public ResponseResult selectSponsorList(){
+        return sponsorService.selectSponsorList();
+    }
+
     @SaCheckLogin
     @GetMapping( "add")
     @ApiOperation(value = "添加打赏记录", httpMethod = "GET", response = ResponseResult.class, notes = "添加打赏记录")

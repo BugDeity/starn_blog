@@ -9,18 +9,10 @@ export function addSponsor(payImage) {
         }
     })
 }
-export function validateTodayIsSign() {
+export function getSponsorList(params) {
     return request({
-        url: '/v1/sign/validateTodayIsSign',
+        url: '/v1/sponsor/list',
         method: 'get',
-    })
-}
-export function sign(time) {
-    return request({
-        url: '/v1/sign/',
-        method: 'get',
-        params: {
-            time: time
-        }
+        params: params
     })
 }

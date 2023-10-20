@@ -18,7 +18,10 @@
                     1.博主不会强迫任何人必须赞助！完全自愿。
                 </div>
                 <div class="item">
-                    2.在支付完后请
+                    2.请在上传支付截图前登录站点以此来绑定您的账号
+                </div>
+                <div class="item">
+                    3.在支付完后请
                     <span class="submitBtn">
                         <el-upload style="display:inline-block" :show-file-list="false" ref="upload" name="filedatas"
                             :action="uploadPictureHost" :http-request="uploadPayImage" :before-upload="handleUploadBefore"
@@ -28,6 +31,7 @@
                     </span>
                     来发送你的支付截图
                 </div>
+
             </div>
             <div class="sponsor">
                 <div class="sponsorBtn">
@@ -43,7 +47,25 @@
                         <img @click="handlePreview" v-if="activeIndex == index" v-for="(item, index) in payImages"
                             :key="index" :src="item" alt="">
                     </div>
+                </div>
+            </div>
+            <div class="sponsorList">
+                <h3>赞助名单</h3>
+                <div>
+                    <ul>
+                        <li v-for="(item, index) in sponsorList" :key="index">
+                            <span class="index">{{ index + 1 }}</span>
+                            <div>
+                                <img :src="item.avatar" />
+                                <span>{{ item.nickname }}</span>
+                            </div>
 
+                            <span class="sopnsor-item">
+                                赞助了 <i> {{ item.money }} </i>元
+                            </span>
+                            <span class="sopnsor-item">{{ item.createTime }}</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </el-card>
@@ -52,7 +74,7 @@
 </template>
 <script>
 import { upload } from '@/api'
-import { addSponsor } from '@/api/sponsor'
+import { addSponsor, getSponsorList } from '@/api/sponsor'
 import imagePreview from '@/components/imagePreview'
 export default {
     components: {
@@ -62,14 +84,28 @@ export default {
         return {
             btnList: ["确认", "微信", "支付宝"],
             activeIndex: 0,
+            pageData: {
+                pageNo: 1,
+                pageSize: 100,
+            },
+            pages: 0,
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
+            sponsorList: [],
             files: [],
             images: {},
             payImages: ["https://img.shiyit.com/20231020_1697773914361.jpg", this.$store.state.webSiteInfo.weixinPay, this.$store.state.webSiteInfo.aliPay],
         }
     },
-
+    created() {
+        this.getSponsorList()
+    },
     methods: {
+        getSponsorList() {
+            getSponsorList().then(res => {
+                this.sponsorList.push(...res.data.records)
+                this.pages = res.data.pages
+            })
+        },
         handlePreview() {
             let urls = this.payImages.join(",")
             this.images = {
@@ -207,6 +243,57 @@ export default {
                 }
 
 
+            }
+        }
+
+        .sponsorList {
+            margin: 15px 0;
+
+            ul {
+                list-style: none;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    width: fit-content;
+                    border-radius: 5px;
+                    padding: 5px 20px;
+                    background-color: #ebeef5;
+                    color: var(--text-color);
+                    margin: 0 auto;
+                    margin-bottom: 10px;
+
+                    .index {
+                        display: inline-block;
+                        width: 20px;
+                        height: 20px;
+                        background-color: var(--theme-color);
+                        padding: 5px;
+                        text-align: center;
+                        line-height: 20px;
+                        margin-right: 20px;
+                        border-radius: 3px;
+                        color: #fff;
+                    }
+
+                    .sopnsor-item {
+                        margin-left: 50px;
+
+                        line-height: 20px;
+
+                        i {
+                            color: var(--theme-color);
+                            font-weight: 700;
+                        }
+                    }
+
+                    img {
+                        vertical-align: middle;
+                        border-radius: 50%;
+                        width: 35px;
+                        height: 35px;
+                    }
+                }
             }
         }
 

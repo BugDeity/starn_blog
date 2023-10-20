@@ -1080,7 +1080,7 @@ CREATE TABLE `b_sponsor` (
      `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
      `user_id` varchar(100) DEFAULT NULL COMMENT '用户id',
      `pay_img` varchar(200) DEFAULT NULL COMMENT '支付图片',
-     `price` decimal(10,2) DEFAULT NULL COMMENT '打赏金额',
+     `money` decimal(10,2) DEFAULT NULL COMMENT '打赏金额',
      `create_time` datetime DEFAULT NULL COMMENT '创建时间',
      `status` int(1) DEFAULT '0' COMMENT '状态 0 审核  1 通过 ',
      PRIMARY KEY (`id`)

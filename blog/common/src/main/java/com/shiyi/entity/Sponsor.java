@@ -40,7 +40,7 @@ public class Sponsor implements Serializable {
     private String payImg;
 
     @ApiModelProperty(value = "金额")
-    private double price;
+    private double money;
 
     @ApiModelProperty(value = "状态 0 审核  1 通过")
     private Integer status;

@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shiyi.mapper.SponsorMapper">
 
+    <select id="selectSponsorList" resultType="com.shiyi.vo.sponsor.ApiSponsorListVO">
+        select ui.nickname,ui.avatar,s.money,s.create_time from b_sponsor s
+            left join b_user u on s.user_id = u.id
+            left join b_user_info ui on u.user_info_id = ui.id
+            where s.status = 1
+    </select>
 </mapper>

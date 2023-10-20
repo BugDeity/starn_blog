@@ -10,6 +10,13 @@ import com.shiyi.common.ResponseResult;
  */
 public interface ApiSponsorService {
 
+    /**
+     * 记录列表
+     * @return
+     */
+    ResponseResult selectSponsorList();
+
+
 
     /**
      * 添加记录
@@ -17,5 +24,7 @@ public interface ApiSponsorService {
      * @return
      */
     ResponseResult addSponsor(String payImage);
+
+
 
 }
