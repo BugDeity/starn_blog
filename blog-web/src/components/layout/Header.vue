@@ -537,22 +537,22 @@ export default {
                     position: relative;
 
 
-                    &:hover::before {
-                        content: "";
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        width: 60%;
-                        height: 4px;
-                        border-bottom-left-radius: 15px;
-                        border-bottom-right-radius: 15px;
-                        background-color: var(--theme-color);
-                        margin: 0 auto;
-                        text-align: center;
-                        animation: fade-in 0.3s linear 1;
-                    }
+                    // &:hover::before {
+                    //     content: "";
+                    //     position: absolute;
+                    //     top: 0;
+                    //     left: 0;
+                    //     right: 0;
+                    //     bottom: 0;
+                    //     width: 60%;
+                    //     height: 4px;
+                    //     border-bottom-left-radius: 15px;
+                    //     border-bottom-right-radius: 15px;
+                    //     background-color: var(--theme-color);
+                    //     margin: 0 auto;
+                    //     text-align: center;
+                    //     animation: fade-in 0.3s linear 1;
+                    // }
 
                     @keyframes fade-in {
                         0% {
@@ -585,21 +585,21 @@ export default {
                 }
 
                 .active {
-                    &::before {
-                        content: "";
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        width: 60%;
-                        height: 4px;
-                        border-bottom-left-radius: 15px;
-                        border-bottom-right-radius: 15px;
-                        background-color: var(--theme-color);
-                        margin: 0 auto;
-                        text-align: center;
-                    }
+                    // &::before {
+                    //     content: "";
+                    //     position: absolute;
+                    //     top: 0;
+                    //     left: 0;
+                    //     right: 0;
+                    //     bottom: 0;
+                    //     width: 60%;
+                    //     height: 4px;
+                    //     border-bottom-left-radius: 15px;
+                    //     border-bottom-right-radius: 15px;
+                    //     background-color: var(--theme-color);
+                    //     margin: 0 auto;
+                    //     text-align: center;
+                    // }
 
                     /deep/ a,
                     span {

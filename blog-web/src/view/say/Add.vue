@@ -132,6 +132,7 @@ export default {
     .say-add-containner {
         padding: 10px;
         color: var(--text-color);
+        min-height: calc(100vh - 207px);
 
         .title {
             margin-bottom: 15px;

@@ -34,7 +34,7 @@
                 </div>
                 <div class="menus-item">
                     <a @click="handleClike('/forum')">
-                        <i class="el-icon-s-promotion" /> 瞬间
+                        <i class="el-icon-mobile-phone" /> 瞬间
                     </a>
                 </div>
                 <div class="menus-item">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="menus-item">
                     <a @click="handleClike('/message')">
-                        <i class="iconfont icon-pinglun" /> 留言
+                        <i class="el-icon-chat-dot-square" /> 留言
                     </a>
                 </div>
                 <div class="menus-item">
@@ -54,7 +54,7 @@
                 </div>
                 <div class="menus-item">
                     <a @click="handleClike('/links')">
-                        <i class="el-icon-position" /> 友链
+                        <i class="el-icon-link" /> 友链
                     </a>
                 </div>
                 <div class="menus-item">

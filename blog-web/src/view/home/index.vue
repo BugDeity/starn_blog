@@ -17,7 +17,7 @@
                 <div class="top-right">
                     <SiteInfo />
                     <el-card class="soft box-shadow">
-                        <a href="https://www.zhisu1.com" target="_blank">
+                        <a href="https://www.zhisu1.com/aff/DIHZPJNL" target="_blank">
                             <img v-lazy="'https://img.shiyit.com/20231010_1696930367538.jpg'"
                                 :key="'https://img.shiyit.com/20231010_1696930367538.jpg'" alt="">
                             <div class="soft-title">
