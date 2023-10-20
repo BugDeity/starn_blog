@@ -15,15 +15,14 @@ export default {
     mounted() {
         this.$bus.$on('show', () => {
             this.isLoading = true;
-            var mo = function (e) { e.preventDefault(); };
             document.body.style.overflow = 'hidden';
-            document.addEventListener("touchmove", mo, false);//禁止页面滑动}, false)
+            document.addEventListener("touchmove", () => { }, true);
         });
         this.$bus.$on('close', () => {
             this.isLoading = false;
             var mo = function (e) { e.preventDefault(); };
-            document.body.style.overflow = '';//出现滚动条
-            document.removeEventListener("touchmove", mo, false);
+            document.body.style.overflow = '';
+            document.removeEventListener("touchmove", mo, true);
         });
     },
     beforeDestroy() {

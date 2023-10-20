@@ -12,7 +12,7 @@ document.addEventListener("visibilitychange", () => {
             document.title = "拾壹博客-一个专注于技术分享的博客平台"
         }, 800)
     }
-});
+}, false);
 
 !function (e, t, a) {
     function r() {

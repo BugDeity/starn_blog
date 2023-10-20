@@ -36,6 +36,7 @@ import {
     TimelineItem,
     Avatar,
     InfiniteScroll,
+    Empty,
 } from 'element-ui';
 
 //封装组件
@@ -77,6 +78,7 @@ const element = {
         Vue.use(TimelineItem);
         Vue.use(Avatar);
         Vue.use(InfiniteScroll);
+        Vue.use(Empty);
 
     }
 }

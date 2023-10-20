@@ -308,6 +308,7 @@
                 <el-button type="primary" @click="checkCode">确 定</el-button>
             </span>
         </el-dialog>
+        <image-preview :img="images"></image-preview>
     </div>
 </template>
 <script>
@@ -315,10 +316,12 @@ import { articleInfo, articleLike, checkCode, followedUser, deleteFollowedUser, 
 import { collect, cancelCollect } from '@/api/collect'
 import SiteInfo from '@/components/site/index.vue'
 import Comment from '@/components/comment/index.vue'
+import imagePreview from '@/components/imagePreview'
 export default {
     components: {
         SiteInfo,
-        Comment
+        Comment,
+        imagePreview
     },
     metaInfo: {
         meta: [{
@@ -341,7 +344,7 @@ export default {
             code: null,
             style: '',
             titles: [],
-            imgList: [],
+            images: {},
             readTypeList: ['', '评论阅读', '点赞阅读', '扫码阅读'],
             readDescList: ['', '评论', '点赞', '扫码回复验证码'],
             dialogVisible: false,
@@ -411,9 +414,11 @@ export default {
                 const imgList = this.$refs.article.getElementsByTagName("img");
                 let that = this
                 for (var i = 0; i < imgList.length; i++) {
-                    that.imgList.push(imgList[i].src);
                     imgList[i].addEventListener("click", function (e) {
-                        that.previewImg(e.target.currentSrc);
+                        that.images = {
+                            urls: e.target.currentSrc,
+                            time: new Date().getTime()
+                        }
                     });
                 }
                 // 添加文章生成目录功能
@@ -571,12 +576,6 @@ export default {
             this.dialogVisible = false
             this.style = ''
             this.serceShow = true
-        },
-        previewImg(img) {
-            this.$imagePreview({
-                images: this.imgList,
-                index: this.imgList.indexOf(img)
-            });
         },
         onScroll() {
             const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
@@ -1406,8 +1405,6 @@ code {
     line-height: 20px !important;
     font-size: 16px !important;
     vertical-align: top;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
     padding: 10px !important;
     border-bottom-left-radius: 8px !important;
     border-bottom-right-radius: 8px !important;

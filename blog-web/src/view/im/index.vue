@@ -188,7 +188,7 @@
                 <el-button size="small" type="primary" @click="uploadSectionFile(null)">发 送</el-button>
             </span>
         </el-dialog>
-
+        <image-preview :img="images"></image-preview>
     </div>
 </template>
 
@@ -198,9 +198,11 @@ import { upload } from '@/api'
 import { addEmoji } from '@/api/emoji';
 import { getImHistory, getUserImHistoryList, send, withdraw, getRoomList, addRoom, read, deleteRoom } from '@/api/im'
 import Emoji from '@/components/emoji'
+import imagePreview from '@/components/imagePreview'
 export default {
     components: {
-        Emoji
+        Emoji,
+        imagePreview
     },
     data() {
         return {
@@ -239,7 +241,8 @@ export default {
             atMember: "",
             searchUrl: ['https://www.baidu.com/s?&wd=', 'https://search.gitee.com/?skin=rec&type=repository&q=', 'https://github.com/search?q='],
             lastEditRange: null,
-            RegEx: /(?<=(img src="))[^"]*?(?=")/gims
+            RegEx: /(?<=(img src="))[^"]*?(?=")/gims,
+            images: {}
         }
     },
 
@@ -561,11 +564,10 @@ export default {
         //关闭表情框
         handleClose(e) {
             if (e.target.className == "messageImg") {
-                const imgs = [e.target.currentSrc]
-                this.$imagePreview({
-                    images: imgs,
-                    index: imgs.indexOf(e.target.currentSrc)
-                });
+                this.images = {
+                    urls: e.target.currentSrc,
+                    time: new Date().getTime()
+                }
             }
             if (e.target.className != "el-radio-button__orig-radio" && e.target.className != "el-radio-button__inner"
                 && e.target.className != "el-upload__input" && e.target.className != "el-icon-plus avatar-uploader-icon") {

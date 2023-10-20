@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="imgages m-l-50" v-if="item.imgUrl">
                                     <img v-for="(img, index) in splitImg(item.imgUrl)"
-                                        @click.stop="handlePreviewImg(item.imgUrl, img)" :key="index" v-lazy="img" alt="">
+                                        @click.stop="handlePreviewImg(item.imgUrl)" :key="index" v-lazy="img" alt="">
                                 </div>
                                 <div class="site m-l-50" v-if="item.site">
                                     <div class="siteItem">
@@ -224,6 +224,7 @@
                     @changePage="handleLikePage" />
             </div>
         </el-dialog>
+        <image-preview :img="images"></image-preview>
     </div>
 </template>
    
@@ -233,11 +234,13 @@ import { followedUser, deleteFollowedUser } from '@/api'
 import { upload } from '@/api'
 import Emoji from '@/components/emoji'
 import Comment from '@/components/forumComment/index.vue'
+import imagePreview from '@/components/imagePreview'
 export default {
     name: '',
     components: {
         Emoji,
-        Comment
+        Comment,
+        imagePreview
     },
     data() {
         return {
@@ -261,7 +264,6 @@ export default {
             showUploadImg: false,
             showComment: false,
             forumList: [],
-            loading: [],
             tailkList: [
                 {
                     id: 0,
@@ -304,6 +306,7 @@ export default {
             codeContent: null,
             codeHtmlContent: null,
             forumLikeList: [],
+            images: {},
         }
     },
     mounted() {
@@ -502,12 +505,11 @@ export default {
             this.forumLikePageData.pageNo++
             this.handleLikeList()
         },
-        handlePreviewImg(imgs, img) {
-            let imgList = this.splitImg(imgs)
-            this.$imagePreview({
-                images: imgList,
-                index: imgList.indexOf(img)
-            });
+        handlePreviewImg(imgs) {
+            this.images = {
+                urls: imgs,
+                time: new Date().getTime()
+            }
         },
         splitImg(img) {
             let imgs = img.split(",")
@@ -924,6 +926,11 @@ export default {
 
                                 /deep/ pre {
                                     margin-top: 10px;
+                                }
+
+                                /deep/ code {
+                                    border-bottom-left-radius: 0 !important;
+                                    border-bottom-right-radius: 0 !important;
                                 }
                             }
 

@@ -7,23 +7,27 @@ import store from './store'
 
 import "../src/icons";
 import { vueBaberrage } from 'vue-baberrage'
+Vue.use(vueBaberrage)
+
 import jsCookie from 'js-cookie'
-import VueImageSwipe from 'vue-image-swipe'
-import 'vue-image-swipe/dist/vue-image-swipe.css'
+Vue.prototype.$cookie = jsCookie;  // 在页面里可直接用 this.$cookie 调用
+
+import VueViewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
+Vue.use(VueViewer);
+
 
 import element from '@/element/index'
 Vue.use(element)
 
 
 import Toast from '@/components/toast/index.vue';
-
 const ToastPlugin = {
   install(Vue) {
     Vue.prototype.$toast = new Vue(Toast).$mount();
     document.body.appendChild(Vue.prototype.$toast.$el);
   },
 };
-
 Vue.use(ToastPlugin);
 
 
@@ -40,7 +44,11 @@ Vue.directive('highlight', function (el) {
 
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditor)
+
 import Clipboard from 'clipboard'
+Vue.prototype.Clipboard = Clipboard
+
 
 import Loading from '@/components/loading/loading';
 // 注册全局组件
@@ -48,18 +56,9 @@ Vue.component('loading', Loading);
 
 // 创建一个 Vue 实例作为事件总线
 Vue.prototype.$bus = new Vue();
-Vue.prototype.Clipboard = Clipboard
 
 import MetaInfo from 'vue-meta-info';
-
 Vue.use(MetaInfo)
-Vue.use(mavonEditor)
-
-
-
-Vue.use(VueImageSwipe);
-Vue.prototype.$cookie = jsCookie;  // 在页面里可直接用 this.$cookie 调用
-Vue.use(vueBaberrage)
 
 import Empty from '@/components/empty/index.vue'
 Vue.component("sy-empty", Empty);

@@ -19,7 +19,7 @@
                         </div>
                         <p class="content" v-highlight v-html="item.content"></p>
                         <div v-if="item.imgUrl" :class="ckeckImgClass(item.imgUrl)">
-                            <div class="imgBox" @click="handlePreviewImg(item.imgUrl, imgItem)" v-if="checkImg(item.imgUrl)"
+                            <div class="imgBox" @click="handlePreviewImg(item.imgUrl)" v-if="checkImg(item.imgUrl)"
                                 v-for="(imgItem, imgIndex) in splitImg(item.imgUrl)">
                                 <img :key="imgItem" v-lazy="imgItem" alt="">
                             </div>
@@ -101,15 +101,17 @@
                 <sy-pagination :pageNo="pageData.pageNo" :pages="pages" @changePage="handlePage" />
             </div>
         </div>
-
+        <image-preview :img="images"></image-preview>
     </div>
 </template>
 <script>
 import { getSayList, sayLike, sayComment } from '@/api/say'
 import Emoji from '@/components/emoji'
+import imagePreview from '@/components/imagePreview'
 export default {
     components: {
-        Emoji
+        Emoji,
+        imagePreview
     },
     metaInfo: {
         meta: [{
@@ -123,6 +125,7 @@ export default {
     data() {
         return {
             sayList: [],
+            images: {},
             pageData: {
                 pageNo: 1,
                 pageSize: 10,
@@ -232,7 +235,9 @@ export default {
             img.style.verticalAlign = 'middle';
             img.style.marginLeft = "2px"
             img.style.marginRight = "2px"
-
+            img.style.maxHeight = value.maxHeight;
+            img.style.height = value.height
+            img.style.width = value.width
 
             let edit = document.getElementById("textarea")
             edit.focus()
@@ -316,12 +321,11 @@ export default {
                 this.$toast.success(res.data);
             })
         },
-        handlePreviewImg(imgs, img) {
-            let imgList = this.splitImg(imgs)
-            this.$imagePreview({
-                images: imgList,
-                index: imgList.indexOf(img)
-            });
+        handlePreviewImg(imgs) {
+            this.images = {
+                urls: imgs,
+                time: new Date().getTime()
+            }
         },
         getSayList() {
             this.$bus.$emit('show');
