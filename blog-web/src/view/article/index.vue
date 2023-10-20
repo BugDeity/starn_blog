@@ -1157,15 +1157,36 @@ export default {
                         content: '🔗';
                     }
                 }
+            }
+
+            code {
+                vertical-align: middle;
+                word-break: break-word !important;
+                border-radius: 2px !important;
+                overflow-x: auto !important;
+                background-color: #fff5f5;
+                color: #ff502c;
+                font-size: .87em !important;
+                padding: 0.065em 0.4em !important;
+            }
+
+            pre {
+                opacity: 1 !important;
+                margin-top: 10px;
+                color: #f8f8f2 !important;
+                overflow: hidden;
 
                 code {
-                    vertical-align: middle;
-                    background-color: rgba(27, 31, 35, .05);
-                    border-radius: 3px !important;
-                    padding: 0 !important;
-                    padding-top: 0.2em !important;
-                    padding-bottom: 0.2em !important;
-                    margin: 0 !important;
+                    line-height: 20px !important;
+                    font-size: 16px !important;
+                    vertical-align: top;
+                    padding: 10px !important;
+                    border-bottom-left-radius: 8px !important;
+                    border-bottom-right-radius: 8px !important;
+                    background-color: #303133 !important;
+                    color: #c0c4cc !important;
+                    width: -webkit-fill-available;
+                    display: inline-block;
                 }
 
             }
@@ -1389,27 +1410,10 @@ export default {
 </style>
 
 <style>
-pre {
-    opacity: 1 !important;
-    margin-top: 10px;
-    color: #f8f8f2 !important;
-
-}
-
 .hljs {
     border-bottom-left-radius: 8px !important;
     border-bottom-right-radius: 8px !important;
 }
-
-code {
-    line-height: 20px !important;
-    font-size: 16px !important;
-    vertical-align: top;
-    padding: 10px !important;
-    border-bottom-left-radius: 8px !important;
-    border-bottom-right-radius: 8px !important;
-}
-
 
 .mac-icon {
     height: 20px !important;
