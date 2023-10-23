@@ -152,3 +152,7 @@
          width: 90% !important;
      }
  }
+
+ .point {
+     cursor: pointer;
+ }

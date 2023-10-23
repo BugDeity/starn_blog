@@ -32,6 +32,13 @@ export function getMyArticleInfo(id) {
         }
     })
 }
+export function readMarkdownFile(data) {
+    return request({
+        url: '/v1/article/readMarkdownFile',
+        method: 'post',
+        data
+    })
+}
 export function insertArticle(data) {
     return request({
         url: '/v1/article/',

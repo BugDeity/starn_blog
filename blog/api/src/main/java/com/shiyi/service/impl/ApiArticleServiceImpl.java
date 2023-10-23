@@ -30,7 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -263,6 +267,27 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         //然后新增标签
         tagsMapper.saveArticleTags(article.getId(),dto.getTagList());
         return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult readMarkdownFile(MultipartFile file) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            InputStream inputStream = file.getInputStream();
+            byte[] buffer = new byte[1024];
+
+            int length;
+            while ((length = inputStream.read(buffer)) != -1) {
+                sb.append(new String(buffer, 0, length));
+            }
+
+            inputStream.close();
+
+        } catch (IOException e) {
+            log.error("文件读取失败,错误原因:{}", e);
+           throw new BusinessException("文件读取失败");
+        }
+        return ResponseResult.success(sb);
     }
 
     @Override

@@ -17,7 +17,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
-                            <el-form-item label="封面图" prop="">
+                            <el-form-item label="封面图" prop="" class="articeAvatar">
                                 <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
                                     :action="uploadPictureHost" :http-request="uploadSectionFile"
                                     :before-upload="handleUploadBefore" multiple>
@@ -29,6 +29,11 @@
                         </el-col>
                     </el-row>
                     <el-form-item label="文章内容" prop="contentMd">
+                        <el-upload style="color: var(--theme-color)" :show-file-list="false" ref="upload" name="filedatas"
+                            action="" :http-request="readMarkdownFile" :before-upload="handleUploadBefore" multiple>
+                            <i class="el-icon-upload"></i> 文档导入
+                        </el-upload>
+
                         <mavon-editor placeholder="输入文章内容..." style="height: 500px" ref=md v-model="article.contentMd"
                             @imgDel="imgDel" @change="" @imgAdd="imgAdd" />
                     </el-form-item>
@@ -77,7 +82,7 @@
     </div>
 </template>
 <script>
-import { upload, featchCategory, insertArticle, updateArticle, getMyArticleInfo, fetchTagList } from '@/api'
+import { upload, featchCategory, insertArticle, updateArticle, getMyArticleInfo, fetchTagList, readMarkdownFile } from '@/api'
 export default {
     data() {
         return {
@@ -202,6 +207,26 @@ export default {
         },
         handleUploadBefore() {
             this.$bus.$emit('show');
+        },
+        readMarkdownFile(param) {
+            var fileExtension = param.file.name.split('.').pop().toLowerCase();
+            if (fileExtension !== "md") {
+                this.$bus.$emit('close')
+                this.$toast.error("只能上传md后缀的文件")
+                return false;
+            }
+            this.files = param.file
+            // FormData 对象
+            var formData = new FormData()
+            // 文件对象
+            formData.append('file', this.files)
+            readMarkdownFile(formData).then(res => {
+                this.article.contentMd = res.data
+                console.log(this.article.contentMd)
+                this.$bus.$emit('close')
+            }).catch(err => {
+                this.$bus.$emit('close')
+            })
         },
         uploadSectionFile: function (param) {
             this.files = param.file
@@ -371,35 +396,37 @@ export default {
     }
 }
 
-/deep/ .avatar-uploader {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    max-width: 200px;
-    height: 100px;
-    text-align: center;
-}
+.articeAvatar {
+    /deep/ .avatar-uploader {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        max-width: 200px;
+        height: 100px;
+        text-align: center;
+    }
 
-/deep/ .el-upload {
-    width: 100%;
-    height: 100%;
-}
+    /deep/ .el-upload {
+        width: 100%;
+        height: 100%;
+    }
 
-/deep/ .avatar-uploader:hover {
-    border-color: #409EFF;
-}
+    /deep/ .avatar-uploader:hover {
+        border-color: #409EFF;
+    }
 
-/deep/ .el-icon-plus {
-    font-size: 28px;
-    color: #8c939d;
-    line-height: 100px;
-}
+    /deep/ .el-icon-plus {
+        font-size: 28px;
+        color: #8c939d;
+        line-height: 100px;
+    }
 
-/deep/ .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
+    /deep/ .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
 }
 </style>

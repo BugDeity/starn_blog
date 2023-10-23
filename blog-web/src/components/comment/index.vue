@@ -12,10 +12,10 @@
                             @paste="optimizePasteEvent" data-placeholder="说点什么呢" class="comment-textarea"></div>
                     </div>
                     <div class="comment-btn">
-                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn">
+                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn point">
                             <i class="iconfont icon-biaoqing"></i>
                         </span>
-                        <el-button @click="addComment" style="" class="upload-btn v-comment-btn">
+                        <el-button @click="addComment" style="" class="upload-btn v-comment-btn point">
                             提交
                         </el-button>
                     </div>
@@ -51,7 +51,7 @@
                                         </h4>
                                     </div>
                                     <a :ref="'replyBtn' + item.id" @click="replyComment(item, item.id, false)"
-                                        class="comment-reply-link">回复</a>
+                                        class="comment-reply-link point">回复</a>
                                     <div class="right">
                                         <div class="info">
                                             <time itemprop="datePublished" datetime="1680523318635" class="comment-time">发布于
@@ -112,7 +112,7 @@
                                                 </div>
                                                 <a href="javascript:;" :ref="'childrenBtn' + childrenItem.id"
                                                     @click="replyComment(childrenItem, item.id, true)"
-                                                    class="comment-reply-link">回复</a>
+                                                    class="comment-reply-link point">回复</a>
                                                 <div class="right">
                                                     <div class="info">
                                                         <time itemprop="datePublished" datetime="1680523318635"
@@ -435,7 +435,6 @@ export default {
                     .emoji-btn {
                         i {
                             font-size: 1.3rem;
-                            cursor: pointer
                         }
                     }
 
@@ -447,7 +446,6 @@ export default {
                         font-size: 14px;
                         transition: all .3s;
                         outline: none;
-                        cursor: pointer;
                     }
 
                     @media screen and (max-width: 767px) {
@@ -510,19 +508,6 @@ export default {
 
         .comment-wrp {
             padding: 10px 0 16px 0;
-
-            .more-btn {
-                background-color: var(--theme-color);
-                border-radius: 5px;
-                text-align: center;
-                line-height: 30px;
-                padding: 3px 0;
-                height: 30px;
-                width: 100px;
-                margin: auto;
-                cursor: pointer;
-                color: #fff;
-            }
 
             .ul-item {
                 clear: both;

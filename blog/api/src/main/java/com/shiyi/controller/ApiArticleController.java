@@ -10,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 /**
  * @author blue
@@ -111,6 +113,12 @@ public class ApiArticleController {
     @ApiOperation(value = "我的文章详情", httpMethod = "GET", response = ResponseResult.class, notes = "我的文章详情")
     public ResponseResult selectMyArticleInfo(Long id) {
         return articleService.selectMyArticleInfo(id);
+    }
+
+    @PostMapping(value = "/readMarkdownFile")
+    @ApiOperation(value = "md文件添加文章", httpMethod = "POST", response = ResponseResult.class, notes = "md文件添加文章")
+    public ResponseResult readMdFile(MultipartFile file) {
+        return articleService.readMarkdownFile(file);
     }
 
 }

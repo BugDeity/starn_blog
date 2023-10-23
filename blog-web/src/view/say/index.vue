@@ -71,7 +71,7 @@
                                             回复
                                             <span class="username">{{ comment.replyUserNickname }}：</span>
                                         </span>
-                                        <span class="content" v-html="comment.content"
+                                        <span class="content point" v-html="comment.content"
                                             @click="handleShowCommentBox(comment, item.id, index)">
                                         </span>
                                     </div>
@@ -83,10 +83,10 @@
                                             @paste="optimizePasteEvent" :data-placeholder="placeholder"
                                             class="comment-textarea"></div>
 
-                                        <a @click="showEmoji = !showEmoji">
+                                        <span class="point" @click="showEmoji = !showEmoji">
                                             <i class="iconfont icon-biaoqing"></i>
-                                        </a>
-                                        <a class="sendBtn" @click="sayComment">发送</a>
+                                        </span>
+                                        <a class="sendBtn point" @click="sayComment">发送</a>
 
                                     </div>
                                     <div class="emoji-wrapper" v-if="showEmoji">

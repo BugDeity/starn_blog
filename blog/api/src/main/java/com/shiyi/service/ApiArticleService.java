@@ -2,6 +2,7 @@ package com.shiyi.service;
 
 import com.shiyi.common.ResponseResult;
 import com.shiyi.dto.ArticleInsertDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ApiArticleService {
 
@@ -88,4 +89,11 @@ public interface ApiArticleService {
      * @return
      */
     public ResponseResult updateMyArticle(ArticleInsertDTO dto);
+
+    /**
+     * 读取md文件添加文章
+     * @param file
+     * @return
+     */
+    ResponseResult readMarkdownFile(MultipartFile file);
 }

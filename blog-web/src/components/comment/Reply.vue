@@ -12,14 +12,14 @@
                             @paste="optimizePasteEvent" data-placeholder="说点什么呢" class="comment-textarea"></div>
                     </div>
                     <div class="comment-btn">
-                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn">
+                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn point">
                             <i class="iconfont icon-biaoqing"></i>
                         </span>
                         <div style="margin-left: auto;">
-                            <el-button type="info" @click="handleCancle" class="cancle-btn v-comment-btn">
+                            <el-button type="info" @click="handleCancle" class="cancle-btn v-comment-btn point">
                                 取消
                             </el-button>
-                            <el-button @click="addComment" class="upload-btn v-comment-btn">
+                            <el-button @click="addComment" class="upload-btn v-comment-btn point">
                                 提交
                             </el-button>
                         </div>
@@ -226,7 +226,6 @@ export default {
                     .emoji-btn {
                         i {
                             font-size: 1.3rem;
-                            cursor: pointer
                         }
                     }
 
@@ -244,7 +243,6 @@ export default {
                         font-size: 14px;
                         transition: all .3s;
                         outline: none;
-                        cursor: pointer;
                     }
 
                     .cancle-btn {
