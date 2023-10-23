@@ -1097,7 +1097,25 @@ export default {
                 margin: 10px 0;
             }
 
+            table {
+                border: 1px solid var(--border-line);
 
+                td,
+                th {
+                    border-bottom: 1px solid var(--border-line);
+                    border-left: 1px solid var(--border-line);
+
+                    &:first-child {
+                        border-left: none;
+                    }
+                }
+
+                tr:last-child {
+                    td {
+                        border-bottom: none;
+                    }
+                }
+            }
 
             p {
                 a {
