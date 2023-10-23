@@ -15,7 +15,7 @@ public interface ApiForumService {
      * @param talkId
      * @return
      */
-    ResponseResult selectForumListByTalkId(Integer talkId);
+    ResponseResult selectForumListByTalkId(Integer talkId,String orderBy);
 
     /**
      * 添加圈子内容

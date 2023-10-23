@@ -17,9 +17,11 @@ import com.shiyi.vo.talk.ApiForumCommentListVO;
 import com.shiyi.vo.talk.ApiForumLikeListVO;
 import com.shiyi.vo.talk.ApiForumListVO;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,8 +42,13 @@ public class ApiForumServiceImpl implements ApiForumService {
     private final FollowedMapper followedMapper;
 
     @Override
-    public ResponseResult selectForumListByTalkId(Integer talkId) {
-        Page<ApiForumListVO> page = forumMapper.selectForumListByTalkId(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),talkId);
+    public ResponseResult selectForumListByTalkId(Integer talkId, String orderBy) {
+        List<Followed> followedList = new ArrayList<>();
+        if (StringUtils.isNotBlank(orderBy) && orderBy.equals("followed")) {
+            followedList = followedMapper.selectList(new LambdaQueryWrapper<Followed>().eq(Followed::getUserId, StpUtil.getLoginIdDefaultNull()));
+        }
+
+        Page<ApiForumListVO> page = forumMapper.selectForumListByTalkId(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),talkId,followedList);
         page.getRecords().forEach(item ->{
             String format = RelativeDateFormat.format(item.getCreateTime());
             Integer count = forumCommentMapper.selectCount(new LambdaQueryWrapper<ForumComment>().eq(ForumComment::getForumId, item.getId()));

@@ -1085,7 +1085,7 @@ export default {
                 padding: 0 10px;
                 color: #6a737d;
                 border-left: 0.25em solid #dfe2e5;
-
+                margin: 20px 0;
             }
 
             h1,
@@ -1121,9 +1121,13 @@ export default {
                 padding: 0.065em 0.4em !important;
             }
 
+            ol {
+                margin-left: 20px;
+            }
+
             pre {
                 opacity: 1 !important;
-                margin-top: 10px;
+                margin: 10px 0;
                 color: #f8f8f2 !important;
                 overflow: hidden;
 

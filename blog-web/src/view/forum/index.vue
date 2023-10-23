@@ -264,24 +264,10 @@ export default {
             showUploadImg: false,
             showComment: false,
             forumList: [],
-            tailkList: [
-                {
-                    id: 0,
-                    name: "上班摸鱼"
-                },
-                {
-                    id: 1,
-                    name: "下班去哪玩"
-                },
-            ],
             talkList: [
                 {
                     id: null,
                     name: "最新"
-                },
-                {
-                    id: null,
-                    name: "热门"
                 },
                 {
                     id: null,
@@ -471,9 +457,14 @@ export default {
             this.$refs.categoryRef[index].className = "active"
             this.pageData.pageNo = 1
             this.pageData.talkId = item.id
+            this.pageData.orderBy = null
             if (item.id) {
                 this.form.talkId = item.id
                 this.talkName = item.name
+            }
+
+            if (index == 1) {
+                this.pageData.orderBy = "followed"
             }
             this.getForumList()
         },

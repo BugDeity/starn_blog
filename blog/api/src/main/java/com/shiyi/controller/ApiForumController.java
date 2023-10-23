@@ -26,9 +26,9 @@ public class ApiForumController {
     private final ApiForumService apiForumService;
 
     @GetMapping("list")
-    @ApiOperation(value = "话题列表", httpMethod = "GET", response = ResponseResult.class, notes = "话题列表")
-    public ResponseResult selectForumListByTalkId(Integer talkId){
-        return apiForumService.selectForumListByTalkId(talkId);
+    @ApiOperation(value = "圈子内容列表", httpMethod = "GET", response = ResponseResult.class, notes = "圈子内容列表")
+    public ResponseResult selectForumListByTalkId(Integer talkId,String orderBy){
+        return apiForumService.selectForumListByTalkId(talkId,orderBy);
     }
 
     @SaCheckLogin

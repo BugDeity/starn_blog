@@ -20,9 +20,18 @@
         left join b_user user on forum.user_id = user.id
         left join b_user_info info on info.id = user.user_info_id
         left join b_talk talk on forum.talk_id = talk.id
-        <if test="talkId != null">
-            where forum.talk_id = #{talkId}
-        </if>
+          <where>
+              <if test="talkId != null">
+                  forum.talk_id = #{talkId}
+              </if>
+              <if test="followedList.size > 0">
+                  forum.user_id in
+                  <foreach collection="followedList" item="followed" open="(" separator="," close=")">
+                      #{followed.followedUserId}
+                  </foreach>
+              </if>
+          </where>
+
         order by forum.create_time desc
     </select>
 
