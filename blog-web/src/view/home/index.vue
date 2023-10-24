@@ -62,25 +62,29 @@
                         <el-card class="articleItem box-shadow-top" v-for="(item, index) in articleList" :key="item.id">
                             <div class="articleInfo">
                                 <div class="articleInfo-item">
-                                    <el-tooltip class="item" effect="dark" content="原创文章" placement="top">
-                                        <span v-if="item.isOriginal" class="original">
-                                            <i class="el-icon-tickets"></i>
-                                        </span>
-                                    </el-tooltip>
+                                    <div>
+                                        <el-tooltip class="item" effect="dark" content="原创文章" placement="top">
+                                            <span v-if="item.isOriginal" class="original">
+                                                <i class="el-icon-tickets"></i>
+                                            </span>
+                                        </el-tooltip>
 
-                                    <span v-if="item.isStick" class="top">置顶</span>
-                                    <router-link :to="'/article/' + item.id">
-                                        <h3 class="xiahuaxian">{{ item.title }}</h3>
-                                    </router-link>
-                                    <p>
-                                        {{ item.summary }}
-                                    </p>
-                                </div>
-                                <router-link :to="'/article/' + item.id">
-                                    <div class="articleImgBox" style="">
-                                        <img class="articleImg" v-lazy="item.avatar" :key="item.avatar">
+                                        <span v-if="item.isStick" class="top">置顶</span>
+                                        <router-link :to="'/article/' + item.id">
+                                            <h3 class="xiahuaxian">{{ item.title }}</h3>
+                                        </router-link>
+                                        <p>
+                                            {{ item.summary }}
+                                        </p>
                                     </div>
-                                </router-link>
+
+                                    <router-link :to="'/article/' + item.id">
+                                        <div class="articleImgBox" style="">
+                                            <img class="articleImg" v-lazy="item.avatar" :key="item.avatar">
+                                        </div>
+                                    </router-link>
+                                </div>
+
 
                             </div>
                             <div class="bottumItem">
@@ -599,19 +603,14 @@ export default {
                 }
             }
 
-            .articleInfo-item {
-                width: 70%;
-            }
 
             .articleImgBox {
                 width: 180px;
                 height: 110px;
                 overflow: hidden;
                 border: 1px solid var(--border-line);
-                position: absolute;
-                right: 30px;
-                top: 20px;
                 border-radius: 5px;
+                margin-left: auto;
 
                 &:hover .articleImg {
                     transform: scale(1.1);
@@ -1138,7 +1137,6 @@ export default {
                         color: var(--article-color);
 
                         .original {
-                            content: '';
                             position: absolute;
                             right: 0;
                             top: 0;
@@ -1159,8 +1157,9 @@ export default {
                         }
 
                         .articleInfo-item {
-
+                            display: flex;
                             height: 100px;
+                            justify-content: space-between;
 
                             a {
                                 color: var(--article-color);
