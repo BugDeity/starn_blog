@@ -271,6 +271,7 @@ public class ApiArticleServiceImpl implements ApiArticleService {
 
     @Override
     public ResponseResult readMarkdownFile(MultipartFile file) {
+        String fileName = file.getOriginalFilename().split(".md")[0];
         StringBuilder sb = new StringBuilder();
         try {
             InputStream inputStream = file.getInputStream();
@@ -287,7 +288,10 @@ public class ApiArticleServiceImpl implements ApiArticleService {
             log.error("文件读取失败,错误原因:{}", e);
            throw new BusinessException("文件读取失败");
         }
-        return ResponseResult.success(sb);
+        Map<String, Object> map = new HashMap<>();
+        map.put("content", sb.toString());
+        map.put("fileName", fileName);
+        return ResponseResult.success(map);
     }
 
     @Override

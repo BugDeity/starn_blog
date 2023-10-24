@@ -73,7 +73,7 @@
                             <i class="el-icon-circle-check"></i> 提交审核
                         </button>
                         <span v-else class="noBtn">
-                            暂无发布权限,请先<a @click="$store.state.loginFlag = true">登录</a>
+                            暂无发布权限,请先<span @click="$store.state.loginFlag = true">登录</span>
                         </span>
                     </div>
                 </div>
@@ -88,7 +88,8 @@ export default {
         return {
             uploadPictureHost: process.env.VUE_APP_BASE_API + "/file/upload",
             article: {
-                avatar: ""
+                avatar: "",
+                title: ""
             },
             categoryList: [],
             loading: [],
@@ -221,8 +222,8 @@ export default {
             // 文件对象
             formData.append('file', this.files)
             readMarkdownFile(formData).then(res => {
-                this.article.contentMd = res.data
-                console.log(this.article.contentMd)
+                this.article.contentMd = res.data.content
+                this.article.title = res.data.fileName
                 this.$bus.$emit('close')
             }).catch(err => {
                 this.$bus.$emit('close')
@@ -385,8 +386,9 @@ export default {
                 .noBtn {
                     color: var(--text-color);
 
-                    a {
+                    span {
                         color: var(--theme-color);
+                        cursor: pointer;
                     }
                 }
             }
