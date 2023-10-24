@@ -124,8 +124,9 @@
                                 <div class="content m-l-50" id="forumContent" v-highlight v-html="item.content">
                                 </div>
                                 <div class="imgages m-l-50" v-if="item.imgUrl">
-                                    <img v-for="(img, index) in splitImg(item.imgUrl)"
-                                        @click.stop="handlePreviewImg(item.imgUrl)" :key="index" v-lazy="img" alt="">
+                                    <el-image v-for="(img, index) in splitImg(item.imgUrl)"
+                                        @click.stop="handlePreviewImg(item.imgUrl)" :key="index" :src="img" fit="contain"
+                                        style="height: 150px;margin-right: 5px;margin-bottom: 5px;" lazy></el-image>
                                 </div>
                                 <div class="site m-l-50" v-if="item.site">
                                     <div class="siteItem">
@@ -683,14 +684,6 @@ export default {
                 display: none;
             }
 
-            .imgages {
-
-                img {
-                    width: 100px;
-                    height: 100px;
-                }
-            }
-
         }
 
         @media screen and (min-width: 1119px) {
@@ -698,14 +691,6 @@ export default {
 
             .m-l-50 {
                 margin-left: 50px;
-            }
-
-            .imgages {
-
-                img {
-                    width: 170px;
-                    height: 170px;
-                }
             }
 
             .categoryBox {
@@ -929,12 +914,6 @@ export default {
                                 flex-wrap: wrap;
                                 margin-top: 10px;
 
-                                img {
-                                    margin-bottom: 5px;
-                                    margin-right: 5px;
-                                    flex-shrink: 0;
-                                    cursor: pointer;
-                                }
                             }
 
                             .item-category {

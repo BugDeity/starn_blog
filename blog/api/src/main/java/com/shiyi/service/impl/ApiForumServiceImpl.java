@@ -43,12 +43,16 @@ public class ApiForumServiceImpl implements ApiForumService {
 
     @Override
     public ResponseResult selectForumListByTalkId(Integer talkId, String orderBy) {
-        List<Followed> followedList = new ArrayList<>();
-        if (StringUtils.isNotBlank(orderBy) && orderBy.equals("followed")) {
-            followedList = followedMapper.selectList(new LambdaQueryWrapper<Followed>().eq(Followed::getUserId, StpUtil.getLoginIdDefaultNull()));
+        Page<ApiForumListVO> page = new Page<>();
+        if (StringUtils.isNotBlank(orderBy) && orderBy.equals("followed") &&  StpUtil.isLogin()) {
+            List<Followed>  followedList = followedMapper.selectList(new LambdaQueryWrapper<Followed>().eq(Followed::getUserId, StpUtil.getLoginIdAsString()));
+            if (followedList.size() > 0) {
+                page = forumMapper.selectForumListByTalkId(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),talkId,followedList);
+            }
+        }else {
+            page = forumMapper.selectForumListByTalkId(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),talkId,null);
         }
 
-        Page<ApiForumListVO> page = forumMapper.selectForumListByTalkId(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),talkId,followedList);
         page.getRecords().forEach(item ->{
             String format = RelativeDateFormat.format(item.getCreateTime());
             Integer count = forumCommentMapper.selectCount(new LambdaQueryWrapper<ForumComment>().eq(ForumComment::getForumId, item.getId()));

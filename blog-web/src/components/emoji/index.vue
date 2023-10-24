@@ -292,6 +292,7 @@ export default {
                 cursor: pointer;
                 color: var(--text-color);
                 position: relative;
+                line-height: 0;
 
                 .menuitem {
                     padding: 5px;

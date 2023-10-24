@@ -24,7 +24,7 @@
               <if test="talkId != null">
                   forum.talk_id = #{talkId}
               </if>
-              <if test="followedList.size > 0">
+              <if test="followedList != null and followedList.size > 0">
                   forum.user_id in
                   <foreach collection="followedList" item="followed" open="(" separator="," close=")">
                       #{followed.followedUserId}
