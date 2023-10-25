@@ -13,7 +13,10 @@ import java.util.Date;
  * @describe:
  */
 @Data
-public class ApiSponsorListVO {
+public class SponsorListVO {
+
+    @ApiModelProperty(value = "id")
+    private Integer id;
 
     @ApiModelProperty(value = "昵称")
     private String nickname;
@@ -21,8 +24,14 @@ public class ApiSponsorListVO {
     @ApiModelProperty(value = "头像")
     private String avatar;
 
+    @ApiModelProperty(value = "支付截图")
+    private String payImg;
+
     @ApiModelProperty(value = "金额")
     private double money;
+
+    @ApiModelProperty(value = "状态")
+    private Integer status;
 
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = DateUtil.FORMAT_STRING,timezone="GMT+8")

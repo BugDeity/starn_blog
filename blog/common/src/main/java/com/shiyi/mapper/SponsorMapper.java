@@ -3,7 +3,8 @@ package com.shiyi.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.entity.Sponsor;
-import com.shiyi.vo.sponsor.ApiSponsorListVO;
+import com.shiyi.vo.sponsor.SponsorListVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,5 +17,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SponsorMapper extends BaseMapper<Sponsor> {
 
-    Page<ApiSponsorListVO> selectSponsorList(Page<Object> objectPage);
+    Page<SponsorListVO> selectSponsorList(@Param("objectPage")Page<Object> objectPage,@Param("status") Integer status);
 }

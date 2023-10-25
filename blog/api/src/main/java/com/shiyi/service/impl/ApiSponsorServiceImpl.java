@@ -7,7 +7,7 @@ import com.shiyi.entity.Sponsor;
 import com.shiyi.mapper.SponsorMapper;
 import com.shiyi.service.ApiSponsorService;
 import com.shiyi.utils.PageUtils;
-import com.shiyi.vo.sponsor.ApiSponsorListVO;
+import com.shiyi.vo.sponsor.SponsorListVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class ApiSponsorServiceImpl implements ApiSponsorService {
 
     @Override
     public ResponseResult selectSponsorList() {
-        Page<ApiSponsorListVO> page = sponsorMapper.selectSponsorList(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()));
+        Page<SponsorListVO> page = sponsorMapper.selectSponsorList(new Page<>(PageUtils.getPageNo(),PageUtils.getPageSize()),1);
         return ResponseResult.success(page);
     }
 
