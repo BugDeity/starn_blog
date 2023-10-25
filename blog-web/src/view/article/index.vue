@@ -480,7 +480,7 @@ export default {
                     `<span class="mac-icon-red"></span>` +
                     `<span class="mac-icon-yellow"></span>` +
                     `<span class="mac-icon-green"></span>` +
-                    `<a class=" el-icon-document-copy copy-button"></a>` +
+                    `<i class=" el-icon-document-copy copy-button"></i>` +
                     `</div>`;
 
                 item.insertAdjacentHTML("afterbegin", icon);
@@ -1098,23 +1098,27 @@ export default {
             }
 
             table {
-                border: 1px solid var(--border-line);
+                background-color: var(--article-table-back-color);
 
-                td,
+                td {
+                    border: 1px solid var(--article-table-border-color);
+                    padding: 5px;
+                }
+
+                tr {
+                    background-color: var(--article-table-border-color);
+                    transition: all .3s ease-in-out;
+
+                    &:hover {
+                        background-color: var(--article-table-back-color);
+                        border: none;
+                    }
+                }
+
                 th {
-                    border-bottom: 1px solid var(--border-line);
-                    border-left: 1px solid var(--border-line);
-
-                    &:first-child {
-                        border-left: none;
-                    }
+                    background-color: var(--article-table-back-color);
                 }
 
-                tr:last-child {
-                    td {
-                        border-bottom: none;
-                    }
-                }
             }
 
             p {
@@ -1148,6 +1152,8 @@ export default {
                 margin: 10px 0;
                 color: #f8f8f2 !important;
                 overflow: hidden;
+                box-shadow: rgba(0, 0, 0, 0.55) 0px 2px 10px;
+                border-radius: 8px;
 
                 code {
                     line-height: 20px !important;
@@ -1389,7 +1395,7 @@ export default {
 }
 
 .mac-icon {
-    height: 20px !important;
+    height: 15px !important;
     display: flex;
     align-items: center;
     border: 1px solid #272822 !important;
@@ -1404,8 +1410,8 @@ export default {
     display: inline-block !important;
     letter-spacing: 5px !important;
     word-spacing: 5px !important;
-    width: 13px !important;
-    height: 13px !important;
+    width: 10px !important;
+    height: 10px !important;
     border-radius: 8px !important;
 }
 
@@ -1434,7 +1440,6 @@ export default {
     border-radius: 3px;
     padding: 5px !important;
     color: #ffffff !important;
-    margin-bottom: 5px !important;
     font-size: 1rem;
     margin-left: auto;
 }

@@ -22,6 +22,8 @@ html[data-theme='dark'] {
     --say-background: #303133;
     --footer-background-color: #232323e0;
     --forum-background-color: #303133;
+    --article-table-back-color: #000;
+    --article-table-border-color: #303133;
 }
 
 :root {
@@ -48,4 +50,6 @@ html[data-theme='dark'] {
     --say-background: #f7f7f7;
     --footer-background-color: rgba(255, 255, 255, 0.8);
     --forum-background-color: #f2f3f5;
+    --article-table-border-color: #fffdf9;
+    --article-table-back-color: #fff3e0;
 }
