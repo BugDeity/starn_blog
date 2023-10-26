@@ -1,6 +1,7 @@
 package com.shiyi.strategy.imp;
 
 import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
@@ -10,6 +11,7 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.BatchStatus;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.storage.model.FileListing;
+import com.qiniu.storage.persistent.FileRecorder;
 import com.qiniu.util.Auth;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.SystemConfig;
@@ -28,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 
 @Service("qiNiuUploadStrategyImpl")
@@ -79,6 +82,16 @@ public class QiNiuUploadStrategyImpl implements FileUploadStrategy {
 
     @Override
     public String fileUpload(MultipartFile file,String suffix) {
+        return fragmentationUpload(file,suffix);
+    }
+
+    /**
+     * 默认上传也称简单上传
+     * @param file
+     * @param suffix
+     * @return
+     */
+    private String defaultUpload(MultipartFile file,String suffix){
         String key = null;
         //构造一个带指定 Region 对象的配置类
         Configuration cfg = new Configuration(region);
@@ -109,6 +122,55 @@ public class QiNiuUploadStrategyImpl implements FileUploadStrategy {
                     e.printStackTrace();
                 }
             }
+        }
+        return key;
+    }
+
+    /**
+     * 分片上传
+     * @param file
+     * @param suffix
+     * @return
+     */
+    private String fragmentationUpload(MultipartFile file,String suffix){
+        //构造一个带指定 Region 对象的配置类
+        Configuration cfg = new Configuration(Region.region0());
+        cfg.resumableUploadAPIVersion = Configuration.ResumableUploadAPIVersion.V2;// 指定分片上传版本
+        cfg.resumableUploadMaxConcurrentTaskCount = 2;  // 设置分片上传并发，1：采用同步上传；大于1：采用并发上传
+
+
+        String localFilePath = DateUtil.dateTimeToStr(DateUtil.getNowDate(), DateUtil.YYYYMMDD) +"_"+ DateUtil.getNowDate().getTime();
+        String key = null;
+
+        Auth auth = Auth.create(qi_niu_accessKey, qi_niu_secretKey);
+        String upToken = auth.uploadToken(qi_niu_bucket);
+
+        String localTempDir = Paths.get(System.getenv("java.io.tmpdir"), qi_niu_bucket).toString();
+        FileInputStream inputStream = null;
+        try {
+            //设置断点续传文件进度保存目录
+            FileRecorder fileRecorder = new FileRecorder(localTempDir);
+            UploadManager uploadManager = new UploadManager(cfg, fileRecorder);
+            try {
+                inputStream = (FileInputStream) file.getInputStream();
+                Response response = uploadManager.put(inputStream, localFilePath + "." + suffix, upToken,null,null);
+                //解析上传成功的结果
+                DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+                key =  qi_niu_url + putRet.key;
+            } catch (QiniuException ex) {
+                ex.printStackTrace();
+                if (ex.response != null) {
+                    System.err.println(ex.response);
+
+                    try {
+                        String body = ex.response.toString();
+                        System.err.println(body);
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
         return key;
     }

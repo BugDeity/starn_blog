@@ -161,7 +161,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .comment-main {
-    width: 100%;
+    margin-left: 40px;
 
     .comment-item {
         border: 1px solid rgba(144, 147, 153, .31);

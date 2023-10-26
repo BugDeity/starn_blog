@@ -195,6 +195,7 @@ export default {
             commentList: [],
             pages: 0,
             lastEditRange: null,
+            lastCommentId: null,
         }
     },
     mounted() {
@@ -284,8 +285,15 @@ export default {
                 this.$store.state.loginFlag = true;
                 return
             }
+            if (this.$refs['replys' + this.lastCommentId] != null) {
+                this.$refs['replys' + this.lastCommentId][0].showBox = false
+            }
+            if (this.$refs['reply' + this.lastCommentId] != null) {
+                this.$refs['reply' + this.lastCommentId][0].showBox = false
+            }
+
             if (isChilderen) {
-                this.$refs['replys' + item.id][0].showBox = !this.$refs['replys' + item.id][0].showBox
+                this.$refs['replys' + item.id][0].showBox = true
                 //传值给回复框
                 this.$refs['replys' + item.id][0].commentContent = "";
                 this.$refs['replys' + item.id][0].nickname = item.nickname;
@@ -293,7 +301,7 @@ export default {
                 this.$refs['replys' + item.id][0].parentId = parentId;
                 this.$refs['replys' + item.id][0].index = item.id;
             } else {
-                this.$refs['reply' + item.id][0].showBox = !this.$refs['reply' + item.id][0].showBox
+                this.$refs['reply' + item.id][0].showBox = true
                 //传值给回复框
                 this.$refs['reply' + item.id][0].commentContent = "";
                 this.$refs['reply' + item.id][0].nickname = item.nickname;
@@ -301,6 +309,7 @@ export default {
                 this.$refs['reply' + item.id][0].parentId = parentId;
                 this.$refs['reply' + item.id][0].index = item.id;
             }
+            this.lastCommentId = item.id
         },
         reloadReply(index) {
             let query = {

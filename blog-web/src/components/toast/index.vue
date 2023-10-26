@@ -82,6 +82,12 @@ export default {
             this.show = true;
             this.after(message)
         },
+        info(message) {
+            this.color = "#909399";
+            this.icon = "iconfont icon-info";
+            this.show = true;
+            this.after(message)
+        },
     },
 };
 </script>
