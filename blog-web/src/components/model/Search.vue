@@ -7,15 +7,14 @@
         <div class="dividerBox">
             <div class="divider">
                 <svg-icon icon-class="car"></svg-icon>
-
             </div>
         </div>
 
         <div class="tagBox" v-if="!list.length">
             <div class="tag-title">标签搜索</div>
             <div>
-                <a @click="handleToTag(tag.id)" :style="{ backgroundColor: `${randomColor()}` }" class="tag-item"
-                    v-for="(tag, index) in tagList" :key="index">{{ tag.name }}</a>
+                <span @click="handleToTag(tag.id)" :style="{ backgroundColor: `${randomColor()}` }" class="tag-item"
+                    v-for="(tag, index) in tagList" :key="index">{{ tag.name }}</span>
             </div>
         </div>
 
@@ -174,6 +173,10 @@ export default {
             left: 0;
             bottom: 0;
         }
+    }
+
+    span {
+        cursor: pointer;
     }
 }
 

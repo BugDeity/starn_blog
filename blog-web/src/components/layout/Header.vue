@@ -229,7 +229,6 @@
                         <div class="loginTip" style="padding: 10px;font-size: 0.9rem;">
                             <p>登录网站，获取以下权益</p>
                             <div style="margin-top: 10px;">
-
                                 <span>
                                     <i class="el-icon-cloudy"></i> 参与互动评论
                                 </span>
@@ -346,11 +345,11 @@ export default {
             this.i = scrollTop;
 
             // 鼠标向上滚动
-            if (scroll < 0) {
-                this.headerClass = "header slideDown"
-            } else {
-                this.headerClass = "header slideUp"
-            }
+            // if (scroll < 0) {
+            //     this.headerClass = "header slideDown"
+            // } else {
+            //     this.headerClass = "header slideUp"
+            // }
             let page = document.body.scrollHeight
             let client = document.documentElement.clientHeight
             let comend = page - client
@@ -488,7 +487,8 @@ export default {
         line-height: 60px;
         z-index: 99;
         background-color: var(--header-back-color);
-        backdrop-filter: blur(4px);
+        backdrop-filter: blur(25px);
+        box-shadow: 0 1px 40px -8px rgba(0, 0, 0, .5);
 
         a {
             text-decoration: none;

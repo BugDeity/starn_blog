@@ -269,10 +269,10 @@
                             </router-link>
                         </div>
                         <div class="tagBox">
-                            <a @click="handleClike(item.id, '/tag')" :style="{ backgroundColor: `${randomColor()}` }"
+                            <span @click="handleClike(item.id, '/tag')" :style="{ backgroundColor: `${randomColor()}` }"
                                 class="tag-item" v-for="(item, index) in tagList" :key="index">
                                 {{ item.name }}
-                            </a>
+                            </span>
                         </div>
                     </el-card>
 
@@ -1025,6 +1025,10 @@ export default {
                         padding-bottom: 10px;
                         height: auto;
                         margin-top: 10px;
+
+                        span {
+                            cursor: pointer;
+                        }
                     }
 
                 }
