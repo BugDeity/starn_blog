@@ -35,7 +35,16 @@
                         </el-upload>
 
                         <mavon-editor placeholder="输入文章内容..." style="height: 500px" ref=md v-model="article.contentMd"
-                            @imgDel="imgDel" @change="" @imgAdd="imgAdd" />
+                            @imgDel="imgDel" @change="" @imgAdd="imgAdd">
+                            <!-- 左工具栏后加入自定义按钮  -->
+                            <template slot="left-toolbar-after">
+                                <el-upload style="display: inline-block;" :show-file-list="false" ref="upload"
+                                    name="filedatas" action="" :http-request="uploadVideo"
+                                    :before-upload="handleUploadBefore" multiple>
+                                    <i class="op-icon fa el-icon-video-camera" title="上传视频"></i>
+                                </el-upload>
+                            </template>
+                        </mavon-editor>
                     </el-form-item>
                 </div>
                 <div class="article-right">
@@ -224,6 +233,19 @@ export default {
             readMarkdownFile(formData).then(res => {
                 this.article.contentMd = res.data.content
                 this.article.title = res.data.fileName
+                this.$bus.$emit('close')
+            }).catch(err => {
+                this.$bus.$emit('close')
+            })
+        },
+        uploadVideo(param) {
+            this.files = param.file
+            // FormData 对象
+            var formData = new FormData()
+            // 文件对象
+            formData.append('multipartFile', this.files)
+            upload(formData).then(res => {
+                this.article.contentMd += `\n<video height=100% width=100% src=${res.data}></video>`
                 this.$bus.$emit('close')
             }).catch(err => {
                 this.$bus.$emit('close')
