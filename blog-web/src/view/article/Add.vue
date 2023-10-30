@@ -38,11 +38,24 @@
                             @imgDel="imgDel" @change="" @imgAdd="imgAdd">
                             <!-- 左工具栏后加入自定义按钮  -->
                             <template slot="left-toolbar-after">
-                                <el-upload style="display: inline-block;" :show-file-list="false" ref="upload"
-                                    name="filedatas" action="" :http-request="uploadVideo"
-                                    :before-upload="handleUploadBefore" multiple>
-                                    <i class="op-icon fa el-icon-video-camera" title="上传视频"></i>
-                                </el-upload>
+
+                                <el-dropdown>
+                                    <span class="el-dropdown-link">
+                                        <i class="op-icon fa el-icon-video-camera" title="上传视频"></i>
+                                    </span>
+                                    <el-dropdown-menu slot="dropdown">
+                                        <el-dropdown-item>
+                                            <el-upload style="display: inline-block;" :show-file-list="false" ref="upload"
+                                                name="filedatas" action="" :http-request="uploadVideo"
+                                                :before-upload="handleUploadBefore" multiple>
+                                                <span>上传视频</span>
+                                            </el-upload>
+                                        </el-dropdown-item>
+                                        <el-dropdown-item>
+                                            <div @click="dialogVisible = true">添加视频地址</div>
+                                        </el-dropdown-item>
+                                    </el-dropdown-menu>
+                                </el-dropdown>
                             </template>
                         </mavon-editor>
                     </el-form-item>
@@ -88,6 +101,13 @@
                 </div>
             </el-form>
         </div>
+        <el-dialog center title="添加视频" :visible.sync="dialogVisible" width="30%">
+            <el-input v-model="videoInput" placeholder="视频地址"></el-input>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addVideo">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -101,10 +121,12 @@ export default {
                 title: ""
             },
             categoryList: [],
+            dialogVisible: false,
             loading: [],
             img: process.env.VUE_APP_IMG_API,
             articleId: this.$route.query.id,
             tagList: [],
+            videoInput: "",
             rules: {
                 title: [
                     { required: true, message: '请输入文章名称', trigger: 'blur' },
@@ -238,6 +260,20 @@ export default {
                 this.$bus.$emit('close')
             })
         },
+        addVideo() {
+            // 这里获取到的是mavon编辑器实例，上面挂载着很多方法
+            const $vm = this.$refs.md
+            // 将文件名与文件路径插入当前光标位置，这是mavon-editor 内置的方法
+            $vm.insertText($vm.getTextareaDom(),
+                {
+                    prefix: `<video height=100% width=100% src="${this.videoInput}"></video>`,
+                    subfix: '',
+                    str: ''
+                })
+
+            this.dialogVisible = false
+            this.videoInput = ''
+        },
         uploadVideo(param) {
             this.files = param.file
             // FormData 对象
@@ -245,7 +281,14 @@ export default {
             // 文件对象
             formData.append('multipartFile', this.files)
             upload(formData).then(res => {
-                this.article.contentMd += `\n<video height=100% width=100% src=${res.data}></video>`
+                const $vm = this.$refs.md
+                // 将文件名与文件路径插入当前光标位置，这是mavon-editor 内置的方法
+                $vm.insertText($vm.getTextareaDom(),
+                    {
+                        prefix: `<video height=100% width=100% src="${res.data}"></video>`,
+                        subfix: '',
+                        str: ''
+                    })
                 this.$bus.$emit('close')
             }).catch(err => {
                 this.$bus.$emit('close')

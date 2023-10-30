@@ -78,13 +78,13 @@ export default {
         },
         warnning(message) {
             this.color = "#F57C00";
-            this.icon = "iconfont icon-jinggao";
+            this.icon = "iconfont icon-jinggao1";
             this.show = true;
             this.after(message)
         },
         info(message) {
             this.color = "#909399";
-            this.icon = "iconfont icon-info";
+            this.icon = "iconfont icon-jinggao1";
             this.show = true;
             this.after(message)
         },

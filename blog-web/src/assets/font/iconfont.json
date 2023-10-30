@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "125444715",
+      "name": "警告",
+      "font_class": "jinggao1",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
       "icon_id": "117043771",
       "name": "搜索",
       "font_class": "search",
@@ -32,20 +39,6 @@
       "font_class": "tupian",
       "unicode": "e658",
       "unicode_decimal": 58968
-    },
-    {
-      "icon_id": "124923922",
-      "name": "info",
-      "font_class": "info",
-      "unicode": "e67d",
-      "unicode_decimal": 59005
-    },
-    {
-      "icon_id": "124923923",
-      "name": "警告",
-      "font_class": "jinggao",
-      "unicode": "e6aa",
-      "unicode_decimal": 59050
     },
     {
       "icon_id": "118120316",
