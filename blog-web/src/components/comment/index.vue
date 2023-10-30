@@ -367,10 +367,12 @@ export default {
             })
         },
         moreComment(val) {
+            this.$bus.$emit('show');
             this.pageData.pageNo = val;
             featchComments(this.pageData).then(res => {
                 this.commentList.push(...res.data.records)
                 this.pages = res.data.pages;
+                this.$bus.$emit('close');
             })
         },
 
