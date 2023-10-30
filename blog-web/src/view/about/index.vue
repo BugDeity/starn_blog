@@ -45,7 +45,7 @@ export default {
     }
 
     .box1 {
-        margin-top: 70px;
+        margin-top: 80px;
         background-color: var(--background-color);
         height: 100%;
 

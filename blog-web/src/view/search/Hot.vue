@@ -233,7 +233,7 @@ export default {
 
     .box {
         height: 100%;
-        margin-top: 70px;
+        margin-top: 80px;
 
         .nav {
             margin: 0 auto;

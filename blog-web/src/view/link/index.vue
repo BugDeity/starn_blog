@@ -284,7 +284,7 @@ export default {
         padding: 20px;
         height: 100%;
         background-color: var(--background-color);
-        margin-top: 70px;
+        margin-top: 80px;
 
         h1 {
 

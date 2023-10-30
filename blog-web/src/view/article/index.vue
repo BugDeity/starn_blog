@@ -906,7 +906,7 @@ export default {
         background-color: var(--background-color);
         padding: 20px;
         height: 100%;
-        margin-top: 70px;
+        margin-top: 80px;
 
         .category {
             border-radius: 3px;

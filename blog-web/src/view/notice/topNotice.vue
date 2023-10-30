@@ -9,9 +9,9 @@
                     公告 :
                 </span>
                 <span class="content" v-html="notice.msg"></span>
-                <!-- <a class="closeBtn" @click="closeMsg">
+                <span class="closeBtn" @click="closeMsg">
                     关闭 <i class="el-icon-close"></i>
-                </a> -->
+                </span>
             </span>
         </marquee>
     </div>
@@ -97,6 +97,7 @@ export default {
         .closeBtn {
             margin-left: 15px;
             font-weight: 400;
+            cursor: pointer;
         }
     }
 }

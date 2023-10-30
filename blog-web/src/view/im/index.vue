@@ -823,7 +823,7 @@ export default {
         display: flex;
         border: 2px solid var(--border-line);
         height: 100%;
-        margin-top: 70px;
+        margin-top: 80px;
         background-color: #272a37;
         padding: 10px;
         border-radius: 10px;

@@ -78,7 +78,7 @@ export default {
     }
 
     .navigation-container {
-        margin-top: 70px;
+        margin-top: 80px;
 
 
         .site-container {

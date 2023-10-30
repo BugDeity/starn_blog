@@ -1049,7 +1049,7 @@ export default {
     }
 
     .main {
-        margin-top: 70px;
+        margin-top: 80px;
 
         .main-box {
             width: 100%;

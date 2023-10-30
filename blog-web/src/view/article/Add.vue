@@ -331,7 +331,7 @@ export default {
     }
 
     .containner {
-        margin-top: 70px;
+        margin-top: 80px;
 
         padding: 10px;
         color: var(--text-color);

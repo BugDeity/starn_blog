@@ -467,7 +467,7 @@ export default {
 
     .say-containner {
         padding: 10px;
-        margin-top: 70px;
+        margin-top: 80px;
 
         .cover {
             width: 100%;

@@ -111,7 +111,7 @@ export default {
     }
 
     .archive-container {
-        margin-top: 70px;
+        margin-top: 80px;
         height: 100%;
         text-align: center;
         background-color: var(--background-color);

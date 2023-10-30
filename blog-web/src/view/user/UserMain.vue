@@ -295,7 +295,7 @@ export default {
     .user-warpper {
         display: flex;
         flex-direction: column;
-        margin-top: 70px;
+        margin-top: 80px;
 
     }
 

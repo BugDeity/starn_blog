@@ -671,7 +671,7 @@ export default {
     min-height: calc(100vh - 207px);
 
     .main {
-        margin-top: 70px;
+        margin-top: 80px;
 
         @media screen and (max-width: 1118px) {
             width: 100%;
