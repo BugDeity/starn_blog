@@ -13,6 +13,8 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
+import Clipboard from 'clipboard'
+Vue.prototype.Clipboard = Clipboard
 
 import '@/icons' // icon
 import '@/permission' // permission control

@@ -1,7 +1,9 @@
 package com.shiyi.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.entity.SystemConfig;
+import com.shiyi.vo.TableListVO;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.shiyi.entity.SystemConfig;
  */
 public interface SystemConfigMapper extends BaseMapper<SystemConfig> {
 
+    Page<TableListVO> selectTables(Page<Object> objectPage);
 }

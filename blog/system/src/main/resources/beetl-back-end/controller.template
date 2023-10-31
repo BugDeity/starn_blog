@@ -1,0 +1,65 @@
+package ${package};
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import com.shiyi.common.ResponseResult;
+import ${impPo};
+import ${impVo};
+import ${impService};
+
+@EnableAutoConfiguration
+@RestController
+@RequestMapping(value="/${strutil.toLowerCase(entityName)}")
+public class ${entityName}Controller {
+	@Autowired
+	private ${entityName}Service ${varName}Service;
+
+	/**
+     *${tableComment}列表
+     **/
+    @RequestMapping(value="/list", method = RequestMethod.GET)
+    public ResponseResult select${entityName}List() {
+        return ${varName}Service.select${entityName}List();
+    }
+
+    /**
+     *${tableComment}详情
+     **/
+    @RequestMapping(value="/info", method = RequestMethod.GET)
+    public ResponseResult select${entityName}ById(Integer id) {
+        return ${varName}Service.select${entityName}ById(id);
+    }
+
+	/**
+     *${tableComment}添加
+     **/
+    @RequestMapping(value="/save", method=RequestMethod.POST)
+    public ResponseResult save${entityName}(
+            @RequestBody ${entityName} ${varName}) {
+        return ${varName}Service.save(${varName});
+    }
+
+    /**
+     *${tableComment}修改
+     **/
+    @RequestMapping(value="/update", method=RequestMethod.PUT)
+    public ResponseResult update${entityName}(
+            @RequestBody ${entityName} ${varName}) {
+        return ${varName}Service.update${entityName}(${varName});
+    }
+
+    /**
+     *${tableComment}删除多条
+     **/
+    @RequestMapping(value="/removeByIds", method=RequestMethod.DELETE)
+    public ResponseResult remove${entityName}ByIds(@RequestBody List<Integer> ids) {
+        return ${varName}Service.remove${entityName}ByIds(ids);
+    }
+}
