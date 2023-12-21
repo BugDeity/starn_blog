@@ -249,7 +249,7 @@
 </template>
 <script>
 import { logout } from '@/api'
-import { removeToken, getNotice } from '@/utils/cookieUtil'
+import { removeToken, getToken } from '@/utils/cookieUtil'
 export default {
     name: 'Header',
 
@@ -301,7 +301,7 @@ export default {
             this.$store.state.searchDialogVisible = true
         },
         handleClickNotice(index) {
-            if (!this.user) {
+            if (!getToken()) {
                 this.$store.commit("setLoginFlag", true)
                 return;
             }

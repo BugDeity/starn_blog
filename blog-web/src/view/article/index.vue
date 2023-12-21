@@ -266,13 +266,14 @@
                         <el-button type="primary" @click="handleGoIm"><i class="el-icon-chat-dot-round"></i> 私信</el-button>
                     </div>
                 </el-card>
-                <div class="directory">
+                <div class="directory" @mouseenter="handleDireMousEnter" @mouseleave="handleDireMousLeave">
                     <el-card class="directory-item">
                         <div slot="header" class="title">
-                            <span>目录</span>
+                            <i class="el-icon-s-fold"></i> <span>文档目录</span>
                         </div>
-                        <ul class="structureBox">
-                            <li :style="{ paddingLeft: item.level * 10 + 'px' }"
+                        <ul class="structureBox" style="">
+                            <li ref="directoryItem"
+                                :style="{ paddingLeft: item.level * 10 + 'px', filter: active != index ? 'blur(1px)' : 'none' }"
                                 :class="active == index ? 'structure active' : 'structure'" v-for="(item, index) in titles"
                                 :key="index" @click="handleNodeClick(item.id)">
                                 {{ item.title }}
@@ -449,6 +450,19 @@ export default {
     },
 
     methods: {
+        handleDireMousEnter() {
+            for (let i = 0; i < this.$refs.directoryItem.length; i++) {
+                this.$refs.directoryItem[i].style.filter = 'none'
+            }
+        },
+        handleDireMousLeave() {
+            for (let i = 0; i < this.$refs.directoryItem.length; i++) {
+                if (this.active != i) {
+                    this.$refs.directoryItem[i].style.filter = 'blur(1px)'
+                }
+            }
+        },
+
         handleNodeClick(data, event) {
             //  实现跳转锚点
             document.getElementById(data).scrollIntoView({ behavior: 'smooth' })
@@ -866,6 +880,12 @@ export default {
                     }
 
                     .title {
+                        display: flex;
+
+                        i {
+                            font-size: 20px;
+                            margin-right: 10px;
+                        }
 
                         span {
                             color: var(--article-color);
@@ -889,6 +909,7 @@ export default {
 
                     .active {
                         font-size: 1.2rem;
+                        transition: all .25s ease-in-out;
                     }
 
                     .active,

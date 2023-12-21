@@ -153,8 +153,22 @@
 
                 <!-- 右侧内容 -->
                 <div class="rightBox">
-                    <el-card class="box-card box-shadow">
-                        <img style="width: 100%;" src="https://img.shiyit.com/1.jpg" alt="">
+                    <el-card class="box-card box-shadow" style="perspective: 1000px;position: relative;height: 120px;">
+                        <div class="front">
+                            <img style="width: 100%;" src="https://img.shiyit.com/1.jpg" alt="">
+
+                        </div>
+                        <div class="back">
+                            <div style="width: 50%;">
+                                <h2>
+                                    扫一扫
+                                </h2>
+                                <span style="margin-left: 20px;">
+                                    体验小程序
+                                </span>
+                            </div>
+                            <img src="https://img.shiyit.com/20231117_1700185199582.jpg" alt="">
+                        </div>
                     </el-card>
                     <!-- 推荐文章 -->
                     <el-card class="box-card recomArticle box-shadow">
@@ -722,6 +736,37 @@ export default {
                     color: var(--article-color);
                     margin-bottom: 15px;
 
+                    .front,
+                    .back {
+                        position: absolute;
+                        width: 100%;
+                        transform-style: preserve-3d;
+                        backface-visibility: hidden;
+                        transition-duration: .5s;
+                        transition-timing-function: 'ease-in';
+                    }
+
+                    .back {
+
+                        transform: rotateY(180deg);
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            width: 120px;
+                            height: 120px;
+                        }
+                    }
+
+                    &:hover .front,
+                    &:focus .front {
+                        transform: rotateY(180deg);
+                    }
+
+                    &:hover .back,
+                    &:focus .back {
+                        transform: rotateY(0deg);
+                    }
 
                     &:hover {
                         .clearfix {

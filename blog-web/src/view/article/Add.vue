@@ -285,7 +285,7 @@ export default {
                 // 将文件名与文件路径插入当前光标位置，这是mavon-editor 内置的方法
                 $vm.insertText($vm.getTextareaDom(),
                     {
-                        prefix: `<video height=100% width=100% src="${res.data}"></video>`,
+                        prefix: `<video height=100% width=100% controls autoplay src="${res.data}"></video>`,
                         subfix: '',
                         str: ''
                     })
