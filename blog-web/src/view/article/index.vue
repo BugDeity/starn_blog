@@ -659,7 +659,6 @@ export default {
     }
 
     @media screen and (min-width: 1119px) {
-        .article-header {}
 
         /deep/ .el-dialog {
             width: 24%;
