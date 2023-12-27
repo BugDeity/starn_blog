@@ -1,6 +1,25 @@
 <template>
     <div class="main-container container">
         <div class="main">
+
+            <el-tooltip class="item" effect="dark" content="随机视频播放" placement="right">
+                <div @click="drawer = true"
+                    style="color: var(--theme-color);position: fixed;left: 20px;bottom: 50%;font-size: 1.5rem;cursor: pointer;">
+                    <i class="el-icon-d-arrow-right"></i>
+                </div>
+            </el-tooltip>
+
+            <el-drawer title="我是标题" :visible.sync="drawer" :with-header="false">
+                <div class="video-container">
+                    <video style="width: 100%;" controls autoplay :src="videoSrc"></video>
+                </div>
+                <div style="margin-left: 20px;margin-top: 10px;">
+                    <el-button type="primary" icon="el-icon-d-arrow-right" @click="nextVideo"></el-button>
+
+                </div>
+            </el-drawer>
+
+
             <div class="main-box">
                 <div class="bannerBox">
                     <!-- 轮播图 -->
@@ -89,11 +108,8 @@
                             </div>
                             <div class="bottumItem">
                                 <div class="articleUser">
-                                    <a @click="handleToUserMain(item.userId)">
-                                        <el-avatar class="userAvatar" :src="item.userAvatar"></el-avatar>
-                                    </a>
-
-                                    <span>{{ item.username }}</span>
+                                    <el-avatar class="userAvatar" :src="$store.state.webSiteInfo.authorAvatar"></el-avatar>
+                                    <span>{{ $store.state.webSiteInfo.author }}</span>
                                 </div>
 
                                 <div class="tag">
@@ -121,7 +137,7 @@
                                         <i class="el-icon-chat-dot-round"></i>
                                         <span class="name">评论</span>{{ item.commentCount }}
                                     </span>
-                                    <span class="item">
+                                    <!-- <span class="item">
                                         <span v-if="item.isCollect">
                                             <i style="font-size: 1rem;" class="el-icon-star-on"></i>
                                             <span class="name">收藏</span>{{ item.collectCount }}
@@ -130,7 +146,7 @@
                                             <i style="font-size: 1rem;" class="el-icon-star-off"></i>
                                             <span class="name">收藏</span>{{ item.collectCount }}
                                         </span>
-                                    </span>
+                                    </span> -->
                                     <span class="item">
                                         <i style="font-size: 0.8rem;" class="iconfont icon-dianzan1"></i>
                                         <span class="name">赞</span>{{ item.likeCount }}
@@ -156,7 +172,6 @@
                     <el-card class="box-card box-shadow" style="perspective: 1000px;position: relative;height: 120px;">
                         <div class="front">
                             <img style="width: 100%;" src="https://img.shiyit.com/1.jpg" alt="">
-
                         </div>
                         <div class="back">
                             <div style="width: 50%;">
@@ -171,13 +186,13 @@
                         </div>
                     </el-card>
                     <!-- 推荐文章 -->
-                    <el-card class="box-card recomArticle box-shadow">
+                    <el-card class="box-card recomArticle box-shadow" v-if="newArticleList.length">
                         <div class="clearfix">
                             <svg-icon icon-class="tuijian"></svg-icon>
                             <span>推荐文章</span>
                         </div>
                         <ul class="recomArticleUl">
-                            <li v-for="(item, index) in    newArticleList   ">
+                            <li v-for="(item, index) in  newArticleList   ">
                                 <div :class="index == 0 ? 'article-item-top1' : 'article-item'">
                                     <div class="recomCover">
                                         <router-link :to="'/article/' + item.id">
@@ -327,6 +342,8 @@ export default {
     data() {
         return {
             centerDialogVisible: false,
+            drawer: false,
+            videoSrc: "http://api.yujn.cn/api/zzxjj.php",
             emojis: [],
             pageData: {
                 pageNo: 1,
@@ -370,9 +387,7 @@ export default {
         clearInterval(this.timer);
     },
     methods: {
-        handleToUserMain(userId) {
-            this.$router.push({ path: "/user_main", query: { id: userId } })
-        },
+
         stop() {
             clearInterval(this.timer);
         },
@@ -452,6 +467,9 @@ export default {
                 this.$toast.error('复制失败')
                 clipboard.destroy()
             })
+        },
+        nextVideo() {
+            this.videoSrc = this.videoSrc + "?temps=" + new Date().getTime()
         },
         handleTabClick(tab) {
 
@@ -1095,6 +1113,15 @@ export default {
 
     .main {
         margin-top: 80px;
+
+        .video-container {
+            position: relative;
+            max-width: 92vw;
+            max-height: 100vh;
+            border-radius: 40px;
+            box-shadow: rgba(0, 51, 203, 0.5) 0px 0px 40px;
+            overflow: hidden;
+        }
 
         .main-box {
             width: 100%;

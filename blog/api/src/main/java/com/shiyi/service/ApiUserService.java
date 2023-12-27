@@ -1,10 +1,7 @@
 package com.shiyi.service;
 
 import com.shiyi.common.ResponseResult;
-import com.shiyi.dto.EmailForgetPasswordDTO;
-import com.shiyi.dto.EmailLoginDTO;
-import com.shiyi.dto.EmailRegisterDTO;
-import com.shiyi.dto.UserInfoDTO;
+import com.shiyi.dto.*;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.zhyd.oauth.model.AuthResponse;
 
@@ -98,4 +95,13 @@ public interface ApiUserService {
      * @return
      */
     public ResponseResult getUserCount(String id);
+
+
+    /**
+     * 微信小程序登录
+     * @param wechatAppletDTO
+     * @return
+     */
+    ResponseResult appletLogin(WechatAppletDTO wechatAppletDTO);
+
 }

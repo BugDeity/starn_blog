@@ -115,7 +115,7 @@ export default {
         height: 100%;
         text-align: center;
         background-color: var(--background-color);
-        padding: 5px;
+        padding: 5px 40px;
 
         .num {
             line-height: 50px;
@@ -187,6 +187,8 @@ export default {
                     margin-left: 20px;
                     display: block;
                     text-decoration: none;
+                    padding: 15px 0px;
+                    border-bottom: 1px dashed #dbdde0;
 
                     &:hover {
                         color: var(--theme-color);

@@ -2,16 +2,15 @@ package com.shiyi.service.impl;
 
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.shiyi.common.RedisConstants;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.common.ResultCode;
-import com.shiyi.dto.EmailForgetPasswordDTO;
-import com.shiyi.dto.EmailLoginDTO;
-import com.shiyi.dto.EmailRegisterDTO;
-import com.shiyi.dto.UserInfoDTO;
+import com.shiyi.dto.*;
 import com.shiyi.entity.*;
 import com.shiyi.enums.LoginTypeEnum;
 import com.shiyi.enums.UserStatusEnum;
@@ -35,6 +34,8 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -59,6 +60,8 @@ public class ApiUserServiceImpl implements ApiUserService {
     private final FollowedMapper followedMapper;
 
     private final EmailService emailService;
+
+    private final CommentMapper commentMapper;
 
     private final String[] userAvatarList = {"http://img.shiyit.com/avatars/buxie.png","http://img.shiyit.com/avatars/daizhi.png",
             "http://img.shiyit.com/avatars/fennu.png","http://img.shiyit.com/avatars/jingxi.png","http://img.shiyit.com/avatars/kaixin.png",
@@ -128,40 +131,15 @@ public class ApiUserServiceImpl implements ApiUserService {
         if (!loginFlag) {
             return "验证码已过期";
         }
-        UserInfoVO userInfoVO = userMapper.selectByUserName(message.getFromUser());
-        if (userInfoVO == null) {
-            String ip = IpUtil.getIp();
-            String ipSource = IpUtil.getIp2region(ip);
-
-            // 保存用户信息
-            UserInfo userInfo = UserInfo.builder()
-                    .nickname("WECHAT-" + RandomUtils.generationCapital(6))
-                    .avatar(userAvatarList[RandomUtils.generationNumber(userAvatarList.length)])
-                    .build();
-            userInfoMapper.insert(userInfo);
-            // 保存账号信息
-            User user = User.builder()
-                    .userInfoId(userInfo.getId())
-                    .username(message.getFromUser())
-                    .password(AesEncryptUtils.aesEncrypt(message.getFromUser()))
-                    .loginType(LoginTypeEnum.WECHAT.getType())
-                    .lastLoginTime(DateUtil.getNowDate())
-                    .ipAddress(ip)
-                    .ipSource(ipSource)
-                    .roleId(2)
-                    .build();
-            userMapper.insert(user);
-            //组装返回信息
-            userInfoVO = UserInfoVO.builder().id(user.getId()).loginType(user.getLoginType())
-                    .avatar(userInfo.getAvatar()).email(userInfo.getEmail()).nickname(userInfo.getNickname())
-                    .intro(userInfo.getIntro()).webSite(userInfo.getWebSite()).build();
-        }
+        UserInfoVO userInfoVO = wechatInit(message.getFromUser());
 
 
         //修改redis缓存 以便监听是否已经授权成功
         redisService.setCacheObject(RedisConstants.WX_LOGIN_USER + content, userInfoVO, 60, TimeUnit.SECONDS);
         return "网站登录成功！(若页面长时间未跳转请刷新验证码)";
     }
+
+
 
     /**
      * 获取微信公众号登录验证码
@@ -196,9 +174,13 @@ public class ApiUserServiceImpl implements ApiUserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult updateUser(UserInfoDTO vo) {
+        User user = userMapper.selectById(StpUtil.getLoginIdAsString());
+        if (ObjectUtils.isEmpty(user)) {
+            throw  new BusinessException("用户不存在");
+        }
         UserInfo userInfo = BeanCopyUtils.copyObject(vo, UserInfo.class);
-        userInfo.setId(vo.getUserInfoId());
-        int update = userInfoMapper.updateById(userInfo);
+        userInfo.setId(user.getUserInfoId());
+        userInfoMapper.updateById(userInfo);
         return ResponseResult.success("修改信息成功");
     }
 
@@ -332,6 +314,54 @@ public class ApiUserServiceImpl implements ApiUserService {
         Integer followedCount = followedMapper.selectCount(new LambdaQueryWrapper<Followed>().eq(Followed::getUserId, id));
         return ResponseResult.success().putExtra("articleCount", articleCount).putExtra("collectCount", collectCount)
                 .putExtra("followedCount", followedCount);
+    }
+
+    @Override
+    public ResponseResult appletLogin(WechatAppletDTO wechatAppletDTO) {
+
+        String url = "https://api.weixin.qq.com/sns/jscode2session?appid=wx3e9678e6cdabd38f&secret=f8f33e962ab232ab70fd6545b86ac731&js_code="+wechatAppletDTO.getCode()+"&grant_type=authorization_code";
+        String result = HttpUtil.get(url);
+
+        JSONObject jsonObject = JSON.parseObject(result);
+        String openid = jsonObject.get("openid").toString();
+        UserInfoVO userInfoVO = this.wechatInit(openid);
+
+        StpUtil.login(userInfoVO.getId(), new SaLoginModel().setDevice("PC").setTimeout(60 * 60 * 24 * 7));
+        userInfoVO.setToken(StpUtil.getTokenValue());
+        return ResponseResult.success(userInfoVO);
+    }
+
+
+    private UserInfoVO wechatInit(String openId) {
+        UserInfoVO userInfoVO = userMapper.selectByUserName(openId);
+        if (userInfoVO == null) {
+            String ip = IpUtil.getIp();
+            String ipSource = IpUtil.getIp2region(ip);
+
+            // 保存用户信息
+            UserInfo userInfo = UserInfo.builder()
+                    .nickname("WECHAT-" + RandomUtils.generationCapital(6))
+                    .avatar(userAvatarList[RandomUtils.generationNumber(userAvatarList.length)])
+                    .build();
+            userInfoMapper.insert(userInfo);
+            // 保存账号信息
+            User user = User.builder()
+                    .userInfoId(userInfo.getId())
+                    .username(openId)
+                    .password(AesEncryptUtils.aesEncrypt(openId))
+                    .loginType(LoginTypeEnum.WECHAT.getType())
+                    .lastLoginTime(DateUtil.getNowDate())
+                    .ipAddress(ip)
+                    .ipSource(ipSource)
+                    .roleId(2)
+                    .build();
+            userMapper.insert(user);
+            //组装返回信息
+            userInfoVO = UserInfoVO.builder().id(user.getId()).loginType(user.getLoginType())
+                    .avatar(userInfo.getAvatar()).email(userInfo.getEmail()).nickname(userInfo.getNickname())
+                    .intro(userInfo.getIntro()).webSite(userInfo.getWebSite()).build();
+        }
+        return userInfoVO;
     }
 
 }

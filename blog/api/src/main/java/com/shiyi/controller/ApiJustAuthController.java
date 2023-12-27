@@ -9,6 +9,7 @@ import com.shiyi.config.properties.WeiboConfigProperties;
 import com.shiyi.dto.EmailForgetPasswordDTO;
 import com.shiyi.dto.EmailLoginDTO;
 import com.shiyi.dto.EmailRegisterDTO;
+import com.shiyi.dto.WechatAppletDTO;
 import com.shiyi.service.ApiUserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -106,6 +107,12 @@ public class ApiJustAuthController {
     @ApiOperation(value = "忘记密码", httpMethod = "PUT", response = ResponseResult.class, notes = "忘记密码")
     public ResponseResult forgetPassword(@Valid @RequestBody EmailForgetPasswordDTO emailForgetPasswordDTO){
         return userService.forgetPassword(emailForgetPasswordDTO);
+    }
+
+    @RequestMapping(value = "/applet",method = RequestMethod.POST)
+    @ApiOperation(value = "小程序登录", httpMethod = "GET", response = ResponseResult.class, notes = "小程序登录")
+    public ResponseResult appletLogin(@RequestBody WechatAppletDTO wechatAppletDTO){
+        return userService.appletLogin(wechatAppletDTO);
     }
 
     /**

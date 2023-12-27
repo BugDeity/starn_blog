@@ -70,15 +70,7 @@ export function articleInfo(id) {
         }
     })
 }
-export function selectUserInfoByArticleId(id) {
-    return request({
-        url: '/v1/article/selectUserInfoByArticleId',
-        method: 'get',
-        params: {
-            id: id
-        }
-    })
-}
+
 export function checkCode(code) {
     return request({
         url: '/v1/article/checkCode',

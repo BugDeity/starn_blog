@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.ImMessage;
 import com.shiyi.entity.ImRoom;
+import com.shiyi.enums.YesOrNoEnum;
 import com.shiyi.exception.BusinessException;
 import com.shiyi.handle.RelativeDateFormat;
 import com.shiyi.im.MessageConstant;
@@ -318,6 +319,28 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
         }
         imMessageMapper.delete(new LambdaQueryWrapper<ImMessage>().eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
                 .eq(ImMessage::getNoticeType, type));
+        return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult getMessageNoticeApplet(Integer type) {
+        Page<ImMessageVO> page = imMessageMapper.getMessageNotice(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()),
+                StpUtil.getLoginIdAsString(), type);
+        page.getRecords().forEach(item -> {
+            item.setCreateTimeStr(RelativeDateFormat.format(item.getCreateTime()));
+        });
+        return ResponseResult.success(page);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseResult markReadMessageNoticeApplet(String id) {
+        if (StringUtils.isNotBlank(id)) {
+            imMessageMapper.updateById(ImMessage.builder().id(id).isRead(YesOrNoEnum.YES.getCode()).build());
+            return ResponseResult.success();
+        }
+        imMessageMapper.update(ImMessage.builder().isRead(YesOrNoEnum.YES.getCode()).build(),new LambdaQueryWrapper<ImMessage>()
+                .eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString()));
         return ResponseResult.success();
     }
 

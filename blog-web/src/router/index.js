@@ -83,20 +83,7 @@ const routes = [
                     title: "添加说说"
                 }
             },
-            {
-                path: "/forum",
-                component: resolve => require(["@/view/forum/index"], resolve),
-                meta: {
-                    title: "瞬间"
-                }
-            },
-            {
-                path: "/sponsor",
-                component: resolve => require(["@/view/sponsor/index"], resolve),
-                meta: {
-                    title: "打赏名单"
-                }
-            },
+
             {
                 path: "/im",
                 component: resolve => require(["@/view/im/index"], resolve),
@@ -129,13 +116,6 @@ const routes = [
             {
                 path: "/user",
                 component: resolve => require(["@/view/user/index.vue"], resolve),
-                meta: {
-                    title: "拾壹博客-一个专注于技术分享的博客平台"
-                }
-            },
-            {
-                path: "/user_main",
-                component: resolve => require(["@/view/user/UserMain.vue"], resolve),
                 meta: {
                     title: "拾壹博客-一个专注于技术分享的博客平台"
                 }

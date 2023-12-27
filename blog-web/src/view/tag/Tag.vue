@@ -22,10 +22,8 @@
                             </router-link>
                             <div class="bottumItem">
                                 <div class="articleUser">
-                                    <a @click="handleToUserMain(item.userId)">
-                                        <el-avatar class="userAvatar" :src="item.userAvatar"></el-avatar>
-                                    </a>
-                                    <span>{{ item.username }}</span>
+                                    <el-avatar class="userAvatar" :src="$store.state.webSiteInfo.authorAvatar"></el-avatar>
+                                    <span>{{ $store.state.webSiteInfo.author }}</span>
                                 </div>
 
                                 <div class="tag">
@@ -88,9 +86,7 @@ export default {
     },
 
     methods: {
-        handleToUserMain(userId) {
-            this.$router.push({ path: "/user_main", query: { id: userId } })
-        },
+
         handleCategoryClike(id) {
             this.$router.push({ path: "/categorys", query: { id: id } })
         },

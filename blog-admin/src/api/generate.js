@@ -13,3 +13,10 @@ export function getTableList(params) {
         params: params
     })
 }
+export function download(params) {
+    return request({
+        url: '/system/generate/download',
+        method: 'get',
+        params: params
+    })
+}

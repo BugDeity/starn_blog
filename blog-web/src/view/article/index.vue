@@ -1,5 +1,6 @@
 <template>
     <div class="article-container container">
+
         <!-- 左侧点赞和打赏 -->
         <div class="left-sidbarnav" :style="{ left: left }">
             <el-tooltip class="item" effect="dark" content="点赞" placement="left">
@@ -43,13 +44,20 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="打赏" placement="left">
-                <router-link :to="'/sponsor'" style="text-decoration:none">
-                    <div class="left-item rewardMain" title="打赏">
-                        <span class="reward-btn">
-                            <i class="iconfont icon-dashang1"></i>
+                <div class="left-item rewardMain" title="打赏">
+                    <span class="reward-btn">
+                        <i class="iconfont icon-dashang1"></i>
+                    </span>
+                    <!-- 二维码 -->
+                    <div class="rewardItem">
+                        <span>
+                            <img class="reward-img" :src="$store.state.webSiteInfo.aliPay" />
+                        </span>
+                        <span>
+                            <img class="reward-img" :src="$store.state.webSiteInfo.weixinPay" />
                         </span>
                     </div>
-                </router-link>
+                </div>
             </el-tooltip>
 
         </div>
@@ -61,14 +69,13 @@
             </el-tag>
             <h1 class="article-title">
                 {{ article.title }}
-                <svg-icon v-if="article.isPublish == 2" icon-class="audit"></svg-icon>
             </h1>
             <div class="article-desc">
                 <div class="article-item">
-                    <img v-lazy="userInfo.avatar" :key="userInfo.avatar" alt="">
+                    <img v-lazy="$store.state.webSiteInfo.authorAvatar" :key="$store.state.webSiteInfo.authorAvatar" alt="">
                     <div class="meta">
                         <div class="author">
-                            <a class="link" href="#">{{ userInfo.nickname }}</a>
+                            <a class="link" href="#">{{ $store.state.webSiteInfo.author }}</a>
                         </div>
                         <div class="item">
                             <span class="text textItem"> <i class="el-icon-time"></i> {{ formatDate(article.createTime)
@@ -98,7 +105,8 @@
             </div>
             <!-- 文章内容 -->
             <div style="height: 100%;" class="box-article">
-                <article class="content" :style="style" ref="article" v-highlight v-html="this.article.content"></article>
+                <article class="content" :style="style" ref="article" v-highlight v-html="this.article.content">
+                </article>
                 <div v-if="article.readType != 0 && !serceShow" class="warpper">
                     <div class="item-title">
                         <i class="el-icon-lock"></i> 该文章部分内容已隐藏
@@ -138,7 +146,8 @@
             <!-- 文章标签和分享 -->
             <div class="tag-share">
                 <div>
-                    <a class="tagBtn" v-for="item in article.tagList" :key="item.id" @click="handleClike(item.id, '/tag')">
+                    <a class="tagBtn" v-for=" item  in  article.tagList " :key="item.id"
+                        @click="handleClike(item.id, '/tag')">
                         <el-tag type="success">
                             <i class="el-icon-collection-tag"></i> {{ item.name }}
                         </el-tag>
@@ -174,7 +183,7 @@
                 <div class="copyrightItem" v-if="article.isOriginal">
                     <svg-icon icon-class="copyright"></svg-icon>
                     <span class="text name">版权归属:</span>
-                    <span class="text"> {{ userInfo.nickname }}</span>
+                    <span class="text"> {{ $store.state.webSiteInfo.author }}</span>
                 </div>
                 <div class="copyrightItem" v-else>
                     <svg-icon icon-class="zzlink"></svg-icon>
@@ -212,61 +221,12 @@
         </el-card>
         <!-- 右边侧边栏 -->
         <div class="sidebar" v-if="rightShow">
-            <div style="position: sticky;top:70px;">
-                <el-card class="box-card articleUser">
-                    <div style="margin-bottom: 15px;margin-top: 10px;">
-                        <div style="display: flex;">
-                            <a @click="handleToUserMain(article.userId)">
-                                <el-avatar style="border: 1px solid var(--border-line);" :src="userInfo.avatar"></el-avatar>
-                            </a>
-                            <div class="userInfo">
-                                <p class="nickname">
-                                    {{ userInfo.nickname }}
-                                    <el-tooltip effect="dark" content="作者" placement="right">
-                                        <svg-icon class="tag" icon-class="guanfang"></svg-icon>
-                                    </el-tooltip>
-                                </p>
-                                <p class="intor">{{ userInfo.intro ? userInfo.intro : '这个博主很懒，什么都没有留下' }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="authorInfo">
-                        <span class="user-item">
-                            <div>
-                                {{ userInfo.articleCount }}
-                            </div>
-                            <div class="name">
-                                文章
-                            </div>
-                        </span>
-                        <span class="user-item">
-                            <div>
-                                {{ userInfo.fansCount }}
-                            </div>
-                            <div class="name">
-                                粉丝
-                            </div>
-                        </span>
-                        <span class="user-item">
-                            <div>
-                                {{ userInfo.watchCount }}
-                            </div>
-                            <div class="name">
-                                关注
-                            </div>
-                        </span>
-                    </div>
-                    <div class="userBtn">
-                        <el-button v-if="article.isFollowed" type="info" class="guanzhuBtn"
-                            @click="handleDeleteFollowedUser"> <i class="el-icon-delete"></i>
-                            取消关注</el-button>
-                        <el-button v-else type="danger" class="guanzhuBtn" @click="handleFollowedUser"> <i
-                                class="el-icon-sugar"></i> 关注</el-button>
-                        <el-button type="primary" @click="handleGoIm"><i class="el-icon-chat-dot-round"></i> 私信</el-button>
-                    </div>
-                </el-card>
-                <div class="directory" @mouseenter="handleDireMousEnter" @mouseleave="handleDireMousLeave">
+            <div style="position: sticky;top:80px;">
+                <div style="margin-top: 80px;">
+                    <SiteInfo />
+                </div>
+                <div class="directory" @mouseenter="handleDireMousEnter" @mouseleave="handleDireMousLeave"
+                    v-if="titles.length">
                     <el-card class="directory-item">
                         <div slot="header" class="title">
                             <i class="el-icon-s-fold"></i> <span>文档目录</span>
@@ -274,8 +234,8 @@
                         <ul class="structureBox" style="">
                             <li ref="directoryItem"
                                 :style="{ paddingLeft: item.level * 10 + 'px', filter: active != index ? 'blur(1px)' : 'none' }"
-                                :class="active == index ? 'structure active' : 'structure'" v-for="(item, index) in titles"
-                                :key="index" @click="handleNodeClick(item.id)">
+                                :class="active == index ? 'structure active' : 'structure'"
+                                v-for="( item, index ) in  titles " :key="index" @click="handleNodeClick(item.id)">
                                 {{ item.title }}
                             </li>
                         </ul>
@@ -306,7 +266,7 @@
     </div>
 </template>
 <script>
-import { articleInfo, articleLike, checkCode, followedUser, deleteFollowedUser, selectUserInfoByArticleId } from '@/api'
+import { articleInfo, articleLike, checkCode, followedUser, deleteFollowedUser } from '@/api'
 import { collect, cancelCollect } from '@/api/collect'
 import SiteInfo from '@/components/site/index.vue'
 import Comment from '@/components/comment/index.vue'
@@ -328,7 +288,6 @@ export default {
     },
     data() {
         return {
-            userInfo: {},
             article: {
                 category: {},
                 comments: [],
@@ -439,10 +398,7 @@ export default {
             if (this.article.keywords != null) {
                 document.querySelector('meta[name="keywords"]').setAttribute('content', this.article.keywords)
             }
-            //获取文章作者信息
-            selectUserInfoByArticleId(this.articleId).then(res => {
-                this.userInfo = res.data
-            })
+
             this.$bus.$emit('close')
         }).catch(err => {
             this.$bus.$emit('close')
@@ -516,10 +472,6 @@ export default {
                 };
 
             });
-        },
-
-        handleToUserMain(userId) {
-            this.$router.push({ path: "/user_main", query: { id: userId } })
         },
         qqShare() {
             const url = `https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${window.location.href}&sharesource=qzone&title=${this.article.title}&summary=${this.article.title}`
@@ -707,6 +659,8 @@ export default {
     }
 
     @media screen and (min-width: 1119px) {
+        .article-header {}
+
         /deep/ .el-dialog {
             width: 24%;
             border-radius: 10px;
@@ -776,82 +730,50 @@ export default {
                     top: -8px;
 
                 }
+
+                .rewardItem {
+                    position: absolute;
+                    bottom: -150px;
+                    left: 52px;
+                    margin: 0;
+                    padding: 0 0 15px;
+                    background-color: #5956563e;
+                    border-radius: 5px;
+                    display: none;
+
+                    .reward-img {
+                        margin-left: 5px;
+                        margin-right: 5px;
+                        width: 275px;
+                        height: 300px;
+                        margin-top: 12px;
+                    }
+                }
+            }
+
+            .rewardMain {
+                &:hover {
+                    .rewardItem {
+                        display: flex;
+                        animation: left-in 1s ease;
+
+                        @keyframes left-in {
+                            0% {
+                                transform: translateY(-50%);
+                            }
+
+                            100% {
+                                transform: translateX(0);
+                            }
+                        }
+                    }
+                }
             }
         }
 
         .sidebar {
             margin-left: 20px;
             width: 20%;
-
-            .box-card {
-                margin-top: 80px;
-            }
-
-            .articleUser {
-                padding: 10px;
-                background-color: var(--background-color);
-
-                a {
-                    text-decoration: none;
-
-                }
-
-                .userInfo {
-                    margin-left: 10px;
-
-                    .nickname {
-                        color: var(--article-color);
-                        font-weight: 700;
-
-                        .tag {
-                            width: 18px;
-                            height: 18px;
-                            vertical-align: -3px;
-                        }
-                    }
-
-                    .intor {
-                        font-size: 0.9rem;
-                        color: var(--text-color);
-                        margin-top: 2px;
-                    }
-                }
-
-                .authorInfo {
-                    margin-bottom: 15px;
-                    margin-top: 30px;
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
-
-                    .user-item {
-                        text-align: center;
-                        margin-left: 10px;
-                        margin-right: 20px;
-                        color: var(--text-color);
-
-                        .name {
-                            margin-top: 2px;
-                        }
-                    }
-                }
-
-
-                .userBtn {
-                    display: flex;
-                    margin-top: 20px;
-
-                    /deep/ .el-button {
-                        border-radius: 50px;
-                        width: 45%;
-                        padding: 8px 20px;
-                    }
-
-                    .guanzhuBtn {
-                        margin-left: 10px;
-                        margin-right: 15px;
-                    }
-                }
-            }
 
             .directory {
                 margin-top: 10px;
@@ -1100,6 +1022,9 @@ export default {
             margin-top: 10px;
             padding: 10px;
 
+            .hljs-center {
+                text-align: center;
+            }
 
             blockquote {
                 position: relative;

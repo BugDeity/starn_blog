@@ -114,16 +114,11 @@
 
     <select id="selectPublicArticleList" resultType="com.shiyi.vo.ApiArticleListVO">
         select a.id, a.title, a.avatar,a.summary,a.quantity,a.is_stick,a.is_original,a.user_id,c.id as categoryId,c.name as categoryName,
-               ui.nickname as username,
-               ui.nickname,
-               ui.avatar as userAvatar,
                a.create_time
         from b_article a
-        left join b_user b on a.user_id = b.id
-        left join b_user_info ui on ui.id = b.user_info_id
         left join b_category c on a.category_id = c.id
         where a.is_publish = 1
-        <if test="categoryId != null">
+        <if test="categoryId != null and categoryId != 0">
            and a.category_id = #{categoryId}
         </if>
         <if test="tagId != null">
@@ -150,6 +145,7 @@
     <select id="selectArticleByIdToVO" resultMap="selectArticleByIdToVOMap">
         select a.id,
                a.user_id,
+               a.avatar,
                a.title,
                a.content,
                a.content_md,

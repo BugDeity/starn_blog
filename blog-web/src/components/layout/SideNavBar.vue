@@ -33,11 +33,6 @@
                     </a>
                 </div>
                 <div class="menus-item">
-                    <a @click="handleClike('/forum')">
-                        <i class="el-icon-mobile-phone" /> 瞬间
-                    </a>
-                </div>
-                <div class="menus-item">
                     <a @click="handleClike('/navigation')">
                         <i class="el-icon-s-promotion" /> 网址导航
                     </a>

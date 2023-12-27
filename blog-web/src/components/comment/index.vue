@@ -33,9 +33,7 @@
                     <div class="comment" @mouseenter="replyEnter(item.id, false)" @mouseleave="replyLeave(item.id)">
                         <div class="main">
                             <div class="profile">
-                                <a @click="handleToUserMain(item.userId)" target="_blank">
-                                    <el-avatar :src="item.avatar" size="medium"></el-avatar>
-                                </a>
+                                <el-avatar :src="item.avatar" size="medium"></el-avatar>
                             </div>
                             <div class="commentinfo">
                                 <section class="commeta">
@@ -44,7 +42,7 @@
                                             <a :href="item.webSite" target="_blank" class="disabled">
                                                 {{ item.nickname }}
                                                 <el-tooltip effect="dark" content="作者" placement="top"
-                                                    v-if="item.userId == articleUserId">
+                                                    v-if="item.userId == 1">
                                                     <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                                 </el-tooltip>
                                             </a>
@@ -92,9 +90,7 @@
                                     @mouseleave="replyLeave(childrenItem.id, true, index)">
                                     <div class="main">
                                         <div class="profile">
-                                            <a @click="handleToUserMain(childrenItem.userId)">
-                                                <el-avatar :src="childrenItem.avatar" size="medium"></el-avatar>
-                                            </a>
+                                            <el-avatar :src="childrenItem.avatar" size="medium"></el-avatar>
                                         </div>
                                         <div class="commentinfo">
                                             <section class="commeta">
@@ -104,7 +100,7 @@
                                                             {{ childrenItem.nickname }}
 
                                                             <el-tooltip effect="dark" content="作者" placement="top"
-                                                                v-if="childrenItem.userId == articleUserId">
+                                                                v-if="childrenItem.userId == 1">
                                                                 <svg-icon class="tag" icon-class="guanfang"></svg-icon>
                                                             </el-tooltip>
                                                         </a>
@@ -217,9 +213,7 @@ export default {
         }
     },
     methods: {
-        handleToUserMain(userId) {
-            this.$router.push({ path: "/user_main", query: { id: userId } })
-        },
+
         getCommens() {
             featchComments(this.pageData).then(res => {
                 this.commentList = res.data.records

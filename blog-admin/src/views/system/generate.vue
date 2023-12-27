@@ -30,6 +30,9 @@
                         <el-button @click="handlePreview(scope.row.name)" type="text">
                             <i class="el-icon-view"></i> 预览
                         </el-button>
+                        <el-button @click="handleDownloadBefor(scope.row.name)" type="text">
+                            <i class="el-icon-download"></i> 生成
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -42,6 +45,22 @@
                 layout="total, sizes,prev, pager, next,jumper" :total="total">
             </el-pagination>
         </div>
+
+
+        <!-- 添加或修改对话框 -->
+        <el-dialog :title="download.title" :visible.sync="download.open" width="30%">
+            <el-form ref="form" :model="download" label-width="80px">
+                <el-form-item label="生成地址">
+                    <el-input v-model="download.path"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="handleDownload">确 定</el-button>
+                </el-form-item>
+            </el-form>
+            <el-alert title="地址示例：C:\blog" type="success" effect="dark" :closable="false">
+            </el-alert>
+
+        </el-dialog>
 
         <!-- 添加或修改对话框 -->
         <el-dialog center :title="preview.title" :visible.sync="preview.open" top="5vh" width="80%">
@@ -59,7 +78,7 @@
 </template>
 
 <script>
-import { preview, getTableList } from "@/api/generate"
+import { preview, getTableList, download } from "@/api/generate"
 import { mapGetters } from "vuex";
 import { hasAuth } from "@/utils/auth";
 
@@ -89,6 +108,13 @@ export default {
                     { min: 1, max: 20, message: '长度在1到10个字符' },
                 ],
             },
+            download: {
+                open: false,
+                title: "生成代码",
+                path: null,
+                tableName: null
+            },
+            downloadPath: null,
             // 预览参数
             preview: {
                 open: false,
@@ -127,6 +153,18 @@ export default {
                 this.preview.data = response.data;
                 this.preview.open = true
                 this.preview.activeName = "domain.java";
+            }).catch(err => {
+                console.log(err)
+            });
+        },
+        handleDownloadBefor: function (name) {
+            this.download.tableName = name
+            this.download.open = true
+        },
+        handleDownload: function () {
+            download({ tableName: this.download.tableName, downloadPath: this.download.path }).then(response => {
+                this.download.open = false
+                this.$message.success('下载成功！')
             }).catch(err => {
                 console.log(err)
             });

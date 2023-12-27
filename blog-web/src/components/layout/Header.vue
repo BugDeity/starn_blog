@@ -65,22 +65,6 @@
                     </el-dropdown>
                 </li>
 
-                <li>
-                    <span>
-                        <router-link :to="'/sponsor'" style="color:red;font-weight:700">
-                            <svg-icon icon-class="sponsor"></svg-icon> 赞助
-                        </router-link>
-                    </span>
-                </li>
-
-                <li :class="path == '/forum' ? 'active' : ''">
-                    <span>
-                        <router-link :to="'/forum'">
-                            <svg-icon icon-class="talk"></svg-icon> 瞬间
-                        </router-link>
-                    </span>
-                </li>
-
                 <li :class="path == '/say' ? 'active' : ''">
                     <span>
                         <router-link :to="'/say'">
@@ -149,51 +133,23 @@
 
             </ul>
 
-            <!-- 热搜框 -->
+            <!-- 搜索框 -->
             <div class="searchBox" v-show="!showSearch">
-                <p class="search_ico" @click="handleOpenSearchDialog">
-                    <i class="iconfont icon-search"></i>
-                </p>
+                <div class="search_ico">
+                    <div class="" @click="handleOpenSearchDialog">
+                        <i class="iconfont icon-search"></i>
+                        搜索文章...
+                        <span>
+                            Ctrl+K
+                        </span>
+                    </div>
+                </div>
             </div>
-            <!-- 发布文章按钮 -->
-            <div class="articleBtn" v-if="showUser">
 
-                <el-dropdown trigger="hover">
-                    <span class="el-dropdown-link">
-                        <button type="button" class="sendBtn">
-                            <i class="el-icon-edit-outline"></i> 创作
-                        </button>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-
-                        <router-link style="text-decoration: none;color: #71777c;" :to="'/newposts'">
-                            <el-dropdown-item>
-                                <svg-icon icon-class="article"
-                                    style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布文章
-                            </el-dropdown-item>
-                        </router-link>
-                        <router-link v-if="$store.state.userInfo && $store.state.userInfo.id == 1"
-                            style="text-decoration: none;color: #71777c;" :to="'/newSays'">
-                            <el-dropdown-item>
-                                <svg-icon icon-class="say"
-                                    style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布说说
-                            </el-dropdown-item>
-                        </router-link>
-
-                        <router-link style="text-decoration: none;color: #71777c;" :to="'/forum'">
-                            <el-dropdown-item>
-                                <svg-icon icon-class="talk"
-                                    style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布瞬间
-                            </el-dropdown-item>
-                        </router-link>
-                    </el-dropdown-menu>
-                </el-dropdown>
-            </div>
 
             <div class="noticeBtn" v-if="showUser">
                 <el-dropdown trigger="hover">
                     <div class="el-dropdown-link">
-                        <!-- <i class="el-icon-bell"></i> -->
                         <svg-icon icon-class="notice"></svg-icon>
                         <span v-if="topBageShow()" class="notice-bage topBage"></span>
                     </div>
@@ -275,9 +231,10 @@ export default {
             noticeList: ["系统通知", "评论", "关注", "点赞", "收藏", "私信"]
         };
     },
-
+    mounted() {
+        this.isMobile = window.innerWidth < 1119
+    },
     created() {
-
         window.addEventListener('resize', () => {
             this.windowWidth = window.innerWidth // 宽
         }, true)
@@ -345,11 +302,11 @@ export default {
             this.i = scrollTop;
 
             // 鼠标向上滚动
-            // if (scroll < 0) {
-            //     this.headerClass = "header slideDown"
-            // } else {
-            //     this.headerClass = "header slideUp"
-            // }
+            if (scroll < 0) {
+                this.headerClass = "header slideDown"
+            } else {
+                this.headerClass = "header slideUp"
+            }
             let page = document.body.scrollHeight
             let client = document.documentElement.clientHeight
             let comend = page - client
@@ -625,102 +582,38 @@ export default {
                     padding: 0;
                     margin: 0;
                     line-height: 60px;
-                    cursor: pointer;
-                    text-align: right;
-                    color: var(--text-color);
 
-                    .iconfont {
-                        font-size: 20px;
-                        font-weight: 700;
+
+                    div {
+                        width: 180px;
+                        border: 1px solid var(--border-line);
+                        height: 35px;
+                        line-height: 35px;
+                        margin-top: 13px;
+                        font-size: 15px;
+                        border-radius: 5px;
+                        color: #82848a;
+                        cursor: pointer;
+
+                        .iconfont {
+                            font-weight: 700;
+                            margin: 0 5px;
+                        }
+
+                        span {
+                            border: 1px solid var(--border-line);
+                            border-radius: 3px;
+                            padding: 2px 2px;
+                            margin-left: 15px;
+                            background-color: var(--background-color);
+                        }
                     }
-                }
-
-                // .hot_search_main {
-                //     background-color: var(--background-color);
-                //     border-radius: 2px;
-                //     box-shadow: 0 0 10px rgba(0, 0, 0, .5);
-                //     position: absolute;
-                //     z-index: 99;
-                //     top: 60px;
-                //     left: 10px;
-                //     right: -10px;
-                //     opacity: 0;
-                //     visibility: hidden;
-                //     transition: visibility .35s, opacity .35s, transform .35s;
-                //     transform: translate3d(0, 15px, 0);
-
-                //     a {
-                //         height: 30px;
-                //         text-decoration: none;
-                //         display: block;
-                //         overflow: hidden;
-                //         text-overflow: ellipsis;
-                //         white-space: nowrap;
-                //         /* border-bottom: 1px solid #f2f6fc; */
-                //         line-height: 30px;
-                //         padding: 4px 5px;
-                //         color: #606266;
-                //         font-size: 12px;
-
-                //         &:first-child span {
-                //             background-color: #FE2D46;
-                //         }
-
-                //         &:nth-child(2) span {
-                //             background-color: #FF6600;
-                //         }
-
-                //         &:nth-child(3) span {
-                //             background-color: #FAA90E;
-                //         }
-
-                //         span {
-                //             width: 20px;
-                //             height: 20px;
-                //             display: inline-block;
-                //             line-height: 21px;
-                //             text-align: center;
-                //             border-radius: 3px;
-                //             color: var(--background-color);
-                //             background-color: #71777c;
-
-                //         }
-
-                //         &:first-child {
-                //             border-top-left-radius: 4px;
-                //             border-top-right-radius: 4px;
-                //         }
-
-                //         &:last-child {
-                //             border-bottom-left-radius: 4px;
-                //             border-bottom-right-radius: 4px;
-                //         }
-
-                //         &:hover {
-                //             background-color: rgb(235, 238, 245);
-                //         }
-                //     }
-                // }
-            }
-
-            .articleBtn {
-                position: absolute;
-                right: 220px;
-                top: 0;
-
-                .sendBtn {
-                    display: inline-block;
-                    background: linear-gradient(135deg, #60e464 10%, #5cb85b 100%);
-                    border-radius: 50px;
-                    padding: 5px 10px 5px 10px;
-                    border: none;
-                    color: #fff;
                 }
             }
 
             .noticeBtn {
                 position: absolute;
-                right: 170px;
+                right: 250px;
                 top: 0;
 
                 svg {
@@ -745,7 +638,7 @@ export default {
 
             .userInfo {
                 position: absolute;
-                right: 120px;
+                right: 190px;
                 top: 0;
 
                 /deep/ .el-dropdown {

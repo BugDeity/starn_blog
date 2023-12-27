@@ -29,7 +29,7 @@ import Login from '@/components/model/Login.vue'
 import SearchModle from '@/components/model/Search.vue'
 import Notice from '@/view/notice/topNotice.vue'
 import { report, getWebSiteInfo, selectUserInfoByToken } from '@/api'
-import { setSkin, getSkin, getToken, setToken } from '@/utils/cookieUtil'
+import { getToken, setToken } from '@/utils/cookieUtil'
 
 export default {
   name: 'App',
@@ -65,6 +65,13 @@ export default {
         that.$toast.success("复制成功,转载请务必保留原文链接!")
       }
     })
+
+    document.addEventListener('keydown', (event) => {
+      if (event.ctrlKey && event.key === 'k') {
+        this.$store.state.searchDialogVisible = true
+        event.preventDefault(); // 阻止默认行为  
+      }
+    });
 
   },
 

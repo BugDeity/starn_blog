@@ -47,8 +47,7 @@
                         <div :class="item.isWithdraw ? 'withdraw' : 'right'" v-else>
                             <div class="info">
                                 <div>
-                                    <img class="noSelect" v-lazy="item.fromUserAvatar" :key="item.fromUserAvatar"
-                                        @click="handleToUserMain(item.fromUserId)">
+                                    <img class="noSelect" v-lazy="item.fromUserAvatar" :key="item.fromUserAvatar">
                                 </div>
                                 <div class="nickname">
                                     <div class="userInfo">
@@ -106,11 +105,6 @@
 
                 <!-- 自定义右键功能 -->
                 <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
-                    <li @click="collectEmoji" class="" v-show="validateContainsImg(this.message)">
-                        <div class="menuitem">
-                            <i class="el-icon-star-off"></i>收藏表情
-                        </div>
-                    </li>
                     <li @click="clipboard" class="copyBtn">
                         <div class="menuitem">
                             <i class="el-icon-document-copy"></i> 复制
@@ -195,7 +189,6 @@
 <script>
 let socket;
 import { upload } from '@/api'
-import { addEmoji } from '@/api/emoji';
 import { getImHistory, getUserImHistoryList, send, withdraw, getRoomList, addRoom, read, deleteRoom } from '@/api/im'
 import Emoji from '@/components/emoji'
 import imagePreview from '@/components/imagePreview'
@@ -293,9 +286,7 @@ export default {
         this.init()
     },
     methods: {
-        handleToUserMain(userId) {
-            this.$router.push({ path: "/user_main", query: { id: userId } })
-        },
+
         updateContent(event) {
             let selection = window.getSelection()
             this.lastEditRange = selection.getRangeAt(0);
@@ -465,22 +456,6 @@ export default {
         //翻译
         translate() {
             window.open("https://fanyi.baidu.com/?aldtype=16047#zh/en/" + this.message.content, '_blank')
-        },
-        //收藏表情
-        collectEmoji() {
-
-            if (this.validateContainsImg(this.message)) {
-                let emoji = {
-                    url: this.message.content.match(this.RegEx)[0]
-                }
-                addEmoji(emoji).then(res => {
-                    this.$toast.success("收藏表情成功");
-                })
-            }
-
-        },
-        validateContainsImg(html) {
-            return html && html.content.match(this.RegEx) && html.content.match(this.RegEx).length > 0
         },
         //复制
         clipboard() {
@@ -667,7 +642,6 @@ export default {
         init() {
             let _this = this;
             if (!_this.user) {
-
                 this.$toast.error("登录才能进行群聊");
                 return;
             }

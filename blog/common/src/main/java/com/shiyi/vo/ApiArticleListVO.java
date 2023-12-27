@@ -24,19 +24,6 @@ public class ApiArticleListVO {
      */
     private Long id;
 
-    /**
-     * 用户id
-     */
-    private String userId;
-
-    /**
-     * 作者昵称
-     */
-    private String username;
-    /**
-     * 作者头像
-     */
-    private String userAvatar;
 
     /**
      * 文章标题

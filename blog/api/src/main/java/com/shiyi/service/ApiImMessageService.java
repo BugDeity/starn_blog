@@ -88,10 +88,23 @@ public interface ApiImMessageService {
     ResponseResult getNewSystemNotice();
 
     /**
-     * 根绝类型删除所有消息
+     * 根据类型删除所有消息
      * @param type
      * @return
      */
     ResponseResult deleteByNoticeType(String id,Integer type);
 
+    /**
+     * 获取系统通知-小程序
+     * @param type
+     * @return
+     */
+    ResponseResult getMessageNoticeApplet(Integer type);
+
+    /**
+     * 标记消息为已读
+     * @param id
+     * @return
+     */
+    ResponseResult markReadMessageNoticeApplet(String id);
 }

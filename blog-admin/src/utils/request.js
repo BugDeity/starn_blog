@@ -44,7 +44,10 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-
+    console.log(res)
+    if (!res) {
+      return res
+    }
     // 401: Illegal token;
     if (res.code === 401) {
       // to re-login

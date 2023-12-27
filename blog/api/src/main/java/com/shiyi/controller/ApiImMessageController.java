@@ -91,11 +91,27 @@ public class ApiImMessageController {
     public ResponseResult getNewSystemNotice(){
         return imMessageService.getNewSystemNotice();
     }
+
     @SaCheckLogin
     @DeleteMapping("/deleteMessage")
     @ApiOperation(value = "根据类型删除所有消息", httpMethod = "DELETE", response = ResponseResult.class, notes = "根据类型删除所有消息")
     public ResponseResult deleteMessage(String id,Integer type){
         return imMessageService.deleteByNoticeType(id,type);
+    }
+
+
+    @SaCheckLogin
+    @GetMapping(value = "/getMessageNoticeApplet")
+    @ApiOperation(value = "获取系统通知-小程序", httpMethod = "GET", response = ResponseResult.class, notes = "获取系统通知-小程序")
+    public ResponseResult getMessageNoticeApplet(Integer type) {
+        return imMessageService.getMessageNoticeApplet(type);
+    }
+
+    @SaCheckLogin
+    @GetMapping(value = "/markReadMessageNoticeApplet")
+    @ApiOperation(value = "标记已读-小程序", httpMethod = "GET", response = ResponseResult.class, notes = "标记已读-小程序")
+    public ResponseResult markReadMessageNoticeApplet(String id) {
+        return imMessageService.markReadMessageNoticeApplet(id);
     }
 
 }

@@ -71,15 +71,15 @@ public class ApiArticleServiceImpl implements ApiArticleService {
                 categoryId,tagId,orderByDescColumn);
         articlePage.getRecords().forEach(item ->{
             setCommentAndLike(item);
-            //获取文章
-            int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId()));
-            item.setCollectCount(collectCount);
-            //判断当前登录用户是否收藏该文章 标记为收藏
-            if (StpUtil.getLoginIdDefaultNull() != null) {
-                collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId())
-                        .eq(Collect::getUserId,StpUtil.getLoginIdAsString()));
-                item.setIsCollect(collectCount > 0);
-            }
+//            //获取文章
+//            int collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId()));
+//            item.setCollectCount(collectCount);
+//            //判断当前登录用户是否收藏该文章 标记为收藏
+//            if (StpUtil.getLoginIdDefaultNull() != null) {
+//                collectCount = collectMapper.selectCount(new LambdaQueryWrapper<Collect>().eq(Collect::getArticleId, item.getId())
+//                        .eq(Collect::getUserId,StpUtil.getLoginIdAsString()));
+//                item.setIsCollect(collectCount > 0);
+//            }
             //格式化时间为几秒前 几分钟前等
             item.setFormatCreateTime(RelativeDateFormat.format(item.getCreateTime()));
         });
@@ -339,20 +339,6 @@ public class ApiArticleServiceImpl implements ApiArticleService {
         articleInsertDTO.setTagList(tagList);
         return ResponseResult.success(articleInsertDTO);
     }
-
-    /**
-     * 根据文章id获取作者信息
-     * @param id 文章id
-     * @return
-     */
-    @Override
-    public ResponseResult selectUserInfoByArticleId(Integer id) {
-        Article article = articleMapper.selectById(id);
-        UserInfoVO userInfoVO = userMapper.selectInfoByUserId(article.getUserId());
-        return ResponseResult.success(userInfoVO);
-    }
-
-
 
     /**
      *  校验文章验证码(验证码通过关注公众号获取)
