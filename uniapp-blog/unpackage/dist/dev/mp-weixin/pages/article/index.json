@@ -1,9 +1,0 @@
-{
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "tn-nav-bar": "/tuniao-ui/components/tn-nav-bar/tn-nav-bar",
-    "tn-avatar": "/tuniao-ui/components/tn-avatar/tn-avatar",
-    "mp-html": "/uni_modules/mp-html/components/mp-html/mp-html",
-    "tn-button": "/tuniao-ui/components/tn-button/tn-button"
-  }
-}

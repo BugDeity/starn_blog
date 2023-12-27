@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "好物收藏",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "tn-nav-bar": "/tuniao-ui/components/tn-nav-bar/tn-nav-bar",
-    "uni-load-more": "/uni_modules/uni-load-more/components/uni-load-more/uni-load-more"
-  }
-}
