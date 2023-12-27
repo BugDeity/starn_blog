@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "账号安全",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "tn-nav-bar": "/tuniao-ui/components/tn-nav-bar/tn-nav-bar",
+    "tn-form": "/tuniao-ui/components/tn-form/tn-form",
+    "tn-form-item": "/tuniao-ui/components/tn-form-item/tn-form-item",
+    "tn-verification-code": "/tuniao-ui/components/tn-verification-code/tn-verification-code"
+  }
+}

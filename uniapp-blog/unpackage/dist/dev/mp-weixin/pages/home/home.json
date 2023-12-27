@@ -1,0 +1,11 @@
+{
+  "component": true,
+  "usingComponents": {
+    "tn-nav-bar": "/tuniao-ui/components/tn-nav-bar/tn-nav-bar",
+    "tn-swiper": "/tuniao-ui/components/tn-swiper/tn-swiper",
+    "tn-notice-bar": "/tuniao-ui/components/tn-notice-bar/tn-notice-bar",
+    "tn-tabs": "/tuniao-ui/components/tn-tabs/tn-tabs",
+    "tn-avatar": "/tuniao-ui/components/tn-avatar/tn-avatar",
+    "uni-load-more": "/uni_modules/uni-load-more/components/uni-load-more/uni-load-more"
+  }
+}
