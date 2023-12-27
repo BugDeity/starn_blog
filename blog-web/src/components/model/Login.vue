@@ -72,7 +72,7 @@
                 <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
                     <el-input class="input" placeholder="请输入邮箱" v-model="form.email" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="昵称" :label-width="formLabelWidth" prop="password">
+                <el-form-item label="昵称" :label-width="formLabelWidth" prop="nickname">
                     <el-input class="input" placeholder="请输入昵称" v-model="form.nickname" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
@@ -151,6 +151,9 @@ export default {
             rules: {
                 email: [
                     { required: true, message: '请输入账号', trigger: 'blur' },
+                ],
+                nickname: [
+                    { required: true, message: '请输入昵称', trigger: 'blur' },
                 ],
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blur' },
@@ -258,14 +261,8 @@ export default {
                             setToken(res.data.token)
                             this.$store.commit("setUserInfo", res.data)
                             this.close()
-                            if (res.data.email == null) {
-
-                                this.$toast.warning('请绑定邮箱以便及时收到回复');
-                            } else {
-
-                                this.$toast.success('登录成功');
-                            }
-                            location.reload()
+                            this.$toast.success('登录成功');
+                            window.location.reload()
                         })
                     } else {
                         // 倒计时结束，处理逻辑
