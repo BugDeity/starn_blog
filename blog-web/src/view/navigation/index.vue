@@ -1,7 +1,7 @@
 <template>
     <div class='navigation-main container'>
         <div class="navigation-container">
-            <div class="site-container  box-shadow" v-for="(item, index) in navigationList" :key="index">
+            <div class="site-container" v-for="(item, index) in navigationList" :key="index">
                 <div class="title">
                     {{ item.siteClassName }}
                 </div>

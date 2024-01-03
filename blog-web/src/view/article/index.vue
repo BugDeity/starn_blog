@@ -148,9 +148,9 @@
                 <div>
                     <a class="tagBtn" v-for=" item  in  article.tagList " :key="item.id"
                         @click="handleClike(item.id, '/tag')">
-                        <el-tag type="success">
+                        <span type="success">
                             <i class="el-icon-collection-tag"></i> {{ item.name }}
-                        </el-tag>
+                        </span>
                     </a>
 
                 </div>
@@ -452,7 +452,6 @@ export default {
                     `<span class="mac-icon-green"></span>` +
                     `<i class=" el-icon-document-copy copy-button"></i>` +
                     `</div>`;
-
                 item.insertAdjacentHTML("afterbegin", icon);
                 let value = item.lastElementChild.innerText
                 // 获取复制元素
@@ -1111,6 +1110,7 @@ export default {
                     color: #c0c4cc !important;
                     width: -webkit-fill-available;
                     display: inline-block;
+
                 }
 
             }
@@ -1150,6 +1150,15 @@ export default {
             .tagBtn {
                 cursor: pointer;
                 margin-right: 5px;
+                background-color: #f2f6fc;
+                border: 1px solid #f2f6fc;
+                padding: 3px 5px;
+                border-radius: 25px;
+                display: inline-block;
+
+                i {
+                    color: var(--theme-color);
+                }
             }
 
             .social-share {
@@ -1392,5 +1401,16 @@ export default {
 
 .copy-button:hover {
     background-color: black !important;
+}
+
+.line-num-box {
+    display: inline-block !important;
+    color: #ccc !important;
+    border-right: 2px solid #fff !important;
+    line-height: 20px !important;
+    font-size: 16px !important;
+    text-align: right !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
 }
 </style>

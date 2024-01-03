@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Denglong />
     <!-- 头部 -->
     <Header :userInfo=userInfo></Header>
     <!-- 侧边导航栏 -->
@@ -20,6 +21,7 @@
 </template>
 
 <script>
+import Denglong from '@/components/denglong/index.vue'
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
 import SideNavBar from "@/components/layout/SideNavBar.vue";
@@ -42,6 +44,7 @@ export default {
     SearchModle,
     Loading,
     Notice,
+    Denglong
   },
   data() {
     return {

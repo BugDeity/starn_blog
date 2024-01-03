@@ -1,8 +1,8 @@
 <template>
     <div id="toast">
-        <span class="toast" @mouseleave="start" @mouseenter="stop" :style="{ backgroundColor: color, top: styleTop }">
-            <i :class="icon" style="vertical-align:-1px"></i>
-            {{ message }}
+        <span class="toast" @mouseleave="start" @mouseenter="stop" :style="{ top: styleTop }">
+            <i :class="icon" :style="{ color: color, verticalAlign: '-1px' }"></i>
+            <span> {{ message }}</span>
             <i class="el-icon-close close" v-if="showCloseBtn" @click="close"></i>
         </span>
     </div>
@@ -16,7 +16,7 @@ export default {
             message: '',
             icon: "",
             type: "normal",
-            color: "#49b1f5",
+            color: "#fff",
             styleTop: "-100px",
             timer: null,
             showCloseBtn: false
@@ -39,7 +39,7 @@ export default {
         after(message) {
             clearInterval(this.timer);
             this.message = message;
-            this.styleTop = "30px"
+            this.styleTop = "70px"
             this.timer = setTimeout(() => {
                 this.styleTop = "-100px"
             }, 3000);
@@ -56,10 +56,10 @@ export default {
                     break;
                 case "warnning":
                     this.color = "#F57C00";
-                    this.icon = "iconfont icon-jinggao";
+                    this.icon = "iconfont icon-jinggao1";
                     break;
                 default:
-                    this.icon = null
+                    this.icon = "iconfont icon-jinggao1";
                     this.color = "#49b1f5"
                     break;
             }
@@ -99,14 +99,14 @@ export default {
     right: 0;
     bottom: 0;
     margin: 0 auto;
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
+    background-color: #fff;
+    padding: 8px;
     border-radius: 3px;
     z-index: 99999;
     width: fit-content;
     height: fit-content;
     transition: all 0.4s;
+    color: rgba(0, 0, 0, .65);
 
     .close {
         margin-left: 30px;

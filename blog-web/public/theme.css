@@ -24,6 +24,9 @@ html[data-theme='dark'] {
     --forum-background-color: #303133;
     --article-table-back-color: #000;
     --article-table-border-color: #303133;
+    --pagination-background-color: #303133;
+    --pagination-border-color: #60626657;
+    --pagination-hover-color: #606266;
 }
 
 :root {
@@ -52,4 +55,7 @@ html[data-theme='dark'] {
     --forum-background-color: #f2f3f5;
     --article-table-border-color: #fffdf9;
     --article-table-back-color: #fff3e0;
+    --pagination-background-color: #fff;
+    --pagination-border-color: #e4e7ed;
+    --pagination-hover-color: #f5f7fa;
 }

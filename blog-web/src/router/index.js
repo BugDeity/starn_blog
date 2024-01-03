@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import home from '@/view/home/home'
-
+import store from '@/store'
 Vue.use(VueRouter);
 const routes = [
     {
@@ -152,6 +152,7 @@ VueRouter.prototype.replace = function replace(location) {
 }
 
 router.beforeEach((to, from, next) => {
+    store.state.searchDialogVisible = false;
     if (to.meta.title) {
         document.title = to.meta.title
     }

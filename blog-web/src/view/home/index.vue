@@ -197,6 +197,7 @@
                                     <div class="recomCover">
                                         <router-link :to="'/article/' + item.id">
                                             <div class="imgBox">
+                                                <span>{{ index + 1 }}</span>
                                                 <img v-lazy="item.avatar" :key="item.avatar" />
                                             </div>
                                         </router-link>
@@ -827,9 +828,37 @@ export default {
                         list-style: none;
                         flex-wrap: wrap;
 
+
+
                         li {
                             width: 100%;
                             margin-bottom: 20px;
+
+                            .imgBox span {
+                                background-color: #818b95;
+
+                            }
+
+                            &:first-child {
+                                .imgBox span {
+                                    background-color: #f56c6c;
+
+                                }
+                            }
+
+                            &:nth-child(2) {
+                                .imgBox span {
+                                    background-color: #ffa41b;
+
+                                }
+                            }
+
+                            &:nth-child(3) {
+                                .imgBox span {
+                                    background-color: #409eff;
+
+                                }
+                            }
 
                             &:last-child {
                                 margin-bottom: 10px;
@@ -851,6 +880,23 @@ export default {
                                         border-radius: 5px;
                                         overflow: hidden;
                                         border: 1px solid var(--border-line);
+                                        position: relative;
+
+                                        span {
+                                            position: absolute;
+                                            display: inline-block;
+                                            width: 30px;
+                                            border-radius: 2px 8px 8px 2px;
+                                            text-align: right;
+                                            padding-right: 5px;
+                                            font-weight: 700;
+                                            color: #fff;
+                                            margin-top: 5px;
+                                            z-index: 50;
+
+                                        }
+
+
 
                                         img {
                                             width: 100%;

@@ -1,6 +1,6 @@
 <template>
     <div class="link-main container">
-        <el-card class="link-content box-shadow">
+        <el-card class="link-content">
             <h1>友情链接</h1>
             <h3 class="directory1">
                 友链列表

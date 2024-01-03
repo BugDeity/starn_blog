@@ -15,14 +15,6 @@
             </a>
         </el-tooltip>
 
-        <el-tooltip class="item" effect="dark" :content="isFullscreen ? '退出全屏' : '全屏'" placement="left">
-            <a href="javascript:void(0)" title="全屏" class="toolbar_item back2top" @click="toFullOrExit">
-
-                <i class="iconfont icon-tuichuquanping" v-if="isFullscreen"></i>
-                <i class="iconfont icon-quanping" v-else></i>
-            </a>
-        </el-tooltip>
-
         <el-tooltip class="item" effect="dark" content="回到顶部" placement="left">
             <a href="javascript:void(0)" title="回到顶部" class="toolbar_item back2top" @click="backTop()"
                 @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
@@ -39,7 +31,6 @@ export default {
         return {
             theme: sessionStorage.getItem("theme"),
             show: false,
-            isFullscreen: false,
             right: "-80px",
             percentage: 0,
             showPercentage: true,
@@ -51,35 +42,7 @@ export default {
     },
 
     methods: {
-        toFullOrExit() {
-            this.isFullscreen = !this.isFullscreen
-            if (this.isFullscreen) {
-                this.requestFullScreen()
-            } else {
-                this.exitFullscreen()
-            }
-        },
 
-        requestFullScreen() {
-            let de = document.documentElement
-            if (de.requestFullscreen) {
-                de.requestFullscreen()
-            } else if (de.mozRequestFullScreen) {
-                de.mozRequestFullScreen()
-            } else if (de.webkitRequestFullScreen) {
-                de.webkitRequestFullScreen()
-            }
-        },
-        exitFullscreen() {
-            let de = document
-            if (de.exitFullscreen) {
-                de.exitFullscreen()
-            } else if (de.mozCancelFullScreen) {
-                de.mozCancelFullScreen()
-            } else if (de.webkitCancelFullScreen) {
-                de.webkitCancelFullScreen()
-            }
-        },
         handleGoIm() {
             if (!this.$store.state.userInfo) {
                 this.$store.commit("setLoginFlag", true)

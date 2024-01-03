@@ -12,7 +12,7 @@
                     </span>
                 </p>
                 <p>
-                    Copyright©2022-2023 <a href="https://gitee.com/quequnlong/shiyi-blog" target="_blank">拾壹博客</a>
+                    Copyright©2022-{{ nowYear }} <a href="https://gitee.com/quequnlong/shiyi-blog" target="_blank">拾壹博客</a>
                     <a href="https://beian.miit.gov.cn/" target="_blank" style="margin-left: 10px">{{
                         $store.state.webSiteInfo.recordNum
                     }}</a>
@@ -48,6 +48,7 @@ export default {
             hours: "",
             minute: "",
             second: "",
+            nowYear: new Date().getFullYear(),
             url: "https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2020%2F0601%2Fba14f84ep00qb7neh000xd200jx00bog00gn009q.png&thumbnail=650x2147483647&quality=80&type=jpg"
         }
     },

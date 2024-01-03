@@ -1,6 +1,6 @@
 <template>
     <div class="about-box container">
-        <el-card class="box1 box-shadow">
+        <el-card class="box1">
             <h1 class="title">关于本站</h1>
             <div class="content" v-html="$store.state.webSiteInfo.aboutMe" ref="preview" />
         </el-card>

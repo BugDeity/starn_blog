@@ -278,18 +278,6 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
                 .eq(ImMessage::getCode, MessageConstant.SYSTEM_MESSAGE_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
                 .eq(ImMessage::getIsRead, 0).eq(ImMessage::getNoticeType, MessageConstant.MESSAGE_COMMENT_NOTICE));
 
-        int watchCount = imMessageMapper.selectCount(new LambdaQueryWrapper<ImMessage>()
-                .eq(ImMessage::getCode, MessageConstant.SYSTEM_MESSAGE_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
-                .eq(ImMessage::getIsRead, 0).eq(ImMessage::getNoticeType, MessageConstant.MESSAGE_WATCH_NOTICE));
-
-        int likeCount = imMessageMapper.selectCount(new LambdaQueryWrapper<ImMessage>()
-                .eq(ImMessage::getCode, MessageConstant.SYSTEM_MESSAGE_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
-                .eq(ImMessage::getIsRead, 0).eq(ImMessage::getNoticeType, MessageConstant.MESSAGE_LIKE_NOTICE));
-
-        int collectCount = imMessageMapper.selectCount(new LambdaQueryWrapper<ImMessage>()
-                .eq(ImMessage::getCode, MessageConstant.SYSTEM_MESSAGE_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
-                .eq(ImMessage::getIsRead, 0).eq(ImMessage::getNoticeType, MessageConstant.MESSAGE_COLLECT_NOTICE));
-
         int privateCount = imMessageMapper.selectCount(new LambdaQueryWrapper<ImMessage>()
                 .eq(ImMessage::getCode, MessageConstant.PRIVATE_CHAT_CODE).eq(ImMessage::getToUserId, StpUtil.getLoginIdAsString())
                 .eq(ImMessage::getIsRead, 0));
@@ -297,9 +285,6 @@ public class ApiImMessageServiceImpl implements ApiImMessageService {
         Map<String, Integer> map = new HashMap<>();
         map.put("system", systemCount);
         map.put("comment", commentCount);
-        map.put("watch", watchCount);
-        map.put("like", likeCount);
-        map.put("collect", collectCount);
         map.put("private", privateCount);
         return ResponseResult.success(map);
     }

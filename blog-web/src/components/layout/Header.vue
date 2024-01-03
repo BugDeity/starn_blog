@@ -6,7 +6,7 @@
                 <div class="logoBox">
                     <router-link :to="'/'">
                         <el-image class="img"
-                            style="width: 40px;border-radius: 50%; height: 40px;border: 1px solid var(--border-line);"
+                            style="width: 50px;border-radius: 50%; height: 50px;border: 1px solid var(--border-line);"
                             :src="$store.state.webSiteInfo.logo">
                         </el-image>
                         <span class="name">拾壹博客</span>
@@ -228,7 +228,7 @@ export default {
             windowWidth: 0,
             headerClass: "header",
             adminUrl: process.env.VUE_APP_ADMIN_API,
-            noticeList: ["系统通知", "评论", "关注", "点赞", "收藏", "私信"]
+            noticeList: ["系统通知", "评论", "私信"]
         };
     },
     mounted() {
@@ -270,8 +270,7 @@ export default {
         },
         topBageShow() {
             return this.$store.state.systemNotcie.system > 0 || this.$store.state.systemNotcie.comment > 0
-                || this.$store.state.systemNotcie.watch > 0 || this.$store.state.systemNotcie.like > 0
-                || this.$store.state.systemNotcie.collect > 0 || this.$store.state.systemNotcie.message > 0 || this.$store.state.systemNotcie.private > 0;
+                || this.$store.state.systemNotcie.private > 0;
         },
         validata(index) {
             switch (index) {
@@ -280,12 +279,6 @@ export default {
                 case 1:
                     return this.$store.state.systemNotcie.comment > 0;
                 case 2:
-                    return this.$store.state.systemNotcie.watch > 0;
-                case 3:
-                    return this.$store.state.systemNotcie.like > 0;
-                case 4:
-                    return this.$store.state.systemNotcie.collect > 0;
-                case 5:
                     return this.$store.state.systemNotcie.private > 0;
                 default:
                     return false;

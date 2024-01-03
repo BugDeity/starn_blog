@@ -42,7 +42,7 @@ export default {
 <style lang='scss' scoped>
 .page {
     text-align: center;
-    background-color: rgba(0, 0, 0, .8);
+    background-color: var(--pagination-background-color);
     width: 120px;
     height: 30px;
     line-height: 30px;
@@ -50,10 +50,18 @@ export default {
     margin: 0 auto;
     margin-top: 20px;
     cursor: pointer;
-    color: #fff;
+    position: relative;
+    white-space: nowrap;
+    border: 1px solid var(--pagination-border-color);
+    transition: all .3s;
+    color: rgba(0, 0, 0, .65);
 
     &:hover {
-        color: var(--theme-color);
+        background-color: var(--pagination-hover-color)
+    }
+
+    &:active {
+        transform: scale(0.7);
     }
 }
 

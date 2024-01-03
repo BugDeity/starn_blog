@@ -5,7 +5,6 @@
                 <svg-icon icon-class="404_2"></svg-icon>
                 <h3 class="title">“未找到您要的资源,<span style="color: red;">{{ countDown }}</span>秒后自动跳转到首页”</h3>
                 <a href="/" class="error_link">回到主页</a>
-                <svg-icon class="right" icon-class="404_1"></svg-icon>
             </div>
         </div>
     </div>
@@ -45,13 +44,6 @@ export default {
         .left {
             position: relative;
             top: 200px;
-
-            .right {
-                position: absolute;
-                top: 80px;
-                right: 250px;
-
-            }
         }
 
         .title {

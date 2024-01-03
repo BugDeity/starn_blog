@@ -73,8 +73,6 @@ export default {
                 pageSize: 5,
                 tagId: this.$route.query.id,
             },
-            // 加载层信息
-
             articleList: [],
             pageTotal: 0,
             isInfiniteScroll: false, // 控制滚动禁用
