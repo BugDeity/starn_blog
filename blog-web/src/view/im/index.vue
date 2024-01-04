@@ -25,7 +25,7 @@
                                     {{ item.fromUserNickname }}
                                     <span v-if="item.fromUserId == 1">
                                         <el-tooltip effect="dark" content="作者" placement="top">
-                                            <svg-icon class="tag" icon-class="guanfang"></svg-icon>
+                                            <svg-icon class="tag" icon-class="bozhu"></svg-icon>
                                         </el-tooltip>
                                     </span>
                                     <span v-if="item.ipSource" class="item "> <i class="el-icon-location-information"></i>
@@ -59,7 +59,7 @@
                                         </span>
                                         <span v-if="item.fromUserId == 1">
                                             <el-tooltip effect="dark" content="作者" placement="top">
-                                                <svg-icon class="tag" icon-class="guanfang"></svg-icon>
+                                                <svg-icon class="tag" icon-class="bozhu"></svg-icon>
                                             </el-tooltip>
                                         </span>
                                         <span class="noSelect">{{ item.fromUserNickname }}</span>

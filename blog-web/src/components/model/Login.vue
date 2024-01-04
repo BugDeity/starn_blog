@@ -1,129 +1,123 @@
 <template>
     <div>
-        <el-dialog :lock-scroll="false" :close-on-click-modal="false" class="dialog" center title="账号密码登录"
+        <el-dialog :lock-scroll="false" :close-on-click-modal="false" class="dialog" center :title="title"
             :visible.sync="dialogFormVisible">
-            <el-form :model="form" :rules="rules" ref="ruleForm">
-                <el-form-item label="账号" :label-width="formLabelWidth" prop="email">
-                    <el-input placeholder="请输入账号/邮箱" @keyup.enter.native="login" v-model="form.email"
-                        autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-                    <el-input placeholder="请输入密码" @keyup.enter.native="login" v-model="form.password" autocomplete="off"
-                        show-password></el-input>
-                </el-form-item>
-            </el-form>
-            <el-button type="success" class="loginBtn" @click="login" round>登录</el-button>
+            <!-- 账号登录 -->
+            <div v-if="index == 1">
+                <el-form :model="form" :rules="rules" ref="ruleForm">
+                    <el-form-item label="账号" :label-width="formLabelWidth" prop="email">
+                        <el-input placeholder="请输入账号/邮箱" @keyup.enter.native="login" v-model="form.email"
+                            autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
+                        <el-input placeholder="请输入密码" @keyup.enter.native="login" v-model="form.password" autocomplete="off"
+                            show-password></el-input>
+                    </el-form-item>
+                </el-form>
+                <el-button type="success" class="loginBtn" @click="login" round>登录</el-button>
 
-            <div class="regitstBtn">
-                <a class="regist" @click="handleRegister(1)">账号注册</a>
-                <a class="forget" @click="handleRegister(2)">忘记密码</a>
+                <div class="regitstBtn">
+                    <a class="regist" @click="handleChangeLoginMethod(2)">账号注册</a>
+                    <a class="forget" @click="handleChangeLoginMethod(3)">忘记密码</a>
+                </div>
+
+                <div>
+                    <div class="social-login-title">社交账号登录</div>
+                    <div class="social-login-wrapper">
+                        <a v-show="isShow(2)" @click="openAuthLogin('qq')">
+                            <svg-icon icon-class="qq" />
+                        </a>
+
+                        <a v-show="isShow(4)" @click="openAuthLogin('gitee')">
+                            <svg-icon icon-class="gitee" />
+                        </a>
+                        <a v-show="isShow(3)" @click="openAuthLogin('weibo')">
+                            <svg-icon icon-class="weibo" />
+                        </a>
+                        <a v-show="isShow(5)" @click="handleChangeLoginMethod(4)">
+                            <svg-icon icon-class="wechat" />
+                        </a>
+                        <a v-show="isShow(6)" @click="openAuthLogin('github')">
+                            <svg-icon icon-class="github" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- 注册 -->
+            <div v-if="index == 2">
+                <el-form :model="form" :rules="rules" ref="ruleForm" label-position="left">
+                    <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
+                        <el-input class="input" placeholder="请输入邮箱" v-model="form.email" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="昵称" :label-width="formLabelWidth" prop="nickname">
+                        <el-input class="input" placeholder="请输入昵称" v-model="form.nickname" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
+                        <el-input class="input" placeholder="请输入密码" v-model="form.password" autocomplete="off"
+                            show-password></el-input>
+                    </el-form-item>
+                    <el-form-item label="验证码" :label-width="formLabelWidth" prop="code">
+                        <div style="display: flex;">
+                            <el-input class="input" placeholder="请输入验证码" v-model="form.code" autocomplete="off"></el-input>
+                            <a v-if="showSendBtnFlag" class="send" @click="handleSendEmailCode">发送</a>
+                            <a v-else class="send">{{ countdown }}s</a>
+                        </div>
+                    </el-form-item>
+                </el-form>
+
+                <el-button type="danger" class="loginBtn" @click="register" round>注册</el-button>
+
+                <div class="goLoginBtn">
+                    已有账号，<a @click="handleChangeLoginMethod(1)">去登录</a>
+                </div>
             </div>
 
-            <div>
-                <div class="social-login-title">社交账号登录</div>
-                <div class="social-login-wrapper">
-                    <a v-show="isShow(2)" @click="openAuthLogin('qq')">
-                        <svg-icon icon-class="qq" />
-                    </a>
+            <div v-if="index == 3">
+                <el-form :model="form" :rules="rules" ref="ruleForm" label-position="left">
+                    <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
+                        <el-input class="input" placeholder="请输入邮箱" v-model="form.email" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="新密码" :label-width="formLabelWidth" prop="password">
+                        <el-input class="input" placeholder="请输入密码" v-model="form.password" autocomplete="off"
+                            show-password></el-input>
+                    </el-form-item>
+                    <el-form-item label="验证码" :label-width="formLabelWidth" prop="code">
+                        <div style="display: flex;">
+                            <el-input class="input" placeholder="请输入验证码" v-model="form.code" autocomplete="off"></el-input>
+                            <a v-if="showSendBtnFlag" class="send" @click="handleSendEmailCode">发送</a>
+                            <a v-else class="send">{{ countdown }}s</a>
+                        </div>
+                    </el-form-item>
+                </el-form>
 
-                    <a v-show="isShow(4)" @click="openAuthLogin('gitee')">
-                        <svg-icon icon-class="gitee" />
-                    </a>
-                    <a v-show="isShow(3)" @click="openAuthLogin('weibo')">
-                        <svg-icon icon-class="weibo" />
-                    </a>
-                    <a v-show="isShow(5)" @click="openWechat">
-                        <svg-icon icon-class="wechat" />
-                    </a>
-                    <a v-show="isShow(6)" @click="openAuthLogin('github')">
-                        <svg-icon icon-class="github" />
-                    </a>
+                <el-button type="primary" class="loginBtn" @click="forgetPassword" round>修改</el-button>
+
+                <div class="goLoginBtn">
+                    已有账号，<a @click="handleChangeLoginMethod(1)">去登录</a>
+                </div>
+            </div>
+
+            <div v-if="index == 4">
+                <el-image class="wxImg" src="http://img.shiyit.com/wechatQr.jpg">
+                    <div slot="error" class="image-slot">
+                        加载中<span class="dot">...</span>
+                    </div>
+                </el-image>
+                <div style="text-align: center;">
+                    <p>
+                        扫码关注公众号，回复验证码完成登录
+                    </p>
+                    <p>
+                        登录验证码： <span style="color: red;margin-right: 5px;">{{ this.wechatLoginCode }}</span>
+                        <i style="cursor: url(https://img.shiyit.com/link.cur),pointer;" @click="getWecahtLoginCode()"
+                            class="el-icon-refresh"></i>
+                    </p>
+                </div>
+                <div style="text-align: center;margin-top: 20px;" slot="footer" class="dialog-footer">
+                    <el-button @click="handleChangeLoginMethod(1)">返回登录</el-button>
                 </div>
             </div>
         </el-dialog>
-
-        <!-- 微信登录 -->
-        <el-dialog :lock-scroll="false" class="dialog" title="微信扫码登录" center :visible.sync="wechatLoginFlag"
-            :before-close="close">
-            <el-image class="wxImg" src="http://img.shiyit.com/wechatQr.jpg">
-                <div slot="error" class="image-slot">
-                    加载中<span class="dot">...</span>
-                </div>
-            </el-image>
-            <div style="text-align: center;">
-                <p>
-                    扫码关注公众号，回复验证码完成登录
-                </p>
-                <p>
-                    登录验证码： <span style="color: red;margin-right: 5px;">{{ this.wechatLoginCode }}</span>
-                    <i style="cursor: url(https://img.shiyit.com/link.cur),pointer;" @click="getWecahtLoginCode()"
-                        class="el-icon-refresh"></i>
-                </p>
-            </div>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="bacKLogin">返回登录</el-button>
-            </div>
-        </el-dialog>
-
-        <!-- 邮箱注册 -->
-        <el-dialog :lock-scroll="false" class="dialog" :close-on-click-modal="false" title="邮箱注册" center
-            :visible.sync="emailRegistFlag">
-            <el-form :model="form" :rules="rules" ref="ruleForm" label-position="left">
-                <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
-                    <el-input class="input" placeholder="请输入邮箱" v-model="form.email" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="昵称" :label-width="formLabelWidth" prop="nickname">
-                    <el-input class="input" placeholder="请输入昵称" v-model="form.nickname" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-                    <el-input class="input" placeholder="请输入密码" v-model="form.password" autocomplete="off"
-                        show-password></el-input>
-                </el-form-item>
-                <el-form-item label="验证码" :label-width="formLabelWidth" prop="code">
-                    <div style="display: flex;">
-                        <el-input class="input" placeholder="请输入验证码" v-model="form.code" autocomplete="off"></el-input>
-                        <a v-if="showSendBtnFlag" class="send" @click="handleSendEmailCode">发送</a>
-                        <a v-else class="send">{{ countdown }}s</a>
-                    </div>
-                </el-form-item>
-            </el-form>
-
-            <el-button type="danger" class="loginBtn" @click="register" round>注册</el-button>
-
-            <div class="goLoginBtn">
-                已有账号，<a @click="bacKLogin">去登录</a>
-            </div>
-        </el-dialog>
-
-
-        <!-- 忘记密码 -->
-        <el-dialog :lock-scroll="false" class="dialog" :close-on-click-modal="false" title="忘记密码" center
-            :visible.sync="forgetFlag">
-            <el-form :model="form" :rules="rules" ref="ruleForm" label-position="left">
-                <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
-                    <el-input class="input" placeholder="请输入邮箱" v-model="form.email" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="新密码" :label-width="formLabelWidth" prop="password">
-                    <el-input class="input" placeholder="请输入密码" v-model="form.password" autocomplete="off"
-                        show-password></el-input>
-                </el-form-item>
-                <el-form-item label="验证码" :label-width="formLabelWidth" prop="code">
-                    <div style="display: flex;">
-                        <el-input class="input" placeholder="请输入验证码" v-model="form.code" autocomplete="off"></el-input>
-                        <a v-if="showSendBtnFlag" class="send" @click="handleSendEmailCode">发送</a>
-                        <a v-else class="send">{{ countdown }}s</a>
-                    </div>
-                </el-form-item>
-            </el-form>
-
-            <el-button type="primary" class="loginBtn" @click="forgetPassword" round>修改</el-button>
-
-            <div class="goLoginBtn">
-                已有账号，<a @click="bacKLogin">去登录</a>
-            </div>
-        </el-dialog>
-
-
 
     </div>
 </template>
@@ -141,10 +135,10 @@ export default {
             },
             code: null,
             timer: null,
+            index: 1,
             wechatLoginFlag: false,
-            emailRegistFlag: false,
+            title: "账号密码登录",
             showSendBtnFlag: true,
-            forgetFlag: false,
             formLabelWidth: '80px',
             wechatLoginCode: null,
             countdown: 60, // 倒计时初始值为 60 秒
@@ -168,14 +162,32 @@ export default {
     computed: {
         dialogFormVisible: {
             set(value) {
+                clearInterval(this.timer);
                 this.$store.state.loginFlag = value;
             },
             get() {
+                this.index = 1
                 return this.$store.state.loginFlag;
             }
         },
     },
     methods: {
+        handleChangeLoginMethod(condition) {
+            this.form = {}
+            if (condition == 1) {
+                clearInterval(this.timer);
+                this.title = "账号密码登录"
+            } else if (condition == 2) {
+                this.title = "邮箱注册"
+            } else if (condition == 3) {
+                this.title = "忘记密码"
+            } else {
+                this.getWecahtLoginCode()
+                this.title = "微信扫码登录"
+            }
+            this.index = condition;
+
+        },
         forgetPassword() {
             this.$refs['ruleForm'].validate((valid) => {
                 if (valid) {
@@ -242,15 +254,9 @@ export default {
             this.$store.state.loginFlag = false;
             this.wechatLoginFlag = false
         },
-        openWechat() {
-            this.getWecahtLoginCode()
-            this.wechatLoginFlag = true
-            this.$store.state.loginFlag = false;
-        },
         getWecahtLoginCode() {
             getWechatLoginCode().then(res => {
                 this.wechatLoginCode = res.data
-
                 this.$toast.success('验证码获取成功');
                 this.countdown = 60
                 this.timer = setInterval(() => {
@@ -272,14 +278,7 @@ export default {
                 }, 1000);
             })
         },
-        bacKLogin() {
-            clearInterval(this.timer);
-            this.form = {}
-            this.$store.state.loginFlag = true
-            this.wechatLoginFlag = false
-            this.forgetFlag = false
-            this.emailRegistFlag = false
-        },
+
         isShow(type) {
             return this.$store.state.webSiteInfo.loginTypeList.indexOf(type) != -1
         },
