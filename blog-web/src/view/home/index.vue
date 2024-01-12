@@ -35,7 +35,7 @@
 
                 <div class="top-right">
                     <SiteInfo />
-                    <el-card class="soft box-shadow">
+                    <el-card class="soft ">
                         <a href="https://www.zhisu1.com/aff/DIHZPJNL" target="_blank">
                             <img v-lazy="'https://img.shiyit.com/20231010_1696930367538.jpg'"
                                 :key="'https://img.shiyit.com/20231010_1696930367538.jpg'" alt="">
@@ -169,7 +169,7 @@
 
                 <!-- 右侧内容 -->
                 <div class="rightBox">
-                    <el-card class="box-card box-shadow" style="perspective: 1000px;position: relative;height: 120px;">
+                    <el-card class="box-card" style="perspective: 1000px;position: relative;height: 120px;">
                         <div class="front">
                             <img style="width: 100%;" src="https://img.shiyit.com/1.jpg" alt="">
                         </div>
@@ -186,10 +186,9 @@
                         </div>
                     </el-card>
                     <!-- 推荐文章 -->
-                    <el-card class="box-card recomArticle box-shadow" v-if="newArticleList.length">
+                    <el-card class="box-card recomArticle" v-if="newArticleList.length">
                         <div class="clearfix">
-                            <svg-icon icon-class="tuijian"></svg-icon>
-                            <span>推荐文章</span>
+                            <span class="card-title">推荐文章</span>
                         </div>
                         <ul class="recomArticleUl">
                             <li v-for="(item, index) in  newArticleList   ">
@@ -215,10 +214,9 @@
                     </el-card>
 
                     <!-- 关注我 -->
-                    <el-card class="box-card guanzhu box-shadow">
+                    <el-card class="box-card guanzhu">
                         <div class="clearfix">
-                            <svg-icon icon-class="guanzhume" class="title-svg"></svg-icon>
-                            <span>关注我</span>
+                            <span class="card-title">关注我</span>
                         </div>
                         <ul class="guanzhuList">
                             <li v-show="isShow(2)">
@@ -290,27 +288,26 @@
                     </el-card>
 
                     <!-- 标签墙 -->
-                    <el-card class="box-card tag_container box-shadow">
+                    <el-card class="box-card tag_container">
                         <div class="clearfix">
-                            <svg-icon icon-class="tag"></svg-icon>
-                            <span> 标签墙</span>
+                            <span class="card-title"> 标签墙</span>
                             <router-link :to="'/tag'">
                                 <a class="more">更多</a>
                             </router-link>
                         </div>
                         <div class="tagBox">
-                            <span @click="handleClike(item.id, '/tag')" :style="{ backgroundColor: `${randomColor()}` }"
-                                class="tag-item" v-for="(item, index) in tagList" :key="index">
+                            <span @click="handleClike(item.id, '/tag')"
+                                :style="{ backgroundColor: `${randomColor()}`, fontSize: item.font }" class="tag-item"
+                                v-for="(item, index) in tagList" :key="index">
                                 {{ item.name }}
                             </span>
                         </div>
                     </el-card>
 
                     <!-- 天气组件 -->
-                    <el-card class="box-card weather box-shadow">
+                    <el-card class="box-card weather">
                         <div class="clearfix">
-                            <svg-icon icon-class="weather"></svg-icon>
-                            <span> 今日天气</span>
+                            <span class="card-title"> 今日天气</span>
                         </div>
                         <div id="he-plugin-standard"></div>
                     </el-card>
@@ -511,6 +508,9 @@ export default {
             featchHomeData().then(res => {
                 this.bannerList = res.extra.articles
                 this.tagList = res.extra.tagCloud
+                for (var i = 0; i < this.tagList.length; i++) {
+                    this.tagList[i].font = Math.floor(Math.random() * 10) + 10 + "px"
+                }
                 this.newArticleList = res.extra.newArticleList
             })
         },
@@ -754,6 +754,28 @@ export default {
                     background-color: var(--background-color);
                     color: var(--article-color);
                     margin-bottom: 15px;
+
+                    .card-title {
+                        padding-left: 40px;
+
+                        &::before,
+                        &::after {
+                            position: absolute;
+                            width: 12px;
+                            height: 12px;
+                            transform: none;
+                            background: #fc625d;
+                            border-radius: 50%;
+                            top: 4px;
+                            left: 20px;
+                            content: '';
+                        }
+
+                        &::after {
+                            left: 5px;
+                            background-color: #fdbc40;
+                        }
+                    }
 
                     .front,
                     .back {

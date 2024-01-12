@@ -155,19 +155,26 @@
 
                 </div>
                 <!-- 分享 -->
-                <div class="social-share">
-                    <a href="javascript:;" @click="qqShare" class="social-share-icon icon-qzone">
-                        <i class="iconfont icon-qqkongjian"></i>
-                    </a>
-                    <a href="javascript:;" @click="qqHyShare" class="social-share-icon icon-qq">
-                        <i class="iconfont icon-QQ"></i>
-                    </a>
-                    <a href="javascript:;" @click="weixinShare" class="social-share-icon icon-wechat">
-                        <i class="iconfont icon-weixin"></i>
-                    </a>
-                    <a href="javascript:;" @click="weiboShare" class="social-share-icon icon-weibo">
-                        <i class="iconfont icon-shejiaotubiao-06"></i>
-                    </a>
+                <div class="social-share" id="social-share" @mouseleave="hiddenShareItmes" @mouseenter="showShareItmes">
+                    <div class="share-item" id="share-item">
+                        <a href="javascript:;" @click="qqShare" class="social-share-icon icon-qzone">
+                            <i class="iconfont icon-qqkongjian"></i>
+                        </a>
+                        <a href="javascript:;" @click="qqHyShare" class="social-share-icon icon-qq">
+                            <i class="iconfont icon-QQ"></i>
+                        </a>
+                        <a href="javascript:;" @click="weixinShare" class="social-share-icon icon-wechat">
+                            <i class="iconfont icon-weixin"></i>
+                        </a>
+                        <a href="javascript:;" @click="weiboShare" class="social-share-icon icon-weibo">
+                            <i class="iconfont icon-shejiaotubiao-06"></i>
+                        </a>
+                    </div>
+                    <div style="width: 34px;display: inline-block;line-height: 34px; height: 34px;">
+                        <i class="iconfont icon-fenxiang share"></i>
+                    </div>
+
+
                 </div>
             </div>
             <div class="wechatImg">
@@ -221,7 +228,7 @@
         </el-card>
         <!-- 右边侧边栏 -->
         <div class="sidebar" v-if="rightShow">
-            <div style="position: sticky;top:80px;">
+            <div style="position: sticky;top:70px;">
                 <div style="margin-top: 80px;">
                     <SiteInfo />
                 </div>
@@ -487,6 +494,14 @@ export default {
         weixinShare() {
             const url = `https://api.pwmqr.com/qrcode/create/?url=${window.location.href}`;
             window.open(url, 'renren-share', 'width=490,height=700');
+        },
+        showShareItmes() {
+            document.getElementById('share-item').style.display = 'inline-block'
+            document.getElementById('social-share').style.backgroundColor = 'var(--article-share-color)'
+        },
+        hiddenShareItmes() {
+            document.getElementById('share-item').style.display = 'none'
+            document.getElementById('social-share').style.backgroundColor = 'unset'
         },
         handleGoIm() {
             this.$router.push({ path: "/im", query: { userId: this.userInfo.id } })
@@ -1137,7 +1152,6 @@ export default {
 
         .tag-share {
             display: flex;
-            overflow-x: auto;
             margin-right: 5px;
             align-items: center;
             padding-bottom: 15px;
@@ -1145,16 +1159,17 @@ export default {
             position: relative;
             border-bottom: 1px solid var(--border-line);
             margin-top: 20px;
-            min-height: 30px;
+            justify-content: space-between;
 
             .tagBtn {
                 cursor: pointer;
                 margin-right: 5px;
-                background-color: #f2f6fc;
-                border: 1px solid #f2f6fc;
+                background-color: var(--article-share-color);
+                border: 1px solid var(--article-share-color);
                 padding: 3px 5px;
                 border-radius: 25px;
                 display: inline-block;
+                color: var(--text-color);
 
                 i {
                     color: var(--theme-color);
@@ -1162,15 +1177,46 @@ export default {
             }
 
             .social-share {
-                position: absolute;
-                right: 0;
-                top: 0;
+                position: relative;
+                border-top-left-radius: 25px;
+                border-bottom-left-radius: 25px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+
+                &:hover .share {
+                    transform: rotate(360deg);
+                }
+
+                .share-item {
+                    text-align: left !important;
+                    width: auto;
+                    display: none;
+                    margin-right: 15px;
+                    transition: display .3s ease-in-out;
+
+                }
+
+                .share {
+                    display: inline-block;
+                    cursor: pointer;
+                    font-size: 18px;
+                    width: 100%;
+                    height: 100%;
+                    font-weight: 700;
+                    text-align: center;
+                    color: #fff;
+                    background: #99f;
+                    border-radius: 50%;
+                    transition: all .3s;
+
+                }
 
                 .social-share-icon {
                     margin-left: 10px;
                     display: inline-block;
-                    width: 32px;
-                    height: 32px;
+                    width: 30px;
+                    height: 30px;
                     font-size: 20px;
                     border-radius: 50%;
                     line-height: 30px;

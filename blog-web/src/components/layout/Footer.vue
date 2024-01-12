@@ -78,16 +78,6 @@ export default {
 }
 </script >
 <style lang="scss" scoped >
-@keyframes bgSize {
-    0% {
-        background-size: 300% 100%;
-    }
-
-    100% {
-        background-size: 100% 100%;
-    }
-}
-
 @keyframes yb {
     10% {
         transform: rotate(15deg);
@@ -120,7 +110,6 @@ export default {
     justify-content: space-between;
     background: var(--footer-background-color);
     background-position: 100% 0;
-    animation: bgSize 5s infinite ease-in-out alternate;
     margin-top: 50px;
 
     .content {

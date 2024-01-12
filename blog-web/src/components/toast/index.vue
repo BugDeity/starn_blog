@@ -1,8 +1,8 @@
 <template>
     <div id="toast">
         <span class="toast" @mouseleave="start" @mouseenter="stop" :style="{ top: styleTop }">
-            <i :class="icon" :style="{ color: color, verticalAlign: '-1px' }"></i>
-            <span> {{ message }}</span>
+            <i :class="icon" :style="{ color: color, marginRight: '5px' }"></i>
+            <div> {{ message }}</div>
             <i class="el-icon-close close" v-if="showCloseBtn" @click="close"></i>
         </span>
     </div>
@@ -16,7 +16,7 @@ export default {
             message: '',
             icon: "",
             type: "normal",
-            color: "#fff",
+            color: "#49b1f5",
             styleTop: "-100px",
             timer: null,
             showCloseBtn: false
@@ -39,11 +39,12 @@ export default {
         after(message) {
             clearInterval(this.timer);
             this.message = message;
-            this.styleTop = "70px"
+            this.styleTop = "30px"
             this.timer = setTimeout(() => {
                 this.styleTop = "-100px"
             }, 3000);
         },
+
         show(option) {
             switch (option.type) {
                 case "error":
@@ -52,7 +53,7 @@ export default {
                     break;
                 case "success":
                     this.color = "#52C41A";
-                    this.icon = "iconfont icon-duigouxiao";
+                    this.icon = "iconfont icon-chenggong";
                     break;
                 case "warnning":
                     this.color = "#F57C00";
@@ -68,7 +69,7 @@ export default {
         },
         success(message) {
             this.color = "#52C41A";
-            this.icon = "iconfont icon-duigouxiao";
+            this.icon = "iconfont icon-chenggong";
             this.after(message)
         },
         error(message) {
@@ -78,12 +79,6 @@ export default {
         },
         warnning(message) {
             this.color = "#F57C00";
-            this.icon = "iconfont icon-jinggao1";
-            this.show = true;
-            this.after(message)
-        },
-        info(message) {
-            this.color = "#909399";
             this.icon = "iconfont icon-jinggao1";
             this.show = true;
             this.after(message)
@@ -100,13 +95,20 @@ export default {
     bottom: 0;
     margin: 0 auto;
     background-color: #fff;
-    padding: 8px;
+    padding: 10px;
     border-radius: 3px;
     z-index: 99999;
     width: fit-content;
     height: fit-content;
+    transition: all 0.35s;
     transition: all 0.4s;
     color: rgba(0, 0, 0, .65);
+    display: flex;
+    align-items: center;
+
+    i {
+        font-size: 1.2rem;
+    }
 
     .close {
         margin-left: 30px;

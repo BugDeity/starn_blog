@@ -33,7 +33,7 @@ export default {
 
     methods: {
         closeMsg() {
-            sessionStorage.setItem("notice", this.notice.id)
+            // sessionStorage.setItem("notice", this.notice.id)
             var message = document.getElementById("message");
             message.style.opacity = 0;
             setTimeout(function () {

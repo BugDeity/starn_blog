@@ -1,5 +1,5 @@
 <template>
-    <el-card class="box box-shadow">
+    <el-card class="box ">
 
         <img src="http://img.shiyit.com/beijing.jpg" alt="">
         <div class="user">

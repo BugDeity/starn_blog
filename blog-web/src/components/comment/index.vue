@@ -41,10 +41,7 @@
                                         <h4 class="author">
                                             <a :href="item.webSite" target="_blank" class="disabled">
                                                 {{ item.nickname }}
-                                                <el-tooltip effect="dark" content="作者" placement="top"
-                                                    v-if="item.userId == 1">
-                                                    <svg-icon class="tag" icon-class="guanfang"></svg-icon>
-                                                </el-tooltip>
+                                                <span v-if="item.userId == 1" class="bozhu">博主</span>
                                             </a>
                                         </h4>
                                     </div>
@@ -98,11 +95,7 @@
                                                     <h4 class="author">
                                                         <a :href="childrenItem.webSite" target="_blank" class="disabled">
                                                             {{ childrenItem.nickname }}
-
-                                                            <el-tooltip effect="dark" content="作者" placement="top"
-                                                                v-if="childrenItem.userId == 1">
-                                                                <svg-icon class="tag" icon-class="guanfang"></svg-icon>
-                                                            </el-tooltip>
+                                                            <span v-if="childrenItem.userId == 1" class="bozhu">博主</span>
                                                         </a>
                                                     </h4>
                                                 </div>
@@ -528,6 +521,43 @@ export default {
                     padding-bottom: 0;
                 }
 
+                .bozhu {
+
+                    display: inline-block;
+                    min-width: 30px;
+                    text-align: center;
+                    font-size: 12px;
+                    background: rgb(254, 44, 85);
+                    color: #fff;
+                    border-radius: 4px;
+                }
+
+                .left {
+                    .author {
+                        font-size: 24px;
+                        font-weight: 400;
+                        margin: 0;
+                        letter-spacing: 0px;
+                        text-transform: none;
+                        line-height: 20px;
+
+                        a {
+                            text-decoration: none;
+                            font-size: 14px;
+                            font-weight: 600;
+                            color: #82848a;
+
+                        }
+
+                        svg {
+                            width: 15px;
+                            height: 15px;
+                            vertical-align: -3px;
+                        }
+                    }
+
+                }
+
                 .comment {
                     width: 100%;
                     padding-top: 10px;
@@ -579,30 +609,7 @@ export default {
                                     display: block;
                                 }
 
-                                .left {
-                                    .author {
-                                        font-size: 24px;
-                                        font-weight: 400;
-                                        margin: 0;
-                                        letter-spacing: 0px;
-                                        text-transform: none;
-                                        line-height: 20px;
 
-                                        a {
-                                            text-decoration: none;
-                                            color: var(--theme-color);
-                                            font-size: 14px;
-                                            font-weight: 600;
-
-                                            .tag {
-                                                width: 15px;
-                                                height: 15px;
-                                                vertical-align: -3px;
-                                            }
-                                        }
-                                    }
-
-                                }
 
                                 .comment-reply-link {
                                     text-decoration: none;
@@ -751,45 +758,6 @@ export default {
                                                 display: block;
                                             }
 
-                                            .left {
-                                                .author {
-                                                    font-size: 24px;
-                                                    font-weight: 400;
-                                                    margin: 0;
-                                                    letter-spacing: 0px;
-                                                    text-transform: none;
-                                                    line-height: 20px;
-
-                                                    a {
-                                                        text-decoration: none;
-                                                        color: var(--theme-color);
-                                                        font-size: 14px;
-                                                        font-weight: 600;
-
-                                                        .bozhu {
-                                                            position: relative;
-                                                            top: -1px;
-                                                            display: inline-block;
-                                                            min-width: 30px;
-                                                            text-align: center;
-                                                            font-size: 12px;
-                                                            color: #fb7299;
-                                                            font-weight: 400;
-                                                            -webkit-transform: scale(0.9);
-                                                            transform: scale(0.9);
-                                                            border: 1px solid #fb7299;
-                                                            border-radius: 4px;
-                                                        }
-                                                    }
-
-                                                    .tag {
-                                                        width: 15px;
-                                                        height: 15px;
-                                                        vertical-align: -3px;
-                                                    }
-                                                }
-
-                                            }
 
                                             .comment-reply-link {
                                                 text-decoration: none;
