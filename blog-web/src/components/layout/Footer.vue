@@ -36,6 +36,9 @@
                     </em>
                 </span>
             </div>
+            <a href="https://www.tsycdn.com/" target="_blank">
+                <img style="height: 30px;" src="https://img.shiyit.com/20240112_1705040551766.png" alt="">
+            </a>
         </div>
     </div>
 </template>

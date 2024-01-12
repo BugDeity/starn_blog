@@ -189,6 +189,12 @@ export default {
             }
         }
 
+        #time-line {
+            height: 800px;
+            overflow: auto;
+            overflow-x: hidden;
+        }
+
         .article {
             float: left;
             height: 800px;
