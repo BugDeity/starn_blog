@@ -59,6 +59,10 @@ export default {
                     this.color = "#F57C00";
                     this.icon = "iconfont icon-jinggao1";
                     break;
+                case "info":
+                    this.color = "#909399";
+                    this.icon = "iconfont icon-jinggao1";
+                    break;
                 default:
                     this.icon = "iconfont icon-jinggao1";
                     this.color = "#49b1f5"
@@ -79,6 +83,12 @@ export default {
         },
         warnning(message) {
             this.color = "#F57C00";
+            this.icon = "iconfont icon-jinggao1";
+            this.show = true;
+            this.after(message)
+        },
+        info(message) {
+            this.color = "#909399";
             this.icon = "iconfont icon-jinggao1";
             this.show = true;
             this.after(message)
