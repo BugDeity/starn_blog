@@ -35,18 +35,18 @@
                                 <i class="el-icon-time"></i> {{ item.createTimeStr }}
                             </span>
                             <div class="operate" ref="operate">
-                                <span class="like" v-if="!item.isLike" @click="sayLike(item)">
+                                <span class="like hand-style" v-if="!item.isLike" @click="sayLike(item)">
                                     <i class="iconfont icon-dianzan"></i> 赞
                                 </span>
-                                <span class="like" v-else @click="canLike(item)">
+                                <span class="like hand-style" v-else @click="canLike(item)">
                                     <i class="iconfont icon-quxiaodianzan"></i> 取消
                                 </span>
                                 <span class="fgx"></span>
-                                <span class="commentBtn" @click="handleShowCommentBox(null, item.id, index)">
+                                <span class="commentBtn hand-style" @click="handleShowCommentBox(null, item.id, index)">
                                     <i class="el-icon-chat-dot-square"></i> 评论
                                 </span>
                             </div>
-                            <a class="operateBtn" @click="handleShowOperate(index)">
+                            <a class="operateBtn hand-style" @click="handleShowOperate(index)">
                                 <i class="el-icon-more"></i>
                             </a>
                         </div>
@@ -587,7 +587,6 @@ export default {
                             display: inline-block;
                             background-color: var(--say-background);
                             padding: 0 5px;
-                            cursor: pointer;
                         }
 
                         .operate {
@@ -616,7 +615,6 @@ export default {
                                 padding: 0 10px;
                                 color: #fff;
                                 position: relative;
-                                cursor: pointer;
 
                                 &:hover {
                                     color: var(--theme-color);

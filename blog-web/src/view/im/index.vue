@@ -8,7 +8,7 @@
                 <div class="title">{{ title }}</div>
                 <div class="messageBox" id="messageBox" ref="messageContainer">
                     <!-- 加载更多 -->
-                    <div class="more noSelect" v-show="pageData.pageNo < totalPage">
+                    <div class="more noSelect hand-style" v-show="pageData.pageNo < totalPage">
                         <div v-if="isLoding" class="loading">
                             <div class="spinner"></div>
                         </div>
@@ -82,12 +82,12 @@
                     <!-- 输入选择 如表情、图片等 -->
                     <div class="toolbars">
                         <div>
-                            <span class="item" @click.stop="handleOpen">
+                            <span class="item hand-style" @click.stop="handleOpen">
                                 <i class="iconfont icon-biaoqing"></i>
                             </span>
                             <el-upload class="avatar-uploader" :show-file-list="false" ref="upload" name="filedatas"
                                 :action="uploadPictureHost" :http-request="uploadSectionFile" multiple>
-                                <span class="item">
+                                <span class="item hand-style">
                                     <i class="el-icon-picture"></i>
                                 </span>
                             </el-upload>
@@ -106,38 +106,38 @@
                 <!-- 自定义右键功能 -->
                 <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
                     <li @click="clipboard" class="copyBtn">
-                        <div class="menuitem">
+                        <div class="menuitem hand-style">
                             <i class="el-icon-document-copy"></i> 复制
                         </div>
                     </li>
                     <li @click="translate">
-                        <div class="menuitem">
+                        <div class="menuitem hand-style">
                             <i class="iconfont icon-fanyi"></i>翻译
                         </div>
                     </li>
                     <li @click="withdraw" v-if="message && message.fromUserId == user.id">
-                        <div class="menuitem">
+                        <div class="menuitem hand-style">
                             <i class="iconfont icon-chehui"></i>撤回
                         </div>
                     </li>
                     <li class="sousuo">
-                        <div class="menuitem">
+                        <div class="menuitem hand-style">
                             <i class="el-icon-search"></i>搜一搜
                             <i class="el-icon-caret-right" style=""></i>
 
                             <ul class="sousuomenu">
                                 <li @click="handleSearch(0)">
-                                    <div class="menuitem">
+                                    <div class="menuitem hand-style">
                                         百度搜索
                                     </div>
                                 </li>
                                 <li @click="handleSearch(1)">
-                                    <div class="menuitem">
+                                    <div class="menuitem hand-style">
                                         Gitee搜索
                                     </div>
                                 </li>
                                 <li @click="handleSearch(2)">
-                                    <div class="menuitem">
+                                    <div class="menuitem hand-style">
                                         Github搜索
                                     </div>
                                 </li>
@@ -150,8 +150,8 @@
             <!-- 房间列表 -->
             <div class="online">
                 <ul class="online-item">
-                    <li ref="room" :class="!index ? 'onlineLi active' : 'onlineLi'" v-for="(item, index) in roomList"
-                        :key="index">
+                    <li ref="room" :class="!index ? 'onlineLi hand-style active' : 'onlineLi hand-style'"
+                        v-for="(item, index) in roomList" :key="index">
                         <div class="room-list-item" @click="selectUserIm(item, index)">
                             <div class="room-list-item">
                                 <img class="img" :src="item.avatar" alt="">
@@ -820,7 +820,6 @@ export default {
                 list-style: none;
 
                 .onlineLi {
-                    cursor: pointer;
                     padding: 5px;
                     line-height: 30px;
                     border-radius: 5px;
@@ -940,7 +939,6 @@ export default {
                 .more {
                     text-align: center;
                     margin-top: 10px;
-                    cursor: pointer;
                     color: rgba(185, 183, 183, 0.898)
                 }
 
@@ -1076,7 +1074,6 @@ export default {
                     padding: 10px;
 
                     .item {
-                        cursor: pointer;
                         margin-left: 10px;
                         padding: 5px;
                         border-radius: 5px;
@@ -1181,7 +1178,6 @@ export default {
                     margin: 0;
                     padding: 5px;
                     width: 100px;
-                    cursor: pointer;
                     color: #fff;
                     position: relative;
 

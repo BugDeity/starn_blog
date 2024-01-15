@@ -9,13 +9,13 @@
                 <div class="ml-3">
                     <div data-v-0089e256="" class="comment-input">
                         <div id="textarea" ref="textareaRef" contenteditable="true" @input="onInput"
-                            @paste="optimizePasteEvent" data-placeholder="说点什么呢" class="comment-textarea"></div>
+                            @paste="optimizePasteEvent" data-placeholder="说点什么呢" class="comment-textarea hand-style"></div>
                     </div>
                     <div class="comment-btn">
-                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn point">
+                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn hand-style">
                             <i class="iconfont icon-biaoqing"></i>
                         </span>
-                        <el-button @click="addComment" style="" class="upload-btn v-comment-btn point">
+                        <el-button @click="addComment" style="" class="upload-btn v-comment-btn hand-style">
                             提交
                         </el-button>
                     </div>
@@ -46,7 +46,7 @@
                                         </h4>
                                     </div>
                                     <a :ref="'replyBtn' + item.id" @click="replyComment(item, item.id, false)"
-                                        class="comment-reply-link point">回复</a>
+                                        class="comment-reply-link hand-style">回复</a>
                                     <div class="right">
                                         <div class="info">
                                             <time itemprop="datePublished" datetime="1680523318635" class="comment-time">发布于
@@ -101,7 +101,7 @@
                                                 </div>
                                                 <a href="javascript:;" :ref="'childrenBtn' + childrenItem.id"
                                                     @click="replyComment(childrenItem, item.id, true)"
-                                                    class="comment-reply-link point">回复</a>
+                                                    class="comment-reply-link hand-style">回复</a>
                                                 <div class="right">
                                                     <div class="info">
                                                         <time itemprop="datePublished" datetime="1680523318635"

@@ -3,7 +3,7 @@
         <span class="toast" @mouseleave="start" @mouseenter="stop" :style="{ top: styleTop }">
             <i :class="icon" :style="{ color: color, marginRight: '5px' }"></i>
             <div> {{ message }}</div>
-            <i class="el-icon-close close" v-if="showCloseBtn" @click="close"></i>
+            <i class="el-icon-close close hand-style" v-if="showCloseBtn" @click="close"></i>
         </span>
     </div>
 </template>
@@ -112,7 +112,6 @@ export default {
 
     .close {
         margin-left: 30px;
-        cursor: pointer;
     }
 
 }

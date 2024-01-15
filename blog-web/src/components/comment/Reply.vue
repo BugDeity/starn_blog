@@ -9,17 +9,17 @@
                 <div class="ml-3">
                     <div data-v-0089e256="" class="comment-input">
                         <div id="textarea" ref="textareaRef" contenteditable="true" @input="onInput"
-                            @paste="optimizePasteEvent" data-placeholder="说点什么呢" class="comment-textarea"></div>
+                            @paste="optimizePasteEvent" data-placeholder="说点什么呢" class="comment-textarea hand-style"></div>
                     </div>
                     <div class="comment-btn">
-                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn point">
+                        <span @click.stop="chooseEmoji = !chooseEmoji" class="emoji-btn hand-style">
                             <i class="iconfont icon-biaoqing"></i>
                         </span>
                         <div style="margin-left: auto;">
-                            <el-button type="info" @click="handleCancle" class="cancle-btn v-comment-btn point">
+                            <el-button type="info" @click="handleCancle" class="cancle-btn v-comment-btn hand-style">
                                 取消
                             </el-button>
-                            <el-button @click="addComment" class="upload-btn v-comment-btn point">
+                            <el-button @click="addComment" class="upload-btn v-comment-btn hand-style">
                                 提交
                             </el-button>
                         </div>

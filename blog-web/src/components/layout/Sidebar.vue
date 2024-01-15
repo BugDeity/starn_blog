@@ -1,13 +1,13 @@
 <template>
     <div class="toolbar1" :style="{ right: right }">
         <el-tooltip class="item" effect="dark" content="聊天室" placement="left">
-            <a href="javascript:void(0)" @click="handleGoIm" class="toolbar_item chat ">
+            <a href="javascript:void(0)" @click="handleGoIm" class="toolbar_item chat hand-style">
                 <i class="el-icon-chat-dot-square"></i>
             </a>
         </el-tooltip>
 
         <el-tooltip class="item" effect="dark" :content="theme && theme == 'dark' ? '切换浅色主题' : '切换深色主题'" placement="left">
-            <a href="javascript:void(0)" class="toolbar_item " @click="chageTheme">
+            <a href="javascript:void(0)" class="toolbar_item hand-style" @click="chageTheme">
                 <i class="iconfont icon-taiyang theme" id="light"
                     :style="theme == 'dark' ? '' : 'transform: translateX(30px)'"></i>
                 <i class="iconfont icon-yueliang theme" id="dark"
@@ -16,7 +16,7 @@
         </el-tooltip>
 
         <el-tooltip class="item" effect="dark" content="回到顶部" placement="left">
-            <a href="javascript:void(0)" title="回到顶部" class="toolbar_item back2top" @click="backTop()"
+            <a href="javascript:void(0)" title="回到顶部" class="toolbar_item back2top hand-style" @click="backTop()"
                 @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
                 <span style="font-size: 1rem;" v-if="percentage < 100 && showPercentage">{{ percentage + '%' }}</span>
                 <i v-else class="iconfont icon-shangjiantou"></i>

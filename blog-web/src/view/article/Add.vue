@@ -95,7 +95,7 @@
                             <i class="el-icon-circle-check"></i> 提交审核
                         </button>
                         <span v-else class="noBtn">
-                            暂无发布权限,请先<span @click="$store.state.loginFlag = true">登录</span>
+                            暂无发布权限,请先<span @click="$store.state.loginFlag = true" class="hand-style">登录</span>
                         </span>
                     </div>
                 </div>
@@ -453,7 +453,6 @@ export default {
 
                     span {
                         color: var(--theme-color);
-                        cursor: pointer;
                     }
                 }
             }

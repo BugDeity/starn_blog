@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1705025077079') format('truetype');
+  src: url('iconfont.ttf?t=1705289244528') format('truetype');
 }
 
 .iconfont {
@@ -129,5 +129,9 @@
 
 .icon-fenxiang:before {
   content: "\e626";
+}
+
+.icon-zitidaima:before {
+  content: "\ec83";
 }
 

@@ -8,7 +8,7 @@
                     <el-row type="flex" class="row-bg top-btn">
                         <el-col :span="18">
                             <div class="grid-content bg-purple">
-                                <a @click="btnClike(0)" class="topBtnItem">
+                                <a @click="btnClike(0)" class="topBtnItem hand-style">
                                     <div>{{ count.article }}</div>
                                     文章
                                 </a>
@@ -16,7 +16,7 @@
                         </el-col>
                         <el-col :span="18">
                             <div class="grid-content bg-purple-light">
-                                <a @click="btnClike(1)" class="topBtnItem">
+                                <a @click="btnClike(1)" class="topBtnItem hand-style">
                                     <div>{{ count.collect }}</div>
                                     收藏
                                 </a>
@@ -24,7 +24,7 @@
                         </el-col>
                         <el-col :span="18">
                             <div class="grid-content bg-purple">
-                                <a class="topBtnItem">
+                                <a class="topBtnItem hand-style">
                                     <div>{{ count.followed }}</div>
                                     关注
                                 </a>
@@ -32,7 +32,7 @@
                         </el-col>
                         <el-col :span="18">
                             <div class="grid-content bg-purple">
-                                <a class="topBtnItem">
+                                <a class="topBtnItem hand-style">
                                     <div>0</div>
                                     勋章
                                 </a>
@@ -40,7 +40,7 @@
                         </el-col>
                     </el-row>
 
-                    <div class="more">
+                    <div class="more hand-style">
                         <div class="menu">
                             <ul>
                                 <li @click="handleUpdateInfo">
@@ -84,8 +84,8 @@
                         </div>
                     </div>
                     <div class="sign">
-                        <button :class="!isTodaySign ? 'signBtn' : 'disabledSignBtn'" :disabled="isTodaySign"
-                            @click="handleSign">
+                        <button :class="!isTodaySign ? 'signBtn hand-style' : 'disabledSignBtn hand-style'"
+                            :disabled="isTodaySign" @click="handleSign">
                             <svg-icon icon-class="sign1"></svg-icon>
                             <span>{{ isTodaySign ? "今天已签到" : "立即签到" }}</span>
                         </button>
@@ -96,7 +96,7 @@
             <div class="bottom-box">
                 <div class="title">
                     <ul>
-                        <li ref="btn" :class="index == 0 ? 'active' : ''" @click="btnClike(index)"
+                        <li ref="btn" :class="index == 0 ? 'active hand-style' : 'hand-style'" @click="btnClike(index)"
                             v-for="(item, index) in btnList" :key="index">
                             <span class="item-title">
                                 <i :class="item.icon"></i> {{ item.name }}
@@ -106,15 +106,15 @@
 
                 </div>
                 <!-- <div class="btnBox">
-                    <div class="btn" @click="handleClike(1)">发布</div>
-                    <div class="btn" @click="handleClike(2)">待审核</div>
-                    <div class="btn" @click="handleClike(0)">下架</div>
+                    <div class="btn hand-style" @click="handleClike(1)">发布</div>
+                    <div class="btn hand-style" @click="handleClike(2)">待审核</div>
+                    <div class="btn hand-style" @click="handleClike(0)">下架</div>
                 </div> -->
                 <div class="articleBox" v-if="dataList.length">
                     <div class="articleItem">
                         <div v-if="pageData.index != 2" class="article" v-for="(item, index) in dataList" :key="index">
                             <router-link :to="'/article/' + item.id">
-                                <div class="article-cover">
+                                <div class="article-cover hand-style">
                                     <img v-lazy="item.avatar" :key="item.avatar">
                                 </div>
                             </router-link>
@@ -156,15 +156,16 @@
                                 </div>
                                 <div class="article-tag">
                                     <el-tooltip class="item1" effect="dark" content="文章分类" placement="top">
-                                        <el-tag size="mini" @click="handleClike(item.categoryId, '/categorys')">
+                                        <el-tag class="hand-style" size="mini"
+                                            @click="handleClike(item.categoryId, '/categorys')">
                                             <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
                                         </el-tag>
                                     </el-tooltip>
                                     <el-tooltip class="item1" effect="dark" content="文章标签" placement="top"
                                         v-for="tag in item.tagList" :key="tag.id">
 
-                                        <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
-                                            @click="handleClike(tag.id, '/tag')">
+                                        <el-tag class="hand-style" :type="tagStyle[Math.round(Math.random() * 4)]"
+                                            size="mini" @click="handleClike(tag.id, '/tag')">
                                             <i class="el-icon-collection-tag"></i> {{ tag.name
                                             }}</el-tag>
                                     </el-tooltip>
@@ -638,7 +639,6 @@ export default {
         .article-cover {
             width: 160px;
             height: 150px;
-            cursor: pointer;
             overflow: hidden;
             border-radius: 5px;
 
@@ -667,7 +667,7 @@ export default {
             .signBtn,
             .disabledSignBtn {
                 border: none;
-                cursor: pointer;
+
                 color: var(--text-color);
                 background-color: var(--background-color);
             }
@@ -723,7 +723,7 @@ export default {
                 position: absolute;
                 right: 20px;
                 bottom: 10px;
-                cursor: pointer;
+
                 font-size: 20px;
                 background-color: #90939987;
                 border-color: #909399;
@@ -864,7 +864,6 @@ export default {
 
                 li {
                     margin-right: 20px;
-                    cursor: pointer;
                     color: var(--text-color);
 
                     &:hover {
@@ -897,7 +896,6 @@ export default {
                 border-radius: 5px;
                 font-size: 0.9rem;
                 color: var(--text-color);
-                cursor: pointer;
 
                 &:hover {
                     background-color: var(--theme-color);
@@ -995,7 +993,6 @@ export default {
                     .article-tag {
                         .el-tag {
                             margin-right: 5px;
-                            cursor: pointer;
                         }
                     }
 

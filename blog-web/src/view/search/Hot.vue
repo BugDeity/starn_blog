@@ -4,11 +4,11 @@
             <div class="nav">
                 <div class="siteBox">
                     <svg-icon :icon-class="svgList[selectSite]"></svg-icon>
-                    <i @click="dialogVisible = true" class="el-icon-caret-bottom"></i>
+                    <i @click="dialogVisible = true" class="el-icon-caret-bottom hand-style"></i>
                 </div>
                 <el-input class="input" v-model="text" placeholder="请输入内容" @keyup.enter.native="handleCommit"></el-input>
-                <div class="searchCommit" @click="handleCommit">
-                    <i class="iconfont icon-search"></i>
+                <div class="searchCommit hand-style" @click="handleCommit">
+                    <i class="iconfont icon-search "></i>
                 </div>
             </div>
             <div class="hot">
@@ -18,7 +18,7 @@
                         <svg-icon icon-class="hot"></svg-icon>
                     </div>
                     <ul>
-                        <li v-for="(item, index) in weiboList" :key="index" @click="go(item.url)">
+                        <li v-for="(item, index) in weiboList" class="hand-style" :key="index" @click="go(item.url)">
                             <span class="index">
                                 {{ index + 1 }}
                             </span>
@@ -32,7 +32,7 @@
                         <svg-icon icon-class="hot"></svg-icon>
                     </div>
                     <ul>
-                        <li v-for="(item, index) in baiduList" :key="index" @click="go(item.url)">
+                        <li v-for="(item, index) in baiduList" class="hand-style" :key="index" @click="go(item.url)">
                             <span class="index">
                                 {{ index + 1 }}
                             </span>
@@ -47,7 +47,7 @@
                         <svg-icon icon-class="hot"></svg-icon>
                     </div>
                     <ul>
-                        <li v-for="(item, index) in zhihuList" :key="index" @click="go(item.url)">
+                        <li v-for="(item, index) in zhihuList" class="hand-style" :key="index" @click="go(item.url)">
                             <span class="index">
                                 {{ index + 1 }}
                             </span>
@@ -61,7 +61,7 @@
                         <svg-icon icon-class="hot"></svg-icon>
                     </div>
                     <ul>
-                        <li v-for="(item, index) in csdnList" :key="index" @click="go(item.url)">
+                        <li v-for="(item, index) in csdnList" class="hand-style" :key="index" @click="go(item.url)">
                             <span class="index">
                                 {{ index + 1 }}
                             </span>
@@ -75,7 +75,7 @@
                         <svg-icon icon-class="hot"></svg-icon>
                     </div>
                     <ul>
-                        <li v-for="(item, index) in toutiaoList" :key="index" @click="go(item.url)">
+                        <li v-for="(item, index) in toutiaoList" class="hand-style" :key="index" @click="go(item.url)">
                             <span class="index">
                                 {{ index + 1 }}
                             </span>
@@ -265,7 +265,6 @@ export default {
 
                 i {
                     margin-left: 10px;
-                    cursor: pointer;
                     font-size: 14px;
                 }
 
@@ -285,7 +284,6 @@ export default {
                 border-left: none;
                 padding-left: 20px;
                 padding-right: 20px;
-                cursor: pointer;
             }
         }
 
@@ -355,7 +353,6 @@ export default {
 
                     li {
                         margin-bottom: 20px;
-                        cursor: pointer;
                         font-size: 13px;
                         height: 100%;
                         padding: 5px;

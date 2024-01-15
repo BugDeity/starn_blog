@@ -15,7 +15,7 @@
                         <div class="long-line"></div>
                     </div>
                     <div class="timeline-content">
-                        <div class="timeline-date" @click="open(index)">
+                        <div class="timeline-date hand-style" @click="open(index)">
                             <span style="padding-left: 10px;">
                                 {{ formatTime(item.time) }}
 
@@ -26,7 +26,7 @@
                         </div>
                         <div ref="liCol" style="overflow: hidden;transition: height 0.3s;">
                             <router-link :to="'/article/' + chriden.id" v-for="chriden in item.list" :key="chriden.id"
-                                class="timeline-title">
+                                class="timeline-title hand-style">
                                 <span style="margin-right: 10px;">{{ chriden.formatTime }} : </span> {{ chriden.title }}
                             </router-link>
                             <el-divider></el-divider>
@@ -183,11 +183,10 @@ export default {
                     margin-bottom: 16px;
                     color: var(--article-color);
                     font-weight: 500;
-                    cursor: pointer;
                     margin-left: 20px;
                     display: block;
                     text-decoration: none;
-                    padding: 15px 0px;
+                    padding: 10px 0px;
                     border-bottom: 1px dashed #dbdde0;
 
                     &:hover {
@@ -205,7 +204,6 @@ export default {
                     height: 35px;
                     line-height: 35px;
                     border-radius: 5px;
-                    cursor: pointer;
 
                     &::before {
                         content: "";

@@ -42,7 +42,7 @@
             <div class="infoBox">
                 <div style="display: flex;position: relative;">
                     <h3 class="directory2">申请格式</h3>
-                    <div class="btn-box" @click="handleAdd">
+                    <div class="btn-box hand-style" @click="handleAdd">
                         <svg-icon icon-class="add"></svg-icon>
                         加入友链
                     </div>
@@ -464,7 +464,6 @@ export default {
                 position: absolute;
                 right: 0;
                 line-height: 24px;
-                cursor: pointer;
 
                 svg {
                     width: 17px;

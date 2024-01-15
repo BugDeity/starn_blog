@@ -37,7 +37,7 @@
                 </span>
             </div>
             <a href="https://www.tsycdn.com/" target="_blank">
-                <img style="height: 30px;" src="https://img.shiyit.com/20240112_1705040551766.png" alt="">
+                <img style="height: 30px;width: 320px;" src="https://img.shiyit.com/lanyiyun.png" alt="">
             </a>
         </div>
     </div>
@@ -52,7 +52,6 @@ export default {
             minute: "",
             second: "",
             nowYear: new Date().getFullYear(),
-            url: "https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2020%2F0601%2Fba14f84ep00qb7neh000xd200jx00bog00gn009q.png&thumbnail=650x2147483647&quality=80&type=jpg"
         }
     },
     watch: {

@@ -1,7 +1,8 @@
 <template>
     <div class='emoji-container'>
         <div class="emojiBox" v-if="type == 0">
-            <span class="emoji-item" v-for="(item, index) of emojiList" :key="index" @click="chooseEmoji(item.url, 0)">
+            <span class="emoji-item hand-style" v-for="(item, index) of emojiList" :key="index"
+                @click="chooseEmoji(item.url, 0)">
                 <el-tooltip class="item" effect="dark" :content="item.name" placement="top">
                     <img :src="item.url" class="emoji" :title="item.name" />
                 </el-tooltip>
@@ -9,7 +10,8 @@
         </div>
 
         <div class="emojiBox" v-if="type == 1">
-            <span class="emoji-item" v-for="(item, index) of heoList" :key="index" @click="chooseEmoji(item.url, 1)">
+            <span class="emoji-item hand-style" v-for="(item, index) of heoList" :key="index"
+                @click="chooseEmoji(item.url, 1)">
                 <el-tooltip class="item" effect="dark" :content="item.name" placement="top">
                     <img :src="item.url" class="heoImg" :title="item.name" />
                 </el-tooltip>
@@ -149,39 +151,6 @@ export default {
 </script>
    
 <style lang='scss' scoped>
-/deep/ .avatar-uploader {
-    display: inline-block;
-    margin-right: 5px;
-
-    .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-
-        &:hover {
-            border-color: #409EFF;
-        }
-    }
-
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 75px;
-        height: 75px;
-        line-height: 75px;
-        text-align: center;
-    }
-
-    .avatar {
-        width: 75px;
-        height: 75px;
-        display: block;
-    }
-}
-
-
 /deep/ .el-radio-button__inner {
     padding: 8px 15px !important;
 }
@@ -204,7 +173,6 @@ export default {
         }
 
         .emoji-item {
-            cursor: pointer;
             display: inline-block;
 
             .emoji {

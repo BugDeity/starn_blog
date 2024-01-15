@@ -5,7 +5,8 @@
                 <span>目前共计{{ tagList.length }}个标签,继续加油</span>
             </div>
             <div id="time-line">
-                <div class="item" v-for="(item, index) in tagList" :key="index" @click="handleClick(item.id, index)">
+                <div class="item hand-style" v-for="(item, index) in tagList" :key="index"
+                    @click="handleClick(item.id, index)">
                     <div :class="handleChoose(item, index) ? 'item-index active' : 'item-index'" ref="tag">{{ item.name }}
                     </div>
                 </div>
@@ -18,7 +19,7 @@
                         <el-card
                             style="padding: 15px;background-color: var(--background-color);border: 1px solid var(--border-line);">
                             <router-link :to="'/article/' + item.id">
-                                <h4 class="title">{{ item.title }}</h4>
+                                <h4 class="title hand-style">{{ item.title }}</h4>
                             </router-link>
                             <div class="bottumItem">
                                 <div class="articleUser">
@@ -28,7 +29,8 @@
 
                                 <div class="tag">
                                     <el-tooltip class="item1" effect="dark" content="文章分类" placement="top">
-                                        <el-tag size="mini" @click="handleCategoryClike(item.categoryId)">
+                                        <el-tag class="hand-style" size="mini"
+                                            @click="handleCategoryClike(item.categoryId)">
                                             <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
                                         </el-tag>
                                     </el-tooltip>
@@ -186,6 +188,12 @@ export default {
             }
         }
 
+        #time-line {
+            height: 800px;
+            overflow: auto;
+            overflow-x: hidden;
+        }
+
         .article {
             float: left;
             height: 800px;
@@ -237,7 +245,6 @@ export default {
                     margin-left: 20px;
 
                     .el-tag {
-                        cursor: pointer;
                         margin-right: 5px;
                     }
                 }
@@ -262,7 +269,6 @@ export default {
             /*高度由内容决定*/
             position: relative;
             margin-bottom: 30px;
-            cursor: pointer;
 
             &::before {
                 content: "";

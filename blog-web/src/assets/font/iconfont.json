@@ -214,6 +214,13 @@
       "font_class": "fenxiang",
       "unicode": "e626",
       "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "6337464",
+      "name": "字体代码",
+      "font_class": "zitidaima",
+      "unicode": "ec83",
+      "unicode_decimal": 60547
     }
   ]
 }

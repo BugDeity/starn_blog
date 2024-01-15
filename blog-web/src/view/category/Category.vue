@@ -5,7 +5,8 @@
                 <span>目前共计{{ categoryList.length }}个分类,继续加油</span>
             </div>
             <div id="time-line">
-                <div class="item" v-for="(item, index) in categoryList" :key="index" @click="handleClick(item.id, index)">
+                <div class="item hand-style" v-for="(item, index) in categoryList" :key="index"
+                    @click="handleClick(item.id, index)">
                     <div :class="handleChoose(item, index) ? 'item-index active' : 'item-index'" ref="category">{{ item.name
                     }}</div>
                 </div>
@@ -18,7 +19,7 @@
                         <el-card
                             style="padding: 15px;background-color: var(--background-color);border: 1px solid var(--border-line);">
                             <router-link :to="'/article/' + item.id">
-                                <h4 class="title">{{ item.title }}</h4>
+                                <h4 class="title hand-style">{{ item.title }}</h4>
                             </router-link>
                             <div class="bottumItem">
                                 <div class="articleUser">
@@ -35,7 +36,7 @@
                                     <el-tooltip class="item1" effect="dark" content="文章标签" placement="top"
                                         v-for="tag in item.tagList" :key="tag.id">
                                         <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
-                                            @click="handleTagClike(tag.id)">{{
+                                            class="hand-style" @click="handleTagClike(tag.id)">{{
                                                 tag.name
                                             }}</el-tag>
                                     </el-tooltip>
@@ -246,7 +247,6 @@ export default {
                     margin-left: 20px;
 
                     .el-tag {
-                        cursor: pointer;
                         margin-right: 5px;
                     }
                 }
@@ -267,7 +267,6 @@ export default {
             /*高度由内容决定*/
             position: relative;
             margin-bottom: 30px;
-            cursor: pointer;
 
             &::before {
                 content: "";

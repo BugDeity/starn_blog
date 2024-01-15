@@ -4,7 +4,7 @@
         <!-- 左侧点赞和打赏 -->
         <div class="left-sidbarnav" :style="{ left: left }">
             <el-tooltip class="item" effect="dark" content="点赞" placement="left">
-                <div class="left-item" title="点赞" @click="like(article.id)">
+                <div class="left-item hand-style" title="点赞" @click="like(article.id)">
                     <el-badge :value="article.likeCount" class="item">
                         <span>
                             <i v-if="article.isLike" class="iconfont icon-dianzan4"></i>
@@ -15,7 +15,7 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="收藏" placement="left">
-                <div class="left-item" title="收藏" @click="handleCollect">
+                <div class="left-item hand-style" title="收藏" @click="handleCollect">
                     <el-badge :value="article.collectCount" class="item">
                         <span style="font-size: 20px;">
                             <i v-if="article.isCollect" class="el-icon-star-on"></i>
@@ -26,7 +26,7 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="评论" placement="left">
-                <div class="left-item" title="评论" @click="handleNodeClick('comment')">
+                <div class="left-item hand-style" title="评论" @click="handleNodeClick('comment')">
                     <el-badge :value="article.commentCount" class="item">
                         <span>
                             <i class="iconfont icon-pinglun"></i>
@@ -36,7 +36,7 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="开启沉浸式阅读" placement="left">
-                <div class="left-item" title="开启沉浸式阅读" @click="handleImmerse">
+                <div class="left-item hand-style" title="开启沉浸式阅读" @click="handleImmerse">
                     <span>
                         <i class="iconfont icon-full-screen"></i>
                     </span>
@@ -44,7 +44,7 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="打赏" placement="left">
-                <div class="left-item rewardMain" title="打赏">
+                <div class="left-item rewardMain hand-style" title="打赏">
                     <span class="reward-btn">
                         <i class="iconfont icon-dashang1"></i>
                     </span>
@@ -64,7 +64,7 @@
 
         <!-- 中间文章信息 -->
         <el-card class="article" id="articleBox">
-            <el-tag @click="handleClike(article.category.id, '/categorys')" effect="dark" class="category">
+            <el-tag @click="handleClike(article.category.id, '/categorys')" effect="dark" class="category hand-style">
                 {{ article.category.name }}
             </el-tag>
             <h1 class="article-title">
@@ -146,7 +146,7 @@
             <!-- 文章标签和分享 -->
             <div class="tag-share">
                 <div>
-                    <a class="tagBtn" v-for=" item  in  article.tagList " :key="item.id"
+                    <a class="tagBtn hand-style" v-for=" item  in  article.tagList " :key="item.id"
                         @click="handleClike(item.id, '/tag')">
                         <span type="success">
                             <i class="el-icon-collection-tag"></i> {{ item.name }}
@@ -171,7 +171,7 @@
                         </a>
                     </div>
                     <div style="width: 34px;display: inline-block;line-height: 34px; height: 34px;">
-                        <i class="iconfont icon-fenxiang share"></i>
+                        <i class="iconfont icon-fenxiang share hand-style"></i>
                     </div>
 
 
@@ -241,7 +241,7 @@
                         <ul class="structureBox" style="">
                             <li ref="directoryItem"
                                 :style="{ paddingLeft: item.level * 10 + 'px', filter: active != index ? 'blur(1px)' : 'none' }"
-                                :class="active == index ? 'structure active' : 'structure'"
+                                :class="active == index ? 'structure active hand-style' : 'structure hand-style'"
                                 v-for="( item, index ) in  titles " :key="index" @click="handleNodeClick(item.id)">
                                 {{ item.title }}
                             </li>
@@ -711,7 +711,6 @@ export default {
                 text-align: center;
                 line-height: 50px;
                 background-color: var(--background-color);
-                cursor: pointer;
                 position: relative;
                 color: var(--text-color);
 
@@ -828,7 +827,6 @@ export default {
                     }
 
                     .structure {
-                        cursor: pointer;
                         color: var(--article-color);
                         padding: 5px 0;
                         padding-left: 20px;
@@ -866,7 +864,6 @@ export default {
 
         .category {
             border-radius: 3px;
-            cursor: pointer;
             transition: transform .35s;
             height: 30px;
             line-height: 30px;
@@ -1162,7 +1159,6 @@ export default {
             justify-content: space-between;
 
             .tagBtn {
-                cursor: pointer;
                 margin-right: 5px;
                 background-color: var(--article-share-color);
                 border: 1px solid var(--article-share-color);
@@ -1199,7 +1195,6 @@ export default {
 
                 .share {
                     display: inline-block;
-                    cursor: pointer;
                     font-size: 18px;
                     width: 100%;
                     height: 100%;

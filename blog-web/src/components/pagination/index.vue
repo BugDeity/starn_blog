@@ -1,7 +1,7 @@
 <template>
     <div class=''>
         <!-- 分页按钮 -->
-        <div class="page" v-if="pageNo < pages" @click="handlePage">
+        <div class="page hand-style" v-if="pageNo < pages" @click="handlePage">
             加载更多
         </div>
         <div class="tips" v-else>
@@ -49,7 +49,6 @@ export default {
     border-radius: 50px;
     margin: 0 auto;
     margin-top: 20px;
-    cursor: pointer;
     position: relative;
     white-space: nowrap;
     border: 1px solid var(--pagination-border-color);

@@ -9,7 +9,7 @@
                     公告 :
                 </span>
                 <span class="content" v-html="$store.state.webSiteInfo.bulletin"></span>
-                <span class="closeBtn" @click="closeMsg">
+                <span class="closeBtn hand-style" @click="closeMsg">
                     关闭 <i class="el-icon-close"></i>
                 </span>
             </span>
@@ -90,7 +90,6 @@ export default {
         .closeBtn {
             margin-left: 15px;
             font-weight: 400;
-            cursor: pointer;
         }
     }
 }

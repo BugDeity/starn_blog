@@ -6,7 +6,7 @@
                     {{ item.siteClassName }}
                 </div>
                 <ul>
-                    <li v-for="(item, index) in item.navigations" :key="index" @click="open(item.url)">
+                    <li v-for="(item, index) in item.navigations" :key="index" @click="open(item.url)" class="hand-style">
                         <div class="item">
                             <el-avatar class="logo" :src="item.logo"></el-avatar>
                             <span class="name">{{ item.name }}</span>
@@ -109,7 +109,6 @@ export default {
             li {
                 margin-bottom: 10px;
                 padding: 10px;
-                cursor: pointer;
                 font-size: 15px;
 
 

@@ -4,6 +4,16 @@
      font-family: "font";
  }
 
+ html {
+     cursor: url(https://img.shiyit.com/normal.cur), default;
+ }
+
+ /* 设置鼠标小手样式 */
+ .hand-style {
+     cursor: url(https://img.shiyit.com/link.cur), pointer;
+     /* 这里也可以选择其他合适的值，比如crosshair、wait等 */
+ }
+
  .el-tabs__nav-scroll {
      overflow-x: scroll !important;
 
@@ -151,8 +161,4 @@
      .el-dialog {
          width: 90% !important;
      }
- }
-
- .point {
-     cursor: pointer;
  }

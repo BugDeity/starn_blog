@@ -3,8 +3,8 @@
         <div class="main">
 
             <el-tooltip class="item" effect="dark" content="随机视频播放" placement="right">
-                <div @click="drawer = true"
-                    style="color: var(--theme-color);position: fixed;left: 20px;bottom: 50%;font-size: 1.5rem;cursor: pointer;">
+                <div @click="drawer = true" class="hand-style"
+                    style="color: var(--theme-color);position: fixed;left: 20px;bottom: 50%;font-size: 1.5rem;">
                     <i class="el-icon-d-arrow-right"></i>
                 </div>
             </el-tooltip>
@@ -25,7 +25,7 @@
                     <!-- 轮播图 -->
                     <el-carousel class="banner" :interval="5000" arrow="always">
                         <el-carousel-item v-for="(item, index) in bannerList" :key="index">
-                            <router-link :to="'/article/' + item.id">
+                            <router-link class="hand-style" :to="'/article/' + item.id">
                                 <img class="bannerImg" v-lazy="item.avatar" :key="item.avatar" />
                                 <h3 class="title">{{ item.title }}</h3>
                             </router-link>
@@ -36,7 +36,7 @@
                 <div class="top-right">
                     <SiteInfo />
                     <el-card class="soft ">
-                        <a href="https://www.zhisu1.com/aff/DIHZPJNL" target="_blank">
+                        <a href="https://www.zhisu1.com/aff/DIHZPJNL" target="_blank" class="hand-style">
                             <img v-lazy="'https://img.shiyit.com/20231010_1696930367538.jpg'"
                                 :key="'https://img.shiyit.com/20231010_1696930367538.jpg'" alt="">
                             <div class="soft-title">
@@ -90,7 +90,7 @@
 
                                         <span v-if="item.isStick" class="top">置顶</span>
                                         <router-link :to="'/article/' + item.id">
-                                            <h3 class="xiahuaxian">{{ item.title }}</h3>
+                                            <h3 class="xiahuaxian hand-style">{{ item.title }}</h3>
                                         </router-link>
                                         <p>
                                             {{ item.summary }}
@@ -99,7 +99,7 @@
 
                                     <router-link :to="'/article/' + item.id">
                                         <div class="articleImgBox" style="">
-                                            <img class="articleImg" v-lazy="item.avatar" :key="item.avatar">
+                                            <img class="articleImg hand-style" v-lazy="item.avatar" :key="item.avatar">
                                         </div>
                                     </router-link>
                                 </div>
@@ -114,14 +114,15 @@
 
                                 <div class="tag">
                                     <el-tooltip class="item" effect="dark" content="文章分类" placement="top">
-                                        <el-tag size="mini" @click="handleClike(item.categoryId, '/categorys')">
+                                        <el-tag size="mini" class="hand-style"
+                                            @click="handleClike(item.categoryId, '/categorys')">
                                             <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
                                         </el-tag>
                                     </el-tooltip>
                                     <el-tooltip class="item" effect="dark" content="文章标签" placement="top"
                                         v-for="tag in item.tagList" :key="tag.id">
                                         <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
-                                            @click="handleClike(tag.id, '/tag')">
+                                            class="hand-style" @click="handleClike(tag.id, '/tag')">
                                             <i class="el-icon-collection-tag"></i>
                                             {{ tag.name }}
                                         </el-tag>
@@ -197,12 +198,12 @@
                                         <router-link :to="'/article/' + item.id">
                                             <div class="imgBox">
                                                 <span>{{ index + 1 }}</span>
-                                                <img v-lazy="item.avatar" :key="item.avatar" />
+                                                <img class="hand-style" v-lazy="item.avatar" :key="item.avatar" />
                                             </div>
                                         </router-link>
                                     </div>
                                     <p class="info">
-                                        <router-link class="tuijian-title" :to="'/article/' + item.id">
+                                        <router-link class="tuijian-title hand-style" :to="'/article/' + item.id">
                                             {{ item.title }}
                                         </router-link>
 
@@ -222,12 +223,13 @@
                             <li v-show="isShow(2)">
                                 <div class="guanzhu-item qq">
                                     <svg-icon icon-class="qq" />
-                                    <a :href="'//wpa.qq.com/msgrd?v=3&amp;uin=' + $store.state.webSiteInfo.qqNumber + '&amp;site=qq&amp;menu=yes'"
+                                    <a class="hand-style"
+                                        :href="'//wpa.qq.com/msgrd?v=3&amp;uin=' + $store.state.webSiteInfo.qqNumber + '&amp;site=qq&amp;menu=yes'"
                                         target="_blank">
                                         {{ $store.state.webSiteInfo.qqNumber }}
                                     </a>
                                     <span title="点击复制" @click="copy($store.state.webSiteInfo.qqNumber)"
-                                        class="copyBtn name">
+                                        class="copyBtn name hand-style">
                                         QQ号
                                     </span>
                                 </div>
@@ -235,10 +237,11 @@
                             <li v-show="isShow(6)">
                                 <div class="guanzhu-item qqgroup">
                                     <svg-icon icon-class="qqgroup" />
-                                    <a href="javascript:;">
+                                    <a class="hand-style" href="javascript:;">
                                         {{ $store.state.webSiteInfo.qqGroup }}
                                     </a>
-                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.qqGroup)" class="copyBtn name">
+                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.qqGroup)"
+                                        class="copyBtn name hand-style">
                                         QQ群
                                     </span>
                                 </div>
@@ -246,10 +249,11 @@
                             <li v-show="isShow(3)">
                                 <div class="guanzhu-item github">
                                     <svg-icon icon-class="github" />
-                                    <a :href="$store.state.webSiteInfo.github" target="_blank">
+                                    <a class="hand-style" :href="$store.state.webSiteInfo.github" target="_blank">
                                         {{ $store.state.webSiteInfo.github }}
                                     </a>
-                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.github)" class="copyBtn name">
+                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.github)"
+                                        class="copyBtn name hand-style">
                                         github
                                     </span>
                                 </div>
@@ -257,10 +261,11 @@
                             <li v-show="isShow(4)">
                                 <div class="guanzhu-item gitee">
                                     <svg-icon icon-class="gitee" />
-                                    <a :href="$store.state.webSiteInfo.gitee" target="_blank">
+                                    <a class="hand-style" :href="$store.state.webSiteInfo.gitee" target="_blank">
                                         {{ $store.state.webSiteInfo.gitee }}
                                     </a>
-                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.gitee)" class="copyBtn name">
+                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.gitee)"
+                                        class="copyBtn name hand-style">
                                         gitee
                                     </span>
                                 </div>
@@ -268,10 +273,12 @@
                             <li v-show="isShow(1)">
                                 <div class="guanzhu-item email">
                                     <svg-icon icon-class="email" />
-                                    <a :href="'mailto:' + $store.state.webSiteInfo.email" target="_blank" title="邮箱">
+                                    <a class="hand-style" :href="'mailto:' + $store.state.webSiteInfo.email" target="_blank"
+                                        title="邮箱">
                                         {{ $store.state.webSiteInfo.email }}
                                     </a>
-                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.email)" class="copyBtn name">
+                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.email)"
+                                        class="copyBtn name hand-style">
                                         邮箱
                                     </span>
                                 </div>
@@ -279,7 +286,8 @@
                             <li v-show="isShow(5)">
                                 <div class="guanzhu-item wechat">
                                     <svg-icon icon-class="wechat" /> {{ $store.state.webSiteInfo.wechat }}
-                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.wechat)" class="copyBtn name">
+                                    <span title="点击复制" @click="copy($store.state.webSiteInfo.wechat)"
+                                        class="copyBtn name hand-style">
                                         微信
                                     </span>
                                 </div>
@@ -292,13 +300,13 @@
                         <div class="clearfix">
                             <span class="card-title"> 标签墙</span>
                             <router-link :to="'/tag'">
-                                <a class="more">更多</a>
+                                <a class="more hand-style">更多</a>
                             </router-link>
                         </div>
                         <div class="tagBox">
                             <span @click="handleClike(item.id, '/tag')"
-                                :style="{ backgroundColor: `${randomColor()}`, fontSize: item.font }" class="tag-item"
-                                v-for="(item, index) in tagList" :key="index">
+                                :style="{ backgroundColor: `${randomColor()}`, fontSize: item.font }"
+                                class="tag-item hand-style" v-for="(item, index) in tagList" :key="index">
                                 {{ item.name }}
                             </span>
                         </div>
@@ -728,7 +736,6 @@ export default {
                 /deep/ .el-image {
                     width: 100%;
                     height: 47%;
-                    cursor: pointer;
 
                     &:last-child {
                         margin-top: 20px;
@@ -895,8 +902,6 @@ export default {
                             .article-item-top1,
                             .article-item {
                                 .recomCover {
-                                    cursor: pointer;
-
                                     .imgBox {
                                         margin-right: 10px;
                                         border-radius: 5px;
@@ -1055,7 +1060,6 @@ export default {
                                 right: 0;
                                 width: 60px;
                                 text-align: center;
-                                cursor: pointer;
                                 color: #fff;
                                 transition: width .35s;
                             }
@@ -1156,10 +1160,6 @@ export default {
                         padding-bottom: 10px;
                         height: auto;
                         margin-top: 10px;
-
-                        span {
-                            cursor: pointer;
-                        }
                     }
 
                 }
@@ -1322,7 +1322,6 @@ export default {
                             }
 
                             h3 {
-                                cursor: pointer;
                                 position: relative;
                                 display: inline-block;
                             }
@@ -1370,7 +1369,6 @@ export default {
 
                             .el-tag {
                                 margin-right: 8px;
-                                cursor: pointer;
                             }
                         }
 

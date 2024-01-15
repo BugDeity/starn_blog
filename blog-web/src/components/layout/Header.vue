@@ -4,7 +4,7 @@
         <nav>
             <div class="logo">
                 <div class="logoBox">
-                    <router-link :to="'/'">
+                    <router-link :to="'/'" class="hand-style">
                         <el-image class="img"
                             style="width: 50px;border-radius: 50%; height: 50px;border: 1px solid var(--border-line);"
                             :src="$store.state.webSiteInfo.logo">
@@ -32,7 +32,7 @@
             <ul class="starlist">
                 <li :class="path == '/' ? 'active' : ''">
                     <span>
-                        <router-link :to="'/'">
+                        <router-link :to="'/'" class="hand-style">
                             <svg-icon icon-class="home"></svg-icon> 首页
                         </router-link>
                     </span>
@@ -41,7 +41,7 @@
                 <li :class="path == '/archive' || path == '/categorys' || path == '/tag'
                     ? 'active' : ''">
                     <el-dropdown trigger="hover">
-                        <span class="el-dropdown-link">
+                        <span class="el-dropdown-link hand-style">
                             <svg-icon icon-class="archive"></svg-icon> 文章归档<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
@@ -67,7 +67,7 @@
 
                 <li :class="path == '/say' ? 'active' : ''">
                     <span>
-                        <router-link :to="'/say'">
+                        <router-link :to="'/say'" class="hand-style">
                             <svg-icon icon-class="say"></svg-icon> 说说
                         </router-link>
                     </span>
@@ -75,7 +75,7 @@
 
                 <li :class="path == '/navigation' ? 'active' : ''">
                     <span>
-                        <router-link :to="'/navigation'">
+                        <router-link :to="'/navigation'" class="hand-style">
                             <svg-icon icon-class="navication"></svg-icon> 网址导航
                         </router-link>
                     </span>
@@ -83,28 +83,28 @@
 
                 <li :class="path == '/hot' ? 'active' : ''">
                     <span>
-                        <router-link :to="'/hot'">
+                        <router-link :to="'/hot'" class="hand-style">
                             <svg-icon icon-class="hot2"></svg-icon> 热搜
                         </router-link>
                     </span>
                 </li>
                 <li :class="path == '/message' ? 'active' : ''">
                     <span>
-                        <router-link :to="'/message'">
+                        <router-link :to="'/message'" class="hand-style">
                             <svg-icon icon-class="message"></svg-icon> 留言板
                         </router-link>
                     </span>
                 </li>
                 <li :class="path == '/links' ? 'active' : ''">
                     <span>
-                        <router-link :to="'/links'">
+                        <router-link :to="'/links'" class="hand-style">
                             <svg-icon icon-class="friendLink"></svg-icon> 友情链接
                         </router-link>
                     </span>
                 </li>
                 <li :class="path == '/about' ? 'active' : ''">
                     <el-dropdown trigger="hover">
-                        <span class="el-dropdown-link">
+                        <span class="el-dropdown-link hand-style">
                             <svg-icon icon-class="about"></svg-icon> 关于本站<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
@@ -118,7 +118,7 @@
                             <a style="text-decoration: none;color: #71777c;" href="https://gitee.com/quequnlong/shiyi-blog"
                                 target="_blank">
                                 <el-dropdown-item>
-                                    <i class="iconfont icon-code"></i>网站源码
+                                    <i class="iconfont icon-zitidaima"></i>网站源码
                                 </el-dropdown-item>
                             </a>
 
@@ -136,7 +136,7 @@
             <!-- 搜索框 -->
             <div class="searchBox" v-show="!showSearch">
                 <div class="search_ico">
-                    <div class="" @click="handleOpenSearchDialog">
+                    <div class="hand-style" @click="handleOpenSearchDialog">
                         <i class="iconfont icon-search"></i>
                         搜索文章...
                         <span>
@@ -149,7 +149,7 @@
 
             <div class="noticeBtn" v-if="showUser">
                 <el-dropdown trigger="hover">
-                    <div class="el-dropdown-link">
+                    <div class="el-dropdown-link hand-style">
                         <svg-icon icon-class="notice"></svg-icon>
                         <span v-if="topBageShow()" class="notice-bage topBage"></span>
                     </div>
@@ -166,7 +166,7 @@
 
             <div class="userInfo" v-if="showUser">
                 <el-dropdown trigger="hover">
-                    <div class="el-dropdown-link">
+                    <div class="el-dropdown-link hand-style">
                         <img v-if="!userInfo" src="http://img.shiyit.com/touristAvatar.png" alt="">
                         <img v-else :src="userInfo.avatar" alt="" />
                     </div>
@@ -473,12 +473,6 @@ export default {
                 overflow: hidden;
                 max-width: 1500px;
 
-                .el-dropdown-link {
-                    cursor: pointer;
-                }
-
-
-
                 li {
                     float: left;
                     display: block;
@@ -586,7 +580,6 @@ export default {
                         font-size: 15px;
                         border-radius: 5px;
                         color: #82848a;
-                        cursor: pointer;
 
                         .iconfont {
                             font-weight: 700;

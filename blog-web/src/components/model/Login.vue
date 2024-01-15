@@ -17,27 +17,27 @@
                 <el-button type="success" class="loginBtn" @click="login" round>登录</el-button>
 
                 <div class="regitstBtn">
-                    <a class="regist" @click="handleChangeLoginMethod(2)">账号注册</a>
-                    <a class="forget" @click="handleChangeLoginMethod(3)">忘记密码</a>
+                    <a class="regist hand-style" @click="handleChangeLoginMethod(2)">账号注册</a>
+                    <a class="forget hand-style" @click="handleChangeLoginMethod(3)">忘记密码</a>
                 </div>
 
                 <div>
                     <div class="social-login-title">社交账号登录</div>
                     <div class="social-login-wrapper">
-                        <a v-show="isShow(2)" @click="openAuthLogin('qq')">
+                        <a class="hand-style" v-show="isShow(2)" @click="openAuthLogin('qq')">
                             <svg-icon icon-class="qq" />
                         </a>
 
-                        <a v-show="isShow(4)" @click="openAuthLogin('gitee')">
+                        <a class="hand-style" v-show="isShow(4)" @click="openAuthLogin('gitee')">
                             <svg-icon icon-class="gitee" />
                         </a>
-                        <a v-show="isShow(3)" @click="openAuthLogin('weibo')">
+                        <a class="hand-style" v-show="isShow(3)" @click="openAuthLogin('weibo')">
                             <svg-icon icon-class="weibo" />
                         </a>
-                        <a v-show="isShow(5)" @click="handleChangeLoginMethod(4)">
+                        <a class="hand-style" v-show="isShow(5)" @click="handleChangeLoginMethod(4)">
                             <svg-icon icon-class="wechat" />
                         </a>
-                        <a v-show="isShow(6)" @click="openAuthLogin('github')">
+                        <a class="hand-style" v-show="isShow(6)" @click="openAuthLogin('github')">
                             <svg-icon icon-class="github" />
                         </a>
                     </div>
@@ -59,16 +59,16 @@
                     <el-form-item label="验证码" :label-width="formLabelWidth" prop="code">
                         <div style="display: flex;">
                             <el-input class="input" placeholder="请输入验证码" v-model="form.code" autocomplete="off"></el-input>
-                            <a v-if="showSendBtnFlag" class="send" @click="handleSendEmailCode">发送</a>
-                            <a v-else class="send">{{ countdown }}s</a>
+                            <a v-if="showSendBtnFlag" class="send hand-style" @click="handleSendEmailCode">发送</a>
+                            <a v-else class="send hand-style">{{ countdown }}s</a>
                         </div>
                     </el-form-item>
                 </el-form>
 
-                <el-button type="danger" class="loginBtn" @click="register" round>注册</el-button>
+                <el-button type="danger" class="loginBtn hand-style" @click="register" round>注册</el-button>
 
                 <div class="goLoginBtn">
-                    已有账号，<a @click="handleChangeLoginMethod(1)">去登录</a>
+                    已有账号，<a @click="handleChangeLoginMethod(1)" class="hand-style">去登录</a>
                 </div>
             </div>
 
@@ -84,16 +84,16 @@
                     <el-form-item label="验证码" :label-width="formLabelWidth" prop="code">
                         <div style="display: flex;">
                             <el-input class="input" placeholder="请输入验证码" v-model="form.code" autocomplete="off"></el-input>
-                            <a v-if="showSendBtnFlag" class="send" @click="handleSendEmailCode">发送</a>
+                            <a v-if="showSendBtnFlag" class="send hand-style" @click="handleSendEmailCode">发送</a>
                             <a v-else class="send">{{ countdown }}s</a>
                         </div>
                     </el-form-item>
                 </el-form>
 
-                <el-button type="primary" class="loginBtn" @click="forgetPassword" round>修改</el-button>
+                <el-button type="primary" class="loginBtn hand-style" @click="forgetPassword" round>修改</el-button>
 
                 <div class="goLoginBtn">
-                    已有账号，<a @click="handleChangeLoginMethod(1)">去登录</a>
+                    已有账号，<a @click="handleChangeLoginMethod(1)" class="hand-style">去登录</a>
                 </div>
             </div>
 
@@ -326,10 +326,6 @@ export default {
 <style lang="scss" scoped>
 /deep/ .el-dialog__wrapper {
     background-image: url(https://img.shiyit.com/20231007_1696659441438.jpg) !important;
-}
-
-a {
-    cursor: pointer;
 }
 
 .dialog {

@@ -13,8 +13,8 @@
         <div class="tagBox" v-if="!list.length">
             <div class="tag-title">标签搜索</div>
             <div>
-                <span @click="handleToTag(tag.id)" :style="{ backgroundColor: `${randomColor()}` }" class="tag-item"
-                    v-for="(tag, index) in tagList" :key="index">{{ tag.name }}</span>
+                <span @click="handleToTag(tag.id)" :style="{ backgroundColor: `${randomColor()}` }"
+                    class="tag-item hand-style" v-for="(tag, index) in tagList" :key="index">{{ tag.name }}</span>
             </div>
         </div>
 
@@ -175,9 +175,6 @@ export default {
         }
     }
 
-    span {
-        cursor: pointer;
-    }
 }
 
 .search-article {

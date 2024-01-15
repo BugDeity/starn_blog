@@ -4,7 +4,8 @@
             <div class="left-toolbar">
 
                 <ul>
-                    <li ref="leftIem" :class="pageData.type == index ? 'left-item active' : 'left-item'"
+                    <li ref="leftIem"
+                        :class="pageData.type == index ? 'left-item hand-style active' : 'left-item hand-style'"
                         v-for="(item, index) in leftIems" :key="index" @click="handleClike(item, index)">
                         <i :class="item.icon"></i> {{ item.name }}
                     </li>
@@ -15,7 +16,7 @@
                     <span class="top-title">
                         {{ title }}
                     </span>
-                    <span class="clearAllbtn" @click="clearMessage(null)">
+                    <span class="clearAllbtn hand-style" @click="clearMessage(null)">
                         <i class="el-icon-delete"></i> 清空所有消息
                     </span>
                 </div>
@@ -38,7 +39,7 @@
                                 <span class="user-item" v-if="item.commentMark == 1">
                                     <i class="el-icon-link"></i> 在文章
                                     <router-link :to="'/article/' + item.articleId">
-                                        <span class="title">
+                                        <span class="title hand-style">
                                             {{ item.articleTitle }}
                                         </span>
                                     </router-link>
@@ -48,12 +49,12 @@
                                     <i class="el-icon-link"></i>
                                     评论了你的文章:
                                     <router-link :to="'/article/' + item.articleId">
-                                        <span class="title">
+                                        <span class="title hand-style">
                                             {{ item.articleTitle }}
                                         </span>
                                     </router-link>
                                 </span>
-                                <span class="clearBtn" @click="clearMessage(item.id, index)">
+                                <span class="clearBtn hand-style" @click="clearMessage(item.id, index)">
                                     <i class="el-icon-delete"></i>
                                 </span>
                             </div>
@@ -67,7 +68,7 @@
                                 <div v-if="item.noticeType == 3">
                                     点赞了你的文章
                                     <router-link :to="'/article/' + item.articleId">
-                                        <span class="title">" {{
+                                        <span class="title hand-style">" {{
                                             item.articleTitle
                                         }} "</span>
                                     </router-link>
@@ -75,7 +76,7 @@
                                 <div v-if="item.noticeType == 4">
                                     收藏了你的文章
                                     <router-link :to="'/article/' + item.articleId">
-                                        <span class="title">" {{
+                                        <span class="title hand-style">" {{
                                             item.articleTitle
                                         }} "
                                         </span>
@@ -287,7 +288,6 @@ export default {
             }
 
             .left-item {
-                cursor: pointer;
                 border-radius: 5px;
                 position: relative;
                 margin-top: 10px;
@@ -331,7 +331,6 @@ export default {
 
         .clearAllbtn,
         .clearBtn {
-            cursor: pointer;
             float: right;
         }
 
@@ -403,7 +402,6 @@ export default {
                 }
 
                 .title {
-                    cursor: pointer;
                     font-weight: 600;
                     font-style: italic;
 
