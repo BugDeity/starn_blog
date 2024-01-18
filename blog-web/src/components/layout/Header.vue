@@ -50,13 +50,13 @@
                                     <i class="el-icon-date"></i>文章归档
                                 </el-dropdown-item>
                             </router-link>
-                            <router-link style="text-decoration: none;color: #71777c;" :to="'/categorys'">
+                            <router-link style="text-decoration: none;color: #71777c;" :to="'/category'">
                                 <el-dropdown-item>
                                     <i class="el-icon-menu"></i>文章分类
                                 </el-dropdown-item>
                             </router-link>
 
-                            <router-link style="text-decoration: none;color: #71777c;" :to="'/tag'">
+                            <router-link style="text-decoration: none;color: #71777c;" :to="'/tags'">
                                 <el-dropdown-item>
                                     <i class="el-icon-collection-tag"></i>文章标签
                                 </el-dropdown-item>

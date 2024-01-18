@@ -72,7 +72,7 @@ export default {
     methods: {
         handleToTag(id) {
             this.$store.state.searchDialogVisible = false
-            this.$router.push({ path: "/tag", query: { id: id } })
+            this.$router.push({ path: "/tags", query: { id: id } })
         },
         inputChage(event) {
             this.pageData.keyword = event.replace(/\s/g, '')

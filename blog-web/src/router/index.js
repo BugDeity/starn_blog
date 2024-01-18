@@ -56,15 +56,16 @@ const routes = [
                 }
             },
             {
-                path: "/categorys",
-                component: resolve => require(["@/view/category/Category.vue"], resolve),
+                path: "/category",
+                component: resolve => require(["@/view/category/index.vue"], resolve),
                 meta: {
                     title: "文章分类"
                 }
             },
+
             {
-                path: "/tag",
-                component: resolve => require(["@/view/tag/Tag"], resolve),
+                path: "/tags",
+                component: resolve => require(["@/view/tag/index"], resolve),
                 meta: {
                     title: "文章标签"
                 }

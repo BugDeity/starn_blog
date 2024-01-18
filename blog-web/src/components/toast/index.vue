@@ -1,7 +1,7 @@
 <template>
     <div id="toast">
-        <span class="toast" @mouseleave="start" @mouseenter="stop" :style="{ top: styleTop }">
-            <i :class="icon" :style="{ color: color, marginRight: '5px' }"></i>
+        <span class="toast" @mouseleave="start" @mouseenter="stop" :style="{ top: styleTop, backgroundColor: color }">
+            <i :class="icon" :style="{ marginRight: '5px' }"></i>
             <div> {{ message }}</div>
             <i class="el-icon-close close hand-style" v-if="showCloseBtn" @click="close"></i>
         </span>
@@ -104,7 +104,6 @@ export default {
     right: 0;
     bottom: 0;
     margin: 0 auto;
-    background-color: #fff;
     padding: 10px;
     border-radius: 3px;
     z-index: 99999;
@@ -112,12 +111,13 @@ export default {
     height: fit-content;
     transition: all 0.35s;
     transition: all 0.4s;
-    color: rgba(0, 0, 0, .65);
+    color: #fff;
     display: flex;
     align-items: center;
 
     i {
         font-size: 1.2rem;
+
     }
 
     .close {

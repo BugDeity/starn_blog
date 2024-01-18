@@ -115,6 +115,11 @@
                             <i class="iconfont icon-fanyi"></i>翻译
                         </div>
                     </li>
+                    <li @click="handlePrivate" v-if="message && message.fromUserId != user.id">
+                        <div class="menuitem hand-style">
+                            <i class="el-icon-chat-dot-round"></i>私信
+                        </div>
+                    </li>
                     <li @click="withdraw" v-if="message && message.fromUserId == user.id">
                         <div class="menuitem hand-style">
                             <i class="iconfont icon-chehui"></i>撤回
@@ -450,8 +455,13 @@ export default {
             // 将组装好的json发送给服务端，由服务端进行转发
             withdraw(message).then(re => {
 
-            }).catch(error => {
-            });
+            })
+        },
+        //私信
+        handlePrivate() {
+            addRoom(this.message.fromUserId).then(res => {
+                this.roomList.push(res.data)
+            })
         },
         //翻译
         translate() {

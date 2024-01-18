@@ -28,6 +28,7 @@ html[data-theme='dark'] {
     --pagination-border-color: #60626657;
     --pagination-hover-color: #606266;
     --article-share-color: #303030;
+    --hover-color: rgb(56, 58, 58);
 }
 
 :root {
@@ -60,4 +61,6 @@ html[data-theme='dark'] {
     --pagination-border-color: #e4e7ed;
     --pagination-hover-color: #f5f7fa;
     --article-share-color: #f2f6fc;
+    --hover-color: rgb(238, 243, 243);
+
 }

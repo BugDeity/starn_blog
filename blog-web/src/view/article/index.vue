@@ -64,7 +64,7 @@
 
         <!-- 中间文章信息 -->
         <el-card class="article" id="articleBox">
-            <el-tag @click="handleClike(article.category.id, '/categorys')" effect="dark" class="category hand-style">
+            <el-tag @click="handleClike(article.category.id, '/category')" effect="dark" class="category hand-style">
                 {{ article.category.name }}
             </el-tag>
             <h1 class="article-title">
@@ -75,18 +75,21 @@
                     <img v-lazy="$store.state.webSiteInfo.authorAvatar" :key="$store.state.webSiteInfo.authorAvatar" alt="">
                     <div class="meta">
                         <div class="author">
-                            <a class="link" href="#">{{ $store.state.webSiteInfo.author }}</a>
+                            <span class="link" href="#">{{ $store.state.webSiteInfo.author }}</span>
                         </div>
                         <div class="item">
-                            <span class="text textItem"> <i class="el-icon-time"></i> {{ formatDate(article.createTime)
+                            <span class="text textItem"> <i class="el-icon-time" style="color: rgb(236, 125, 98);"></i> {{
+                                formatDate(article.createTime)
                             }}</span>
-                            <span class="text textItem"><i class="el-icon-chat-dot-round"></i> {{ article.commentCount }}
+                            <span class="text textItem"><i class="el-icon-chat-dot-round"
+                                    style="color: rgb(211, 236, 98);"></i> {{ article.commentCount }}
                                 评论</span>
                             <span class="text textItem">
-                                <i style="font-size: 0.7rem;" class="iconfont icon-dianzan1"></i>
+                                <i style="font-size: 0.7rem;color: rgb(38, 211, 153);" class="iconfont icon-dianzan1"></i>
                                 {{ article.likeCount == null ? 0 : article.likeCount }} 点赞
                             </span>
-                            <span class="text"><i class="el-icon-view"></i> {{ article.quantity }} 阅读</span>
+                            <span class="text"><i class="el-icon-view" style="color: rgb(190, 221, 16);"></i> {{
+                                article.quantity }} 阅读</span>
 
                         </div>
                     </div>
@@ -97,7 +100,7 @@
             </div>
             <div class="tips">
                 <i class="el-icon-message-solid"></i>
-                <span>温馨提示：</span>
+                <span style="color: orange;">温馨提示：</span>
                 <div style="margin-left: 30px;margin-top: 5px;">
                     <span v-if="article.isOriginal == 0">该文章为转载文章。</span>
                     本着开源共享、共同学习的精神，若内容或图片失效，请留言反馈。若有内容不小心影响到您的利益，请联系博主删除
@@ -147,7 +150,7 @@
             <div class="tag-share">
                 <div>
                     <a class="tagBtn hand-style" v-for=" item  in  article.tagList " :key="item.id"
-                        @click="handleClike(item.id, '/tag')">
+                        @click="handleClike(item.id, '/tags')">
                         <span type="success">
                             <i class="el-icon-collection-tag"></i> {{ item.name }}
                         </span>
@@ -236,7 +239,7 @@
                     v-if="titles.length">
                     <el-card class="directory-item">
                         <div slot="header" class="title">
-                            <i class="el-icon-s-fold"></i> <span>文档目录</span>
+                            <i class="iconfont icon-menu_normal"></i> <span>文档目录</span>
                         </div>
                         <ul class="structureBox" style="">
                             <li ref="directoryItem"
@@ -690,10 +693,11 @@ export default {
                 .time {
                     font-size: 32px;
                     line-height: 42px;
-                    color: #606266;
+                    color: orange;
                     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
                     position: absolute;
                     right: 0;
+
                 }
             }
         }
@@ -930,12 +934,11 @@ export default {
                     flex-direction: column;
                     height: 35px;
                     justify-content: space-between;
-                    font-size: 12px;
+                    font-size: 0.9rem;
 
                     .link {
                         font-weight: 500;
                         color: var(--theme-color);
-                        text-decoration: none;
                     }
 
                     .item {

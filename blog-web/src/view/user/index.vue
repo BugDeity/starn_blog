@@ -157,7 +157,7 @@
                                 <div class="article-tag">
                                     <el-tooltip class="item1" effect="dark" content="文章分类" placement="top">
                                         <el-tag class="hand-style" size="mini"
-                                            @click="handleClike(item.categoryId, '/categorys')">
+                                            @click="handleClike(item.categoryId, '/category')">
                                             <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
                                         </el-tag>
                                     </el-tooltip>
@@ -165,7 +165,7 @@
                                         v-for="tag in item.tagList" :key="tag.id">
 
                                         <el-tag class="hand-style" :type="tagStyle[Math.round(Math.random() * 4)]"
-                                            size="mini" @click="handleClike(tag.id, '/tag')">
+                                            size="mini" @click="handleClike(tag.id, '/tags')">
                                             <i class="el-icon-collection-tag"></i> {{ tag.name
                                             }}</el-tag>
                                     </el-tooltip>

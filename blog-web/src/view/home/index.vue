@@ -43,7 +43,7 @@
                                 高效便宜可靠的服务器厂商知速云
                             </div>
                             <div class="soft-info">
-                                软件推荐
+                                资源推荐
                             </div>
                             <div class="overlay"></div>
                         </a>
@@ -115,14 +115,14 @@
                                 <div class="tag">
                                     <el-tooltip class="item" effect="dark" content="文章分类" placement="top">
                                         <el-tag size="mini" class="hand-style"
-                                            @click="handleClike(item.categoryId, '/categorys')">
+                                            @click="handleClike(item.categoryId, '/category')">
                                             <i class=" el-icon-folder-opened"></i> {{ item.categoryName }}
                                         </el-tag>
                                     </el-tooltip>
                                     <el-tooltip class="item" effect="dark" content="文章标签" placement="top"
                                         v-for="tag in item.tagList" :key="tag.id">
                                         <el-tag :type="tagStyle[Math.round(Math.random() * 4)]" size="mini"
-                                            class="hand-style" @click="handleClike(tag.id, '/tag')">
+                                            class="hand-style" @click="handleClike(tag.id, '/tags')">
                                             <i class="el-icon-collection-tag"></i>
                                             {{ tag.name }}
                                         </el-tag>
@@ -304,7 +304,7 @@
                             </router-link>
                         </div>
                         <div class="tagBox">
-                            <span @click="handleClike(item.id, '/tag')"
+                            <span @click="handleClike(item.id, '/tags')"
                                 :style="{ backgroundColor: `${randomColor()}`, fontSize: item.font }"
                                 class="tag-item hand-style" v-for="(item, index) in tagList" :key="index">
                                 {{ item.name }}
