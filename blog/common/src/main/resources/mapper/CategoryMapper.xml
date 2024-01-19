@@ -18,5 +18,19 @@
             </if>
         </where>
     </select>
+    <select id="selectCategoryListApi" resultType="com.shiyi.vo.ApiCategoryListVO">
+        SELECT
+            c.id,
+            c.name,
+            c.icon,
+            count( a.id ) AS articleNum
+        FROM
+            b_category c
+                LEFT JOIN b_article a ON c.id = a.category_id
+        GROUP BY
+            c.id
+        ORDER BY
+            c.sort
+    </select>
 
 </mapper>

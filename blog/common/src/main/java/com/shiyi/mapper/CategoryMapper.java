@@ -3,6 +3,7 @@ package com.shiyi.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.entity.Category;
+import com.shiyi.vo.ApiCategoryListVO;
 import com.shiyi.vo.SystemCategoryCountVO;
 import com.shiyi.vo.SystemCategoryListVO;
 import org.apache.ibatis.annotations.Param;
@@ -34,5 +35,8 @@ public interface CategoryMapper extends BaseMapper<Category> {
      * @return
      */
     List<SystemCategoryCountVO> countArticle();
+
+    List<ApiCategoryListVO> selectCategoryListApi();
+
 
 }

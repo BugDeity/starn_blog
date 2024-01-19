@@ -41,5 +41,18 @@
     <select id="validateTagIdIsExistArticle" resultType="java.lang.Integer" parameterType="java.lang.Long">
         select count(id) from b_article_tag where tag_id=#{id}
     </select>
+    <select id="selectTagListApi" resultType="com.shiyi.vo.ApiTagListVO">
+        SELECT
+            t.id,
+            t.NAME,
+            count( a.id ) AS articleNum
+        FROM
+            b_tags t
+                LEFT JOIN b_article_tag a ON t.id = a.tag_id
+        GROUP BY
+            t.id
+        ORDER BY
+            t.sort
+    </select>
 
 </mapper>

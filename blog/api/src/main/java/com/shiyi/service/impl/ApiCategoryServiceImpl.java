@@ -5,6 +5,7 @@ import com.shiyi.common.ResponseResult;
 import com.shiyi.entity.Category;
 import com.shiyi.mapper.CategoryMapper;
 import com.shiyi.service.ApiCategoryService;
+import com.shiyi.vo.ApiCategoryListVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class ApiCategoryServiceImpl implements ApiCategoryService {
      */
     @Override
     public ResponseResult selectCategoryList() {
-        List<Category> list = categoryMapper.selectList(new LambdaQueryWrapper<Category>().orderByDesc(Category::getSort));
+        List<ApiCategoryListVO> list = categoryMapper.selectCategoryListApi();
         return ResponseResult.success(list);
     }
 }

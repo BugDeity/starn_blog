@@ -10,7 +10,7 @@
                         <a ref="tag" :style="{ fontSize: tag.font }"
                             :class="handleChoose(tag, index) ? 'tag-option hand-style active' : 'tag-option hand-style'"
                             @click="handleClick(tag.id, index)" v-for="(tag, index) in tagList" :key="index">
-                            {{ tag.name }}
+                            {{ tag.name }} <span class="num">{{ tag.articleNum }}</span>
                         </a>
                     </div>
                 </div>
@@ -115,9 +115,13 @@ export default {
             })
         },
         fetchArticleList() {
+            this.$bus.$emit('show');
             fetchArticleList(this.pageData).then(res => {
                 this.articleList.push(...res.data.records)
                 this.pages = res.data.pages
+                this.$bus.$emit('close');
+            }).catch(err => {
+                this.$bus.$emit('close');
             })
         },
 
@@ -198,6 +202,18 @@ export default {
 
                     &:hover {
                         background-color: rgb(171, 214, 214);
+                    }
+
+                    .num {
+                        display: inline-block;
+                        border-radius: 50%;
+                        width: 20px;
+                        height: 20px;
+                        background-color: #66b1ff;
+                        text-align: center;
+                        line-height: 20px;
+                        color: white;
+                        font-size: 12px;
                     }
                 }
 
