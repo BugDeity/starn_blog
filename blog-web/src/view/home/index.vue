@@ -300,7 +300,7 @@
                         <div class="clearfix">
                             <span class="card-title"> 标签墙</span>
                             <router-link :to="'/tag'">
-                                <a class="more hand-style">更多</a>
+                                <a class="more hand-style no-select">更多</a>
                             </router-link>
                         </div>
                         <div class="tagBox">

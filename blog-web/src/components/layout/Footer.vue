@@ -19,7 +19,7 @@
                 </p>
 
             </div>
-            <div class="site-number">
+            <div class="site-number no-select">
                 <span class="site_pv">
                     <i class="iconfont icon-fangwenliang"></i>
                     访问量

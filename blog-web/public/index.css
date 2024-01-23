@@ -11,7 +11,6 @@
  /* 设置鼠标小手样式 */
  .hand-style {
      cursor: url(https://img.shiyit.com/link.cur), pointer;
-     /* 这里也可以选择其他合适的值，比如crosshair、wait等 */
  }
 
  .el-tabs__nav-scroll {
@@ -78,7 +77,7 @@
 
  ::selection {
      color: #fff;
-     background-color: var(--theme-color);
+     background-color: #d17598;
  }
 
  .el-card__body {
@@ -161,4 +160,10 @@
      .el-dialog {
          width: 90% !important;
      }
+ }
+
+ .no-select {
+     -moz-user-select: none;
+     -ms-user-select: none;
+     user-select: none;
  }

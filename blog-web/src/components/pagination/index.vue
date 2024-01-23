@@ -1,7 +1,7 @@
 <template>
     <div class=''>
         <!-- 分页按钮 -->
-        <div class="page hand-style" v-if="pageNo < pages" @click="handlePage">
+        <div class="page hand-style no-select" v-if="pageNo < pages" @click="handlePage">
             加载更多
         </div>
         <div class="tips" v-else>

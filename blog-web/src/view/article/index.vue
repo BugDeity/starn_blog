@@ -132,6 +132,12 @@
                 </div>
             </div>
 
+            <div class="read-duration">
+                <div class="duration">
+                    阅读时长，您已阅读：{{ hour }}时{{ minute }}分{{ second }}秒。
+                </div>
+            </div>
+
             <!-- 移动端点赞 -->
             <div class="dianzanBox">
                 <div class="dianzan-item">
@@ -325,8 +331,11 @@ export default {
             user: {},
             serceShow: 0,
             left: "0px",
-            codes: []
-
+            codes: [],
+            timer: null,
+            second: 0,
+            minute: 0,
+            hour: 0
         }
     },
 
@@ -336,7 +345,19 @@ export default {
 
         // 监听滚动事件
         window.addEventListener('scroll', this.onScroll, false)
-
+        this.timer = setInterval(() => {
+            console.log(123)
+            if (this.second == 60) {
+                this.second = 0
+                this.minute++
+            } else {
+                this.second++
+            }
+            if (this.minute == 60) {
+                this.minute = 0
+                this.hour++
+            }
+        }, 1000)
     },
 
     computed: {
@@ -353,6 +374,7 @@ export default {
         },
     },
     beforeDestroy() {
+        clearInterval(this.timer);
         window.removeEventListener('scroll', this.onScroll);
     },
 
@@ -635,6 +657,17 @@ export default {
 .article-container {
     padding: 10px;
 
+    .read-duration {
+        border-left: 5px solid #50bfff;
+        background-color: var(--tips-backgroud-color);
+        color: #bf5dd8;
+        padding: 10px 0;
+        margin-top: 15px;
+        padding-left: 10px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
     @media screen and (max-width: 1118px) {
 
         .article {
@@ -684,6 +717,7 @@ export default {
 
         .article {
             width: 50%;
+
 
             .dianzanBox {
                 display: none;
