@@ -23,12 +23,12 @@
 
                 <div class="menus-item">
 
-                    <a @click="handleClike('/categorys')">
+                    <a @click="handleClike('/category')">
                         <i class="el-icon-menu" /> 分类
                     </a>
                 </div>
                 <div class="menus-item">
-                    <a @click="handleClike('/tag')">
+                    <a @click="handleClike('/tags')">
                         <i class="el-icon-discount" /> 标签
                     </a>
                 </div>

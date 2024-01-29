@@ -299,7 +299,7 @@
                     <el-card class="box-card tag_container">
                         <div class="clearfix">
                             <span class="card-title"> 标签墙</span>
-                            <router-link :to="'/tag'">
+                            <router-link :to="'/tags'">
                                 <a class="more hand-style no-select">更多</a>
                             </router-link>
                         </div>
