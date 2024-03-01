@@ -1,5 +1,6 @@
 <template>
-  <div class="sidebar-logo-container" :class="{ 'collapse': collapse }">
+  <div class="sidebar-logo-container" :class="{ 'collapse': collapse }"
+       :style="{backgroundColor:settings.sideTheme === 'theme-dark' ? variables.menuLogoColor : variables.menuLightLogoColor}">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
@@ -14,8 +15,20 @@
 </template>
 
 <script>
+import { mapGetters,mapState } from 'vuex'
+import variables from '@/styles/variables.scss'
 export default {
   name: 'SidebarLogo',
+  computed: {
+    ...mapState(["settings"]),
+    ...mapGetters([
+      'menu',
+      'sidebar'
+    ]),
+    variables() {
+      return variables
+    },
+  },
   props: {
     collapse: {
       type: Boolean,
@@ -25,7 +38,7 @@ export default {
   data() {
     return {
       title: '拾壹博客管理系统',
-      logo: 'https://img.shiyit.com/9cf1222617fd4fa197991476a53cc883.jpg'
+      logo: 'https://img.shiyit.com/logo11.png'
     }
   }
 }

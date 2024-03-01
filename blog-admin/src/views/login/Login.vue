@@ -10,7 +10,7 @@
                     label-position="left">
                     <i class="top"></i><i class="bottom"></i>
                     <div class="logo">
-                        <el-avatar src="https://img.shiyit.com/9cf1222617fd4fa197991476a53cc883.jpg"></el-avatar>
+                        <el-avatar src="https://img.shiyit.com/logo11.png"></el-avatar>
                     </div>
 
                     <div class="title-container">
@@ -62,7 +62,7 @@
         </div>
     </div>
 </template>
-   
+
 <script>
 import sliderVerify from './components/sliderVerify';
 import { login } from '@/api/user'
@@ -182,7 +182,7 @@ export default {
     },
 }
 </script>
-   
+
 <style rel="stylesheet/scss" lang='scss' scoped>
 $bg: #2d3a4b;
 $dark_gray: #889aa4;

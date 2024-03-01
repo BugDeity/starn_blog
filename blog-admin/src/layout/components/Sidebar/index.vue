@@ -1,5 +1,9 @@
 <template>
-  <div :class="{'has-logo':showLogo}" :style="{ backgroundColor: settings.sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }">
+  <div :class="{'has-logo':showLogo}"
+       :style="{
+    backgroundColor: settings.sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground,
+    boxShadow:settings.sideTheme === 'theme-dark' ? '': '10px 0px 10px rgba(0, 0, 0, 0.2)'
+  }">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar :class="settings.sideTheme" wrap-class="scrollbar-wrapper">
       <el-menu

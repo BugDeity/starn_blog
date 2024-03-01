@@ -1,7 +1,7 @@
 // sidebar
 $menuText:#bfcbd9;
 $menuActiveText:#409EFF;
-$subMenuActiveText:#f4f4f5; //https://github.com/ElemeFE/element/issues/12951
+$subMenuActiveText:#3a8ee6; //https://github.com/ElemeFE/element/issues/12951
 
 $menuBg:#304156;
 $menuHover:#263445;
@@ -27,6 +27,9 @@ $base-menu-color-active:#f4f4f5;
 $base-menu-background:#304156;
 $base-logo-title-color: #ffffff;
 
+$base-logo-light-background-color: #409eff;
+$base-logo-background-color: #2b2f3a;
+
 $base-menu-light-color:rgba(0,0,0,.70);
 $base-menu-light-background:#ffffff;
 $base-logo-light-title-color: #001529;
@@ -41,6 +44,8 @@ $base-sidebar-width: 200px;
 :export {
   menuColor: $base-menu-color;
   menuLightColor: $base-menu-light-color;
+  menuLightLogoColor: $base-logo-light-background-color;
+  menuLogoColor: $base-logo-background-color;
   menuColorActive: $base-menu-color-active;
   menuBackground: $base-menu-background;
   menuLightBackground: $base-menu-light-background;
@@ -48,5 +53,5 @@ $base-sidebar-width: 200px;
   subMenuHover: $base-sub-menu-hover;
   sideBarWidth: $base-sidebar-width;
   logoTitleColor: $base-logo-title-color;
-  logoLightTitleColor: $base-logo-light-title-color
+  logoLightTitleColor: $base-logo-light-title-color;
 }
