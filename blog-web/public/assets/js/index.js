@@ -83,7 +83,7 @@ color: rgb(30,152,255);
 var title1 = '🌒 思易博客 '
 
 // => 读取配置型(在配置文件里配置这些会变动的网址)
-var offiUrl = 'https://www.siyit.com/'
+var offiUrl = 'https://www.starncom.cn/'
 var content = `
 版 本 号：1.0    
 编译日期：${new Date()}

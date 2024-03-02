@@ -249,7 +249,7 @@ public class ApiUserServiceImpl implements ApiUserService {
         }
 
         StpUtil.login(user.getId(), new SaLoginModel().setDevice("PC").setTimeout(60 * 60 * 24 * 7));
-        httpServletResponse.sendRedirect("http://www.siyit.com/?token=" + StpUtil.getTokenValue());
+        httpServletResponse.sendRedirect("http://www.starncom.cn/?token=" + StpUtil.getTokenValue());
     }
 
     @Override

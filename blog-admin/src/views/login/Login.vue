@@ -57,7 +57,7 @@
 
         <!--  底部  -->
         <div class="el-login-footer">
-            <span>Copyright © 2022 <a href="http://www.siyit.com" target="_blank">siyit.com</a> All Rights
+            <span>Copyright © 2022 <a href="http://www.starn.com.cn" target="_blank">siyit.com</a> All Rights
                 Reserved.</span>
         </div>
     </div>
