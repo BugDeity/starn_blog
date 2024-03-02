@@ -134,7 +134,7 @@ const routes = [
 const router = new VueRouter({
     mode: "history",
     scrollBehavior: () => ({ y: 0 }),
-    base: process.env.BASE_URL+'/dist7',
+    base: process.env.BASE_URL+'/siyi_blog',
     routes
 });
 // 获取原型对象push函数
