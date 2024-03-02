@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiyi.mapper.RoleMapper">
+<mapper namespace="cn.com.starn.mapper.RoleMapper">
     <select id="queryByUserId" resultType="java.lang.Integer">
         select role_id
         from b_user_role

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiyi.mapper.ArticleMapper">
+<mapper namespace="cn.com.starn.mapper.ArticleMapper">
 
-    <resultMap id="selectArticleByIdToVOMap" type="com.shiyi.vo.ApiArticleInfoVO">
+    <resultMap id="selectArticleByIdToVOMap" type="cn.com.starn.vo.ApiArticleInfoVO">
         <result column="id" jdbcType="BIGINT" property="id"/>
         <result column="user_Id" jdbcType="VARCHAR" property="userId"/>
         <result column="nickname" jdbcType="VARCHAR" property="username"/>
@@ -18,14 +18,14 @@
         <result column="create_time" jdbcType="DATE" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
         <result column="read_type" jdbcType="INTEGER" property="readType"/>
-        <association property="category" javaType="com.shiyi.entity.Category">
+        <association property="category" javaType="cn.com.starn.entity.Category">
             <id property="id" column="cid" jdbcType="BIGINT"></id>
             <result property="name" column="cname" jdbcType="VARCHAR"></result>
         </association>
     </resultMap>
 
 
-    <select id="selectArticle" resultType="com.shiyi.vo.SystemArticleListVO">
+    <select id="selectArticle" resultType="cn.com.starn.vo.SystemArticleListVO">
         SELECT
         a.*,
         b.NAME AS categoryName,
@@ -55,7 +55,7 @@
         GROUP BY a.id order by a.is_stick desc ,a.create_time desc
     </select>
 
-    <select id="selectArticlePrimaryKey" resultType="com.shiyi.dto.ArticleDTO">
+    <select id="selectArticlePrimaryKey" resultType="cn.com.starn.dto.ArticleDTO">
         select a.id,
                a.title,
                a.avatar,
@@ -78,7 +78,7 @@
         where a.id = #{id}
     </select>
 
-    <select id="contribute" resultType="com.shiyi.vo.SystemArticleContributeVO">
+    <select id="contribute" resultType="cn.com.starn.vo.SystemArticleContributeVO">
         select count, date
         from
             (SELECT
@@ -102,7 +102,7 @@
         set is_stick = #{article.isStick}
         where id = #{article.id}
     </update>
-    <select id="selectSearchArticle" resultType="com.shiyi.vo.ApiArticleListVO">
+    <select id="selectSearchArticle" resultType="cn.com.starn.vo.ApiArticleListVO">
         select a.id,
                a.title,
                a.summary,
@@ -112,7 +112,7 @@
         where LOWER(a.title) like concat('%', #{keywords}, '%') and a.is_publish = 1 order by a.create_time desc
     </select>
 
-    <select id="selectPublicArticleList" resultType="com.shiyi.vo.ApiArticleListVO">
+    <select id="selectPublicArticleList" resultType="cn.com.starn.vo.ApiArticleListVO">
         select a.id, a.title, a.avatar,a.summary,a.quantity,a.is_stick,a.is_original,a.user_id,c.id as categoryId,c.name as categoryName,
                a.create_time
         from b_article a
@@ -135,7 +135,7 @@
         </choose>
     </select>
 
-    <select id="selectListArchive" resultType="com.shiyi.vo.ApiArchiveVO">
+    <select id="selectListArchive" resultType="cn.com.starn.vo.ApiArchiveVO">
         select id,
                title,
                DATE_FORMAT(create_time, '%Y-%m') as 'time', create_time as formatTime
@@ -163,25 +163,25 @@
                  left join b_category c on a.category_id = c.id
         where a.id = #{id}
     </select>
-    <select id="selectListByBanner" resultType="com.shiyi.vo.SystemArticleListVO">
+    <select id="selectListByBanner" resultType="cn.com.starn.vo.SystemArticleListVO">
         select id, title, avatar
         from b_article
         where is_carousel = 1 and is_publish = 1
         order by is_stick desc ,create_time desc
     </select>
 
-    <select id="selectRecommendArticle" resultType="com.shiyi.vo.ApiArticleListVO">
+    <select id="selectRecommendArticle" resultType="cn.com.starn.vo.ApiArticleListVO">
         select id, title, avatar,create_time
          from b_article where is_recommend = 1
         order by create_time desc limit 5
     </select>
 
-    <select id="selectHotArticleList" resultType="com.shiyi.vo.ApiArticleListVO">
+    <select id="selectHotArticleList" resultType="cn.com.starn.vo.ApiArticleListVO">
         select id, title
         from b_article where is_publish = 1
         order by quantity desc limit 5
     </select>
-    <select id="selectMyArticle" resultType="com.shiyi.vo.ApiArticleListVO">
+    <select id="selectMyArticle" resultType="cn.com.starn.vo.ApiArticleListVO">
         SELECT
         a.*,
         ui.nickname AS username,
@@ -198,7 +198,7 @@
         </if>
         order by a.create_time desc
     </select>
-    <select id="selectMyArticleInfo" resultType="com.shiyi.dto.ArticleInsertDTO">
+    <select id="selectMyArticleInfo" resultType="cn.com.starn.dto.ArticleInsertDTO">
         SELECT
             *
         FROM

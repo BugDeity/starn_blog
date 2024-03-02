@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiyi.mapper.ImRoomMapper">
+<mapper namespace="cn.com.starn.mapper.ImRoomMapper">
 
 
-    <select id="selectListByUserId" resultType="com.shiyi.vo.ImRoomListVO">
+    <select id="selectListByUserId" resultType="cn.com.starn.vo.ImRoomListVO">
         select im.id,im.create_time,toUser.id as toUserId,toUser.nickname as toUserNickname,toUser.avatar as toUserAvatar
         from b_im_room im
             left join (select u.id,ui.nickname,ui.avatar from b_user u left join b_user_info ui on u.user_info_id = ui.id) fromUser

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiyi.mapper.SystemConfigMapper">
+<mapper namespace="cn.com.starn.mapper.SystemConfigMapper">
 
-    <select id="selectTables" resultType="com.shiyi.vo.TableListVO">
+    <select id="selectTables" resultType="cn.com.starn.vo.TableListVO">
         select * from (
                           select table_name as name, table_comment as comment, create_time, update_time
                           from information_schema.tables

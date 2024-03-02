@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiyi.mapper.CommentMapper">
+<mapper namespace="cn.com.starn.mapper.CommentMapper">
 
-    <select id="selectPageList" resultType="com.shiyi.vo.SystemCommentVO">
+    <select id="selectPageList" resultType="cn.com.starn.vo.SystemCommentVO">
         SELECT
         c.id,
         au.avatar,
@@ -27,7 +27,7 @@
     </select>
 
 
-    <select id="selectCommentPage" resultType="com.shiyi.vo.ApiCommentListVO">
+    <select id="selectCommentPage" resultType="cn.com.starn.vo.ApiCommentListVO">
         select c.*, ui.nickname as nickname, ui.web_site as webSite, ui.avatar as avatar
         from b_comment c
                  left join b_user u on c.user_id = u.id
@@ -37,7 +37,7 @@
         order by c.create_time desc
     </select>
 
-    <select id="selectMyComment" resultType="com.shiyi.vo.ApiArticleListVO">
+    <select id="selectMyComment" resultType="cn.com.starn.vo.ApiArticleListVO">
         select c.content as commentContent,c.create_time,a.title,a.id
         from b_comment c left join b_article a on c.article_id = a.id where c.user_id = #{userId} order by c.create_time desc
     </select>
