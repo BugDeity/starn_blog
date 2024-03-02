@@ -12,7 +12,7 @@
                     </span>
                 </p>
                 <p>
-                    Copyright©2022-{{ nowYear }} <a href="https://gitee.com/quequnlong/shiyi-blog" target="_blank">拾壹博客</a>
+                    Copyright©2022-{{ nowYear }} <a href="https://gitee.com/quequnlong/shiyi-blog" target="_blank">思易博客</a>
                     <a href="https://beian.miit.gov.cn/" target="_blank" style="margin-left: 10px">{{
                         $store.state.webSiteInfo.recordNum
                     }}</a>

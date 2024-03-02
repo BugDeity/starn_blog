@@ -263,7 +263,7 @@
         <!-- 公众号扫码验证框 -->
         <el-dialog :lock-scroll="false" title="关注公众号验证" center :visible.sync="dialogVisible">
             <div style="text-align: center;">
-                <div>扫码关注公众号<span style="color: red;">【 拾壹学编程 】</span></div>
+                <div>扫码关注公众号<span style="color: red;">【 思易学编程 】</span></div>
                 <div>回复<span style="color: red;">【 验证码 】</span>获取验证码</div>
             </div>
             <el-image class="wxImg" src="http://img.shiyit.com/wechatQr.jpg">
@@ -296,7 +296,7 @@ export default {
     metaInfo: {
         meta: [{
             name: 'keyWords',
-            content: "拾壹博客,开源博客,www.shiyit.com"  //变量或字符串
+            content: "思易博客,开源博客,www.shiyit.com"  //变量或字符串
         }, {
             name: 'description',
             content: "一个专注于技术分享的博客平台,大家以共同学习,乐于分享,拥抱开源的价值观进行学习交流"

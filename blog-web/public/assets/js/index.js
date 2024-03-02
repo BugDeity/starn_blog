@@ -9,7 +9,7 @@ document.addEventListener("visibilitychange", () => {
         document.title = "咦~ 你又回来了O(∩_∩)O哈哈~"
 
         window.setTimeout(() => {
-            document.title = "拾壹博客-一个专注于技术分享的博客平台"
+            document.title = "思易博客-一个专注于技术分享的博客平台"
         }, 800)
     }
 }, false);
@@ -80,7 +80,7 @@ color: rgb(30,152,255);
 `
 
 /* 内容代码 */
-var title1 = '🌒 拾壹博客 '
+var title1 = '🌒 思易博客 '
 
 // => 读取配置型(在配置文件里配置这些会变动的网址)
 var offiUrl = 'https://www.shiyit.com/'

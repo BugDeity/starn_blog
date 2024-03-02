@@ -220,7 +220,7 @@ export default {
             message: null,
             textImg: null,
             selectIndex: null,
-            title: "拾壹博客交流群",
+            title: "思易博客交流群",
             lastIndex: null,
             userId: this.$route.query.userId,
             pageData: {
@@ -232,7 +232,7 @@ export default {
             roomList: [
                 {
                     avatar: this.$store.state.webSiteInfo.logo,
-                    nickname: "拾壹博客交流群"
+                    nickname: "思易博客交流群"
                 }
             ],
             selectUserOnline: null,
@@ -406,7 +406,7 @@ export default {
 
             //为空则是群聊
             if (!item.receiveId) {
-                this.title = "拾壹博客交流群"
+                this.title = "思易博客交流群"
                 this.messageList = []
                 this.selectUserOnline = null;
                 this.getHistoryList()
