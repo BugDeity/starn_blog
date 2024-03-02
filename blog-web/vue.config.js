@@ -6,7 +6,8 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 module.exports = defineConfig({
-  publicPath: "/",
+  publicPath: "./",
+  outputDir: 'siyi_blog',
   lintOnSave: process.env.NODE_ENV === "development",
   devServer: {
     historyApiFallback: true,
