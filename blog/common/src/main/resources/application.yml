@@ -11,10 +11,10 @@ spring:
   application:
     name: shiyiblog
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&tinyInt1isBit=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://1999.life:13306/myblog?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&tinyInt1isBit=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root
+    password: imgzq
     type: com.alibaba.druid.pool.DruidDataSource
     initial-size: 10
     max-active: 150
@@ -34,7 +34,7 @@ spring:
   #    rest:
   #      uris: localhost:9200
   redis:
-    host: 127.0.0.1
+    host: 1999.life
     port: 6379
     timeout: 3000
     password:
