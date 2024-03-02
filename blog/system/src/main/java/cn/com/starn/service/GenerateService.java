@@ -42,7 +42,7 @@ public class GenerateService {
 
     private final SystemConfigMapper systemConfigMapper;
 
-    private static String comPath = "com.shiyi";
+    private static String comPath = "com.siyi";
 
     private static String schema = "blog";
 

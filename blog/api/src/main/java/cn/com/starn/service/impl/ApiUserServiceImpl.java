@@ -63,9 +63,9 @@ public class ApiUserServiceImpl implements ApiUserService {
 
     private final CommentMapper commentMapper;
 
-    private final String[] userAvatarList = {"http://img.shiyit.com/avatars/buxie.png","http://img.shiyit.com/avatars/daizhi.png",
-            "http://img.shiyit.com/avatars/fennu.png","http://img.shiyit.com/avatars/jingxi.png","http://img.shiyit.com/avatars/kaixin.png",
-            "http://img.shiyit.com/avatars/shuanshuai.png"};
+    private final String[] userAvatarList = {"http://img.siyit.com/avatars/buxie.png","http://img.siyit.com/avatars/daizhi.png",
+            "http://img.siyit.com/avatars/fennu.png","http://img.siyit.com/avatars/jingxi.png","http://img.siyit.com/avatars/kaixin.png",
+            "http://img.siyit.com/avatars/shuanshuai.png"};
 
 
     /**
@@ -249,7 +249,7 @@ public class ApiUserServiceImpl implements ApiUserService {
         }
 
         StpUtil.login(user.getId(), new SaLoginModel().setDevice("PC").setTimeout(60 * 60 * 24 * 7));
-        httpServletResponse.sendRedirect("http://www.shiyit.com/?token=" + StpUtil.getTokenValue());
+        httpServletResponse.sendRedirect("http://www.siyit.com/?token=" + StpUtil.getTokenValue());
     }
 
     @Override

@@ -41,7 +41,7 @@ public class SystemConfig implements Serializable {
     @ApiModelProperty(value = "七牛云存储区域 华东（z0），华北(z1)，华南(z2)，北美(na0)，东南亚(as0)")
     private String qiNiuArea;
 
-    @ApiModelProperty(value = "七牛云域名前缀：http://img.shiyit.com/")
+    @ApiModelProperty(value = "七牛云域名前缀：http://img.siyit.com/")
     private String qiNiuPictureBaseUrl;
 
     @ApiModelProperty(value = "是否开启邮件通知(0:否， 1:是)")

@@ -10,7 +10,7 @@
         <version>2.4.1</version>
     </parent>
 
-    <groupId>com.shiyi</groupId>
+    <groupId>com.siyi</groupId>
     <artifactId>blog</artifactId>
     <version>1.0-SNAPSHOT</version>
     <description>基于springboot + vue开发的前后端分离博客</description>
@@ -77,7 +77,7 @@
         </plugins>
 
         <!-- 固定Jar包名字 -->
-        <finalName>shiyi-blog</finalName>
+        <finalName>siyi-blog</finalName>
     </build>
 
     <repositories>

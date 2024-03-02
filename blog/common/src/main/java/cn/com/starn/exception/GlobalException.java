@@ -17,7 +17,7 @@ import static cn.com.starn.common.ResultCode.*;
  * @date 2022/3/11
  * @apiNote
  */
-@ControllerAdvice(basePackages = "com.shiyi")
+@ControllerAdvice(basePackages = "com.siyi")
 public class GlobalException {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalException.class);

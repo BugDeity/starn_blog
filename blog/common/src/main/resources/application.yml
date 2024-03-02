@@ -2,14 +2,14 @@ server:
   port: 8800
   servlet:
     # 应用的访问路径
-    context-path: /shiyi
+    context-path: /siyi
 spring:
   servlet:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
   application:
-    name: shiyiblog
+    name: siyiblog
   datasource:
     url: jdbc:mysql://1999.life:13306/myblog?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&tinyInt1isBit=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -119,25 +119,25 @@ knife4j:
 qq:
   app-id: 101995894
   app-secret: 238689485c7d930b7da82545505471aa
-  redirect-url: https://www.shiyit.com/shiyi/oauth/callback/qq
+  redirect-url: https://www.siyit.com/siyi/oauth/callback/qq
 weibo:
   app-id: 2285022919
   app-secret: a380fef0743e38cad12125902b204fab
-  redirect-url: https://www.shiyit.com/callback/weibo
+  redirect-url: https://www.siyit.com/callback/weibo
 
 gitee:
   app-id: d029020a6839273e0e82d853783874bf1f4f34b95da6ebcbc230e6603ff9b656
   app-secret: e94dfa5baaa5ac896bd01d077d742020504910a0a4c974a83d40d51a0d8377b8
-  redirect-url: https://www.shiyit.com/shiyi/oauth/callback/gitee
+  redirect-url: https://www.siyit.com/siyi/oauth/callback/gitee
 
 github:
   app-id: befd660732a0844e225a
   app-secret: c444b625f3463e9419cb36ef41acb59b2ef36228
-  redirect-url: https://www.shiyit.com/shiyi/oauth/callback/github
+  redirect-url: https://www.siyit.com/siyi/oauth/callback/github
 
 #百度推送
 baidu:
-  url: http://data.zz.baidu.com/urls?site=www.shiyit.com&token=aw5iVpNEB9aQJOYZ
+  url: http://data.zz.baidu.com/urls?site=www.siyit.com&token=aw5iVpNEB9aQJOYZ
 file:
   #服务器上传文件地址
   #upload-folder: /usr/local/blog/file/

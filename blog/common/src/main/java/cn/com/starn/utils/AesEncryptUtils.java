@@ -11,7 +11,7 @@ import cn.dev33.satoken.secure.SaSecureUtil;
  */
 public class AesEncryptUtils {
 
-    final static String key = "shiyi2022";
+    final static String key = "siyi2022";
     /**
      * 校验内容是否一致
      */
