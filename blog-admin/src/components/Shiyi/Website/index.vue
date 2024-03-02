@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'ShiYiGit',
+  name: 'siyiGit',
   data() {
     return {
       url: process.env.VUE_APP_BLOG_WEB_API

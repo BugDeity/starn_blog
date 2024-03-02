@@ -28,7 +28,7 @@
 <script>
 import { editPassword } from "@/api/user"
 export default {
-  name: 'ShiYiPassword',
+  name: 'siyiPassword',
   data() {
     return {
       formLabelWidth: '120px',

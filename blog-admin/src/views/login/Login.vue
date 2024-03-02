@@ -10,7 +10,7 @@
                     label-position="left">
                     <i class="top"></i><i class="bottom"></i>
                     <div class="logo">
-                        <el-avatar src="https://img.shiyit.com/logo11.png"></el-avatar>
+                        <el-avatar src="https://img.siyit.com/logo11.png"></el-avatar>
                     </div>
 
                     <div class="title-container">
@@ -57,7 +57,7 @@
 
         <!--  底部  -->
         <div class="el-login-footer">
-            <span>Copyright © 2022 <a href="http://www.shiyit.com" target="_blank">shiyit.com</a> All Rights
+            <span>Copyright © 2022 <a href="http://www.siyit.com" target="_blank">siyit.com</a> All Rights
                 Reserved.</span>
         </div>
     </div>

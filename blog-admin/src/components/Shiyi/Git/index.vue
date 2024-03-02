@@ -7,10 +7,10 @@
 
 <script>
 export default {
-  name: 'ShiYiGit',
+  name: 'siyiGit',
   data() {
     return {
-      url: 'https://gitee.com/quequnlong/shiyi-blog'
+      url: 'https://gitee.com/quequnlong/siyi-blog'
     }
   },
   methods: {

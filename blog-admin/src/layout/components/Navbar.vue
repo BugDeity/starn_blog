@@ -10,7 +10,7 @@
           <Website id="website" class="right-menu-item" />
         </el-tooltip>
         <el-tooltip content="Gitee源码" effect="dark" placement="bottom">
-          <ShiYiGit id="ShiYiGit-git" class="right-menu-item" />
+          <siyiGit id="siyiGit-git" class="right-menu-item" />
         </el-tooltip>
         <el-tooltip effect="dark" content="修改密码" placement="bottom">
           <password class=" right-menu-item"></password>
@@ -48,9 +48,9 @@ import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import Screenfull from "@/components/Screenfull";
-import ShiYiGit from '@/components/Shiyi/Git'
-import Website from '@/components/Shiyi/Website'
-import Password from '@/components/Shiyi/password'
+import siyiGit from '@/components/siyi/Git'
+import Website from '@/components/siyi/Website'
+import Password from '@/components/siyi/password'
 
 
 export default {
@@ -58,7 +58,7 @@ export default {
     Breadcrumb,
     Screenfull,
     Password,
-    ShiYiGit,
+    siyiGit,
     Website,
     Hamburger,
   },

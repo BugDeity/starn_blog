@@ -5,7 +5,7 @@
     </div>
     <div style="position:relative;height: 25px">
       <pan-thumb :image="avatar" class="panThumb" />
-      <mallki class-name="mallki-text" text="shiyi-blog-admin" />
+      <mallki class-name="mallki-text" text="siyi-blog-admin" />
       <!--      <div style="padding-top:35px;" class="progress-item">
         <span>Vue</span>
         <el-progress :percentage="70" />

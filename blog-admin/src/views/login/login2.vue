@@ -5,7 +5,7 @@
                label-position="left">
         <i class="top"></i><i class="bottom"></i>
         <div class="logo">
-          <el-image src="https://img.shiyit.com/logo11.png"></el-image>
+          <el-image src="https://img.siyit.com/logo11.png"></el-image>
           <h1 class="title">思易博客 欢迎您</h1>
         </div>
 

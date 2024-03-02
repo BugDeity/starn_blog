@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       title: '思易博客管理系统',
-      logo: 'https://img.shiyit.com/logo11.png'
+      logo: 'https://img.siyit.com/logo11.png'
     }
   }
 }

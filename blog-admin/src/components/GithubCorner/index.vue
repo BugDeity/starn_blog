@@ -1,5 +1,5 @@
 <template>
-  <a href="https://gitee.com/quequnlong/shiyi-blog" target="_blank" class="github-corner" aria-label="View source on Github">
+  <a href="https://gitee.com/quequnlong/siyi-blog" target="_blank" class="github-corner" aria-label="View source on Github">
     <svg
       width="80"
       height="80"
