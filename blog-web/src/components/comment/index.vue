@@ -4,7 +4,7 @@
             <div class="box">
                 <div class="avatar">
                     <img v-if="user" :src="user.avatar" alt="">
-                    <img v-else src="http://img.shiyit.com/touristAvatar.png" alt="">
+                    <img v-else src="http://img.siyit.com/touristAvatar.png" alt="">
                 </div>
                 <div class="ml-3">
                     <div data-v-0089e256="" class="comment-input">
@@ -411,7 +411,7 @@ export default {
                         width: 100%;
                         border-radius: 4px;
                         border-style: none;
-                        background: url('https://img.shiyit.com/plun.gif') 100% 100% no-repeat;
+                        background: url('https://img.siyit.com/plun.gif') 100% 100% no-repeat;
                         transition: all 0.25s ease-in-out 0s;
 
                         &:focus {

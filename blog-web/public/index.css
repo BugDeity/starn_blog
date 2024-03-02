@@ -5,12 +5,12 @@
  }
 
  html {
-     cursor: url(https://img.shiyit.com/normal.cur), default;
+     cursor: url(https://img.siyit.com/normal.cur), default;
  }
 
  /* 设置鼠标小手样式 */
  .hand-style {
-     cursor: url(https://img.shiyit.com/link.cur), pointer;
+     cursor: url(https://img.siyit.com/link.cur), pointer;
  }
 
  .el-tabs__nav-scroll {

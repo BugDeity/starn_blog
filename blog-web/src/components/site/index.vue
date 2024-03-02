@@ -1,12 +1,12 @@
 <template>
     <el-card class="box ">
 
-        <img src="http://img.shiyit.com/beijing.jpg" alt="">
+        <img src="http://img.siyit.com/beijing.jpg" alt="">
         <div class="user">
 
             <div class="avatar_wrapper">
                 <img :src="$store.state.webSiteInfo.authorAvatar" alt="" class="userAvatar">
-                <img class="guajian" src="https://img.shiyit.com/gaoda.png" alt="">
+                <img class="guajian" src="https://img.siyit.com/gaoda.png" alt="">
             </div>
             <a class="username">
                 {{ $store.state.webSiteInfo.author }}

@@ -131,7 +131,7 @@ export default {
   // &::before {
   //   content: '';
   //   z-index: -1;
-  //   background: url(https://img.shiyit.com/whitebackimg.jpg) center 0 no-repeat;
+  //   background: url(https://img.siyit.com/whitebackimg.jpg) center 0 no-repeat;
   //   transition: opacity 1s;
   //   background-size: cover !important;
   //   position: fixed;

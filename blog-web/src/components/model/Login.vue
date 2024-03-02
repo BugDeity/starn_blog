@@ -98,7 +98,7 @@
             </div>
 
             <div v-if="index == 4">
-                <el-image class="wxImg" src="http://img.shiyit.com/wechatQr.jpg">
+                <el-image class="wxImg" src="http://img.siyit.com/wechatQr.jpg">
                     <div slot="error" class="image-slot">
                         加载中<span class="dot">...</span>
                     </div>
@@ -109,7 +109,7 @@
                     </p>
                     <p>
                         登录验证码： <span style="color: red;margin-right: 5px;">{{ this.wechatLoginCode }}</span>
-                        <i style="cursor: url(https://img.shiyit.com/link.cur),pointer;" @click="getWecahtLoginCode()"
+                        <i style="cursor: url(https://img.siyit.com/link.cur),pointer;" @click="getWecahtLoginCode()"
                             class="el-icon-refresh"></i>
                     </p>
                 </div>
@@ -325,7 +325,7 @@ export default {
 
 <style lang="scss" scoped>
 /deep/ .el-dialog__wrapper {
-    background-image: url(https://img.shiyit.com/20231007_1696659441438.jpg) !important;
+    background-image: url(https://img.siyit.com/20231007_1696659441438.jpg) !important;
 }
 
 .dialog {

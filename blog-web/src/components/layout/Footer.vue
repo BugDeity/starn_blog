@@ -12,7 +12,7 @@
                     </span>
                 </p>
                 <p>
-                    Copyright©2022-{{ nowYear }} <a href="https://gitee.com/quequnlong/shiyi-blog" target="_blank">思易博客</a>
+                    Copyright©2022-{{ nowYear }} <a href="https://gitee.com/quequnlong/siyi-blog" target="_blank">思易博客</a>
                     <a href="https://beian.miit.gov.cn/" target="_blank" style="margin-left: 10px">{{
                         $store.state.webSiteInfo.recordNum
                     }}</a>
@@ -37,7 +37,7 @@
                 </span>
             </div>
             <a href="https://www.tsycdn.com/" target="_blank">
-                <img style="height: 30px;width: 320px;" src="https://img.shiyit.com/lanyiyun.png" alt="">
+                <img style="height: 30px;width: 320px;" src="https://img.siyit.com/lanyiyun.png" alt="">
             </a>
         </div>
     </div>

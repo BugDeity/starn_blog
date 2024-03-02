@@ -115,7 +115,7 @@
                                 </el-dropdown-item>
                             </router-link>
 
-                            <a style="text-decoration: none;color: #71777c;" href="https://gitee.com/quequnlong/shiyi-blog"
+                            <a style="text-decoration: none;color: #71777c;" href="https://gitee.com/quequnlong/siyi-blog"
                                 target="_blank">
                                 <el-dropdown-item>
                                     <i class="iconfont icon-zitidaima"></i>网站源码
@@ -167,7 +167,7 @@
             <div class="userInfo" v-if="showUser">
                 <el-dropdown trigger="hover">
                     <div class="el-dropdown-link hand-style">
-                        <img v-if="!userInfo" src="http://img.shiyit.com/touristAvatar.png" alt="">
+                        <img v-if="!userInfo" src="http://img.siyit.com/touristAvatar.png" alt="">
                         <img v-else :src="userInfo.avatar" alt="" />
                     </div>
                     <el-dropdown-menu slot="dropdown" v-if="userInfo">

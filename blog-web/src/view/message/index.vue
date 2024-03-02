@@ -33,7 +33,7 @@ export default {
     metaInfo: {
         meta: [{
             name: 'keyWords',
-            content: "思易博客,开源博客,www.shiyit.com"  //变量或字符串
+            content: "思易博客,开源博客,www.siyit.com"  //变量或字符串
         }, {
             name: 'description',
             content: "一个专注于技术分享的博客平台,大家以共同学习,乐于分享,拥抱开源的价值观进行学习交流"
@@ -102,7 +102,7 @@ export default {
     },
     computed: {
         cover() {
-            var cover = "http://img.shiyit.com/1642481294001.png";
+            var cover = "http://img.siyit.com/1642481294001.png";
             return "background: url(" + cover + ") center center / cover no-repeat";
         }
     }

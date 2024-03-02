@@ -37,8 +37,8 @@
                     <SiteInfo />
                     <el-card class="soft ">
                         <a href="https://www.zhisu1.com/aff/DIHZPJNL" target="_blank" class="hand-style">
-                            <img v-lazy="'https://img.shiyit.com/20231010_1696930367538.jpg'"
-                                :key="'https://img.shiyit.com/20231010_1696930367538.jpg'" alt="">
+                            <img v-lazy="'https://img.siyit.com/20231010_1696930367538.jpg'"
+                                :key="'https://img.siyit.com/20231010_1696930367538.jpg'" alt="">
                             <div class="soft-title">
                                 高效便宜可靠的服务器厂商知速云
                             </div>
@@ -172,7 +172,7 @@
                 <div class="rightBox">
                     <el-card class="box-card" style="perspective: 1000px;position: relative;height: 120px;">
                         <div class="front">
-                            <img style="width: 100%;" src="https://img.shiyit.com/1.jpg" alt="">
+                            <img style="width: 100%;" src="https://img.siyit.com/1.jpg" alt="">
                         </div>
                         <div class="back">
                             <div style="width: 50%;">
@@ -183,7 +183,7 @@
                                     体验小程序
                                 </span>
                             </div>
-                            <img src="https://img.shiyit.com/20231117_1700185199582.jpg" alt="">
+                            <img src="https://img.siyit.com/20231117_1700185199582.jpg" alt="">
                         </div>
                     </el-card>
                     <!-- 推荐文章 -->
@@ -338,7 +338,7 @@ export default {
     metaInfo: {
         meta: [{
             name: 'keyWords',
-            content: "思易博客,开源博客,www.shiyit.com"  //变量或字符串
+            content: "思易博客,开源博客,www.siyit.com"  //变量或字符串
         }, {
             name: 'description',
             content: "一个专注于技术分享的博客平台,大家以共同学习,乐于分享,拥抱开源的价值观进行学习交流"

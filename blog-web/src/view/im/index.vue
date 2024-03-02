@@ -909,7 +909,7 @@ export default {
         }
 
         .itemBox {
-            //  background-image: url("http://img.shiyit.com/imbg.png");
+            //  background-image: url("http://img.siyit.com/imbg.png");
             background-color: #323644;
             width: 100%;
             box-shadow: none;
