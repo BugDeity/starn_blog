@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '拾壹博客后台管理',
+  title: '思易博客后台管理',
 
   /**
    * 侧边栏主题 深色主题theme-dark，浅色主题theme-light

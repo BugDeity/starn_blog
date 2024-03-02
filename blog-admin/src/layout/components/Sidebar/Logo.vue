@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      title: '拾壹博客管理系统',
+      title: '思易博客管理系统',
       logo: 'https://img.shiyit.com/logo11.png'
     }
   }

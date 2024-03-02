@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="title-container">
-                        <h3 class="title">拾壹博客 欢迎您</h3>
+                        <h3 class="title">思易博客 欢迎您</h3>
                     </div>
 
                     <el-form-item prop="username">
