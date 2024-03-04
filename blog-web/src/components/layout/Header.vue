@@ -65,29 +65,29 @@
                     </el-dropdown>
                 </li>
 
-                <li :class="path == '/say' ? 'active' : ''">
+<!--                <li :class="path == '/say' ? 'active' : ''">
                     <span>
                         <router-link :to="'/say'" class="hand-style">
                             <svg-icon icon-class="say"></svg-icon> 说说
                         </router-link>
                     </span>
-                </li>
+                </li>-->
 
-                <li :class="path == '/navigation' ? 'active' : ''">
+<!--                <li :class="path == '/navigation' ? 'active' : ''">
                     <span>
                         <router-link :to="'/navigation'" class="hand-style">
                             <svg-icon icon-class="navication"></svg-icon> 网址导航
                         </router-link>
                     </span>
-                </li>
+                </li>-->
 
-                <li :class="path == '/hot' ? 'active' : ''">
+<!--                <li :class="path == '/hot' ? 'active' : ''">
                     <span>
                         <router-link :to="'/hot'" class="hand-style">
                             <svg-icon icon-class="hot2"></svg-icon> 热搜
                         </router-link>
                     </span>
-                </li>
+                </li>-->
                 <li :class="path == '/message' ? 'active' : ''">
                     <span>
                         <router-link :to="'/message'" class="hand-style">
@@ -95,13 +95,13 @@
                         </router-link>
                     </span>
                 </li>
-                <li :class="path == '/links' ? 'active' : ''">
+<!--                <li :class="path == '/links' ? 'active' : ''">
                     <span>
                         <router-link :to="'/links'" class="hand-style">
                             <svg-icon icon-class="friendLink"></svg-icon> 友情链接
                         </router-link>
                     </span>
-                </li>
+                </li>-->
                 <li :class="path == '/about' ? 'active' : ''">
                     <el-dropdown trigger="hover">
                         <span class="el-dropdown-link hand-style">
@@ -115,12 +115,12 @@
                                 </el-dropdown-item>
                             </router-link>
 
-                            <a style="text-decoration: none;color: #71777c;" href="https://gitee.com/quequnlong/siyi-blog"
+<!--                            <a style="text-decoration: none;color: #71777c;" href="https://gitee.com/quequnlong/siyi-blog"
                                 target="_blank">
                                 <el-dropdown-item>
                                     <i class="iconfont icon-zitidaima"></i>网站源码
                                 </el-dropdown-item>
-                            </a>
+                            </a>-->
 
                             <a style="text-decoration: none;color: #71777c;" :href="adminUrl" target="_blank">
                                 <el-dropdown-item>
@@ -146,6 +146,40 @@
                 </div>
             </div>
 
+          <!-- 发布文章按钮 -->
+          <div class="articleBtn" v-if="showUser">
+
+            <el-dropdown trigger="hover">
+                    <span class="el-dropdown-link">
+                        <button type="button" class="sendBtn">
+                            <i class="el-icon-edit-outline"></i> 发布
+                        </button>
+                    </span>
+              <el-dropdown-menu slot="dropdown">
+
+                <router-link style="text-decoration: none;color: #71777c;" :to="'/newposts'">
+                  <el-dropdown-item>
+                    <svg-icon icon-class="article"
+                              style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布文章
+                  </el-dropdown-item>
+                </router-link>
+                <router-link v-if="$store.state.userInfo && $store.state.userInfo.id == 1"
+                             style="text-decoration: none;color: #71777c;" :to="'/add_say'">
+                  <el-dropdown-item>
+                    <svg-icon icon-class="say"
+                              style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布说说
+                  </el-dropdown-item>
+                </router-link>
+
+<!--                <router-link style="text-decoration: none;color: #71777c;" :to="'/'">
+                  <el-dropdown-item>
+                    <svg-icon icon-class="tiezi"
+                              style="width: 20px;height: 20px;vertical-align: -5px;"></svg-icon> 发布帖子
+                  </el-dropdown-item>
+                </router-link>-->
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
 
             <div class="noticeBtn" v-if="showUser">
                 <el-dropdown trigger="hover">
@@ -597,52 +631,68 @@ export default {
                 }
             }
 
-            .noticeBtn {
-                position: absolute;
-                right: 250px;
-                top: 0;
+          .noticeBtn {
+            position: absolute;
+            right: 170px;
+            top: 0;
 
-                svg {
-                    width: 20px;
-                    height: 20px;
-                }
-
-                i {
-                    font-size: 1.5rem;
-                    color: var(--article-color);
-                }
-
-                /deep/ .el-dropdown {
-                    width: 35px;
-                    height: 35px;
-                    right: -10px;
-                    top: 5px;
-                }
+            svg {
+              width: 20px;
+              height: 20px;
             }
 
-
-
-            .userInfo {
-                position: absolute;
-                right: 190px;
-                top: 0;
-
-                /deep/ .el-dropdown {
-                    width: 35px;
-                    height: 35px;
-                    right: 0;
-                    top: 10px;
-                }
-
-                img {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    border: 1px solid var(--border-line);
-                    position: absolute;
-                }
-
+            i {
+              font-size: 1.5rem;
+              color: var(--article-color);
             }
+
+            /deep/ .el-dropdown {
+              width: 35px;
+              height: 35px;
+              right: -10px;
+              top: 5px;
+            }
+          }
+
+          .articleBtn {
+            position: absolute;
+            right: 220px;
+            top: 0;
+
+            .sendBtn {
+              display: inline-block;
+              background: linear-gradient(135deg, #60e464 10%, #5cb85b 100%);
+              border-radius: 50px;
+              padding: 5px 10px 5px 10px;
+              border: none;
+              color: #fff;
+            }
+          }
+
+
+
+
+          .userInfo {
+            position: absolute;
+            right: 120px;
+            top: 0;
+
+            /deep/ .el-dropdown {
+              width: 35px;
+              height: 35px;
+              right: 0;
+              top: 10px;
+            }
+
+            img {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              border: 1px solid var(--border-line);
+              position: absolute;
+            }
+
+          }
         }
     }
 

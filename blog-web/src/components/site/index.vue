@@ -35,14 +35,14 @@
                     target="_blank" title="邮箱" rel="noopener noreferrer nofollow">
                     <svg-icon icon-class="email" />
                 </a>
-                <a class="weibo hand-style" href="https://weibo.com/u/5747542477" target="_blank" title="微博"
+<!--                <a class="weibo hand-style" href="https://weibo.com/u/5747542477" target="_blank" title="微博"
                     rel="noopener noreferrer nofollow">
                     <svg-icon icon-class="weibo" />
-                </a>
-                <a class="zhihu hand-style" href="https://www.zhihu.com/people/he-he-85-83-34" target="_blank" title="知乎"
+                </a>-->
+<!--                <a class="zhihu hand-style" href="https://www.zhihu.com/people/he-he-85-83-34" target="_blank" title="知乎"
                     rel="noopener noreferrer nofollow">
                     <svg-icon icon-class="zhihu" />
-                </a>
+                </a>-->
             </div>
             <!-- 收藏本站 -->
             <div class="collect ">

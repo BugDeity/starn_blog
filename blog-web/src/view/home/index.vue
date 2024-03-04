@@ -35,7 +35,7 @@
 
                 <div class="top-right">
                     <SiteInfo />
-                    <el-card class="soft ">
+<!--                    <el-card class="soft ">
                         <a href="https://www.zhisu1.com/aff/DIHZPJNL" target="_blank" class="hand-style">
                             <img v-lazy="'https://img.siyit.com/20231010_1696930367538.jpg'"
                                 :key="'https://img.siyit.com/20231010_1696930367538.jpg'" alt="">
@@ -47,7 +47,7 @@
                             </div>
                             <div class="overlay"></div>
                         </a>
-                    </el-card>
+                    </el-card>-->
                 </div>
             </div>
 
