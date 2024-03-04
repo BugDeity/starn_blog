@@ -1,4 +1,4 @@
-package com.siyi;
+package cn.com.starn;
 
 import cn.com.starn.im.WebSocketChanneInitializer;
 import cn.com.starn.im.WebSocketConstant;
