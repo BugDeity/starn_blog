@@ -48,9 +48,9 @@ import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 import Screenfull from "@/components/Screenfull";
-import siyiGit from '@/components/siyi/Git'
-import Website from '@/components/siyi/Website'
-import Password from '@/components/siyi/password'
+import siyiGit from '@/components/Siyi/Git'
+import Website from '@/components/Siyi/Website'
+import Password from '@/components/Siyi/password'
 
 
 export default {
