@@ -28,7 +28,7 @@
                             <svg-icon icon-class="qq" />
                         </a>
 
-                        <a class="hand-style" v-show="isShow(4)" @click="openAuthLogin('gitee')">
+<!--                        <a class="hand-style" v-show="isShow(4)" @click="openAuthLogin('gitee')">
                             <svg-icon icon-class="gitee" />
                         </a>
                         <a class="hand-style" v-show="isShow(3)" @click="openAuthLogin('weibo')">
@@ -39,7 +39,7 @@
                         </a>
                         <a class="hand-style" v-show="isShow(6)" @click="openAuthLogin('github')">
                             <svg-icon icon-class="github" />
-                        </a>
+                        </a>-->
                     </div>
                 </div>
             </div>

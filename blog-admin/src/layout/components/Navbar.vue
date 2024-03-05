@@ -9,9 +9,9 @@
         <el-tooltip content="门户页面" effect="dark" placement="bottom">
           <Website id="website" class="right-menu-item" />
         </el-tooltip>
-        <el-tooltip content="Gitee源码" effect="dark" placement="bottom">
+<!--        <el-tooltip content="Gitee源码" effect="dark" placement="bottom">
           <siyiGit id="siyiGit-git" class="right-menu-item" />
-        </el-tooltip>
+        </el-tooltip>-->
         <el-tooltip effect="dark" content="修改密码" placement="bottom">
           <password class=" right-menu-item"></password>
         </el-tooltip>

@@ -40,10 +40,10 @@
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
-        <div style="">
+<!--        <div style="">
           <span style="margin-right: 20px;">用户名: test</span>
           <span>密码: 123456</span>
-        </div>
+        </div>-->
       </el-form>
     </div>
   </div>
